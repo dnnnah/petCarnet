@@ -55,7 +55,7 @@ export function PetHeader({ pet }: PetHeaderProps) {
             <div className="overflow-hidden rounded-[1.45rem] bg-emerald-50">
               <Image
                 src={pet.image}
-                alt={`Foto temporal de ${pet.name}`}
+                alt={`Foto de ${pet.name}`}
                 width={900}
                 height={900}
                 priority

@@ -201,5 +201,15 @@ function formatOptionalDate(date: string | null) {
 }
 
 function formatPhoneForDisplay(phone: string) {
-  return phone.replace(/^(\d{2})(\d{4})(\d{4})$/, "$1 $2 $3");
+  const digits = phone.replace(/\D/g, "");
+
+  if (digits.length === 12) {
+    return digits.replace(/^(\d{2})(\d{2})(\d{4})(\d{4})$/, "+$1 $2 $3 $4");
+  }
+
+  if (digits.length === 10) {
+    return digits.replace(/^(\d{2})(\d{4})(\d{4})$/, "$1 $2 $3");
+  }
+
+  return phone;
 }

@@ -48,6 +48,29 @@ body {
     linear-gradient(180deg, #fffdf9 0%, #fffefa 50%, #f8fffb 100%);
   color: var(--foreground);
   font-family: "Nunito", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p,
+li,
+a,
+button,
+span {
+  letter-spacing: 0;
+}
+
+p,
+li {
+  font-weight: 600;
+}
+
+strong,
+b {
+  font-weight: 800;
 }
 
 button,

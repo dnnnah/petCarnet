@@ -29,8 +29,8 @@ export function ActionButton({
     <a
       href={href}
       className={[
-        "flex items-center justify-center gap-3 rounded-[1.45rem] bg-gradient-to-br px-5 text-white transition hover:-translate-y-0.5",
-        size === "large" ? "min-h-[104px]" : "min-h-[76px]",
+        "flex min-w-0 items-center justify-center gap-3 rounded-[1.45rem] bg-gradient-to-br text-white transition hover:-translate-y-0.5",
+        size === "large" ? "min-h-[104px] px-4 sm:px-5" : "min-h-[76px] px-4 sm:px-5",
         tones[tone],
       ].join(" ")}
     >
@@ -38,8 +38,12 @@ export function ActionButton({
         <Icon size={size === "large" ? 29 : 25} fill="none" />
       </span>
       <span className="min-w-0 text-left">
-        <span className={["block font-extrabold leading-5", size === "large" ? "text-2xl" : "text-lg"].join(" ")}>{label}</span>
-        {helper ? <span className="mt-1 block text-sm font-bold text-white/86">{helper}</span> : null}
+        <span className={["block font-extrabold leading-5", size === "large" ? "text-xl sm:text-2xl" : "text-lg"].join(" ")}>{label}</span>
+        {helper ? (
+          <span className="mt-1 block max-w-full break-words text-xs font-semibold leading-4 text-white/90 sm:text-sm">
+            {helper}
+          </span>
+        ) : null}
       </span>
     </a>
   );
