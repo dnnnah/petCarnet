@@ -65,12 +65,32 @@ span {
 
 p,
 li {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 strong,
 b {
-  font-weight: 800;
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 550;
+}
+
+.font-bold {
+  font-weight: 600;
+}
+
+.font-extrabold {
+  font-weight: 700;
+}
+
+.font-black {
+  font-weight: 760;
+}
+
+.overflow-wrap-anywhere {
+  overflow-wrap: anywhere;
 }
 
 button,

@@ -41,7 +41,7 @@ export function ThankYouBanner({ isLost = false, petName, species }: ThankYouBan
         <div className="relative mx-auto rounded-[2rem] bg-white px-7 py-5 text-center shadow-[0_14px_30px_rgba(17,24,39,0.08)]">
           <div className="absolute -left-4 bottom-6 h-8 w-8 rotate-45 bg-white" />
           <p className="text-base font-semibold text-gray-700">Con amor,</p>
-          <p className="text-2xl font-extrabold text-gray-700">{petName}</p>
+          <p className="text-2xl font-extrabold text-gray-950">{petName}</p>
           <PawPrint className="mx-auto mt-2 text-emerald-500" size={24} fill="currentColor" />
         </div>
       </div>

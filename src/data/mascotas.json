@@ -7,7 +7,7 @@
       "nombre": "Lucca",
       "especie": "Perro",
       "raza": "Golden mix",
-      "fotoPerfilUrl": "/pets/lucca.jpg",
+      "fotoPerfilUrl": "/pets/lucca.jpeg",
       "genero": "Macho",
       "talla": "Mediano",
       "color": "Dorado",
@@ -33,7 +33,7 @@
       "mensajeWhatsapp": "Hola, encontré a Lucca. Escaneé el QR de su collar."
     },
     "emergencia": {
-      "perdido": true,
+      "perdido": false,
       "fechaPerdida": null,
       "zonaPerdida": null,
       "mensajeEmergencia": null,
@@ -81,7 +81,7 @@
       "nombre": "Niko",
       "especie": "Perro",
       "raza": "Labrador mix",
-      "fotoPerfilUrl": "/pets/niko.jpg",
+      "fotoPerfilUrl": "/pets/niko.jpeg",
       "genero": "Macho",
       "talla": "Grande",
       "color": "Negro",
@@ -155,7 +155,7 @@
       "nombre": "Alix",
       "especie": "Perro",
       "raza": "Criollo",
-      "fotoPerfilUrl": "/pets/alix.jpg",
+      "fotoPerfilUrl": "/pets/alix.jpeg",
       "genero": "Hembra",
       "talla": "Pequeño",
       "color": "Blanco con café",
@@ -229,7 +229,7 @@
       "nombre": "Loki",
       "especie": "Gato",
       "raza": "Mestizo",
-      "fotoPerfilUrl": "/pets/loki.jpg",
+      "fotoPerfilUrl": "/pets/loki.jpeg",
       "genero": "Macho",
       "talla": "Grande",
       "color": "Gris",
@@ -283,7 +283,7 @@
       "nombre": "Viserys",
       "especie": "Gato",
       "raza": "Mestizo",
-      "fotoPerfilUrl": "/pets/viserys.jpg",
+      "fotoPerfilUrl": "/pets/viserys.jpeg",
       "genero": "Macho",
       "talla": "Grande",
       "color": "Blanco",
@@ -321,10 +321,10 @@
     },
     "vacunas": [],
     "documentos": [
-      { "id": "chicarrona-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/chicarrona/cartilla-vacunacion.pdf", "fecha": "2025-02-11", "tamano": "2 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
-      { "id": "chicarrona-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/chicarrona/comprobante-veterinario.pdf", "fecha": "2025-04-16", "tamano": "1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Consulta felina y evaluación general." },
-      { "id": "chicarrona-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/chicarrona/foto-reciente.jpg", "fecha": "2025-04-16", "tamano": "680 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocer su pelaje." },
-      { "id": "chicarrona-estudios", "nombre": "Estudio Urinario", "tipo": "pdf", "categoria": "salud", "url": "/docs/chicarrona/estudios-medicos.pdf", "fecha": "2025-05-20", "tamano": "1.7 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Estudio médico privado." }
+      { "id": "chicharrona-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/chicharrona/cartilla-vacunacion.pdf", "fecha": "2025-02-11", "tamano": "2 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
+      { "id": "chicharrona-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/chicharrona/comprobante-veterinario.pdf", "fecha": "2025-04-16", "tamano": "1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Consulta felina y evaluación general." },
+      { "id": "chicharrona-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/chicharrona/foto-reciente.jpg", "fecha": "2025-04-16", "tamano": "680 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocer su pelaje." },
+      { "id": "chicharrona-estudios", "nombre": "Estudio Urinario", "tipo": "pdf", "categoria": "salud", "url": "/docs/chicharrona/estudios-medicos.pdf", "fecha": "2025-05-20", "tamano": "1.7 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Estudio médico privado." }
     ],
     "qr": { "urlPublica": "/perfil/viserys", "texto": "QR de Viserys" },
     "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
@@ -337,7 +337,7 @@
       "nombre": "Frey",
       "especie": "Gato",
       "raza": "Mestizo",
-      "fotoPerfilUrl": "/pets/frey.jpg",
+      "fotoPerfilUrl": "/pets/frey.jpeg",
       "genero": "Macho",
       "talla": "Grande",
       "color": "Blanco",
@@ -386,7 +386,7 @@
       "nombre": "Sandor",
       "especie": "Gato",
       "raza": "Mestizo",
-      "fotoPerfilUrl": "/pets/sandor.jpg",
+      "fotoPerfilUrl": "/pets/sandor.jpeg",
       "genero": "Macho",
       "talla": "Mediano",
       "color": "Negro",
@@ -435,7 +435,7 @@
       "nombre": "Bizcocho",
       "especie": "Gato",
       "raza": "Mestizo",
-      "fotoPerfilUrl": "/pets/bizcocho.jpg",
+      "fotoPerfilUrl": "/pets/bizcocho.jpeg",
       "genero": "Macho",
       "talla": "Grande",
       "color": "Blanco",
@@ -477,14 +477,14 @@
     "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
   },
   {
-    "id": "chicarrona",
+    "id": "chicharrona",
     "estado": "en_casa",
     "verificado": true,
     "mascota": {
-      "nombre": "Chicarrona",
+      "nombre": "Chicharrona",
       "especie": "Gato",
       "raza": "Mestizo",
-      "fotoPerfilUrl": "/pets/chicarrona.jpg",
+      "fotoPerfilUrl": "/pets/chicharrona.jpeg",
       "genero": "Hembra",
       "talla": "Pequeña",
       "color": "Negro",
@@ -494,7 +494,7 @@
       "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-CHICARRONA-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": { "codigoPublico": "PC-CHICHARRONA-001", "microchip": "No hay", "notas": "No hay" },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
@@ -503,7 +503,7 @@
       "email": "No hay",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
-      "mensajeWhatsapp": "Hola, encontré a Chicarrona. Escaneé el QR de su collar."
+      "mensajeWhatsapp": "Hola, encontré a Chicharrona. Escaneé el QR de su collar."
     },
     "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
     "salud": {
@@ -522,7 +522,7 @@
     },
     "vacunas": [],
     "documentos": [],
-    "qr": { "urlPublica": "/perfil/chicarrona", "texto": "QR de Chicarrona" },
+    "qr": { "urlPublica": "/perfil/chicharrona", "texto": "QR de Chicharrona" },
     "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
   },
   {
@@ -533,7 +533,7 @@
       "nombre": "Freya",
       "especie": "Gato",
       "raza": "Mestizo",
-      "fotoPerfilUrl": "/pets/freya.jpg",
+      "fotoPerfilUrl": "/pets/freya.jpeg",
       "genero": "Hembra",
       "talla": "Pequeña",
       "color": "Negro",
@@ -582,7 +582,7 @@
       "nombre": "Arya",
       "especie": "Gato",
       "raza": "Mestizo (Carey)",
-      "fotoPerfilUrl": "/pets/arya.jpg",
+      "fotoPerfilUrl": "/pets/arya.jpeg",
       "genero": "Hembra",
       "talla": "Mediana",
       "color": "Gris",
