@@ -78,7 +78,7 @@ export default function Home() {
                       className={[
                         "group flex items-center justify-between rounded-3xl border p-4 shadow-[0_12px_28px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5",
                         pet.emergencia.perdido
-                          ? "border-rose-200 bg-rose-50/70 hover:border-rose-300"
+                          ? "border-2 border-rose-300 bg-gradient-to-r from-rose-100 to-amber-50 shadow-[0_16px_34px_rgba(225,29,72,0.14)] ring-2 ring-rose-100 hover:border-rose-400"
                           : "border-gray-100 bg-white hover:border-emerald-200",
                       ].join(" ")}
                     >
@@ -97,7 +97,7 @@ export default function Home() {
                           <div className="flex flex-wrap items-center gap-2">
                             <p className="font-extrabold text-gray-950">{pet.mascota.nombre}</p>
                             {pet.emergencia.perdido ? (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-0.5 text-xs font-extrabold text-rose-700 ring-1 ring-rose-200">
+                              <span className="inline-flex items-center gap-1 rounded-full bg-rose-600 px-2.5 py-1 text-xs font-extrabold uppercase text-white shadow-[0_8px_18px_rgba(225,29,72,0.22)] ring-2 ring-white">
                                 <AlertTriangle size={12} />
                                 Perdido
                               </span>

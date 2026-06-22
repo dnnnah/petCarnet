@@ -33,7 +33,7 @@
       "mensajeWhatsapp": "Hola, encontré a Lucca. Escaneé el QR de su collar."
     },
     "emergencia": {
-      "perdido": false,
+      "perdido": true,
       "fechaPerdida": null,
       "zonaPerdida": null,
       "mensajeEmergencia": null,

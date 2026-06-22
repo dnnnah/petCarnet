@@ -29,12 +29,13 @@ export function EmergencyContact({
       className={[
         "relative overflow-hidden rounded-[2rem] border p-5 sm:p-7",
         isLost
-          ? "border-rose-200 bg-gradient-to-r from-rose-50 via-white to-amber-50 shadow-[0_18px_42px_rgba(244,63,94,0.12)]"
+          ? "border-2 border-rose-300 bg-gradient-to-r from-rose-100 via-white to-amber-100 shadow-[0_22px_54px_rgba(225,29,72,0.18)] ring-4 ring-rose-100"
           : "border-amber-100 bg-gradient-to-r from-amber-50/70 via-white to-emerald-50/70 shadow-[0_16px_38px_rgba(217,119,6,0.06)]",
       ].join(" ")}
     >
-      <div className={["absolute -right-3 -top-6", isLost ? "text-rose-200" : "text-amber-200"].join(" ")}>
-        <Phone size={58} />
+      {isLost ? <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-rose-500 via-red-400 to-amber-400" /> : null}
+      <div className={["absolute -right-3 -top-6", isLost ? "text-rose-300" : "text-amber-200"].join(" ")}>
+        <Phone size={isLost ? 74 : 58} />
       </div>
       <div
         className={[
@@ -47,7 +48,7 @@ export function EmergencyContact({
       <div className="relative grid items-center gap-5 lg:grid-cols-[1fr_1.7fr]">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-            {isLost ? "Contacto urgente" : "Contacto de Emergencia"}
+            {isLost ? "Contacto urgente ahora" : "Contacto de Emergencia"}
           </h2>
           <p className="mt-3 text-base font-bold text-gray-700">
             {isLost
@@ -58,9 +59,9 @@ export function EmergencyContact({
             {contact.neighborhood}
           </p>
         </div>
-        <div className={["grid gap-3", isLost ? "sm:grid-cols-[1.15fr_1fr_0.85fr]" : "sm:grid-cols-3"].join(" ")}>
-          <ActionButton href={`tel:${contact.phoneHref}`} label="Llamar" helper={contact.phone} icon={Phone} size={isLost ? "large" : "normal"} tone="call" />
-          <ActionButton href={contact.whatsapp} label="WhatsApp" helper="Enviar mensaje" icon={Send} size={isLost ? "large" : "normal"} tone="whatsapp" />
+        <div className={["grid gap-3", isLost ? "sm:grid-cols-[1.25fr_1.05fr_0.8fr]" : "sm:grid-cols-3"].join(" ")}>
+          <ActionButton href={`tel:${contact.phoneHref}`} label="Llamar" helper={contact.phone} icon={Phone} size={isLost ? "large" : "normal"} tone={isLost ? "urgentCall" : "call"} />
+          <ActionButton href={contact.whatsapp} label="WhatsApp" helper="Enviar mensaje" icon={Send} size={isLost ? "large" : "normal"} tone={isLost ? "urgentWhatsapp" : "whatsapp"} />
           <ActionButton href={contact.locationUrl} label="Ubicación" helper={contact.locationLabel} icon={MapPin} tone="location" />
         </div>
       </div>
