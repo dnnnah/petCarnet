@@ -28,7 +28,6 @@ export interface PetProfile {
     color: string;
     pesoKg: number;
     fechaNacimiento: string;
-    edadTexto: string;
     rasgosDistintivos: string[];
     esterilizado: boolean;
   };

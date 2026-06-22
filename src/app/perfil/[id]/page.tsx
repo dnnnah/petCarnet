@@ -114,7 +114,7 @@ function toProfileProps(pet: PetProfile) {
       name: pet.mascota.nombre,
       species: pet.mascota.especie,
       breed: pet.mascota.raza,
-      age: getPetAgeText(pet.mascota.fechaNacimiento, pet.mascota.edadTexto),
+      age: getPetAgeText(pet.mascota.fechaNacimiento),
       gender: pet.mascota.genero,
       size: pet.mascota.talla,
       id: pet.identificacion.codigoPublico,

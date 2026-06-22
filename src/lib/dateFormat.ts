@@ -1,13 +1,19 @@
 const MEXICO_TIME_ZONE = "America/Mexico_City";
 
 function parseDateOnly(date: string) {
-  const match = date.trim().match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  const normalizedDate = date.trim();
+  const isoMatch = normalizedDate.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  const mexicanMatch = normalizedDate.match(/^(\d{1,2})[\/,](\d{1,2})[\/,](\d{4})$/);
+  const match = isoMatch ?? mexicanMatch;
 
   if (!match) {
     return null;
   }
 
-  const [, yearText, monthText, dayText] = match;
+  const [, first, second, third] = match;
+  const yearText = isoMatch ? first : third;
+  const monthText = second;
+  const dayText = isoMatch ? third : first;
   const year = Number(yearText);
   const month = Number(monthText);
   const day = Number(dayText);

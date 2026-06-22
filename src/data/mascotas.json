@@ -6,16 +6,15 @@
     "mascota": {
       "nombre": "Lucca",
       "especie": "Perro",
-      "raza": "Golden mix",
+      "raza": "Schnauzer miniatura",
       "fotoPerfilUrl": "/pets/lucca.jpeg",
       "genero": "Macho",
-      "talla": "Mediano",
-      "color": "Dorado",
-      "pesoKg": 24,
-      "fechaNacimiento": "2022-05-10",
-      "edadTexto": "3 años",
-      "rasgosDistintivos": ["Mancha blanca en el pecho", "Oreja izquierda caída"],
-      "esterilizado": true
+      "talla": "Miniatura",
+      "color": "Sal con pimienta",
+      "pesoKg": 7,
+      "fechaNacimiento": "07/01/2023",
+      "rasgosDistintivos": ["Tiene los bigotes dorados", "Las orejas siempre están levantadas"],
+      "esterilizado": false
     },
     "identificacion": {
       "codigoPublico": "PC-LUCCA-001",
@@ -23,13 +22,13 @@
       "notas": "No cuenta con rastreador GPS ni microchip."
     },
     "contacto": {
-      "nombrePublico": "Familia de Lucca",
-      "telefonoPrincipal": "5512345678",
-      "whatsapp": "5215512345678",
+      "nombrePublico": "Donnovan Trejo",
+      "telefonoPrincipal": "5656091856",
+      "whatsapp": "5656091856",
       "telefonoSecundario": "",
       "email": "",
       "zonaSegura": "cerca de casa",
-      "zonaHabitual": "Roma Norte, CDMX",
+      "zonaHabitual": "San Buenaventura, Ixtapaluca",
       "mensajeWhatsapp": "Hola, encontré a Lucca. Escaneé el QR de su collar."
     },
     "emergencia": {
@@ -41,18 +40,18 @@
       "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado.", "Contacta por llamada o WhatsApp."]
     },
     "salud": {
-      "alergias": ["Pollo", "Polen"],
-      "condicionesMedicas": ["Propenso a problemas de cadera"],
+      "alergias": ["Ninguna registrada"],
+      "condicionesMedicas": ["Ninguna"],
       "medicamentosActuales": [],
       "dietaEspecial": "",
-      "comportamiento": "Amigable, puede asustarse con ruidos fuertes."
+      "comportamiento": "Amigable y curioso, puede asustarse con ruidos fuertes."
     },
     "veterinario": {
-      "nombre": "Dr. López",
-      "clinica": "Veterinaria Roma",
-      "telefono": "5544332211",
+      "nombre": "Alux veterinaria",
+      "clinica": "Veterinaria Alux",
+      "telefono": "",
       "direccion": "Roma Norte, CDMX",
-      "horario": "Lun-Sáb 9:00 a 18:00"
+      "horario": "L-S 10am a 7pm"
     },
     "vacunas": [
       { "nombre": "Rabia", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "al_dia", "lote": "A123", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" },
@@ -80,30 +79,29 @@
     "mascota": {
       "nombre": "Niko",
       "especie": "Perro",
-      "raza": "Labrador mix",
+      "raza": "Mestizo",
       "fotoPerfilUrl": "/pets/niko.jpeg",
       "genero": "Macho",
-      "talla": "Grande",
-      "color": "Negro",
-      "pesoKg": 29,
-      "fechaNacimiento": "2021-09-18",
-      "edadTexto": "4 años",
-      "rasgosDistintivos": ["Pecho con mechón blanco", "Collar azul"],
-      "esterilizado": true
+      "talla": "Mediano",
+      "color": "Blanco con negro",
+      "pesoKg": 12,
+      "fechaNacimiento": "27/11/2022",
+      "rasgosDistintivos": ["Tiene manchas negras en su cuerpo, parece domino", "Chimuelo"],
+      "esterilizado": false
     },
     "identificacion": {
       "codigoPublico": "PC-NIKO-002",
-      "microchip": "982000411223344",
-      "notas": "Microchip registrado a nombre de su familia."
+      "microchip": "",
+      "notas": ""
     },
     "contacto": {
-      "nombrePublico": "Familia de Niko",
-      "telefonoPrincipal": "5523456789",
-      "whatsapp": "5215523456789",
+      "nombrePublico": "Evelia Corona",
+      "telefonoPrincipal": "5522576308",
+      "whatsapp": "5522576308",
       "telefonoSecundario": "",
       "email": "",
-      "zonaSegura": "cerca del parque",
-      "zonaHabitual": "Condesa, CDMX",
+      "zonaSegura": "cerca de la 4ta avenida",
+      "zonaHabitual": "Nezahualcoyolt, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Niko. Escaneé el QR de su collar."
     },
     "emergencia": {
@@ -115,10 +113,10 @@
       "instrucciones": ["Llámalo por su nombre con voz tranquila.", "No le ofrezcas comida desconocida.", "Contacta por WhatsApp."]
     },
     "salud": {
-      "alergias": ["Lácteos"],
+      "alergias": ["Ninguna registrada"],
       "condicionesMedicas": ["Digestión sensible"],
       "medicamentosActuales": [],
-      "dietaEspecial": "Croquetas hipoalergénicas.",
+      "dietaEspecial": "",
       "comportamiento": "Muy sociable, se emociona al ver pelotas."
     },
     "veterinario": {
@@ -160,8 +158,7 @@
       "talla": "Pequeño",
       "color": "Blanco con café",
       "pesoKg": 10,
-      "fechaNacimiento": "2023-11-02",
-      "edadTexto": "2 años",
+      "fechaNacimiento": "02/11/2023",
       "rasgosDistintivos": ["Manchita café sobre el ojo derecho", "Cola muy esponjada"],
       "esterilizado": false
     },
@@ -234,8 +231,7 @@
       "talla": "Grande",
       "color": "Gris",
       "pesoKg": 3,
-      "fechaNacimiento": "2021-08-01",
-      "edadTexto": "4 años",
+      "fechaNacimiento": "01/08/2021",
       "rasgosDistintivos": ["Una oreja izquierda mocha", "Nariz café", "Pelo de la panza rizado"],
       "esterilizado": true
     },
@@ -288,8 +284,7 @@
       "talla": "Grande",
       "color": "Blanco",
       "pesoKg": 3,
-      "fechaNacimiento": "2024-10-01",
-      "edadTexto": "1 año",
+      "fechaNacimiento": "01/10/2024",
       "rasgosDistintivos": ["Manchas negras con rayas en espalda", "Manchas en patas y dedos"],
       "esterilizado": true
     },
@@ -342,8 +337,7 @@
       "talla": "Grande",
       "color": "Blanco",
       "pesoKg": 3,
-      "fechaNacimiento": "2024-10-01",
-      "edadTexto": "1 año",
+      "fechaNacimiento": "01/10/2024",
       "rasgosDistintivos": ["Manchas negras con rayas en espalda", "Manchas en patas y dedos"],
       "esterilizado": true
     },
@@ -391,8 +385,7 @@
       "talla": "Mediano",
       "color": "Negro",
       "pesoKg": 2,
-      "fechaNacimiento": "2024-12-01",
-      "edadTexto": "1 año",
+      "fechaNacimiento": "01/12/2024",
       "rasgosDistintivos": ["Pelaje negro con rayos blancos", "No es muy peludo"],
       "esterilizado": true
     },
@@ -440,8 +433,7 @@
       "talla": "Grande",
       "color": "Blanco",
       "pesoKg": 3,
-      "fechaNacimiento": "2021-03-01",
-      "edadTexto": "5 años",
+      "fechaNacimiento": "01/03/2021",
       "rasgosDistintivos": ["Muy peludo", "Mancha café claro en cabeza", "Ojos azules", "Estrabismo ligero"],
       "esterilizado": true
     },
@@ -489,8 +481,7 @@
       "talla": "Pequeña",
       "color": "Negro",
       "pesoKg": 1,
-      "fechaNacimiento": "2025-07-01",
-      "edadTexto": "1 año",
+      "fechaNacimiento": "01/07/2025",
       "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo"],
       "esterilizado": true
     },
@@ -538,8 +529,7 @@
       "talla": "Pequeña",
       "color": "Negro",
       "pesoKg": 1,
-      "fechaNacimiento": "2025-07-01",
-      "edadTexto": "1 año",
+      "fechaNacimiento": "01/07/2025",
       "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo"],
       "esterilizado": true
     },
@@ -587,8 +577,7 @@
       "talla": "Mediana",
       "color": "Gris",
       "pesoKg": 2,
-      "fechaNacimiento": "2022-07-01",
-      "edadTexto": "4 años",
+      "fechaNacimiento": "01/07/2022",
       "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo", "Manchas color durazno"],
       "esterilizado": true
     },
