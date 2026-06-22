@@ -2,17 +2,19 @@ import { Cat, Dog, MapPin, Phone, Send } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
 
 type EmergencyContactProps = {
+  petName: string;
   species: string;
   contact: {
     name: string;
     phone: string;
+    phoneHref: string;
     whatsapp: string;
     locationUrl: string;
     neighborhood: string;
   };
 };
 
-export function EmergencyContact({ contact, species }: EmergencyContactProps) {
+export function EmergencyContact({ contact, petName, species }: EmergencyContactProps) {
   const PetIcon = species.toLowerCase().includes("gato") ? Cat : Dog;
 
   return (
@@ -29,12 +31,12 @@ export function EmergencyContact({ contact, species }: EmergencyContactProps) {
             Contacto de Emergencia
           </h2>
           <p className="mt-3 text-base font-bold text-gray-700">
-            Si encontraste a Lucca, por favor contáctanos.
+            Si encontraste a {petName}, por favor contáctanos.
           </p>
           <p className="mt-2 text-sm font-bold text-emerald-700">{contact.neighborhood}</p>
         </div>
         <div className="grid gap-3 sm:grid-cols-3">
-          <ActionButton href={`tel:${contact.phone}`} label="Llamar" helper="55 1234 5678" icon={Phone} tone="call" />
+          <ActionButton href={`tel:${contact.phoneHref}`} label="Llamar" helper={contact.phone} icon={Phone} tone="call" />
           <ActionButton href={contact.whatsapp} label="WhatsApp" helper="Enviar mensaje" icon={Send} tone="whatsapp" />
           <ActionButton href={contact.locationUrl} label="Ubicación" helper="Zona habitual" icon={MapPin} tone="location" />
         </div>

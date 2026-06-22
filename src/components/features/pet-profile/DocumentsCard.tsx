@@ -5,6 +5,7 @@ type DocumentsCardProps = {
   documents: ReadonlyArray<{
     name: string;
     meta: string;
+    url: string;
     tone: "pink" | "mint" | "purple";
   }>;
 };
@@ -44,9 +45,12 @@ export function DocumentsCard({ documents }: DocumentsCardProps) {
                 <span className="mt-1 block text-sm font-semibold text-gray-500">{document.meta}</span>
               </span>
             </div>
-            <button className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-gray-900 shadow-[0_8px_18px_rgba(17,24,39,0.08)] ring-1 ring-gray-100">
+            <a
+              href={document.url}
+              className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-gray-900 shadow-[0_8px_18px_rgba(17,24,39,0.08)] ring-1 ring-gray-100"
+            >
               <Download size={17} />
-            </button>
+            </a>
           </div>
         ))}
       </div>

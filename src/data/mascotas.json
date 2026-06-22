@@ -1,0 +1,367 @@
+[
+  {
+    "id": "lucca",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Lucca",
+      "especie": "Perro",
+      "raza": "Golden mix",
+      "fotoPerfilUrl": "/pets/lucca.svg",
+      "genero": "Macho",
+      "talla": "Mediano",
+      "color": "Dorado",
+      "pesoKg": 24,
+      "fechaNacimiento": "2022-05-10",
+      "edadTexto": "3 años",
+      "rasgosDistintivos": ["Mancha blanca en el pecho", "Oreja izquierda caída"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-LUCCA-001",
+      "microchip": null,
+      "notas": "No cuenta con rastreador GPS ni microchip."
+    },
+    "contacto": {
+      "nombrePublico": "Familia de Lucca",
+      "telefonoPrincipal": "5512345678",
+      "whatsapp": "5215512345678",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "cerca de casa",
+      "zonaHabitual": "Roma Norte, CDMX",
+      "mensajeWhatsapp": "Hola, encontré a Lucca. Escaneé el QR de su collar."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado.", "Contacta por llamada o WhatsApp."]
+    },
+    "salud": {
+      "alergias": ["Pollo", "Polen"],
+      "condicionesMedicas": ["Propenso a problemas de cadera"],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Amigable, puede asustarse con ruidos fuertes."
+    },
+    "veterinario": {
+      "nombre": "Dr. López",
+      "clinica": "Veterinaria Roma",
+      "telefono": "5544332211",
+      "direccion": "Roma Norte, CDMX",
+      "horario": "Lun-Sáb 9:00 a 18:00"
+    },
+    "vacunas": [
+      { "nombre": "Rabia", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "al_dia", "lote": "A123", "veterinario": "Dr. López", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Parvovirus", "fechaAplicacion": "2025-02-20", "proximaDosis": "2026-02-20", "estatus": "al_dia", "lote": "P456", "veterinario": "Dr. López", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Triple Canina", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "proxima_dosis", "lote": "TC789", "veterinario": "Dr. López", "documentoUrl": "/docs/demo-cartilla.pdf" }
+    ],
+    "documentos": [
+      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "2.4 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-01-15", "visiblePublico": true, "estado": "Temporal" },
+      { "nombre": "Certificado Veterinario", "tipo": "PDF", "tamano": "1.1 MB", "url": "/docs/demo-certificado.pdf", "fecha": "2025-02-20", "visiblePublico": true, "estado": "Verificado" },
+      { "nombre": "Estudios Médicos", "tipo": "PDF", "tamano": "3.2 MB", "url": "/docs/demo-estudios.pdf", "fecha": "2025-03-12", "visiblePublico": false, "estado": "Privado" }
+    ],
+    "qr": { "urlPublica": "/perfil/lucca", "texto": "QR temporal de Lucca" },
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "niko",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Niko",
+      "especie": "Perro",
+      "raza": "Labrador mix",
+      "fotoPerfilUrl": "/pets/niko.svg",
+      "genero": "Macho",
+      "talla": "Grande",
+      "color": "Negro",
+      "pesoKg": 29,
+      "fechaNacimiento": "2021-09-18",
+      "edadTexto": "4 años",
+      "rasgosDistintivos": ["Pecho con mechón blanco", "Collar azul"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-NIKO-002",
+      "microchip": "982000411223344",
+      "notas": "Microchip registrado a nombre de su familia."
+    },
+    "contacto": {
+      "nombrePublico": "Familia de Niko",
+      "telefonoPrincipal": "5523456789",
+      "whatsapp": "5215523456789",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "cerca del parque",
+      "zonaHabitual": "Condesa, CDMX",
+      "mensajeWhatsapp": "Hola, encontré a Niko. Escaneé el QR de su collar."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Llámalo por su nombre con voz tranquila.", "No le ofrezcas comida desconocida.", "Contacta por WhatsApp."]
+    },
+    "salud": {
+      "alergias": ["Lácteos"],
+      "condicionesMedicas": ["Digestión sensible"],
+      "medicamentosActuales": [],
+      "dietaEspecial": "Croquetas hipoalergénicas.",
+      "comportamiento": "Muy sociable, se emociona al ver pelotas."
+    },
+    "veterinario": {
+      "nombre": "Dra. Méndez",
+      "clinica": "Clínica Canina Condesa",
+      "telefono": "5555667788",
+      "direccion": "Condesa, CDMX",
+      "horario": "Lun-Vie 10:00 a 19:00"
+    },
+    "vacunas": [
+      { "nombre": "Rabia", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "al_dia", "lote": "R204", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Bordetella", "fechaAplicacion": "2025-04-14", "proximaDosis": "2026-04-14", "estatus": "al_dia", "lote": "B118", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "proxima_dosis", "lote": "MC302", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/demo-cartilla.pdf" }
+    ],
+    "documentos": [
+      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "2.1 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-03-08", "visiblePublico": true, "estado": "Temporal" },
+      { "nombre": "Registro Microchip", "tipo": "PDF", "tamano": "850 KB", "url": "/docs/demo-microchip.pdf", "fecha": "2025-03-10", "visiblePublico": true, "estado": "Verificado" },
+      { "nombre": "Plan Nutricional", "tipo": "PDF", "tamano": "1.4 MB", "url": "/docs/demo-dieta.pdf", "fecha": "2025-04-01", "visiblePublico": false, "estado": "Privado" }
+    ],
+    "qr": { "urlPublica": "/perfil/niko", "texto": "QR temporal de Niko" },
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "alix",
+    "estado": "en_casa",
+    "verificado": false,
+    "mascota": {
+      "nombre": "Alix",
+      "especie": "Perro",
+      "raza": "Criollo",
+      "fotoPerfilUrl": "/pets/alix.svg",
+      "genero": "Hembra",
+      "talla": "Pequeño",
+      "color": "Blanco con café",
+      "pesoKg": 10,
+      "fechaNacimiento": "2023-11-02",
+      "edadTexto": "2 años",
+      "rasgosDistintivos": ["Manchita café sobre el ojo derecho", "Cola muy esponjada"],
+      "esterilizado": false
+    },
+    "identificacion": {
+      "codigoPublico": "PC-ALIX-003",
+      "microchip": null,
+      "notas": "Usa placa con QR temporal."
+    },
+    "contacto": {
+      "nombrePublico": "Familia de Alix",
+      "telefonoPrincipal": "5534567890",
+      "whatsapp": "5215534567890",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "cerca de su edificio",
+      "zonaHabitual": "Del Valle, CDMX",
+      "mensajeWhatsapp": "Hola, encontré a Alix. Escaneé el QR de su collar."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Acércate despacio y agáchate.", "Puede esconderse si hay ruido.", "Contacta a su familia antes de moverla."]
+    },
+    "salud": {
+      "alergias": ["Ninguna registrada"],
+      "condicionesMedicas": ["Ansiedad con fuegos artificiales"],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Cariñosa, tímida con personas nuevas."
+    },
+    "veterinario": {
+      "nombre": "Dr. Salas",
+      "clinica": "Vet Del Valle",
+      "telefono": "5566778899",
+      "direccion": "Del Valle, CDMX",
+      "horario": "Lun-Sáb 8:00 a 17:00"
+    },
+    "vacunas": [
+      { "nombre": "Rabia", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "R901", "veterinario": "Dr. Salas", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Parvovirus", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "P902", "veterinario": "Dr. Salas", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "proxima_dosis", "lote": "MC903", "veterinario": "Dr. Salas", "documentoUrl": "/docs/demo-cartilla.pdf" }
+    ],
+    "documentos": [
+      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "1.8 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-06-02", "visiblePublico": true, "estado": "Temporal" },
+      { "nombre": "Control General", "tipo": "PDF", "tamano": "900 KB", "url": "/docs/demo-control.pdf", "fecha": "2025-06-02", "visiblePublico": true, "estado": "Verificado" },
+      { "nombre": "Notas de Conducta", "tipo": "PDF", "tamano": "720 KB", "url": "/docs/demo-conducta.pdf", "fecha": "2025-06-10", "visiblePublico": false, "estado": "Privado" }
+    ],
+    "qr": { "urlPublica": "/perfil/alix", "texto": "QR temporal de Alix" },
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "chicarrona",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Chicarrona",
+      "especie": "Gato",
+      "raza": "Gato doméstico",
+      "fotoPerfilUrl": "/pets/chicarrona.svg",
+      "genero": "Hembra",
+      "talla": "Mediano",
+      "color": "Carey",
+      "pesoKg": 4.6,
+      "fechaNacimiento": "2020-08-24",
+      "edadTexto": "5 años",
+      "rasgosDistintivos": ["Pelaje carey", "Bigotes muy largos"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-CHICA-004",
+      "microchip": null,
+      "notas": "Gatita indoor con QR temporal."
+    },
+    "contacto": {
+      "nombrePublico": "Familia de Chicarrona",
+      "telefonoPrincipal": "5545678901",
+      "whatsapp": "5215545678901",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "cerca de su ventana",
+      "zonaHabitual": "Narvarte, CDMX",
+      "mensajeWhatsapp": "Hola, encontré a Chicarrona. Escaneé el QR de su collar."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["No intentes cargarla de inmediato.", "Háblale suave y evita movimientos bruscos.", "Contacta por WhatsApp."]
+    },
+    "salud": {
+      "alergias": ["Ninguna registrada"],
+      "condicionesMedicas": ["Sensibilidad urinaria"],
+      "medicamentosActuales": [],
+      "dietaEspecial": "Alimento urinary.",
+      "comportamiento": "Curiosa, cautelosa con personas desconocidas."
+    },
+    "veterinario": {
+      "nombre": "Dra. Paredes",
+      "clinica": "Clínica Felina Narvarte",
+      "telefono": "5577889900",
+      "direccion": "Narvarte, CDMX",
+      "horario": "Mar-Sáb 10:00 a 18:00"
+    },
+    "vacunas": [
+      { "nombre": "Rabia", "fechaAplicacion": "2025-02-11", "proximaDosis": "2026-02-11", "estatus": "al_dia", "lote": "RF321", "veterinario": "Dra. Paredes", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Triple Felina", "fechaAplicacion": "2025-02-11", "proximaDosis": "2026-02-11", "estatus": "al_dia", "lote": "TF322", "veterinario": "Dra. Paredes", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Leucemia Felina", "fechaAplicacion": "2025-02-11", "proximaDosis": "2026-02-11", "estatus": "proxima_dosis", "lote": "LF323", "veterinario": "Dra. Paredes", "documentoUrl": "/docs/demo-cartilla.pdf" }
+    ],
+    "documentos": [
+      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "2 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-02-11", "visiblePublico": true, "estado": "Temporal" },
+      { "nombre": "Consulta Felina", "tipo": "PDF", "tamano": "1 MB", "url": "/docs/demo-consulta.pdf", "fecha": "2025-04-16", "visiblePublico": true, "estado": "Verificado" },
+      { "nombre": "Estudio Urinario", "tipo": "PDF", "tamano": "1.7 MB", "url": "/docs/demo-urinario.pdf", "fecha": "2025-05-20", "visiblePublico": false, "estado": "Privado" }
+    ],
+    "qr": { "urlPublica": "/perfil/chicarrona", "texto": "QR temporal de Chicarrona" },
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "loki",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Loki",
+      "especie": "Gato",
+      "raza": "Gato doméstico",
+      "fotoPerfilUrl": "/pets/loki.svg",
+      "genero": "Macho",
+      "talla": "Pequeño",
+      "color": "Gris atigrado",
+      "pesoKg": 4.1,
+      "fechaNacimiento": "2024-01-30",
+      "edadTexto": "2 años",
+      "rasgosDistintivos": ["Rayas grises en la frente", "Punta de la cola oscura"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-LOKI-005",
+      "microchip": "982000455667788",
+      "notas": "Microchip activo y placa QR temporal."
+    },
+    "contacto": {
+      "nombrePublico": "Familia de Loki",
+      "telefonoPrincipal": "5556789012",
+      "whatsapp": "5215556789012",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "cerca de su patio",
+      "zonaHabitual": "Coyoacán, CDMX",
+      "mensajeWhatsapp": "Hola, encontré a Loki. Escaneé el QR de su collar."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["No lo persigas si corre.", "Ofrece un lugar tranquilo.", "Contacta por llamada o WhatsApp."]
+    },
+    "salud": {
+      "alergias": ["Ninguna registrada"],
+      "condicionesMedicas": ["Sin condiciones registradas"],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Juguetón, puede esconderse en espacios pequeños."
+    },
+    "veterinario": {
+      "nombre": "Dr. Herrera",
+      "clinica": "Vet Coyoacán",
+      "telefono": "5588990011",
+      "direccion": "Coyoacán, CDMX",
+      "horario": "Lun-Dom 9:00 a 20:00"
+    },
+    "vacunas": [
+      { "nombre": "Rabia", "fechaAplicacion": "2025-05-05", "proximaDosis": "2026-05-05", "estatus": "al_dia", "lote": "RF701", "veterinario": "Dr. Herrera", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Triple Felina", "fechaAplicacion": "2025-05-05", "proximaDosis": "2026-05-05", "estatus": "al_dia", "lote": "TF702", "veterinario": "Dr. Herrera", "documentoUrl": "/docs/demo-cartilla.pdf" },
+      { "nombre": "Leucemia Felina", "fechaAplicacion": "2025-05-05", "proximaDosis": "2026-05-05", "estatus": "proxima_dosis", "lote": "LF703", "veterinario": "Dr. Herrera", "documentoUrl": "/docs/demo-cartilla.pdf" }
+    ],
+    "documentos": [
+      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "1.9 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-05-05", "visiblePublico": true, "estado": "Temporal" },
+      { "nombre": "Registro Microchip", "tipo": "PDF", "tamano": "820 KB", "url": "/docs/demo-microchip.pdf", "fecha": "2025-05-06", "visiblePublico": true, "estado": "Verificado" },
+      { "nombre": "Revisión General", "tipo": "PDF", "tamano": "1.2 MB", "url": "/docs/demo-revision.pdf", "fecha": "2025-05-18", "visiblePublico": false, "estado": "Privado" }
+    ],
+    "qr": { "urlPublica": "/perfil/loki", "texto": "QR temporal de Loki" },
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
+  }
+]

@@ -1,0 +1,96 @@
+export type PetSpecies = "Perro" | "Gato";
+
+export type PetStatus = "en_casa" | "perdido";
+
+export type VaccineStatus = "al_dia" | "proxima_dosis" | "vencida";
+
+export type DocumentTone = "Temporal" | "Verificado" | "Privado";
+
+export interface PetProfile {
+  id: string;
+  estado: PetStatus;
+  verificado: boolean;
+  mascota: {
+    nombre: string;
+    especie: PetSpecies;
+    raza: string;
+    fotoPerfilUrl: string;
+    genero: string;
+    talla: string;
+    color: string;
+    pesoKg: number;
+    fechaNacimiento: string;
+    edadTexto: string;
+    rasgosDistintivos: string[];
+    esterilizado: boolean;
+  };
+  identificacion: {
+    codigoPublico: string;
+    microchip: string | null;
+    notas: string;
+  };
+  contacto: {
+    nombrePublico: string;
+    telefonoPrincipal: string;
+    whatsapp: string;
+    telefonoSecundario: string;
+    email: string;
+    zonaSegura: string;
+    zonaHabitual: string;
+    mensajeWhatsapp: string;
+  };
+  emergencia: {
+    perdido: boolean;
+    fechaPerdida: string | null;
+    zonaPerdida: string | null;
+    mensajeEmergencia: string | null;
+    recompensa: string | null;
+    instrucciones: string[];
+  };
+  salud: {
+    alergias: string[];
+    condicionesMedicas: string[];
+    medicamentosActuales: string[];
+    dietaEspecial: string;
+    comportamiento: string;
+  };
+  veterinario: {
+    nombre: string;
+    clinica: string;
+    telefono: string;
+    direccion: string;
+    horario: string;
+  };
+  vacunas: PetVaccine[];
+  documentos: PetDocument[];
+  qr: {
+    urlPublica: string;
+    texto: string;
+  };
+  configuracionPublica: {
+    mostrarEmail: boolean;
+    mostrarTelefonoSecundario: boolean;
+    mostrarDireccionVet: boolean;
+    mostrarDocumentosPrivados: boolean;
+  };
+}
+
+export interface PetVaccine {
+  nombre: string;
+  fechaAplicacion: string;
+  proximaDosis: string;
+  estatus: VaccineStatus;
+  lote: string;
+  veterinario: string;
+  documentoUrl: string;
+}
+
+export interface PetDocument {
+  nombre: string;
+  tipo: string;
+  tamano: string;
+  url: string;
+  fecha: string;
+  visiblePublico: boolean;
+  estado: DocumentTone;
+}

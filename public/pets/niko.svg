@@ -1,0 +1,19 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="1200" fill="#DBEAFE"/>
+  <circle cx="190" cy="220" r="108" fill="#D1FAE5"/>
+  <circle cx="980" cy="260" r="130" fill="#FCE7F3"/>
+  <circle cx="910" cy="970" r="165" fill="#FEF3C7"/>
+  <path d="M268 880C372 735 500 690 600 690C700 690 828 735 932 880C880 1016 754 1084 600 1084C446 1084 320 1016 268 880Z" fill="#252A33"/>
+  <path d="M345 520C314 398 352 266 462 202C531 162 557 316 531 438C512 528 393 718 345 520Z" fill="#111827"/>
+  <path d="M855 520C886 398 848 266 738 202C669 162 643 316 669 438C688 528 807 718 855 520Z" fill="#111827"/>
+  <ellipse cx="600" cy="570" rx="282" ry="302" fill="#1F2937"/>
+  <ellipse cx="600" cy="664" rx="166" ry="145" fill="#E5E7EB"/>
+  <circle cx="498" cy="548" r="34" fill="#F9FAFB"/>
+  <circle cx="702" cy="548" r="34" fill="#F9FAFB"/>
+  <circle cx="507" cy="552" r="18" fill="#111827"/>
+  <circle cx="711" cy="552" r="18" fill="#111827"/>
+  <path d="M560 652C560 629 579 612 600 612C621 612 640 629 640 652C640 671 622 686 600 686C578 686 560 671 560 652Z" fill="#111827"/>
+  <path d="M600 686V719" stroke="#111827" stroke-width="17" stroke-linecap="round"/>
+  <path d="M533 728C565 762 635 762 667 728" stroke="#111827" stroke-width="17" stroke-linecap="round"/>
+  <path d="M500 832C540 858 660 858 700 832" stroke="white" stroke-width="28" stroke-linecap="round"/>
+</svg>

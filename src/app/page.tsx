@@ -3,9 +3,12 @@ import { ArrowRight, Cat, Dog, Heart, PawPrint, ShieldCheck } from "lucide-react
 import { AppShell } from "@/components/layout/AppShell";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { PET_IDS } from "@/lib/constants";
+import { getAllPets } from "@/lib/getAllPets";
 
 export default function Home() {
+  const pets = getAllPets();
+  const featuredPet = pets[0];
+
   return (
     <AppShell>
       <section className="relative overflow-hidden px-4 pb-16 pt-8 sm:px-6 lg:px-8">
@@ -33,13 +36,15 @@ export default function Home() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/perfil/lucca"
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-emerald-500 px-7 text-base font-extrabold text-white shadow-[0_16px_30px_rgba(16,185,129,0.22)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
-              >
-                Ver perfil de Lucca
-                <ArrowRight size={20} />
-              </Link>
+              {featuredPet ? (
+                <Link
+                  href={`/perfil/${featuredPet.id}`}
+                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-emerald-500 px-7 text-base font-extrabold text-white shadow-[0_16px_30px_rgba(16,185,129,0.22)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
+                >
+                  Ver perfil de {featuredPet.mascota.nombre}
+                  <ArrowRight size={20} />
+                </Link>
+              ) : null}
             </div>
           </div>
 
@@ -66,7 +71,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-6 grid gap-3">
-                  {PET_IDS.map((pet, index) => (
+                  {pets.map((pet, index) => (
                     <Link
                       key={pet.id}
                       href={`/perfil/${pet.id}`}
@@ -81,12 +86,12 @@ export default function Home() {
                               : "bg-pink-100 text-pink-500",
                           ].join(" ")}
                         >
-                          {pet.species === "Gato" ? <Cat size={22} /> : <Dog size={22} />}
+                          {pet.mascota.especie === "Gato" ? <Cat size={22} /> : <Dog size={22} />}
                         </div>
                         <div>
-                          <p className="font-extrabold text-gray-950">{pet.name}</p>
+                          <p className="font-extrabold text-gray-950">{pet.mascota.nombre}</p>
                           <p className="text-sm font-semibold text-gray-500">
-                            {pet.species}
+                            {pet.mascota.especie}
                           </p>
                         </div>
                       </div>
