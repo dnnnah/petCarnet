@@ -4,7 +4,15 @@ export type PetStatus = "en_casa" | "perdido";
 
 export type VaccineStatus = "al_dia" | "proxima_dosis" | "vencida";
 
-export type DocumentTone = "Temporal" | "Verificado" | "Privado";
+export type PetDocumentType = "pdf" | "imagen" | "otro";
+
+export type PetDocumentCategory =
+  | "vacunas"
+  | "veterinario"
+  | "identificacion"
+  | "salud"
+  | "foto"
+  | "otro";
 
 export interface PetProfile {
   id: string;
@@ -86,11 +94,14 @@ export interface PetVaccine {
 }
 
 export interface PetDocument {
+  id: string;
   nombre: string;
-  tipo: string;
-  tamano: string;
+  tipo: PetDocumentType;
+  categoria: PetDocumentCategory;
   url: string;
   fecha: string;
+  tamano?: string;
   visiblePublico: boolean;
-  estado: DocumentTone;
+  estado?: string;
+  descripcion?: string;
 }

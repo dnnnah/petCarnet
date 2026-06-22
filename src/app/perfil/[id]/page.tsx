@@ -14,6 +14,7 @@ import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeli
 import { VetCard } from "@/components/features/pet-profile/VetCard";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
+import { getPublicDocuments } from "@/lib/petDocuments";
 import type { PetProfile, VaccineStatus } from "@/types/pet";
 
 type ProfilePageProps = {
@@ -85,7 +86,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </div>
           <VaccineTimeline vaccines={profile.vaccines} />
           <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
-            <DocumentsCard documents={profile.documents} />
+            <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
             <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
           </div>
           <ThankYouBanner isLost={pet.emergencia.perdido} petName={pet.mascota.nombre} species={pet.mascota.especie} />
@@ -99,9 +100,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 }
 
 function toProfileProps(pet: PetProfile) {
-  const visibleDocuments = pet.configuracionPublica.mostrarDocumentosPrivados
-    ? pet.documentos
-    : pet.documentos.filter((document) => document.visiblePublico);
+  const visibleDocuments = getPublicDocuments(pet);
   const locationText = pet.emergencia.perdido && pet.emergencia.zonaPerdida
     ? `Zona donde se perdió: ${pet.emergencia.zonaPerdida}`
     : `Zona segura: ${pet.contacto.zonaSegura}`;
@@ -135,7 +134,7 @@ function toProfileProps(pet: PetProfile) {
       neighborhood: locationText,
     },
     lost: {
-      lostDate: pet.emergencia.fechaPerdida ? formatLongDate(pet.emergencia.fechaPerdida) : null,
+      lostDate: formatOptionalDate(pet.emergencia.fechaPerdida),
     },
     info: {
       species: pet.mascota.especie,
@@ -161,12 +160,7 @@ function toProfileProps(pet: PetProfile) {
       date: formatDate(vaccine.estatus === "proxima_dosis" ? vaccine.proximaDosis : vaccine.fechaAplicacion),
       status: toVaccineLabel(vaccine.estatus),
     })),
-    documents: visibleDocuments.slice(0, 3).map((document, index) => ({
-      name: document.nombre,
-      meta: `${document.tipo} · ${document.tamano}`,
-      url: document.url,
-      tone: (["pink", "mint", "purple"] as const)[index % 3],
-    })),
+    documents: visibleDocuments.slice(0, 3),
   };
 }
 
@@ -190,6 +184,20 @@ function formatLongDate(date: string) {
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(date));
+}
+
+function formatOptionalDate(date: string | null) {
+  if (!date || date === "No hay") {
+    return null;
+  }
+
+  const parsed = new Date(date);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return null;
+  }
+
+  return formatLongDate(date);
 }
 
 function formatPhoneForDisplay(phone: string) {

@@ -34,7 +34,7 @@ export function ActionButton({
         tones[tone],
       ].join(" ")}
     >
-      <span className={["grid shrink-0 place-items-center rounded-full bg-white/22", size === "large" ? "h-13 w-13" : "h-11 w-11"].join(" ")}>
+      <span className={["grid shrink-0 place-items-center rounded-full bg-white/22", size === "large" ? "h-12 w-12" : "h-11 w-11"].join(" ")}>
         <Icon size={size === "large" ? 29 : 25} fill="none" />
       </span>
       <span className="min-w-0 text-left">

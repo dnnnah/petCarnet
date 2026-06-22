@@ -55,14 +55,15 @@
       "horario": "Lun-Sáb 9:00 a 18:00"
     },
     "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "al_dia", "lote": "A123", "veterinario": "Dr. López", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Parvovirus", "fechaAplicacion": "2025-02-20", "proximaDosis": "2026-02-20", "estatus": "al_dia", "lote": "P456", "veterinario": "Dr. López", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Triple Canina", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "proxima_dosis", "lote": "TC789", "veterinario": "Dr. López", "documentoUrl": "/docs/demo-cartilla.pdf" }
+      { "nombre": "Rabia", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "al_dia", "lote": "A123", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" },
+      { "nombre": "Parvovirus", "fechaAplicacion": "2025-02-20", "proximaDosis": "2026-02-20", "estatus": "al_dia", "lote": "P456", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" },
+      { "nombre": "Triple Canina", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "proxima_dosis", "lote": "TC789", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" }
     ],
     "documentos": [
-      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "2.4 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-01-15", "visiblePublico": true, "estado": "Temporal" },
-      { "nombre": "Certificado Veterinario", "tipo": "PDF", "tamano": "1.1 MB", "url": "/docs/demo-certificado.pdf", "fecha": "2025-02-20", "visiblePublico": true, "estado": "Verificado" },
-      { "nombre": "Estudios Médicos", "tipo": "PDF", "tamano": "3.2 MB", "url": "/docs/demo-estudios.pdf", "fecha": "2025-03-12", "visiblePublico": false, "estado": "Privado" }
+      { "id": "lucca-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/lucca/cartilla-vacunacion.pdf", "fecha": "2025-01-15", "tamano": "2.4 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
+      { "id": "lucca-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/lucca/comprobante-veterinario.pdf", "fecha": "2025-02-20", "tamano": "1.1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Comprobante de última consulta." },
+      { "id": "lucca-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/lucca/foto-reciente.jpg", "fecha": "2025-03-12", "tamano": "620 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Imagen reciente para identificarlo rápido." },
+      { "id": "lucca-estudios", "nombre": "Estudios Médicos", "tipo": "pdf", "categoria": "salud", "url": "/docs/lucca/estudios-medicos.pdf", "fecha": "2025-03-12", "tamano": "3.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Resultados médicos privados." }
     ],
     "qr": { "urlPublica": "/perfil/lucca", "texto": "QR temporal de Lucca" },
     "configuracionPublica": {
@@ -128,14 +129,15 @@
       "horario": "Lun-Vie 10:00 a 19:00"
     },
     "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "al_dia", "lote": "R204", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Bordetella", "fechaAplicacion": "2025-04-14", "proximaDosis": "2026-04-14", "estatus": "al_dia", "lote": "B118", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "proxima_dosis", "lote": "MC302", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/demo-cartilla.pdf" }
+      { "nombre": "Rabia", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "al_dia", "lote": "R204", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" },
+      { "nombre": "Bordetella", "fechaAplicacion": "2025-04-14", "proximaDosis": "2026-04-14", "estatus": "al_dia", "lote": "B118", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" },
+      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "proxima_dosis", "lote": "MC302", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" }
     ],
     "documentos": [
-      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "2.1 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-03-08", "visiblePublico": true, "estado": "Temporal" },
-      { "nombre": "Registro Microchip", "tipo": "PDF", "tamano": "850 KB", "url": "/docs/demo-microchip.pdf", "fecha": "2025-03-10", "visiblePublico": true, "estado": "Verificado" },
-      { "nombre": "Plan Nutricional", "tipo": "PDF", "tamano": "1.4 MB", "url": "/docs/demo-dieta.pdf", "fecha": "2025-04-01", "visiblePublico": false, "estado": "Privado" }
+      { "id": "niko-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/niko/cartilla-vacunacion.pdf", "fecha": "2025-03-08", "tamano": "2.1 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con su esquema de vacunación." },
+      { "id": "niko-microchip", "nombre": "Registro Microchip", "tipo": "pdf", "categoria": "identificacion", "url": "/docs/niko/comprobante-veterinario.pdf", "fecha": "2025-03-10", "tamano": "850 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Registro de identificación y datos de contacto." },
+      { "id": "niko-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/niko/foto-reciente.jpg", "fecha": "2025-04-01", "tamano": "700 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerlo al instante." },
+      { "id": "niko-plan", "nombre": "Plan Nutricional", "tipo": "pdf", "categoria": "salud", "url": "/docs/niko/estudios-medicos.pdf", "fecha": "2025-04-01", "tamano": "1.4 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre dieta y salud." }
     ],
     "qr": { "urlPublica": "/perfil/niko", "texto": "QR temporal de Niko" },
     "configuracionPublica": {
@@ -201,89 +203,17 @@
       "horario": "Lun-Sáb 8:00 a 17:00"
     },
     "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "R901", "veterinario": "Dr. Salas", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Parvovirus", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "P902", "veterinario": "Dr. Salas", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "proxima_dosis", "lote": "MC903", "veterinario": "Dr. Salas", "documentoUrl": "/docs/demo-cartilla.pdf" }
+      { "nombre": "Rabia", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "R901", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" },
+      { "nombre": "Parvovirus", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "P902", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" },
+      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "proxima_dosis", "lote": "MC903", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" }
     ],
     "documentos": [
-      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "1.8 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-06-02", "visiblePublico": true, "estado": "Temporal" },
-      { "nombre": "Control General", "tipo": "PDF", "tamano": "900 KB", "url": "/docs/demo-control.pdf", "fecha": "2025-06-02", "visiblePublico": true, "estado": "Verificado" },
-      { "nombre": "Notas de Conducta", "tipo": "PDF", "tamano": "720 KB", "url": "/docs/demo-conducta.pdf", "fecha": "2025-06-10", "visiblePublico": false, "estado": "Privado" }
+      { "id": "alix-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/alix/cartilla-vacunacion.pdf", "fecha": "2025-06-02", "tamano": "1.8 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
+      { "id": "alix-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/alix/comprobante-veterinario.pdf", "fecha": "2025-06-02", "tamano": "900 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Comprobante de consulta y revisión." },
+      { "id": "alix-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/alix/foto-reciente.jpg", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerla mejor." },
+      { "id": "alix-notas", "nombre": "Notas de Conducta", "tipo": "pdf", "categoria": "salud", "url": "/docs/alix/estudios-medicos.pdf", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre comportamiento." }
     ],
     "qr": { "urlPublica": "/perfil/alix", "texto": "QR temporal de Alix" },
-    "configuracionPublica": {
-      "mostrarEmail": false,
-      "mostrarTelefonoSecundario": false,
-      "mostrarDireccionVet": true,
-      "mostrarDocumentosPrivados": false
-    }
-  },
-  {
-    "id": "chicarrona",
-    "estado": "en_casa",
-    "verificado": true,
-    "mascota": {
-      "nombre": "Chicarrona",
-      "especie": "Gato",
-      "raza": "Gato doméstico",
-      "fotoPerfilUrl": "/pets/chicarrona.svg",
-      "genero": "Hembra",
-      "talla": "Mediano",
-      "color": "Carey",
-      "pesoKg": 4.6,
-      "fechaNacimiento": "2020-08-24",
-      "edadTexto": "5 años",
-      "rasgosDistintivos": ["Pelaje carey", "Bigotes muy largos"],
-      "esterilizado": true
-    },
-    "identificacion": {
-      "codigoPublico": "PC-CHICA-004",
-      "microchip": null,
-      "notas": "Gatita indoor con QR temporal."
-    },
-    "contacto": {
-      "nombrePublico": "Familia de Chicarrona",
-      "telefonoPrincipal": "5545678901",
-      "whatsapp": "5215545678901",
-      "telefonoSecundario": "",
-      "email": "",
-      "zonaSegura": "cerca de su ventana",
-      "zonaHabitual": "Narvarte, CDMX",
-      "mensajeWhatsapp": "Hola, encontré a Chicarrona. Escaneé el QR de su collar."
-    },
-    "emergencia": {
-      "perdido": false,
-      "fechaPerdida": null,
-      "zonaPerdida": null,
-      "mensajeEmergencia": null,
-      "recompensa": null,
-      "instrucciones": ["No intentes cargarla de inmediato.", "Háblale suave y evita movimientos bruscos.", "Contacta por WhatsApp."]
-    },
-    "salud": {
-      "alergias": ["Ninguna registrada"],
-      "condicionesMedicas": ["Sensibilidad urinaria"],
-      "medicamentosActuales": [],
-      "dietaEspecial": "Alimento urinary.",
-      "comportamiento": "Curiosa, cautelosa con personas desconocidas."
-    },
-    "veterinario": {
-      "nombre": "Dra. Paredes",
-      "clinica": "Clínica Felina Narvarte",
-      "telefono": "5577889900",
-      "direccion": "Narvarte, CDMX",
-      "horario": "Mar-Sáb 10:00 a 18:00"
-    },
-    "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-02-11", "proximaDosis": "2026-02-11", "estatus": "al_dia", "lote": "RF321", "veterinario": "Dra. Paredes", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Triple Felina", "fechaAplicacion": "2025-02-11", "proximaDosis": "2026-02-11", "estatus": "al_dia", "lote": "TF322", "veterinario": "Dra. Paredes", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Leucemia Felina", "fechaAplicacion": "2025-02-11", "proximaDosis": "2026-02-11", "estatus": "proxima_dosis", "lote": "LF323", "veterinario": "Dra. Paredes", "documentoUrl": "/docs/demo-cartilla.pdf" }
-    ],
-    "documentos": [
-      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "2 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-02-11", "visiblePublico": true, "estado": "Temporal" },
-      { "nombre": "Consulta Felina", "tipo": "PDF", "tamano": "1 MB", "url": "/docs/demo-consulta.pdf", "fecha": "2025-04-16", "visiblePublico": true, "estado": "Verificado" },
-      { "nombre": "Estudio Urinario", "tipo": "PDF", "tamano": "1.7 MB", "url": "/docs/demo-urinario.pdf", "fecha": "2025-05-20", "visiblePublico": false, "estado": "Privado" }
-    ],
-    "qr": { "urlPublica": "/perfil/chicarrona", "texto": "QR temporal de Chicarrona" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -298,70 +228,399 @@
     "mascota": {
       "nombre": "Loki",
       "especie": "Gato",
-      "raza": "Gato doméstico",
+      "raza": "Mestizo",
       "fotoPerfilUrl": "/pets/loki.svg",
       "genero": "Macho",
-      "talla": "Pequeño",
-      "color": "Gris atigrado",
-      "pesoKg": 4.1,
-      "fechaNacimiento": "2024-01-30",
-      "edadTexto": "2 años",
-      "rasgosDistintivos": ["Rayas grises en la frente", "Punta de la cola oscura"],
+      "talla": "Grande",
+      "color": "Gris",
+      "pesoKg": 3,
+      "fechaNacimiento": "2021-08-01",
+      "edadTexto": "4 años",
+      "rasgosDistintivos": ["Una oreja izquierda mocha", "Nariz café", "Pelo de la panza rizado"],
       "esterilizado": true
     },
-    "identificacion": {
-      "codigoPublico": "PC-LOKI-005",
-      "microchip": "982000455667788",
-      "notas": "Microchip activo y placa QR temporal."
-    },
+    "identificacion": { "codigoPublico": "PC-LOKI-001", "microchip": "No hay", "notas": "No cuenta con rastreador GPS ni microchip." },
     "contacto": {
-      "nombrePublico": "Familia de Loki",
-      "telefonoPrincipal": "5556789012",
-      "whatsapp": "5215556789012",
-      "telefonoSecundario": "",
-      "email": "",
-      "zonaSegura": "cerca de su patio",
-      "zonaHabitual": "Coyoacán, CDMX",
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Loki. Escaneé el QR de su collar."
     },
-    "emergencia": {
-      "perdido": false,
-      "fechaPerdida": null,
-      "zonaPerdida": null,
-      "mensajeEmergencia": null,
-      "recompensa": null,
-      "instrucciones": ["No lo persigas si corre.", "Ofrece un lugar tranquilo.", "Contacta por llamada o WhatsApp."]
-    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
     "salud": {
-      "alergias": ["Ninguna registrada"],
-      "condicionesMedicas": ["Sin condiciones registradas"],
-      "medicamentosActuales": [],
-      "dietaEspecial": "",
-      "comportamiento": "Juguetón, puede esconderse en espacios pequeños."
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "Amigable y tímido"
     },
     "veterinario": {
-      "nombre": "Dr. Herrera",
-      "clinica": "Vet Coyoacán",
-      "telefono": "5588990011",
-      "direccion": "Coyoacán, CDMX",
-      "horario": "Lun-Dom 9:00 a 20:00"
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
     },
-    "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-05-05", "proximaDosis": "2026-05-05", "estatus": "al_dia", "lote": "RF701", "veterinario": "Dr. Herrera", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Triple Felina", "fechaAplicacion": "2025-05-05", "proximaDosis": "2026-05-05", "estatus": "al_dia", "lote": "TF702", "veterinario": "Dr. Herrera", "documentoUrl": "/docs/demo-cartilla.pdf" },
-      { "nombre": "Leucemia Felina", "fechaAplicacion": "2025-05-05", "proximaDosis": "2026-05-05", "estatus": "proxima_dosis", "lote": "LF703", "veterinario": "Dr. Herrera", "documentoUrl": "/docs/demo-cartilla.pdf" }
-    ],
+    "vacunas": [],
     "documentos": [
-      { "nombre": "Cartilla de Vacunación", "tipo": "PDF", "tamano": "1.9 MB", "url": "/docs/demo-cartilla.pdf", "fecha": "2025-05-05", "visiblePublico": true, "estado": "Temporal" },
-      { "nombre": "Registro Microchip", "tipo": "PDF", "tamano": "820 KB", "url": "/docs/demo-microchip.pdf", "fecha": "2025-05-06", "visiblePublico": true, "estado": "Verificado" },
-      { "nombre": "Revisión General", "tipo": "PDF", "tamano": "1.2 MB", "url": "/docs/demo-revision.pdf", "fecha": "2025-05-18", "visiblePublico": false, "estado": "Privado" }
+      { "id": "loki-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/loki/cartilla-vacunacion.pdf", "fecha": "2025-05-05", "tamano": "1.9 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con su historial de vacunación." },
+      { "id": "loki-microchip", "nombre": "Registro Microchip", "tipo": "pdf", "categoria": "identificacion", "url": "/docs/loki/comprobante-veterinario.pdf", "fecha": "2025-05-06", "tamano": "820 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Registro público de identificación." },
+      { "id": "loki-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/loki/foto-reciente.jpg", "fecha": "2025-05-18", "tamano": "640 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente de Loki." },
+      { "id": "loki-revision", "nombre": "Revisión General", "tipo": "pdf", "categoria": "salud", "url": "/docs/loki/estudios-medicos.pdf", "fecha": "2025-05-18", "tamano": "1.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Revisión médica privada." }
     ],
-    "qr": { "urlPublica": "/perfil/loki", "texto": "QR temporal de Loki" },
-    "configuracionPublica": {
-      "mostrarEmail": false,
-      "mostrarTelefonoSecundario": false,
-      "mostrarDireccionVet": true,
-      "mostrarDocumentosPrivados": false
-    }
+    "qr": { "urlPublica": "/perfil/loki", "texto": "QR de Loki" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+  },
+  {
+    "id": "viserys",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Viserys",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/viserys.svg",
+      "genero": "Macho",
+      "talla": "Grande",
+      "color": "Blanco",
+      "pesoKg": 3,
+      "fechaNacimiento": "2024-10-01",
+      "edadTexto": "1 año",
+      "rasgosDistintivos": ["Manchas negras con rayas en espalda", "Manchas en patas y dedos"],
+      "esterilizado": true
+    },
+    "identificacion": { "codigoPublico": "PC-VISERYS-001", "microchip": "No hay", "notas": "No hay" },
+    "contacto": {
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Viserys. Escaneé el QR de su collar."
+    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "salud": {
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "Amigable y ruidoso"
+    },
+    "veterinario": {
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
+    },
+    "vacunas": [],
+    "documentos": [
+      { "id": "chicarrona-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/chicarrona/cartilla-vacunacion.pdf", "fecha": "2025-02-11", "tamano": "2 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
+      { "id": "chicarrona-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/chicarrona/comprobante-veterinario.pdf", "fecha": "2025-04-16", "tamano": "1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Consulta felina y evaluación general." },
+      { "id": "chicarrona-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/chicarrona/foto-reciente.jpg", "fecha": "2025-04-16", "tamano": "680 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocer su pelaje." },
+      { "id": "chicarrona-estudios", "nombre": "Estudio Urinario", "tipo": "pdf", "categoria": "salud", "url": "/docs/chicarrona/estudios-medicos.pdf", "fecha": "2025-05-20", "tamano": "1.7 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Estudio médico privado." }
+    ],
+    "qr": { "urlPublica": "/perfil/viserys", "texto": "QR de Viserys" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+  },
+  {
+    "id": "frey",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Frey",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/frey.svg",
+      "genero": "Macho",
+      "talla": "Grande",
+      "color": "Blanco",
+      "pesoKg": 3,
+      "fechaNacimiento": "2024-10-01",
+      "edadTexto": "1 año",
+      "rasgosDistintivos": ["Manchas negras con rayas en espalda", "Manchas en patas y dedos"],
+      "esterilizado": true
+    },
+    "identificacion": { "codigoPublico": "PC-FREY-001", "microchip": "No hay", "notas": "No hay" },
+    "contacto": {
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Frey. Escaneé el QR de su collar."
+    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "salud": {
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "Amigable y ruidoso"
+    },
+    "veterinario": {
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
+    },
+    "vacunas": [],
+    "documentos": [],
+    "qr": { "urlPublica": "/perfil/frey", "texto": "QR de Frey" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+  },
+  {
+    "id": "sandor",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Sandor",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/sandor.svg",
+      "genero": "Macho",
+      "talla": "Mediano",
+      "color": "Negro",
+      "pesoKg": 2,
+      "fechaNacimiento": "2024-12-01",
+      "edadTexto": "1 año",
+      "rasgosDistintivos": ["Pelaje negro con rayos blancos", "No es muy peludo"],
+      "esterilizado": true
+    },
+    "identificacion": { "codigoPublico": "PC-SANDOR-001", "microchip": "No hay", "notas": "No hay" },
+    "contacto": {
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Sandor. Escaneé el QR de su collar."
+    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "salud": {
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "Tímido y se asusta con los ruidos o movimientos bruscos"
+    },
+    "veterinario": {
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
+    },
+    "vacunas": [],
+    "documentos": [],
+    "qr": { "urlPublica": "/perfil/sandor", "texto": "QR de Sandor" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+  },
+  {
+    "id": "bizcocho",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Bizcocho",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/bizcocho.svg",
+      "genero": "Macho",
+      "talla": "Grande",
+      "color": "Blanco",
+      "pesoKg": 3,
+      "fechaNacimiento": "2021-03-01",
+      "edadTexto": "5 años",
+      "rasgosDistintivos": ["Muy peludo", "Mancha café claro en cabeza", "Ojos azules", "Estrabismo ligero"],
+      "esterilizado": true
+    },
+    "identificacion": { "codigoPublico": "PC-BIZCOCHO-001", "microchip": "No hay", "notas": "No hay" },
+    "contacto": {
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Bizcocho. Escaneé el QR de su collar."
+    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "salud": {
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "Tímido y se asusta con los ruidos o movimientos bruscos"
+    },
+    "veterinario": {
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
+    },
+    "vacunas": [],
+    "documentos": [],
+    "qr": { "urlPublica": "/perfil/bizcocho", "texto": "QR de Bizcocho" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+  },
+  {
+    "id": "chicarrona",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Chicarrona",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/chicarrona.svg",
+      "genero": "Hembra",
+      "talla": "Pequeña",
+      "color": "Negro",
+      "pesoKg": 1,
+      "fechaNacimiento": "2025-07-01",
+      "edadTexto": "1 año",
+      "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo"],
+      "esterilizado": true
+    },
+    "identificacion": { "codigoPublico": "PC-CHICARRONA-001", "microchip": "No hay", "notas": "No hay" },
+    "contacto": {
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Chicarrona. Escaneé el QR de su collar."
+    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "salud": {
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "Amigable pero se asusta con los ruidos o movimientos bruscos"
+    },
+    "veterinario": {
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
+    },
+    "vacunas": [],
+    "documentos": [],
+    "qr": { "urlPublica": "/perfil/chicarrona", "texto": "QR de Chicarrona" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+  },
+  {
+    "id": "freya",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Freya",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/freya.svg",
+      "genero": "Hembra",
+      "talla": "Pequeña",
+      "color": "Negro",
+      "pesoKg": 1,
+      "fechaNacimiento": "2025-07-01",
+      "edadTexto": "1 año",
+      "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo"],
+      "esterilizado": true
+    },
+    "identificacion": { "codigoPublico": "PC-FREYA-001", "microchip": "No hay", "notas": "No hay" },
+    "contacto": {
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Freya. Escaneé el QR de su collar."
+    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "salud": {
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "Amigable pero se asusta con los ruidos o movimientos bruscos"
+    },
+    "veterinario": {
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
+    },
+    "vacunas": [],
+    "documentos": [],
+    "qr": { "urlPublica": "/perfil/freya", "texto": "QR de Freya" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+  },
+  {
+    "id": "arya",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Arya",
+      "especie": "Gato",
+      "raza": "Mestizo (Carey)",
+      "fotoPerfilUrl": "/pets/arya.svg",
+      "genero": "Hembra",
+      "talla": "Mediana",
+      "color": "Gris",
+      "pesoKg": 2,
+      "fechaNacimiento": "2022-07-01",
+      "edadTexto": "4 años",
+      "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo", "Manchas color durazno"],
+      "esterilizado": true
+    },
+    "identificacion": { "codigoPublico": "PC-ARYA-001", "microchip": "No hay", "notas": "No hay" },
+    "contacto": {
+      "nombrePublico": "Ana Karen",
+      "telefonoPrincipal": "552201296480",
+      "whatsapp": "552201296480",
+      "telefonoSecundario": "No hay",
+      "email": "No hay",
+      "zonaSegura": "cerca de su casa",
+      "zonaHabitual": "San Isidro, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Arya. Escaneé el QR de su collar."
+    },
+    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "salud": {
+      "alergias": ["Ninguna"],
+      "condicionesMedicas": ["No hay"],
+      "medicamentosActuales": ["No hay"],
+      "dietaEspecial": "No hay",
+      "comportamiento": "No es amigable, se asusta con los ruidos o movimientos bruscos, tímida"
+    },
+    "veterinario": {
+      "nombre": "JADIPS Vet",
+      "clinica": "JADIPS Vet",
+      "telefono": "5522759041",
+      "direccion": "Aries y San Vicente, San Isidro, 56516",
+      "horario": "10am a 8pm L-V"
+    },
+    "vacunas": [],
+    "documentos": [],
+    "qr": { "urlPublica": "/perfil/arya", "texto": "QR de Arya" },
+    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
   }
 ]
