@@ -44,7 +44,7 @@ export interface PetProfile {
     fechaPerdida: string | null;
     zonaPerdida: string | null;
     mensajeEmergencia: string | null;
-    recompensa: string | null;
+    recompensa: number | null;
     instrucciones: string[];
   };
   salud: {

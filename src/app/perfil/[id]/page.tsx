@@ -5,6 +5,8 @@ import { DocumentsCard } from "@/components/features/pet-profile/DocumentsCard";
 import { EmergencyContact } from "@/components/features/pet-profile/EmergencyContact";
 import { HealthCard } from "@/components/features/pet-profile/HealthCard";
 import { InfoCard } from "@/components/features/pet-profile/InfoCard";
+import { LostPetBanner } from "@/components/features/pet-profile/LostPetBanner";
+import { LostPetInstructions } from "@/components/features/pet-profile/LostPetInstructions";
 import { PetHeader } from "@/components/features/pet-profile/PetHeader";
 import { QRShareCard } from "@/components/features/pet-profile/QRShareCard";
 import { ThankYouBanner } from "@/components/features/pet-profile/ThankYouBanner";
@@ -33,7 +35,9 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   }
 
   return {
-    title: `${pet.mascota.nombre} | PetCarnet`,
+    title: pet.emergencia.perdido
+      ? `${pet.mascota.nombre} está perdido | PetCarnet`
+      : `${pet.mascota.nombre} | PetCarnet`,
     description: `Perfil publico de ${pet.mascota.nombre}, ${pet.mascota.raza} · ${pet.mascota.especie}.`,
   };
 }
@@ -52,8 +56,28 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     <AppShell>
       <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="space-y-7">
+          {pet.emergencia.perdido ? (
+            <LostPetBanner
+              petName={pet.mascota.nombre}
+              message={pet.emergencia.mensajeEmergencia}
+              lostDate={profile.lost.lostDate}
+              lostZone={pet.emergencia.zonaPerdida}
+              reward={pet.emergencia.recompensa}
+            />
+          ) : null}
           <PetHeader pet={profile.header} />
-          <EmergencyContact contact={profile.contact} petName={pet.mascota.nombre} species={pet.mascota.especie} />
+          <EmergencyContact
+            contact={profile.contact}
+            isLost={pet.emergencia.perdido}
+            petName={pet.mascota.nombre}
+            species={pet.mascota.especie}
+          />
+          {pet.emergencia.perdido ? (
+            <LostPetInstructions
+              petName={pet.mascota.nombre}
+              instructions={pet.emergencia.instrucciones}
+            />
+          ) : null}
           <div className="grid gap-6 lg:grid-cols-3">
             <InfoCard petName={pet.mascota.nombre} info={profile.info} />
             <HealthCard health={profile.health} />
@@ -64,7 +88,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             <DocumentsCard documents={profile.documents} />
             <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
           </div>
-          <ThankYouBanner petName={pet.mascota.nombre} species={pet.mascota.especie} />
+          <ThankYouBanner isLost={pet.emergencia.perdido} petName={pet.mascota.nombre} species={pet.mascota.especie} />
           <p className="text-center text-sm font-bold text-gray-400">
             PetCarnet © 2026 · Pasaporte Digital para Mascotas
           </p>
@@ -78,6 +102,12 @@ function toProfileProps(pet: PetProfile) {
   const visibleDocuments = pet.configuracionPublica.mostrarDocumentosPrivados
     ? pet.documentos
     : pet.documentos.filter((document) => document.visiblePublico);
+  const locationText = pet.emergencia.perdido && pet.emergencia.zonaPerdida
+    ? `Zona donde se perdió: ${pet.emergencia.zonaPerdida}`
+    : `Zona segura: ${pet.contacto.zonaSegura}`;
+  const locationQuery = pet.emergencia.perdido && pet.emergencia.zonaPerdida
+    ? pet.emergencia.zonaPerdida
+    : pet.contacto.zonaHabitual;
 
   return {
     header: {
@@ -100,8 +130,12 @@ function toProfileProps(pet: PetProfile) {
       phone: formatPhoneForDisplay(pet.contacto.telefonoPrincipal),
       phoneHref: pet.contacto.telefonoPrincipal,
       whatsapp: `https://wa.me/${pet.contacto.whatsapp}?text=${encodeURIComponent(pet.contacto.mensajeWhatsapp)}`,
-      locationUrl: `https://maps.google.com/?q=${encodeURIComponent(pet.contacto.zonaHabitual)}`,
-      neighborhood: `Zona segura: ${pet.contacto.zonaSegura}`,
+      locationUrl: `https://maps.google.com/?q=${encodeURIComponent(locationQuery)}`,
+      locationLabel: pet.emergencia.perdido ? "Zona donde se perdió" : "Zona habitual",
+      neighborhood: locationText,
+    },
+    lost: {
+      lostDate: pet.emergencia.fechaPerdida ? formatLongDate(pet.emergencia.fechaPerdida) : null,
     },
     info: {
       species: pet.mascota.especie,
@@ -144,6 +178,15 @@ function formatDate(date: string) {
   return new Intl.DateTimeFormat("es-MX", {
     day: "numeric",
     month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(date));
+}
+
+function formatLongDate(date: string) {
+  return new Intl.DateTimeFormat("es-MX", {
+    day: "numeric",
+    month: "long",
     year: "numeric",
     timeZone: "UTC",
   }).format(new Date(date));

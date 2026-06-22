@@ -2,6 +2,7 @@ import { Cat, Dog, MapPin, Phone, Send } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
 
 type EmergencyContactProps = {
+  isLost?: boolean;
   petName: string;
   species: string;
   contact: {
@@ -10,35 +11,57 @@ type EmergencyContactProps = {
     phoneHref: string;
     whatsapp: string;
     locationUrl: string;
+    locationLabel: string;
     neighborhood: string;
   };
 };
 
-export function EmergencyContact({ contact, petName, species }: EmergencyContactProps) {
+export function EmergencyContact({
+  contact,
+  isLost = false,
+  petName,
+  species,
+}: EmergencyContactProps) {
   const PetIcon = species.toLowerCase().includes("gato") ? Cat : Dog;
 
   return (
-    <section className="relative overflow-hidden rounded-[2rem] border border-amber-100 bg-gradient-to-r from-amber-50/70 via-white to-emerald-50/70 p-5 shadow-[0_16px_38px_rgba(217,119,6,0.06)] sm:p-7">
-      <div className="absolute -right-3 -top-6 text-amber-200">
+    <section
+      className={[
+        "relative overflow-hidden rounded-[2rem] border p-5 sm:p-7",
+        isLost
+          ? "border-rose-200 bg-gradient-to-r from-rose-50 via-white to-amber-50 shadow-[0_18px_42px_rgba(244,63,94,0.12)]"
+          : "border-amber-100 bg-gradient-to-r from-amber-50/70 via-white to-emerald-50/70 shadow-[0_16px_38px_rgba(217,119,6,0.06)]",
+      ].join(" ")}
+    >
+      <div className={["absolute -right-3 -top-6", isLost ? "text-rose-200" : "text-amber-200"].join(" ")}>
         <Phone size={58} />
       </div>
-      <div className="pointer-events-none absolute -right-1 bottom-1 hidden rotate-[-8deg] rounded-[1.5rem] bg-white/80 p-3 text-amber-400 shadow-[0_12px_26px_rgba(17,24,39,0.08)] ring-1 ring-amber-100 md:block">
+      <div
+        className={[
+          "pointer-events-none absolute -right-1 bottom-1 hidden rotate-[-8deg] rounded-[1.5rem] bg-white/80 p-3 shadow-[0_12px_26px_rgba(17,24,39,0.08)] ring-1 md:block",
+          isLost ? "text-rose-400 ring-rose-100" : "text-amber-400 ring-amber-100",
+        ].join(" ")}
+      >
         <PetIcon size={54} strokeWidth={1.8} />
       </div>
       <div className="relative grid items-center gap-5 lg:grid-cols-[1fr_1.7fr]">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950">
-            Contacto de Emergencia
+            {isLost ? "Contacto urgente" : "Contacto de Emergencia"}
           </h2>
           <p className="mt-3 text-base font-bold text-gray-700">
-            Si encontraste a {petName}, por favor contáctanos.
+            {isLost
+              ? `Si encontraste a ${petName}, llama o envía WhatsApp ahora.`
+              : `Si encontraste a ${petName}, por favor contáctanos.`}
           </p>
-          <p className="mt-2 text-sm font-bold text-emerald-700">{contact.neighborhood}</p>
+          <p className={["mt-2 text-sm font-bold", isLost ? "text-rose-700" : "text-emerald-700"].join(" ")}>
+            {contact.neighborhood}
+          </p>
         </div>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <ActionButton href={`tel:${contact.phoneHref}`} label="Llamar" helper={contact.phone} icon={Phone} tone="call" />
-          <ActionButton href={contact.whatsapp} label="WhatsApp" helper="Enviar mensaje" icon={Send} tone="whatsapp" />
-          <ActionButton href={contact.locationUrl} label="Ubicación" helper="Zona habitual" icon={MapPin} tone="location" />
+        <div className={["grid gap-3", isLost ? "sm:grid-cols-[1.15fr_1fr_0.85fr]" : "sm:grid-cols-3"].join(" ")}>
+          <ActionButton href={`tel:${contact.phoneHref}`} label="Llamar" helper={contact.phone} icon={Phone} size={isLost ? "large" : "normal"} tone="call" />
+          <ActionButton href={contact.whatsapp} label="WhatsApp" helper="Enviar mensaje" icon={Send} size={isLost ? "large" : "normal"} tone="whatsapp" />
+          <ActionButton href={contact.locationUrl} label="Ubicación" helper={contact.locationLabel} icon={MapPin} tone="location" />
         </div>
       </div>
     </section>

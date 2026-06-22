@@ -6,6 +6,7 @@ type ActionButtonProps = {
   helper?: string;
   icon: LucideIcon;
   tone?: "call" | "whatsapp" | "location";
+  size?: "normal" | "large";
 };
 
 const tones = {
@@ -19,13 +20,15 @@ export function ActionButton({
   label,
   helper,
   icon: Icon,
+  size = "normal",
   tone = "call",
 }: ActionButtonProps) {
   return (
     <a
       href={href}
       className={[
-        "flex min-h-[76px] items-center justify-center gap-3 rounded-[1.45rem] bg-gradient-to-br px-5 text-white transition hover:-translate-y-0.5",
+        "flex items-center justify-center gap-3 rounded-[1.45rem] bg-gradient-to-br px-5 text-white transition hover:-translate-y-0.5",
+        size === "large" ? "min-h-[92px]" : "min-h-[76px]",
         tones[tone],
       ].join(" ")}
     >
@@ -33,7 +36,7 @@ export function ActionButton({
         <Icon size={25} fill="none" />
       </span>
       <span className="min-w-0 text-left">
-        <span className="block text-lg font-extrabold leading-5">{label}</span>
+        <span className={["block font-extrabold leading-5", size === "large" ? "text-xl" : "text-lg"].join(" ")}>{label}</span>
         {helper ? <span className="mt-1 block text-sm font-bold text-white/86">{helper}</span> : null}
       </span>
     </a>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Cat, Dog, Heart, PawPrint, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, Cat, Dog, Heart, PawPrint, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -75,7 +75,12 @@ export default function Home() {
                     <Link
                       key={pet.id}
                       href={`/perfil/${pet.id}`}
-                      className="group flex items-center justify-between rounded-3xl border border-gray-100 bg-white p-4 shadow-[0_12px_28px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-emerald-200"
+                      className={[
+                        "group flex items-center justify-between rounded-3xl border p-4 shadow-[0_12px_28px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5",
+                        pet.emergencia.perdido
+                          ? "border-rose-200 bg-rose-50/70 hover:border-rose-300"
+                          : "border-gray-100 bg-white hover:border-emerald-200",
+                      ].join(" ")}
                     >
                       <div className="flex items-center gap-3">
                         <div
@@ -89,7 +94,15 @@ export default function Home() {
                           {pet.mascota.especie === "Gato" ? <Cat size={22} /> : <Dog size={22} />}
                         </div>
                         <div>
-                          <p className="font-extrabold text-gray-950">{pet.mascota.nombre}</p>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="font-extrabold text-gray-950">{pet.mascota.nombre}</p>
+                            {pet.emergencia.perdido ? (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-0.5 text-xs font-extrabold text-rose-700 ring-1 ring-rose-200">
+                                <AlertTriangle size={12} />
+                                Perdido
+                              </span>
+                            ) : null}
+                          </div>
                           <p className="text-sm font-semibold text-gray-500">
                             {pet.mascota.especie}
                           </p>
