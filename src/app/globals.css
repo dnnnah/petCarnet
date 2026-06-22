@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fffdf9;
+  --foreground: #111827;
+  --muted: #6b7280;
+  --mint: #34c99a;
+  --mint-soft: #d1fae5;
+  --pink-soft: #fce7f3;
+  --blue-soft: #dbeafe;
+  --yellow-soft: #fef3c7;
+  --purple-soft: #a78bfa;
+  --border-soft: #e5e7eb;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: "Nunito", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --shadow-soft: 0 16px 42px rgba(17, 24, 39, 0.07);
+  --shadow-button: 0 16px 30px rgba(16, 185, 129, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--background);
+  scroll-behavior: smooth;
+  cursor: url("/paw-cursor.png") 8 8, url("/paw-cursor.svg") 8 8, auto;
+}
+
+body,
+body * {
+  cursor: url("/paw-cursor.png") 8 8, url("/paw-cursor.svg") 8 8, auto;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 7% 6%, rgba(209, 250, 229, 0.54), transparent 24rem),
+    radial-gradient(circle at 94% 8%, rgba(252, 231, 243, 0.48), transparent 24rem),
+    radial-gradient(circle at 40% 82%, rgba(254, 243, 199, 0.38), transparent 26rem),
+    radial-gradient(circle at 87% 78%, rgba(219, 234, 254, 0.46), transparent 24rem),
+    linear-gradient(180deg, #fffdf9 0%, #fffefa 50%, #f8fffb 100%);
+  color: var(--foreground);
+  font-family: "Nunito", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+  cursor: url("/paw-cursor.png") 8 8, url("/paw-cursor.svg") 8 8, pointer;
+}
+
+::selection {
+  background: var(--mint-soft);
+  color: #065f46;
+}
+
+.dotted-path {
+  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.16) 1.2px, transparent 1.2px);
+  background-size: 20px 20px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 72%);
+}
+
+.qr-grid {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(90deg, #111827 9px, transparent 9px),
+    linear-gradient(#111827 9px, transparent 9px),
+    linear-gradient(90deg, transparent 14px, #111827 14px 18px, transparent 18px),
+    linear-gradient(transparent 14px, #111827 14px 18px, transparent 18px);
+  background-position: 0 0, 0 0, 3px 3px, 3px 3px;
+  background-size: 24px 24px;
+  opacity: 0.88;
+}
+
+.soft-card {
+  border: 1px solid rgba(229, 231, 235, 0.78);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 48px rgba(17, 24, 39, 0.08);
+}
+
+.doodle-line {
+  border: 2px dashed rgba(16, 185, 129, 0.32);
+  border-left: 0;
+  border-bottom: 0;
+  border-radius: 999px;
+}
