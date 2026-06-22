@@ -59,7 +59,7 @@ export function EmergencyContact({
             {contact.neighborhood}
           </p>
         </div>
-        <div className={["grid gap-3", isLost ? "sm:grid-cols-[1.25fr_1.05fr_0.8fr]" : "sm:grid-cols-3"].join(" ")}>
+        <div className={["grid min-w-0 gap-3", isLost ? "xl:grid-cols-[1.25fr_1.05fr_0.8fr]" : "md:grid-cols-3"].join(" ")}>
           <ActionButton href={`tel:${contact.phoneHref}`} label="Llamar" helper={contact.phone} icon={Phone} size={isLost ? "large" : "normal"} tone={isLost ? "urgentCall" : "call"} />
           <ActionButton href={contact.whatsapp} label="WhatsApp" helper="Enviar mensaje" icon={Send} size={isLost ? "large" : "normal"} tone={isLost ? "urgentWhatsapp" : "whatsapp"} />
           <ActionButton href={contact.locationUrl} label="Ubicación" helper={contact.locationLabel} icon={MapPin} tone="location" />

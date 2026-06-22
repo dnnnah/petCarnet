@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { formatMexicanDate } from "@/lib/dateFormat";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
 import {
@@ -158,7 +159,7 @@ function DocumentItem({ document }: { document: PetDocument }) {
             <p className="mt-3 font-semibold leading-7 text-gray-700">{document.descripcion}</p>
           ) : null}
           <p className="mt-3 text-sm font-semibold text-gray-500">
-            Fecha: {formatDate(document.fecha)}
+            Fecha: {formatMexicanDate(document.fecha) ?? "Fecha pendiente"}
           </p>
         </div>
       </div>
@@ -168,29 +169,20 @@ function DocumentItem({ document }: { document: PetDocument }) {
           href={document.url}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(16,185,129,0.18)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
+          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(16,185,129,0.18)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
         >
-          <ExternalLink size={18} />
-          Abrir
+          <ExternalLink className="shrink-0" size={18} />
+          <span className="min-w-0 overflow-wrap-anywhere break-words">Abrir</span>
         </a>
         <a
           href={document.url}
           download
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-sm font-extrabold text-gray-900 shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 transition hover:-translate-y-0.5"
+          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-sm font-extrabold text-gray-900 shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 transition hover:-translate-y-0.5"
         >
-          <Download size={18} />
-          Descargar
+          <Download className="shrink-0" size={18} />
+          <span className="min-w-0 overflow-wrap-anywhere break-words">Descargar</span>
         </a>
       </div>
     </GlassCard>
   );
-}
-
-function formatDate(date: string) {
-  return new Intl.DateTimeFormat("es-MX", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(date));
 }

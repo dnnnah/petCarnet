@@ -14,6 +14,7 @@ import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeli
 import { VetCard } from "@/components/features/pet-profile/VetCard";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
+import { formatMexicanDate, formatOptionalMexicanDate, getPetAgeText } from "@/lib/dateFormat";
 import { getPublicDocuments } from "@/lib/petDocuments";
 import type { PetProfile, VaccineStatus } from "@/types/pet";
 
@@ -113,7 +114,7 @@ function toProfileProps(pet: PetProfile) {
       name: pet.mascota.nombre,
       species: pet.mascota.especie,
       breed: pet.mascota.raza,
-      age: pet.mascota.edadTexto,
+      age: getPetAgeText(pet.mascota.fechaNacimiento, pet.mascota.edadTexto),
       gender: pet.mascota.genero,
       size: pet.mascota.talla,
       id: pet.identificacion.codigoPublico,
@@ -134,14 +135,14 @@ function toProfileProps(pet: PetProfile) {
       neighborhood: locationText,
     },
     lost: {
-      lostDate: formatOptionalDate(pet.emergencia.fechaPerdida),
+      lostDate: formatOptionalMexicanDate(pet.emergencia.fechaPerdida),
     },
     info: {
       species: pet.mascota.especie,
       breed: pet.mascota.raza,
       color: pet.mascota.color,
       weight: `${pet.mascota.pesoKg} kg`,
-      birthDate: formatDate(pet.mascota.fechaNacimiento),
+      birthDate: formatMexicanDate(pet.mascota.fechaNacimiento) ?? pet.mascota.fechaNacimiento,
       distinctive: pet.mascota.rasgosDistintivos,
     },
     health: {
@@ -157,7 +158,7 @@ function toProfileProps(pet: PetProfile) {
     },
     vaccines: pet.vacunas.slice(0, 3).map((vaccine) => ({
       name: vaccine.nombre,
-      date: formatDate(vaccine.estatus === "proxima_dosis" ? vaccine.proximaDosis : vaccine.fechaAplicacion),
+      date: formatMexicanDate(vaccine.estatus === "proxima_dosis" ? vaccine.proximaDosis : vaccine.fechaAplicacion, "short") ?? "Fecha pendiente",
       status: toVaccineLabel(vaccine.estatus),
     })),
     documents: visibleDocuments.slice(0, 3),
@@ -166,38 +167,6 @@ function toProfileProps(pet: PetProfile) {
 
 function toVaccineLabel(status: VaccineStatus): "Al día" | "Próxima dosis" {
   return status === "proxima_dosis" ? "Próxima dosis" : "Al día";
-}
-
-function formatDate(date: string) {
-  return new Intl.DateTimeFormat("es-MX", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(date));
-}
-
-function formatLongDate(date: string) {
-  return new Intl.DateTimeFormat("es-MX", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    timeZone: "UTC",
-  }).format(new Date(date));
-}
-
-function formatOptionalDate(date: string | null) {
-  if (!date || date === "No hay") {
-    return null;
-  }
-
-  const parsed = new Date(date);
-
-  if (Number.isNaN(parsed.getTime())) {
-    return null;
-  }
-
-  return formatLongDate(date);
 }
 
 function formatPhoneForDisplay(phone: string) {

@@ -42,34 +42,34 @@ export function DocumentsCard({ documents, documentsPath }: DocumentsCardProps) 
 
   return (
     <GlassCard className="h-full p-6 lg:p-7">
-      <div className="flex items-center justify-between gap-4">
-        <h2 className="flex items-center gap-3 text-2xl font-extrabold text-gray-950">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <h2 className="flex min-w-0 items-center gap-3 text-2xl font-extrabold text-gray-950">
           <Folder className="text-amber-400" size={28} />
           Documentos
         </h2>
-        <Link href={documentsPath} className="flex items-center gap-2 text-sm font-extrabold text-emerald-600">
+        <Link href={documentsPath} className="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-full px-2 text-sm font-extrabold text-emerald-600">
           Ver todos
           <ChevronRight size={18} />
         </Link>
       </div>
 
       {publicDocuments.length > 0 ? (
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        <div className="mt-5 grid gap-3 lg:grid-cols-3">
           {publicDocuments.map((document) => {
             const Icon = icons[document.categoria];
 
             return (
               <div
                 key={document.id}
-                className="flex min-h-[124px] items-center justify-between gap-3 rounded-[1.45rem] border border-gray-100 bg-white p-4 shadow-[0_10px_24px_rgba(17,24,39,0.05)]"
+                className="flex min-h-[124px] min-w-0 items-center justify-between gap-3 rounded-[1.45rem] border border-gray-100 bg-white p-4 shadow-[0_10px_24px_rgba(17,24,39,0.05)]"
               >
                 <a href={document.url} target="_blank" rel="noreferrer" className="flex min-w-0 flex-1 items-center gap-3">
                   <span className={["grid h-14 w-14 shrink-0 place-items-center rounded-2xl", tones[document.categoria]].join(" ")}>
                     <Icon size={28} />
                   </span>
                   <span className="min-w-0">
-                    <span className="block font-extrabold leading-5 text-gray-950">{document.nombre}</span>
-                    <span className="mt-1 block text-sm font-semibold text-gray-500">{getDocumentMeta(document)}</span>
+                    <span className="block overflow-wrap-anywhere break-words font-extrabold leading-5 text-gray-950">{document.nombre}</span>
+                    <span className="mt-1 block overflow-wrap-anywhere break-words text-sm font-semibold text-gray-500">{getDocumentMeta(document)}</span>
                     <span className="mt-1 block text-xs font-extrabold uppercase text-gray-400">
                       {getDocumentCategoryLabel(document.categoria)}
                     </span>
