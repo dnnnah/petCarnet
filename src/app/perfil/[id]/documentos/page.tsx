@@ -1,50 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  Download,
-  ExternalLink,
-  FileImage,
-  FileText,
-  Folder,
-  HeartPulse,
-  IdCard,
-  ShieldCheck,
-  Stethoscope,
-} from "lucide-react";
+import { ArrowLeft, Folder } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { formatMexicanDate } from "@/lib/dateFormat";
+import { DocumentListClient } from "./DocumentListClient";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
-import {
-  getDocumentCategoryLabel,
-  getDocumentMeta,
-  getPublicDocuments,
-} from "@/lib/petDocuments";
-import type { PetDocument } from "@/types/pet";
+import { getPublicDocuments } from "@/lib/petDocuments";
 
 type DocumentsPageProps = {
   params: Promise<{ id: string }>;
-};
-
-const tones = {
-  vacunas: "bg-emerald-50 text-emerald-600 ring-emerald-100",
-  veterinario: "bg-blue-50 text-blue-600 ring-blue-100",
-  identificacion: "bg-violet-50 text-violet-500 ring-violet-100",
-  salud: "bg-pink-50 text-pink-500 ring-pink-100",
-  foto: "bg-amber-50 text-amber-500 ring-amber-100",
-  otro: "bg-gray-50 text-gray-600 ring-gray-100",
-};
-
-const icons = {
-  vacunas: ShieldCheck,
-  veterinario: Stethoscope,
-  identificacion: IdCard,
-  salud: HeartPulse,
-  foto: FileImage,
-  otro: FileText,
 };
 
 export function generateStaticParams() {
@@ -107,11 +73,7 @@ export default async function DocumentsPage({ params }: DocumentsPageProps) {
           </section>
 
           {documents.length > 0 ? (
-            <div className="grid gap-4 md:grid-cols-2">
-              {documents.map((document) => (
-                <DocumentItem key={document.id} document={document} />
-              ))}
-            </div>
+            <DocumentListClient documents={documents} />
           ) : (
             <GlassCard className="p-8 text-center">
               <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-100">
@@ -128,61 +90,5 @@ export default async function DocumentsPage({ params }: DocumentsPageProps) {
         </div>
       </div>
     </AppShell>
-  );
-}
-
-function DocumentItem({ document }: { document: PetDocument }) {
-  const Icon = icons[document.categoria];
-
-  return (
-    <GlassCard className="p-5 lg:p-6">
-      <div className="flex items-start gap-4">
-        <span className={["grid h-14 w-14 shrink-0 place-items-center rounded-2xl ring-1", tones[document.categoria]].join(" ")}>
-          <Icon size={28} />
-        </span>
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-xl font-extrabold leading-6 text-gray-950">
-              {document.nombre}
-            </h2>
-            {document.estado ? (
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold uppercase text-emerald-700 ring-1 ring-emerald-100">
-                {document.estado}
-              </span>
-            ) : null}
-          </div>
-          <p className="mt-2 text-sm font-bold text-gray-500">{getDocumentMeta(document)}</p>
-          <p className="mt-1 text-sm font-extrabold uppercase text-gray-400">
-            {getDocumentCategoryLabel(document.categoria)}
-          </p>
-          {document.descripcion ? (
-            <p className="mt-3 font-semibold leading-7 text-gray-700">{document.descripcion}</p>
-          ) : null}
-          <p className="mt-3 text-sm font-semibold text-gray-500">
-            Fecha: {formatMexicanDate(document.fecha) ?? "Fecha pendiente"}
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
-        <a
-          href={document.url}
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(16,185,129,0.18)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
-        >
-          <ExternalLink className="shrink-0" size={18} />
-          <span className="min-w-0 overflow-wrap-anywhere break-words">Abrir</span>
-        </a>
-        <a
-          href={document.url}
-          download
-          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-sm font-extrabold text-gray-900 shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 transition hover:-translate-y-0.5"
-        >
-          <Download className="shrink-0" size={18} />
-          <span className="min-w-0 overflow-wrap-anywhere break-words">Descargar</span>
-        </a>
-      </div>
-    </GlassCard>
   );
 }
