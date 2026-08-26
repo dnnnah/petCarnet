@@ -41,7 +41,7 @@ export function formatMexicanDate(date: string, month: "short" | "long" = "long"
 }
 
 export function formatOptionalMexicanDate(date: string | null, month: "short" | "long" = "long") {
-  if (!date || date === "No hay") {
+  if (!date) {
     return null;
   }
 

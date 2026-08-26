@@ -12,7 +12,7 @@
       "talla": "Miniatura",
       "color": "Sal con pimienta",
       "pesoKg": 7,
-      "fechaNacimiento": "07/01/2023",
+      "fechaNacimiento": "2023-01-07",
       "rasgosDistintivos": ["Tiene los bigotes dorados", "Las orejas siempre están levantadas"],
       "esterilizado": false
     },
@@ -49,20 +49,20 @@
     "veterinario": {
       "nombre": "Alux veterinaria",
       "clinica": "Veterinaria Alux",
-      "telefono": "",
+      "telefono": "5534487768",
       "direccion": "Roma Norte, CDMX",
       "horario": "L-S 10am a 7pm"
     },
     "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "al_dia", "lote": "A123", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" },
-      { "nombre": "Parvovirus", "fechaAplicacion": "2025-02-20", "proximaDosis": "2026-02-20", "estatus": "al_dia", "lote": "P456", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" },
-      { "nombre": "Triple Canina", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "proxima_dosis", "lote": "TC789", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" }
+      { "id": "lucca-vac-1", "nombre": "Rabia", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "al_dia", "lote": "A123", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" },
+      { "id": "lucca-vac-2", "nombre": "Parvovirus", "fechaAplicacion": "2025-02-20", "proximaDosis": "2026-02-20", "estatus": "al_dia", "lote": "P456", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" },
+      { "id": "lucca-vac-3", "nombre": "Triple Canina", "fechaAplicacion": "2025-01-15", "proximaDosis": "2026-01-15", "estatus": "proxima_dosis", "lote": "TC789", "veterinario": "Dr. López", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf" }
     ],
     "documentos": [
-      { "id": "lucca-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/lucca/cartilla-vacunacion.pdf", "fecha": "2025-01-15", "tamano": "2.4 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
-      { "id": "lucca-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/lucca/comprobante-veterinario.pdf", "fecha": "2025-02-20", "tamano": "1.1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Comprobante de última consulta." },
-      { "id": "lucca-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/lucca/foto-reciente.jpg", "fecha": "2025-03-12", "tamano": "620 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Imagen reciente para identificarlo rápido." },
-      { "id": "lucca-estudios", "nombre": "Estudios Médicos", "tipo": "pdf", "categoria": "salud", "url": "/docs/lucca/estudios-medicos.pdf", "fecha": "2025-03-12", "tamano": "3.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Resultados médicos privados." }
+      { "id": "lucca-doc-1", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/lucca/cartilla-vacunacion.pdf", "fecha": "2025-01-15", "tamano": "2.4 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
+      { "id": "lucca-doc-2", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/lucca/comprobante-veterinario.pdf", "fecha": "2025-02-20", "tamano": "1.1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Comprobante de última consulta." },
+      { "id": "lucca-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/lucca/foto-reciente.jpg", "fecha": "2025-03-12", "tamano": "620 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Imagen reciente para identificarlo rápido." },
+      { "id": "lucca-doc-4", "nombre": "Estudios Médicos", "tipo": "pdf", "categoria": "salud", "url": "/docs/lucca/estudios-medicos.pdf", "fecha": "2025-03-12", "tamano": "3.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Resultados médicos privados." }
     ],
     "qr": { "urlPublica": "/perfil/lucca", "texto": "QR temporal de Lucca" },
     "configuracionPublica": {
@@ -85,13 +85,13 @@
       "talla": "Mediano",
       "color": "Blanco con negro",
       "pesoKg": 12,
-      "fechaNacimiento": "27/11/2022",
+      "fechaNacimiento": "2022-11-27",
       "rasgosDistintivos": ["Tiene manchas negras en su cuerpo, parece domino", "Chimuelo"],
       "esterilizado": false
     },
     "identificacion": {
       "codigoPublico": "PC-NIKO-002",
-      "microchip": "",
+      "microchip": null,
       "notas": ""
     },
     "contacto": {
@@ -100,7 +100,7 @@
       "whatsapp": "5522576308",
       "telefonoSecundario": "",
       "email": "",
-      "zonaSegura": "cerca de la 4ta avenida",
+      "zonaSegura": "cerca de casa",
       "zonaHabitual": "Nezahualcoyolt, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Niko. Escaneé el QR de su collar."
     },
@@ -114,10 +114,10 @@
     },
     "salud": {
       "alergias": ["Ninguna registrada"],
-      "condicionesMedicas": ["Digestión sensible"],
+      "condicionesMedicas": ["Ninguna"],
       "medicamentosActuales": [],
       "dietaEspecial": "",
-      "comportamiento": "Muy sociable, se emociona al ver pelotas."
+      "comportamiento": "Muy sociable, muy noble, se emociona al ver pelotas."
     },
     "veterinario": {
       "nombre": "Dra. Méndez",
@@ -127,15 +127,15 @@
       "horario": "Lun-Vie 10:00 a 19:00"
     },
     "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "al_dia", "lote": "R204", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" },
-      { "nombre": "Bordetella", "fechaAplicacion": "2025-04-14", "proximaDosis": "2026-04-14", "estatus": "al_dia", "lote": "B118", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" },
-      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "proxima_dosis", "lote": "MC302", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" }
+      { "id": "niko-vac-1", "nombre": "Rabia", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "al_dia", "lote": "R204", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" },
+      { "id": "niko-vac-2", "nombre": "Bordetella", "fechaAplicacion": "2025-04-14", "proximaDosis": "2026-04-14", "estatus": "al_dia", "lote": "B118", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" },
+      { "id": "niko-vac-3", "nombre": "Múltiple Canina", "fechaAplicacion": "2025-03-08", "proximaDosis": "2026-03-08", "estatus": "proxima_dosis", "lote": "MC302", "veterinario": "Dra. Méndez", "documentoUrl": "/docs/niko/cartilla-vacunacion.pdf" }
     ],
     "documentos": [
-      { "id": "niko-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/niko/cartilla-vacunacion.pdf", "fecha": "2025-03-08", "tamano": "2.1 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con su esquema de vacunación." },
-      { "id": "niko-microchip", "nombre": "Registro Microchip", "tipo": "pdf", "categoria": "identificacion", "url": "/docs/niko/comprobante-veterinario.pdf", "fecha": "2025-03-10", "tamano": "850 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Registro de identificación y datos de contacto." },
-      { "id": "niko-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/niko/foto-reciente.jpg", "fecha": "2025-04-01", "tamano": "700 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerlo al instante." },
-      { "id": "niko-plan", "nombre": "Plan Nutricional", "tipo": "pdf", "categoria": "salud", "url": "/docs/niko/estudios-medicos.pdf", "fecha": "2025-04-01", "tamano": "1.4 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre dieta y salud." }
+      { "id": "niko-doc-1", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/niko/cartilla-vacunacion.pdf", "fecha": "2025-03-08", "tamano": "2.1 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con su esquema de vacunación." },
+      { "id": "niko-doc-2", "nombre": "Registro Microchip", "tipo": "pdf", "categoria": "identificacion", "url": "/docs/niko/comprobante-veterinario.pdf", "fecha": "2025-03-10", "tamano": "850 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Registro de identificación y datos de contacto." },
+      { "id": "niko-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/niko/foto-reciente.jpg", "fecha": "2025-04-01", "tamano": "700 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerlo al instante." },
+      { "id": "niko-doc-4", "nombre": "Plan Nutricional", "tipo": "pdf", "categoria": "salud", "url": "/docs/niko/estudios-medicos.pdf", "fecha": "2025-04-01", "tamano": "1.4 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre dieta y salud." }
     ],
     "qr": { "urlPublica": "/perfil/niko", "texto": "QR temporal de Niko" },
     "configuracionPublica": {
@@ -158,7 +158,7 @@
       "talla": "Pequeño",
       "color": "Blanco con café",
       "pesoKg": 10,
-      "fechaNacimiento": "02/11/2023",
+      "fechaNacimiento": "2023-11-02",
       "rasgosDistintivos": ["Manchita café sobre el ojo derecho", "Cola muy esponjada"],
       "esterilizado": false
     },
@@ -200,15 +200,15 @@
       "horario": "Lun-Sáb 8:00 a 17:00"
     },
     "vacunas": [
-      { "nombre": "Rabia", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "R901", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" },
-      { "nombre": "Parvovirus", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "P902", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" },
-      { "nombre": "Múltiple Canina", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "proxima_dosis", "lote": "MC903", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" }
+      { "id": "alix-vac-1", "nombre": "Rabia", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "R901", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" },
+      { "id": "alix-vac-2", "nombre": "Parvovirus", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "al_dia", "lote": "P902", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" },
+      { "id": "alix-vac-3", "nombre": "Múltiple Canina", "fechaAplicacion": "2025-06-02", "proximaDosis": "2026-06-02", "estatus": "proxima_dosis", "lote": "MC903", "veterinario": "Dr. Salas", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf" }
     ],
     "documentos": [
-      { "id": "alix-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/alix/cartilla-vacunacion.pdf", "fecha": "2025-06-02", "tamano": "1.8 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
-      { "id": "alix-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/alix/comprobante-veterinario.pdf", "fecha": "2025-06-02", "tamano": "900 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Comprobante de consulta y revisión." },
-      { "id": "alix-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/alix/foto-reciente.jpg", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerla mejor." },
-      { "id": "alix-notas", "nombre": "Notas de Conducta", "tipo": "pdf", "categoria": "salud", "url": "/docs/alix/estudios-medicos.pdf", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre comportamiento." }
+      { "id": "alix-doc-1", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/alix/cartilla-vacunacion.pdf", "fecha": "2025-06-02", "tamano": "1.8 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
+      { "id": "alix-doc-2", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/alix/comprobante-veterinario.pdf", "fecha": "2025-06-02", "tamano": "900 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Comprobante de consulta y revisión." },
+      { "id": "alix-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/alix/foto-reciente.jpg", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerla mejor." },
+      { "id": "alix-doc-4", "nombre": "Notas de Conducta", "tipo": "pdf", "categoria": "salud", "url": "/docs/alix/estudios-medicos.pdf", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre comportamiento." }
     ],
     "qr": { "urlPublica": "/perfil/alix", "texto": "QR temporal de Alix" },
     "configuracionPublica": {
@@ -231,27 +231,38 @@
       "talla": "Grande",
       "color": "Gris",
       "pesoKg": 3,
-      "fechaNacimiento": "01/08/2021",
+      "fechaNacimiento": "2021-08-01",
       "rasgosDistintivos": ["Una oreja izquierda mocha", "Nariz café", "Pelo de la panza rizado"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-LOKI-001", "microchip": "No hay", "notas": "No cuenta con rastreador GPS ni microchip." },
+    "identificacion": {
+      "codigoPublico": "PC-LOKI-001",
+      "microchip": null,
+      "notas": "No cuenta con rastreador GPS ni microchip."
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Loki. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "Amigable y tímido"
     },
     "veterinario": {
@@ -263,13 +274,18 @@
     },
     "vacunas": [],
     "documentos": [
-      { "id": "loki-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/loki/cartilla-vacunacion.pdf", "fecha": "2025-05-05", "tamano": "1.9 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con su historial de vacunación." },
-      { "id": "loki-microchip", "nombre": "Registro Microchip", "tipo": "pdf", "categoria": "identificacion", "url": "/docs/loki/comprobante-veterinario.pdf", "fecha": "2025-05-06", "tamano": "820 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Registro público de identificación." },
-      { "id": "loki-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/loki/foto-reciente.jpg", "fecha": "2025-05-18", "tamano": "640 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente de Loki." },
-      { "id": "loki-revision", "nombre": "Revisión General", "tipo": "pdf", "categoria": "salud", "url": "/docs/loki/estudios-medicos.pdf", "fecha": "2025-05-18", "tamano": "1.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Revisión médica privada." }
+      { "id": "loki-doc-1", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/loki/cartilla-vacunacion.pdf", "fecha": "2025-05-05", "tamano": "1.9 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con su historial de vacunación." },
+      { "id": "loki-doc-2", "nombre": "Registro Microchip", "tipo": "pdf", "categoria": "identificacion", "url": "/docs/loki/comprobante-veterinario.pdf", "fecha": "2025-05-06", "tamano": "820 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Registro público de identificación." },
+      { "id": "loki-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/loki/foto-reciente.jpg", "fecha": "2025-05-18", "tamano": "640 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente de Loki." },
+      { "id": "loki-doc-4", "nombre": "Revisión General", "tipo": "pdf", "categoria": "salud", "url": "/docs/loki/estudios-medicos.pdf", "fecha": "2025-05-18", "tamano": "1.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Revisión médica privada." }
     ],
     "qr": { "urlPublica": "/perfil/loki", "texto": "QR de Loki" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   },
   {
     "id": "viserys",
@@ -284,27 +300,38 @@
       "talla": "Grande",
       "color": "Blanco",
       "pesoKg": 3,
-      "fechaNacimiento": "01/10/2024",
+      "fechaNacimiento": "2024-10-01",
       "rasgosDistintivos": ["Manchas negras con rayas en espalda", "Manchas en patas y dedos"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-VISERYS-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": {
+      "codigoPublico": "PC-VISERYS-001",
+      "microchip": null,
+      "notas": ""
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Viserys. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "Amigable y ruidoso"
     },
     "veterinario": {
@@ -316,13 +343,18 @@
     },
     "vacunas": [],
     "documentos": [
-      { "id": "chicharrona-cartilla", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/chicharrona/cartilla-vacunacion.pdf", "fecha": "2025-02-11", "tamano": "2 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
-      { "id": "chicharrona-vet", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/chicharrona/comprobante-veterinario.pdf", "fecha": "2025-04-16", "tamano": "1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Consulta felina y evaluación general." },
-      { "id": "chicharrona-foto", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/chicharrona/foto-reciente.jpg", "fecha": "2025-04-16", "tamano": "680 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocer su pelaje." },
-      { "id": "chicharrona-estudios", "nombre": "Estudio Urinario", "tipo": "pdf", "categoria": "salud", "url": "/docs/chicharrona/estudios-medicos.pdf", "fecha": "2025-05-20", "tamano": "1.7 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Estudio médico privado." }
+      { "id": "viserys-doc-1", "nombre": "Cartilla de Vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/viserys/cartilla-vacunacion.pdf", "fecha": "2025-02-11", "tamano": "2 MB", "visiblePublico": true, "estado": "Temporal", "descripcion": "Cartilla pública con vacunas al día." },
+      { "id": "viserys-doc-2", "nombre": "Comprobante Veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/viserys/comprobante-veterinario.pdf", "fecha": "2025-04-16", "tamano": "1 MB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Consulta felina y evaluación general." },
+      { "id": "viserys-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/viserys/foto-reciente.jpg", "fecha": "2025-04-16", "tamano": "680 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocer su pelaje." },
+      { "id": "viserys-doc-4", "nombre": "Estudio Urinario", "tipo": "pdf", "categoria": "salud", "url": "/docs/viserys/estudios-medicos.pdf", "fecha": "2025-05-20", "tamano": "1.7 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Estudio médico privado." }
     ],
     "qr": { "urlPublica": "/perfil/viserys", "texto": "QR de Viserys" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   },
   {
     "id": "frey",
@@ -337,27 +369,38 @@
       "talla": "Grande",
       "color": "Blanco",
       "pesoKg": 3,
-      "fechaNacimiento": "01/10/2024",
+      "fechaNacimiento": "2024-10-01",
       "rasgosDistintivos": ["Manchas negras con rayas en espalda", "Manchas en patas y dedos"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-FREY-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": {
+      "codigoPublico": "PC-FREY-001",
+      "microchip": null,
+      "notas": ""
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Frey. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "Amigable y ruidoso"
     },
     "veterinario": {
@@ -370,7 +413,12 @@
     "vacunas": [],
     "documentos": [],
     "qr": { "urlPublica": "/perfil/frey", "texto": "QR de Frey" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   },
   {
     "id": "sandor",
@@ -385,27 +433,38 @@
       "talla": "Mediano",
       "color": "Negro",
       "pesoKg": 2,
-      "fechaNacimiento": "01/12/2024",
+      "fechaNacimiento": "2024-12-01",
       "rasgosDistintivos": ["Pelaje negro con rayos blancos", "No es muy peludo"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-SANDOR-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": {
+      "codigoPublico": "PC-SANDOR-001",
+      "microchip": null,
+      "notas": ""
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Sandor. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "Tímido y se asusta con los ruidos o movimientos bruscos"
     },
     "veterinario": {
@@ -418,7 +477,12 @@
     "vacunas": [],
     "documentos": [],
     "qr": { "urlPublica": "/perfil/sandor", "texto": "QR de Sandor" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   },
   {
     "id": "bizcocho",
@@ -433,27 +497,38 @@
       "talla": "Grande",
       "color": "Blanco",
       "pesoKg": 3,
-      "fechaNacimiento": "01/03/2021",
+      "fechaNacimiento": "2021-03-01",
       "rasgosDistintivos": ["Muy peludo", "Mancha café claro en cabeza", "Ojos azules", "Estrabismo ligero"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-BIZCOCHO-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": {
+      "codigoPublico": "PC-BIZCOCHO-001",
+      "microchip": null,
+      "notas": ""
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Bizcocho. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "Tímido y se asusta con los ruidos o movimientos bruscos"
     },
     "veterinario": {
@@ -466,7 +541,12 @@
     "vacunas": [],
     "documentos": [],
     "qr": { "urlPublica": "/perfil/bizcocho", "texto": "QR de Bizcocho" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   },
   {
     "id": "chicharrona",
@@ -481,27 +561,38 @@
       "talla": "Pequeña",
       "color": "Negro",
       "pesoKg": 1,
-      "fechaNacimiento": "01/07/2025",
+      "fechaNacimiento": "2025-07-01",
       "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-CHICHARRONA-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": {
+      "codigoPublico": "PC-CHICHARRONA-001",
+      "microchip": null,
+      "notas": ""
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Chicharrona. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "Amigable pero se asusta con los ruidos o movimientos bruscos"
     },
     "veterinario": {
@@ -514,7 +605,12 @@
     "vacunas": [],
     "documentos": [],
     "qr": { "urlPublica": "/perfil/chicharrona", "texto": "QR de Chicharrona" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   },
   {
     "id": "freya",
@@ -529,27 +625,38 @@
       "talla": "Pequeña",
       "color": "Negro",
       "pesoKg": 1,
-      "fechaNacimiento": "01/07/2025",
+      "fechaNacimiento": "2025-07-01",
       "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-FREYA-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": {
+      "codigoPublico": "PC-FREYA-001",
+      "microchip": null,
+      "notas": ""
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Freya. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "Amigable pero se asusta con los ruidos o movimientos bruscos"
     },
     "veterinario": {
@@ -562,7 +669,12 @@
     "vacunas": [],
     "documentos": [],
     "qr": { "urlPublica": "/perfil/freya", "texto": "QR de Freya" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   },
   {
     "id": "arya",
@@ -577,27 +689,38 @@
       "talla": "Mediana",
       "color": "Gris",
       "pesoKg": 2,
-      "fechaNacimiento": "01/07/2022",
+      "fechaNacimiento": "2022-07-01",
       "rasgosDistintivos": ["Ojos verdes grandes", "Poco pelo", "Manchas color durazno"],
       "esterilizado": true
     },
-    "identificacion": { "codigoPublico": "PC-ARYA-001", "microchip": "No hay", "notas": "No hay" },
+    "identificacion": {
+      "codigoPublico": "PC-ARYA-001",
+      "microchip": null,
+      "notas": ""
+    },
     "contacto": {
       "nombrePublico": "Ana Karen",
       "telefonoPrincipal": "552201296480",
       "whatsapp": "552201296480",
-      "telefonoSecundario": "No hay",
-      "email": "No hay",
+      "telefonoSecundario": "",
+      "email": "",
       "zonaSegura": "cerca de su casa",
       "zonaHabitual": "San Isidro, EDOMEX",
       "mensajeWhatsapp": "Hola, encontré a Arya. Escaneé el QR de su collar."
     },
-    "emergencia": { "perdido": false, "fechaPerdida": "No hay", "zonaPerdida": "No hay", "mensajeEmergencia": "No hay", "recompensa": "No hay", "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."] },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado."]
+    },
     "salud": {
-      "alergias": ["Ninguna"],
-      "condicionesMedicas": ["No hay"],
-      "medicamentosActuales": ["No hay"],
-      "dietaEspecial": "No hay",
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
       "comportamiento": "No es amigable, se asusta con los ruidos o movimientos bruscos, tímida"
     },
     "veterinario": {
@@ -610,6 +733,11 @@
     "vacunas": [],
     "documentos": [],
     "qr": { "urlPublica": "/perfil/arya", "texto": "QR de Arya" },
-    "configuracionPublica": { "mostrarEmail": false, "mostrarTelefonoSecundario": false, "mostrarDireccionVet": true, "mostrarDocumentosPrivados": false }
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": true,
+      "mostrarDocumentosPrivados": false
+    }
   }
 ]

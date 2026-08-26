@@ -1,6 +1,12 @@
+export type PetId = string;
+
 export type PetSpecies = "Perro" | "Gato";
 
 export type PetStatus = "en_casa" | "perdido";
+
+export type PetGender = "Macho" | "Hembra";
+
+export type PetSize = "Pequeño" | "Mediano" | "Grande" | "Miniatura";
 
 export type VaccineStatus = "al_dia" | "proxima_dosis" | "vencida";
 
@@ -15,7 +21,7 @@ export type PetDocumentCategory =
   | "otro";
 
 export interface PetProfile {
-  id: string;
+  id: PetId;
   estado: PetStatus;
   verificado: boolean;
   mascota: {
@@ -23,8 +29,8 @@ export interface PetProfile {
     especie: PetSpecies;
     raza: string;
     fotoPerfilUrl: string;
-    genero: string;
-    talla: string;
+    genero: PetGender;
+    talla: PetSize;
     color: string;
     pesoKg: number;
     fechaNacimiento: string;
@@ -83,6 +89,7 @@ export interface PetProfile {
 }
 
 export interface PetVaccine {
+  id: string;
   nombre: string;
   fechaAplicacion: string;
   proximaDosis: string;
