@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PetCarnet
 
-## Getting Started
+Pasaporte digital publico para mascotas con QR de emergencia.
 
-First, run the development server:
+## Descripcion
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+PetCarnet es una aplicacion web que genera fichas publicas e interactivas para mascotas. Cada perfil incluye informacion de contacto, historial medico, vacunas, documentos y un codigo QR que cualquier persona puede escanar para ayudar a una mascota perdida a volver a casa.
+
+## Caracteristicas
+
+- **Perfiles publicos** con informacion de contacto, salud, vacunas y documentos
+- **Codigo QR** por mascota que enlaza a su perfil publico
+- **Alerta de mascota perdida** con imagen descargable y compartible
+- **Galeria de fotos** tipo stories con lightbox
+- **Diseno responsive** optimizado para movil, tablet y escritorio
+- **Generacion estatica** (SSG) para maximo rendimiento
+
+## Stack tecnico
+
+- **Framework:** Next.js 16 (App Router, SSG)
+- **UI:** React 19, TypeScript, Tailwind CSS v4
+- **Iconografia:** Lucide React
+- **QR:** qrcode.react
+- **Alertas:** html2canvas para generacion de imagenes
+
+## Estructura del proyecto
+
+```
+src/
+├── app/
+│   ├── page.tsx                    # Landing page
+│   └── perfil/[id]/
+│       ├── page.tsx                # Perfil de mascota
+│       ├── documentos/page.tsx     # Documentos publicos
+│       ├── vacunas/page.tsx        # Cartilla de vacunacion
+│       └── alerta/page.tsx         # Generador de alerta
+├── components/
+│   ├── layout/                     # AppShell
+│   ├── features/pet-profile/       # Componentes del perfil
+│   └── ui/                         # GlassCard, Badge, ActionButton
+├── data/mascotas.json              # Datos de mascotas
+├── lib/                            # Helpers y utilidades
+└── types/pet.ts                    # Interfaces TypeScript
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalacion
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+git clone https://github.com/dnnnah/petCarnet.git
+cd petCarnet
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
-## Learn More
+## Comandos
 
-To learn more about Next.js, take a look at the following resources:
+| Comando | Descripcion |
+|---------|-------------|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Generacion estatica |
+| `npm run start` | Servidor en produccion |
+| `npm run lint` | Verificacion de codigo |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Mascotas de ejemplo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+El proyecto incluye 11 mascotas de ejemplo: Lucca, Niko, Alix, Loki, Viserys, Frey, Sandor, Bizcocho, Chicharrona, Freya y Arya.
 
-## Deploy on Vercel
+## licencia
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
