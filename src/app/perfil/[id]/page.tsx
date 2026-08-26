@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { DocumentsCard } from "@/components/features/pet-profile/DocumentsCard";
 import { EmergencyContact } from "@/components/features/pet-profile/EmergencyContact";
@@ -90,6 +92,13 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
             <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
           </div>
+          <Link
+            href={`/perfil/${pet.id}/alerta`}
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-red-500 px-5 py-3 text-sm font-extrabold text-white shadow-[0_14px_28px_rgba(225,29,72,0.2)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(225,29,72,0.28)]"
+          >
+            <AlertTriangle size={18} />
+            Generar alerta de mascota perdida
+          </Link>
           <ThankYouBanner isLost={pet.emergencia.perdido} petName={pet.mascota.nombre} species={pet.mascota.especie} />
           <p className="text-center text-sm font-bold text-gray-400">
             PetCarnet © 2026 · Pasaporte Digital para Mascotas
