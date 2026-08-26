@@ -122,3 +122,11 @@ a {
   border-bottom: 0;
   border-radius: 999px;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

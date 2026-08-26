@@ -166,7 +166,51 @@ Registro de avances, cambios y decisiones tomadas durante el desarrollo.
 
 ---
 
-## FASE 7+ — Supabase, Auth, Notificaciones (POSTERIOR)
+## FASE 7 — Corrección de Responsive Design
+
+**Estado:** Completada
+**Fecha:** 2026-08-26
+
+### Auditoría realizada
+Se identificaron 17 problemas de responsive design en 11 archivos. Se corrigieron todos los de mayor impacto.
+
+### Cambios realizados
+
+#### Layout y navegación
+- **AppShell**: Decorative elements (`Sparkles`, `PawPrint`, `Heart`, `doodle-line`) ahora `hidden sm:block`. Logo reducido a `h-11 w-11` en mobile, `h-14 w-14` en sm+. Badge "Perfil Verificado" ahora muestra "Verificado" en mobile.
+- **ProfileNav**: Agregado `scrollbar-hide` para scroll horizontal limpio en mobile, labels ocultos en mobile (`hidden sm:inline`).
+
+#### Páginas
+- **Home (`page.tsx`)**: Heading de `text-5xl` a `text-4xl sm:text-5xl`, sub-heading de `text-2xl` a `text-xl sm:text-2xl`.
+- **Perfil (`perfil/[id]/page.tsx`)**: Grid info/health/vet de `lg:grid-cols-3` a `md:grid-cols-2 lg:grid-cols-3`. Grid documentos/QR de `lg:grid-cols-[1fr_280px]` a `md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]`.
+
+#### Componentes
+- **VaccineTimeline**: Eliminado `min-w-[720px]`, grid de `grid-cols-3` a `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`.
+- **LostPetAlertImage**: Ancho de `w-[480px]` a `w-full max-w-[480px]`.
+- **PetHeader**: Heading de `text-6xl sm:text-7xl lg:text-8xl` a `text-5xl sm:text-6xl lg:text-8xl`, sub-heading de `text-2xl` a `text-lg sm:text-2xl`.
+- **LostPetBanner**: Padding de `p-5` a `p-4`, heading de `text-5xl` a `text-3xl sm:text-5xl`, textos y botón responsivos.
+- **DocumentsCard**: Grid de `lg:grid-cols-3` a `md:grid-cols-2 lg:grid-cols-3`, card min-height reducido en mobile.
+- **ThankYouBanner**: Heading de `text-3xl` a `text-xl sm:text-3xl`.
+
+#### CSS
+- Agregada utilidad `.scrollbar-hide` en `globals.css`.
+
+### Archivos modificados
+- `src/components/layout/AppShell.tsx`
+- `src/components/features/pet-profile/VaccineTimeline.tsx`
+- `src/components/features/pet-profile/PetHeader.tsx`
+- `src/components/features/pet-profile/LostPetBanner.tsx`
+- `src/components/features/pet-profile/LostPetAlertImage.tsx`
+- `src/components/features/pet-profile/DocumentsCard.tsx`
+- `src/components/features/pet-profile/ThankYouBanner.tsx`
+- `src/components/features/pet-profile/ProfileNav.tsx`
+- `src/app/page.tsx`
+- `src/app/perfil/[id]/page.tsx`
+- `src/app/globals.css`
+
+---
+
+## FASE 8+ — Supabase, Auth, Notificaciones (POSTERIOR)
 
 **Estado:** No iniciada
 **Fecha:** —

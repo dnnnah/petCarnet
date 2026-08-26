@@ -31,11 +31,11 @@ export function DocumentsCard({ documents, documentsPath }: DocumentsCardProps) 
       </div>
 
       {publicDocuments.length > 0 ? (
-        <div className="mt-5 grid gap-3 lg:grid-cols-3">
+        <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {publicDocuments.map((document) => (
             <div
               key={document.id}
-              className="flex min-h-[124px] min-w-0 items-center justify-between gap-3 rounded-[1.45rem] border border-gray-100 bg-white p-4 shadow-[0_10px_24px_rgba(17,24,39,0.05)]"
+              className="flex min-h-[80px] sm:min-h-[124px] min-w-0 items-center justify-between gap-3 rounded-[1.45rem] border border-gray-100 bg-white p-3 sm:p-4 shadow-[0_10px_24px_rgba(17,24,39,0.05)]"
             >
               <a href={document.url} target="_blank" rel="noreferrer" className="flex min-w-0 flex-1 items-center gap-3">
                 <DocumentPreview document={document} size="sm" />

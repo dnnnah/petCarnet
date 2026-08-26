@@ -70,10 +70,10 @@ export function PetHeader({ pet }: PetHeaderProps) {
             <Sparkles size={34} />
           </div>
 
-          <h1 className="text-6xl font-extrabold leading-none tracking-tight text-gray-950 sm:text-7xl lg:text-8xl">
+          <h1 className="text-5xl font-extrabold leading-none tracking-tight text-gray-950 sm:text-6xl lg:text-8xl">
             {pet.name}
           </h1>
-          <p className="mt-3 text-2xl font-bold text-emerald-600">{pet.breed} · {pet.species}</p>
+          <p className="mt-2 sm:mt-3 text-lg sm:text-2xl font-bold text-emerald-600">{pet.breed} · {pet.species}</p>
 
           <div className="mt-7 flex flex-wrap gap-3">
             <Badge tone="mint" icon={<CalendarDays size={18} />}>

@@ -24,10 +24,10 @@ export default function Home() {
             <Badge tone="mint" icon={<ShieldCheck size={16} />}>
               QR publico para emergencias
             </Badge>
-            <h1 className="mt-5 max-w-3xl text-5xl font-extrabold leading-[0.95] text-gray-950 sm:text-6xl lg:text-7xl">
+            <h1 className="mt-5 max-w-3xl text-4xl sm:text-5xl font-extrabold leading-[0.95] text-gray-950 sm:text-6xl lg:text-7xl">
               PetCarnet
             </h1>
-            <p className="mt-3 text-2xl font-extrabold text-emerald-600">
+            <p className="mt-2 sm:mt-3 text-xl sm:text-2xl font-extrabold text-emerald-600">
               Pasaporte Digital
             </p>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-600">

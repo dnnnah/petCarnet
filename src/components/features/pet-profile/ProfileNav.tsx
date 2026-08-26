@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import {
   FileText,
   Heart,
-  MapPin,
   PawPrint,
   Phone,
   ShieldCheck,
@@ -62,8 +61,8 @@ export function ProfileNav() {
   }
 
   return (
-    <nav className="sticky top-0 z-40 -mx-4 mb-6 overflow-x-auto bg-background/80 px-4 py-3 backdrop-blur-lg sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div className="flex gap-2">
+    <nav className="sticky top-0 z-40 -mx-4 mb-6 overflow-x-auto scrollbar-hide bg-background/80 px-4 py-3 backdrop-blur-lg sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+      <div className="flex gap-2 min-w-max">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;

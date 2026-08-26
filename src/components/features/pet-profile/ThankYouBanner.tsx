@@ -30,7 +30,7 @@ export function ThankYouBanner({ isLost = false, petName, species }: ThankYouBan
         </div>
 
         <div className="text-center md:text-left">
-          <p className="text-3xl font-extrabold tracking-tight text-gray-950">
+          <p className="text-xl sm:text-3xl font-extrabold tracking-tight text-gray-950">
             {isLost ? `Ayuda a ${petName} a volver a casa` : `Gracias por ayudar a ${petName} a volver a casa`}
           </p>
           <p className="mt-3 text-lg font-semibold text-gray-700">

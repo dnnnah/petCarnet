@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import type { PetDocumentCategory } from "@/types/pet";
 
 export type DocumentFilter = "todos" | PetDocumentCategory;

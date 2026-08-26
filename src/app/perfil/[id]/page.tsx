@@ -86,7 +86,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               instructions={pet.emergencia.instrucciones}
             />
           ) : null}
-          <div id="info" className="grid gap-6 lg:grid-cols-3">
+          <div id="info" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <InfoCard petName={pet.mascota.nombre} info={profile.info} />
             <div id="salud">
               <HealthCard health={profile.health} />
@@ -98,7 +98,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           <div id="vacunas">
             <VaccineTimeline petId={pet.id} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
           </div>
-          <div id="documentos" className="grid gap-6 lg:grid-cols-[1fr_280px]">
+          <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
             <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
           </div>

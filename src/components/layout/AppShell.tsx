@@ -9,38 +9,40 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0 dotted-path opacity-40" />
-      <div className="pointer-events-none absolute left-3 top-8 rotate-12 text-amber-200/70">
+      <div className="pointer-events-none absolute left-3 top-8 rotate-12 text-amber-200/70 hidden sm:block">
         <Sparkles size={26} />
       </div>
-      <div className="pointer-events-none absolute right-3 top-20 h-24 w-14 rotate-[20deg] doodle-line" />
-      <div className="pointer-events-none absolute left-5 top-36 rotate-12 text-emerald-200/80">
+      <div className="pointer-events-none absolute right-3 top-20 h-24 w-14 rotate-[20deg] doodle-line hidden sm:block" />
+      <div className="pointer-events-none absolute left-5 top-36 rotate-12 text-emerald-200/80 hidden sm:block">
         <PawPrint size={46} fill="currentColor" />
       </div>
-      <div className="pointer-events-none absolute right-7 top-36 -rotate-12 text-pink-300/80">
+      <div className="pointer-events-none absolute right-7 top-36 -rotate-12 text-pink-300/80 hidden sm:block">
         <Heart size={30} />
       </div>
-      <div className="pointer-events-none absolute bottom-28 left-8 text-blue-100">
+      <div className="pointer-events-none absolute bottom-28 left-8 text-blue-100 hidden md:block">
         <Sparkles size={54} />
       </div>
 
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="grid h-14 w-14 place-items-center rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100">
-            <PawPrint size={34} />
+      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3">
+          <span className="grid h-11 w-11 sm:h-14 sm:w-14 place-items-center rounded-[1.1rem] sm:rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100">
+            <PawPrint size={28} className="sm:hidden" />
+            <PawPrint size={34} className="hidden sm:block" />
           </span>
           <span>
-            <span className="block text-3xl font-extrabold leading-7 tracking-tight text-gray-950">
+            <span className="block text-2xl sm:text-3xl font-extrabold leading-7 tracking-tight text-gray-950">
               PetCarnet
             </span>
-            <span className="block text-base font-bold leading-5 text-gray-900">
+            <span className="block text-xs sm:text-base font-bold leading-5 text-gray-900">
               Pasaporte Digital
             </span>
           </span>
         </Link>
 
-        <div className="hidden items-center gap-3 rounded-full border border-emerald-200 bg-emerald-50/82 px-6 py-3 text-base font-extrabold text-gray-900 shadow-[0_12px_30px_rgba(16,185,129,0.1)] backdrop-blur sm:flex">
+        <div className="hidden items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/82 px-3 py-2 text-xs font-extrabold text-gray-900 shadow-[0_12px_30px_rgba(16,185,129,0.1)] backdrop-blur sm:flex sm:gap-3 sm:px-6 sm:py-3 sm:text-base">
           <ShieldCheck className="text-emerald-600" size={21} />
-          Perfil Verificado
+          <span className="hidden md:inline">Perfil Verificado</span>
+          <span className="md:hidden">Verificado</span>
         </div>
       </header>
 

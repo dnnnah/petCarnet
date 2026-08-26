@@ -32,7 +32,7 @@ export function LostPetAlertImage({
   return (
     <div
       id="lost-pet-alert-image"
-      className="inline-block w-[480px] overflow-hidden rounded-[2rem] bg-white shadow-[0_32px_64px_rgba(0,0,0,0.25)]"
+      className="inline-block w-full max-w-[480px] overflow-hidden rounded-[2rem] bg-white shadow-[0_32px_64px_rgba(0,0,0,0.25)]"
       style={{ fontFamily: "Nunito, Arial, sans-serif" }}
     >
       {/* Header rojo */}

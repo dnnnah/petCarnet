@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Download,
   ExternalLink,
-  Folder,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { DocumentFilters, type DocumentFilter } from "@/components/features/pet-profile/DocumentFilters";
