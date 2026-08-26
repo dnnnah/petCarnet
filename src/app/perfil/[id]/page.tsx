@@ -12,6 +12,7 @@ import { LostPetInstructions } from "@/components/features/pet-profile/LostPetIn
 import { PetHeader } from "@/components/features/pet-profile/PetHeader";
 import { ProfileNav } from "@/components/features/pet-profile/ProfileNav";
 import { QRShareCard } from "@/components/features/pet-profile/QRShareCard";
+import { RecentPhotos } from "@/components/features/pet-profile/RecentPhotos";
 import { ThankYouBanner } from "@/components/features/pet-profile/ThankYouBanner";
 import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeline";
 import { VetCard } from "@/components/features/pet-profile/VetCard";
@@ -95,6 +96,11 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               <VetCard vet={profile.vet} species={pet.mascota.especie} />
             </div>
           </div>
+          {profile.photos.length > 0 ? (
+            <div id="fotos">
+              <RecentPhotos photos={profile.photos} />
+            </div>
+          ) : null}
           <div id="vacunas">
             <VaccineTimeline petId={pet.id} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
           </div>
@@ -184,6 +190,15 @@ function toProfileProps(pet: PetProfile) {
       status: toVaccineLabel(vaccine.estatus),
     })),
     documents: visibleDocuments.slice(0, 3),
+    photos: visibleDocuments
+      .filter((doc) => doc.categoria === "foto")
+      .map((doc) => ({
+        id: doc.id,
+        name: doc.nombre,
+        url: doc.url,
+        date: formatMexicanDate(doc.fecha) ?? doc.fecha,
+        description: doc.descripcion,
+      })),
   };
 }
 

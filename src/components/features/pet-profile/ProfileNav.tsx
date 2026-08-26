@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import {
+  Camera,
   FileText,
   Heart,
   PawPrint,
@@ -21,6 +22,7 @@ const navItems: NavItem[] = [
   { id: "info", label: "Información", icon: PawPrint },
   { id: "salud", label: "Salud", icon: Heart },
   { id: "veterinario", label: "Veterinario", icon: Stethoscope },
+  { id: "fotos", label: "Fotos", icon: Camera },
   { id: "vacunas", label: "Vacunas", icon: ShieldCheck },
   { id: "documentos", label: "Documentos", icon: FileText },
 ];

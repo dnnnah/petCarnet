@@ -3,12 +3,13 @@ import {
   CalendarDays,
   Copy,
   Heart,
+  Mars,
   Microchip,
   PawPrint,
   Ruler,
   ShieldCheck,
   Sparkles,
-  VenusAndMars,
+  Venus,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 
@@ -79,7 +80,7 @@ export function PetHeader({ pet }: PetHeaderProps) {
             <Badge tone="mint" icon={<CalendarDays size={18} />}>
               {pet.age}
             </Badge>
-            <Badge tone="pink" icon={<VenusAndMars size={18} />}>
+            <Badge tone={pet.gender === "Macho" ? "blue" : "pink"} icon={pet.gender === "Macho" ? <Mars size={18} /> : <Venus size={18} />}>
               {pet.gender}
             </Badge>
             <Badge tone="blue" icon={<Ruler size={18} />}>
