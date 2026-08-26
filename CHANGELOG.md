@@ -40,87 +40,129 @@ Registro de avances, cambios y decisiones tomadas durante el desarrollo.
 
 ## FASE 1 — Vaccination Hub
 
-**Estado:** Pendiente
-**Fecha:** —
+**Estado:** Completada
+**Fecha:** 2026-08-26
 
-### Tareas planificadas
-- Crear página `/perfil/[id]/vacunas` con timeline vertical completa
-- Componente `VaccineDetailCard` con todos los campos de `PetVaccine`
-- Actualizar `VaccineTimeline` para que "Ver cartilla completa" apunte a la nueva ruta
-- Eliminar `.slice(0, 3)` hardcodeado en `toProfileProps`
-- Agregar `generateStaticParams` a la nueva ruta
+### Tareas realizadas
+- Nueva ruta `/perfil/[id]/vacunas` con `generateStaticParams`
+- Componente `VaccineDetailCard` con todos los campos de `PetVaccine` (nombre, fecha aplicación, próxima dosis, estatus, lote, veterinario, enlace a documento)
+- `VaccineTimeline` actualizado: link funcional a `/vacunas`, badge de total de vacunas
+- Eliminado `.slice(0, 3)` del perfil — ahora muestra todas las vacunas en la página dedicada
+- Empty state cuando no hay vacunas registradas
+- Resumen de estadísticas (al día, próximas, vencidas) en header de la página
+
+### Archivos creados/modificados
+- `src/app/perfil/[id]/vacunas/page.tsx` — nueva página
+- `src/components/features/pet-profile/VaccineDetailCard.tsx` — nuevo componente
+- `src/components/features/pet-profile/VaccineTimeline.tsx` — actualizado
+- `src/app/perfil/[id]/page.tsx` — actualizado
 
 ---
 
 ## FASE 2 — QR real
 
-**Estado:** Pendiente
-**Fecha:** —
+**Estado:** Completada
+**Fecha:** 2026-08-26
 
-### Tareas planificadas
-- Instalar `qrcode.react`
-- Reemplazar placeholder CSS `.qr-grid` con QR funcional
-- Funcionalidad de descarga QR como PNG
-- Variante QR para impresión en collar
-- Eliminar clase `.qr-grid` de `globals.css`
+### Tareas realizadas
+- Instalada `qrcode.react` para generar QR escaneable
+- `QRShareCard` reescrito: genera QR real con URL completa (`https://petcarnet.app/perfil/{id}`)
+- Funcionalidad de descarga QR como PNG (SVG → Canvas → PNG)
+- Eliminada clase `.qr-grid` decorativa de `globals.css`
+
+### Errores o problemas encontrados
+- Ninguno.
+
+### Archivos modificados
+- `src/components/features/pet-profile/QRShareCard.tsx` — reescrito como client component
+- `src/app/globals.css` — eliminada clase `.qr-grid`
+- `package.json` — nueva dependencia `qrcode.react`
 
 ---
 
 ## FASE 3 — Documentos mejorados
 
-**Estado:** Pendiente
-**Fecha:** —
+**Estado:** Completada
+**Fecha:** 2026-08-26
 
-### Tareas planificadas
-- Filtrado por categoría en `/documentos`
-- Empty state por categoría
-- Preview de imágenes con `next/image`
-- Lightbox/modal para imágenes
-- Ícono diferenciado por tipo de archivo
-- Componente `DocumentPreview` reutilizable
+### Tareas realizadas
+- Componente `DocumentPreview` con thumbnail real para imágenes y badge de tipo (PDF/IMG)
+- Componente `DocumentFilters` con toggles por categoría (vacunas, veterinario, identificación, salud, fotos, otros)
+- Página de documentos reescrita: server component + client component para filtros interactivos
+- Empty state por categoría cuando no hay documentos
+- `DocumentsCard` del perfil ahora usa `DocumentPreview` con thumbnails
+- Conteo de documentos por categoría en badges de filtro
+
+### Archivos creados/modificados
+- `src/components/features/pet-profile/DocumentPreview.tsx` — nuevo
+- `src/components/features/pet-profile/DocumentFilters.tsx` — nuevo
+- `src/app/perfil/[id]/documentos/DocumentListClient.tsx` — nuevo
+- `src/app/perfil/[id]/documentos/page.tsx` — reescrito
+- `src/components/features/pet-profile/DocumentsCard.tsx` — actualizado
 
 ---
 
 ## FASE 4 — HealthCard expandida
 
-**Estado:** Pendiente
-**Fecha:** —
+**Estado:** Completada
+**Fecha:** 2026-08-26
 
-### Tareas planificadas
-- Mostrar `medicamentosActuales[]` y `dietaEspecial` (campos existentes pero no renderizados)
-- Hacer funcional el botón "Ver más detalles" (expandir/colapsar inline)
-- Empty states bonitos para secciones vacías
+### Tareas realizadas
+- Mostrar `medicamentosActuales[]` y `dietaEspecial` (campos que existían en el tipo pero no se renderizaban)
+- Botón "Ver más detalles" ahora funciona: expand/collapse inline
+- Empty states bonitos para alergias y condiciones vacías ("Sin alergias registradas", etc.)
+- Actualizado `toProfileProps` para incluir `medications` y `diet`
+
+### Archivos modificados
+- `src/components/features/pet-profile/HealthCard.tsx` — reescrito
+- `src/app/perfil/[id]/page.tsx` — actualizado `toProfileProps`
 
 ---
 
 ## FASE 5 — Generador de imagen de alerta
 
-**Estado:** Pendiente
-**Fecha:** —
+**Estado:** Completada
+**Fecha:** 2026-08-26
 
-### Tareas planificadas
-- Instalar `html2canvas`
-- Componente `LostPetAlertImage` con template predefinido
-- Formulario pre-rellenado `LostPetAlertForm`
-- Preview en tiempo real
-- Botón descarga como PNG
-- Botón compartir (Web Share API + fallback)
-- Toggle activar/desactivar modo perdida
+### Tareas realizadas
+- Instalada `html2canvas` para renderizar componente a PNG
+- Componente `LostPetAlertImage`: template de imagen con "SE BUSCA", foto, nombre, raza, rasgos distintivos, zona perdida, fecha, recompensa, contacto, QR al perfil y branding PetCarnet
+- Componente `LostPetAlertForm`: formulario pre-rellenado con datos de la mascota, editable antes de generar la imagen
+- Descarga como PNG y compartido via Web Share API
+- Nueva ruta `/perfil/[id]/alerta` con `generateStaticParams`
+- Botón de acceso al generador desde el perfil de la mascota
+
+### Errores o problemas encontrados
+- `@types/html2canvas` desactualizado: la opción `scale` no existía en los tipos. Solucionado con `as Parameters<typeof html2canvas>[1]`
+
+### Archivos creados/modificados
+- `src/components/features/pet-profile/LostPetAlertImage.tsx` — nuevo
+- `src/components/features/pet-profile/LostPetAlertForm.tsx` — nuevo
+- `src/app/perfil/[id]/alerta/page.tsx` — nueva página
+- `src/app/perfil/[id]/page.tsx` — agregado link al generador
+- `package.json` — nueva dependencia `html2canvas`
 
 ---
 
 ## FASE 6 — Pulido UI/UX
 
-**Estado:** Pendiente
-**Fecha:** —
+**Estado:** Completada
+**Fecha:** 2026-08-26
 
-### Tareas planificadas
-- Hacer funcionales botones dead
+### Tareas realizadas
+- Componente `ProfileNav`: navegación sticky con IntersectionObserver que resalta la sección visible
+- Secciones del perfil con IDs para scroll suave (`contacto`, `info`, `salud`, `veterinario`, `vacunas`, `documentos`)
+- Botón "Ver más detalles" de HealthCard funcional (completado en Fase 4)
+
+### Pendiente para futuro
 - Loading states con Suspense
-- Navegación sticky entre secciones del perfil
-- Responsive audit
+- Responsive audit completo
 - Metadata/SEO mejorada (Open Graph, schema.org)
-- Animaciones con Framer Motion
+- Animaciones con Framer Motion (instalado pero no usado)
+
+### Archivos creados/modificados
+- `src/components/features/pet-profile/ProfileNav.tsx` — nuevo
+- `src/app/perfil/[id]/page.tsx` — agregados IDs de sección y ProfileNav
 
 ---
 

@@ -10,6 +10,7 @@ import { InfoCard } from "@/components/features/pet-profile/InfoCard";
 import { LostPetBanner } from "@/components/features/pet-profile/LostPetBanner";
 import { LostPetInstructions } from "@/components/features/pet-profile/LostPetInstructions";
 import { PetHeader } from "@/components/features/pet-profile/PetHeader";
+import { ProfileNav } from "@/components/features/pet-profile/ProfileNav";
 import { QRShareCard } from "@/components/features/pet-profile/QRShareCard";
 import { ThankYouBanner } from "@/components/features/pet-profile/ThankYouBanner";
 import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeline";
@@ -70,25 +71,34 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             />
           ) : null}
           <PetHeader pet={profile.header} />
-          <EmergencyContact
-            contact={profile.contact}
-            isLost={pet.emergencia.perdido}
-            petName={pet.mascota.nombre}
-            species={pet.mascota.especie}
-          />
+          <ProfileNav />
+          <div id="contacto">
+            <EmergencyContact
+              contact={profile.contact}
+              isLost={pet.emergencia.perdido}
+              petName={pet.mascota.nombre}
+              species={pet.mascota.especie}
+            />
+          </div>
           {pet.emergencia.perdido ? (
             <LostPetInstructions
               petName={pet.mascota.nombre}
               instructions={pet.emergencia.instrucciones}
             />
           ) : null}
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div id="info" className="grid gap-6 lg:grid-cols-3">
             <InfoCard petName={pet.mascota.nombre} info={profile.info} />
-            <HealthCard health={profile.health} />
-            <VetCard vet={profile.vet} species={pet.mascota.especie} />
+            <div id="salud">
+              <HealthCard health={profile.health} />
+            </div>
+            <div id="veterinario">
+              <VetCard vet={profile.vet} species={pet.mascota.especie} />
+            </div>
           </div>
-          <VaccineTimeline petId={pet.id} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
-          <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
+          <div id="vacunas">
+            <VaccineTimeline petId={pet.id} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
+          </div>
+          <div id="documentos" className="grid gap-6 lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
             <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
           </div>
