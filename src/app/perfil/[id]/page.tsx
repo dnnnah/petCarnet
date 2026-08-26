@@ -148,6 +148,8 @@ function toProfileProps(pet: PetProfile) {
     health: {
       allergies: pet.salud.alergias,
       conditions: pet.salud.condicionesMedicas,
+      medications: pet.salud.medicamentosActuales,
+      diet: pet.salud.dietaEspecial,
       behavior: pet.salud.comportamiento,
     },
     vet: {
