@@ -1,0 +1,173 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - link "PetCarnet Pasaporte Digital" [ref=f1e4]:
+        - /url: /
+        - generic [ref=f1e11]:
+          - generic [ref=f1e12]: PetCarnet
+          - generic [ref=f1e13]: Pasaporte Digital
+      - generic [ref=f1e14]: Perfil Verificado
+    - main [ref=f1e19]:
+      - generic [ref=f1e21]:
+        - generic [ref=f1e23]:
+          - img "Foto de Lucca" [ref=f1e39]
+          - generic [ref=f1e40]:
+            - heading "Lucca" [level=1] [ref=f1e47]
+            - paragraph [ref=f1e48]: Schnauzer miniatura · Perro
+            - generic [ref=f1e49]:
+              - generic [ref=f1e50]: 3 años 7 meses
+              - generic [ref=f1e53]: Macho
+              - generic [ref=f1e58]: Miniatura
+            - generic [ref=f1e65]: "ID PetCarnet: PC-LUCCA-001"
+            - generic [ref=f1e70]:
+              - article [ref=f1e71]:
+                - paragraph [ref=f1e76]: Vacunas
+                - paragraph [ref=f1e77]: Al día
+              - article [ref=f1e78]:
+                - paragraph [ref=f1e82]: Esterilizado
+                - paragraph [ref=f1e83]: "No"
+              - article [ref=f1e84]:
+                - paragraph [ref=f1e88]: Microchip
+                - paragraph [ref=f1e89]: No cuenta
+        - navigation [ref=f1e90]:
+          - generic [ref=f1e91]:
+            - button "Contacto" [ref=f1e92]
+            - button "Información" [ref=f1e96]
+            - button "Salud" [ref=f1e103]
+            - button "Veterinario" [ref=f1e107]
+            - button "Vacunas" [ref=f1e113]
+            - button "Documentos" [ref=f1e118]
+        - generic [ref=f1e128]:
+          - generic [ref=f1e129]:
+            - heading "Contacto de Emergencia" [level=2] [ref=f1e130]
+            - paragraph [ref=f1e131]: Si encontraste a Lucca, por favor contáctanos.
+            - paragraph [ref=f1e132]: "Zona segura: cerca de casa"
+          - generic [ref=f1e133]:
+            - link "Llamar 56 5609 1856" [ref=f1e134]:
+              - /url: tel:5656091856
+              - generic [ref=f1e138]:
+                - generic [ref=f1e139]: Llamar
+                - generic [ref=f1e140]: 56 5609 1856
+            - link "WhatsApp Enviar mensaje" [ref=f1e141]:
+              - /url: https://wa.me/5656091856?text=Hola%2C%20encontr%C3%A9%20a%20Lucca.%20Escane%C3%A9%20el%20QR%20de%20su%20collar.
+              - generic [ref=f1e146]:
+                - generic [ref=f1e147]: WhatsApp
+                - generic [ref=f1e148]: Enviar mensaje
+            - link "Ubicación Zona habitual" [ref=f1e149]:
+              - /url: https://maps.google.com/?q=San%20Buenaventura%2C%20Ixtapaluca
+              - generic [ref=f1e154]:
+                - generic [ref=f1e155]: Ubicación
+                - generic [ref=f1e156]: Zona habitual
+        - generic [ref=f1e157]:
+          - generic [ref=f1e158]:
+            - heading [level=2] [ref=f1e165]
+            - generic [ref=f1e169]:
+              - paragraph [ref=f1e176]: "Especie: Perro"
+              - paragraph [ref=f1e183]: "Raza: Schnauzer miniatura"
+              - paragraph [ref=f1e190]: "Color: Sal con pimienta"
+              - paragraph [ref=f1e197]: "Peso: 7 kg"
+              - paragraph [ref=f1e204]: "Fecha de nacimiento: 7 de enero de 2023"
+              - generic [ref=f1e211]:
+                - paragraph [ref=f1e212]: "Rasgos distintivos:"
+                - paragraph [ref=f1e213]: Tiene los bigotes dorados
+                - paragraph [ref=f1e214]: Las orejas siempre están levantadas
+          - generic [ref=f1e216]:
+            - heading [level=2] [ref=f1e223]
+            - generic [ref=f1e227]:
+              - generic [ref=f1e228]:
+                - generic [ref=f1e229]: Alergias
+                - paragraph [ref=f1e231]: Sin alergias registradas
+              - generic [ref=f1e232]:
+                - generic [ref=f1e233]: Condiciones
+                - paragraph [ref=f1e235]: Sin condiciones registradas
+              - generic [ref=f1e236]:
+                - generic [ref=f1e237]: Comportamiento
+                - paragraph [ref=f1e238]: Amigable y curioso, puede asustarse con ruidos fuertes.
+          - generic [ref=f1e240]:
+            - heading [level=2] [ref=f1e242]
+            - generic [ref=f1e248]:
+              - generic [ref=f1e249]:
+                - paragraph [ref=f1e250]: Alux veterinaria
+                - paragraph [ref=f1e251]: Veterinaria Alux
+              - link "55 3448 7768" [ref=f1e252]:
+                - /url: tel:55 3448 7768
+              - paragraph [ref=f1e255]: Roma Norte, CDMX
+        - generic [ref=f1e270]:
+          - generic [ref=f1e271]:
+            - heading "Registro de Vacunas 3" [level=2] [ref=f1e272]:
+              - text: Registro de Vacunas
+              - generic [ref=f1e277]: "3"
+            - link "Ver cartilla completa" [ref=f1e278]:
+              - /url: /perfil/lucca/vacunas
+          - generic [ref=f1e281]:
+            - article [ref=f1e282]:
+              - generic [ref=f1e286]:
+                - generic [ref=f1e287]: Rabia
+                - generic [ref=f1e288]: 15 ene 2025
+                - generic [ref=f1e289]: Al día
+            - article [ref=f1e290]:
+              - generic [ref=f1e294]:
+                - generic [ref=f1e295]: Parvovirus
+                - generic [ref=f1e296]: 20 feb 2025
+                - generic [ref=f1e297]: Al día
+            - article [ref=f1e298]:
+              - generic [ref=f1e303]:
+                - generic [ref=f1e304]: Triple Canina
+                - generic [ref=f1e305]: 15 ene 2026
+                - generic [ref=f1e306]: Próxima dosis
+        - generic [ref=f1e307]:
+          - generic [ref=f1e308]:
+            - generic [ref=f1e309]:
+              - heading "Documentos" [level=2] [ref=f1e310]
+              - link "Ver todos" [ref=f1e313]:
+                - /url: /perfil/lucca/documentos
+            - generic [ref=f1e316]:
+              - generic [ref=f1e317]:
+                - link "PDF Cartilla de Vacunación PDF · 2.4 MB Vacunas" [ref=f1e318]:
+                  - /url: /docs/lucca/cartilla-vacunacion.pdf
+                  - generic [ref=f1e319]: PDF
+                  - generic [ref=f1e325]:
+                    - generic [ref=f1e326]: Cartilla de Vacunación
+                    - generic [ref=f1e327]: PDF · 2.4 MB
+                    - generic [ref=f1e328]: Vacunas
+                - link "Descargar Cartilla de Vacunación" [ref=f1e329]:
+                  - /url: /docs/lucca/cartilla-vacunacion.pdf
+              - generic [ref=f1e333]:
+                - link "PDF Comprobante Veterinario PDF · 1.1 MB Veterinario" [ref=f1e334]:
+                  - /url: /docs/lucca/comprobante-veterinario.pdf
+                  - generic [ref=f1e335]: PDF
+                  - generic [ref=f1e342]:
+                    - generic [ref=f1e343]: Comprobante Veterinario
+                    - generic [ref=f1e344]: PDF · 1.1 MB
+                    - generic [ref=f1e345]: Veterinario
+                - link "Descargar Comprobante Veterinario" [ref=f1e346]:
+                  - /url: /docs/lucca/comprobante-veterinario.pdf
+              - generic [ref=f1e350]:
+                - link "Foto Reciente IMG Foto Reciente Imagen · 620 KB Foto" [ref=f1e351]:
+                  - /url: /docs/lucca/foto-reciente.jpg
+                  - generic [ref=f1e353]:
+                    - img "Foto Reciente" [ref=f1e354]
+                    - generic [ref=f1e355]: IMG
+                  - generic [ref=f1e356]:
+                    - generic [ref=f1e357]: Foto Reciente
+                    - generic [ref=f1e358]: Imagen · 620 KB
+                    - generic [ref=f1e359]: Foto
+                - link "Descargar Foto Reciente" [ref=f1e360]:
+                  - /url: /docs/lucca/foto-reciente.jpg
+          - generic [ref=f1e365]:
+            - generic [ref=f1e366]:
+              - paragraph [ref=f1e374]: Escanea para ver el perfil de Lucca
+              - paragraph [ref=f1e375]: https://petcarnet.app/perfil/lucca
+            - button "Descargar QR" [ref=f1e386]
+        - link "Generar alerta de mascota perdida" [ref=f1e390]:
+          - /url: /perfil/lucca/alerta
+        - generic [ref=f1e394]:
+          - generic [ref=f1e409]:
+            - paragraph [ref=f1e410]: Gracias por ayudar a Lucca a volver a casa
+            - paragraph [ref=f1e411]: Tu ayuda hace la diferencia.
+          - generic [ref=f1e412]:
+            - paragraph [ref=f1e414]: Con amor,
+            - paragraph [ref=f1e415]: Lucca
+        - paragraph [ref=f1e421]: PetCarnet © 2026 · Pasaporte Digital para Mascotas
+  - button "Open Next.js Dev Tools" [ref=f1e427] [cursor=pointer]
+  - alert [ref=f1e431]

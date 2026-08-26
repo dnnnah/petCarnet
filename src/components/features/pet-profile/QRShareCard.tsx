@@ -56,16 +56,16 @@ export function QRShareCard({ petName, profilePath }: QRShareCardProps) {
   }
 
   return (
-    <GlassCard className="w-full max-w-lg overflow-hidden bg-emerald-50/80 p-5 sm:p-6">
-      <div className="grid grid-cols-[1fr_auto] items-center gap-5">
+    <GlassCard className="h-full overflow-hidden bg-emerald-50/80 p-5 lg:p-6">
+      <div className="grid h-full grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-1">
         <div>
           <div className="mb-4 grid h-10 w-10 place-items-center rounded-2xl bg-white text-emerald-600 shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
             <QrCode size={22} />
           </div>
-          <p className="text-lg font-extrabold leading-6 text-gray-950">
+          <p className="max-w-[13rem] text-lg font-extrabold leading-6 text-gray-950">
             Escanea para ver el perfil de {petName}
           </p>
-          <p className="mt-3 text-sm font-bold text-emerald-700 break-all">{fullUrl}</p>
+          <p className="mt-3 text-sm font-bold text-emerald-700">{fullUrl}</p>
           <div className="mt-4 flex gap-2 text-emerald-400">
             <Heart size={18} />
             <Heart size={18} />
@@ -75,11 +75,11 @@ export function QRShareCard({ petName, profilePath }: QRShareCardProps) {
         <div className="flex flex-col items-center gap-3">
           <div
             ref={qrRef}
-            className="grid aspect-square w-32 shrink-0 place-items-center rounded-3xl bg-white p-3 shadow-[0_18px_32px_rgba(17,24,39,0.12)] sm:w-36"
+            className="grid aspect-square w-32 shrink-0 place-items-center rounded-3xl bg-white p-2 shadow-[0_18px_32px_rgba(17,24,39,0.12)] sm:w-36 lg:mx-auto lg:w-40"
           >
             <QRCodeSVG
               value={fullUrl}
-              size={160}
+              size={112}
               bgColor="#ffffff"
               fgColor="#111827"
               level="M"

@@ -98,11 +98,9 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           <div id="vacunas">
             <VaccineTimeline petId={pet.id} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
           </div>
-          <div id="documentos">
+          <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
-            <div className="mt-6 flex justify-center">
-              <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
-            </div>
+            <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
           </div>
           <Link
             href={`/perfil/${pet.id}/alerta`}
