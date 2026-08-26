@@ -1,7 +1,10 @@
+import Link from "next/link";
 import { Check, ChevronRight, Clock, ShieldCheck } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 
 type VaccineTimelineProps = {
+  petId: string;
+  totalCount: number;
   vaccines: ReadonlyArray<{
     name: string;
     date: string;
@@ -9,7 +12,7 @@ type VaccineTimelineProps = {
   }>;
 };
 
-export function VaccineTimeline({ vaccines }: VaccineTimelineProps) {
+export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimelineProps) {
   return (
     <GlassCard className="overflow-hidden p-6 lg:p-7">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -18,11 +21,16 @@ export function VaccineTimeline({ vaccines }: VaccineTimelineProps) {
             <ShieldCheck size={22} />
           </span>
           Registro de Vacunas
+          {totalCount > 0 ? (
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-extrabold text-emerald-700 ring-1 ring-emerald-200">
+              {totalCount}
+            </span>
+          ) : null}
         </h2>
-        <a href="#" className="flex items-center gap-2 text-sm font-extrabold text-emerald-600">
+        <Link href={`/perfil/${petId}/vacunas`} className="flex items-center gap-2 text-sm font-extrabold text-emerald-600">
           Ver cartilla completa
           <ChevronRight size={18} />
-        </a>
+        </Link>
       </div>
 
       <div className="relative mt-7 overflow-x-auto pb-2">

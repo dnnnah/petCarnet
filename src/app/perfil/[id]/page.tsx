@@ -85,7 +85,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             <HealthCard health={profile.health} />
             <VetCard vet={profile.vet} species={pet.mascota.especie} />
           </div>
-          <VaccineTimeline vaccines={profile.vaccines} />
+          <VaccineTimeline petId={pet.id} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
           <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
             <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
@@ -156,7 +156,8 @@ function toProfileProps(pet: PetProfile) {
       phone: formatPhoneForDisplay(pet.veterinario.telefono),
       address: pet.configuracionPublica.mostrarDireccionVet ? pet.veterinario.direccion : "Dirección privada",
     },
-    vaccines: pet.vacunas.slice(0, 3).map((vaccine) => ({
+    vaccineTotalCount: pet.vacunas.length,
+    vaccines: pet.vacunas.map((vaccine) => ({
       name: vaccine.nombre,
       date: formatMexicanDate(vaccine.estatus === "proxima_dosis" ? vaccine.proximaDosis : vaccine.fechaAplicacion, "short") ?? "Fecha pendiente",
       status: toVaccineLabel(vaccine.estatus),
