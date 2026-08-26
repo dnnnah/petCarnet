@@ -111,7 +111,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </Link>
           <ThankYouBanner isLost={pet.emergencia.perdido} petName={pet.mascota.nombre} species={pet.mascota.especie} />
           <p className="text-center text-sm font-bold text-gray-400">
-            PetCarnet © 2026 · Pasaporte Digital para Mascotas
+            PetCarnet © {new Date().getFullYear()} · Pasaporte Digital para Mascotas
           </p>
         </div>
       </div>

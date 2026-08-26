@@ -57,7 +57,7 @@ export function QRShareCard({ petName, profilePath }: QRShareCardProps) {
 
   return (
     <GlassCard className="h-full overflow-hidden bg-emerald-50/80 p-5 lg:p-6">
-      <div className="grid h-full grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-1">
+      <div className="grid h-full grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-1">
         <div>
           <div className="mb-4 grid h-10 w-10 place-items-center rounded-2xl bg-white text-emerald-600 shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
             <QrCode size={22} />
