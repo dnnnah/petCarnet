@@ -1,5 +1,6 @@
-import { Cat, Dog, MapPin, Phone, Send } from "lucide-react";
+import { MapPin, Phone, Send } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
+import { PetSpeciesIcon } from "@/lib/petIcon";
 
 type EmergencyContactProps = {
   isLost?: boolean;
@@ -22,7 +23,6 @@ export function EmergencyContact({
   petName,
   species,
 }: EmergencyContactProps) {
-  const PetIcon = species.toLowerCase().includes("gato") ? Cat : Dog;
 
   return (
     <section
@@ -43,7 +43,7 @@ export function EmergencyContact({
           isLost ? "text-rose-400 ring-rose-100" : "text-amber-400 ring-amber-100",
         ].join(" ")}
       >
-        <PetIcon size={54} strokeWidth={1.8} />
+        <PetSpeciesIcon species={species} size={54} strokeWidth={1.8} />
       </div>
       <div className="relative grid items-center gap-5 lg:grid-cols-[1fr_1.7fr]">
         <div>

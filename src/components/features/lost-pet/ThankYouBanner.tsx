@@ -1,4 +1,5 @@
-import { Cat, Dog, Heart, PawPrint } from "lucide-react";
+import { Heart, PawPrint } from "lucide-react";
+import { PetSpeciesIcon } from "@/lib/petIcon";
 
 type ThankYouBannerProps = {
   isLost?: boolean;
@@ -7,7 +8,6 @@ type ThankYouBannerProps = {
 };
 
 export function ThankYouBanner({ isLost = false, petName, species }: ThankYouBannerProps) {
-  const PetIcon = species.toLowerCase().includes("gato") ? Cat : Dog;
 
   return (
     <footer
@@ -20,7 +20,7 @@ export function ThankYouBanner({ isLost = false, petName, species }: ThankYouBan
     >
       <div className="grid items-center gap-6 md:grid-cols-[150px_1fr_220px]">
         <div className="relative mx-auto grid h-28 w-32 place-items-center rounded-[2rem] bg-white/70 text-amber-400 shadow-[0_12px_26px_rgba(17,24,39,0.07)] ring-1 ring-amber-100">
-          <PetIcon size={74} strokeWidth={1.7} />
+          <PetSpeciesIcon species={species} size={74} strokeWidth={1.7} />
           <div className="absolute bottom-5 left-3 text-pink-400">
             <Heart size={18} />
           </div>

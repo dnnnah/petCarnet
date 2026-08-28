@@ -5,7 +5,7 @@ import {
   Folder,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { DocumentPreview } from "@/components/features/pet-profile/DocumentPreview";
+import { DocumentPreview } from "./DocumentPreview";
 import { getDocumentCategoryLabel, getDocumentMeta } from "@/lib/petDocuments";
 import type { PetDocument } from "@/types/pet";
 
@@ -15,8 +15,6 @@ type DocumentsCardProps = {
 };
 
 export function DocumentsCard({ documents, documentsPath }: DocumentsCardProps) {
-  const publicDocuments = documents.filter((document) => document.visiblePublico);
-
   return (
     <GlassCard className="h-full p-6 lg:p-7">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -30,9 +28,9 @@ export function DocumentsCard({ documents, documentsPath }: DocumentsCardProps) 
         </Link>
       </div>
 
-      {publicDocuments.length > 0 ? (
+      {documents.length > 0 ? (
         <div className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {publicDocuments.map((document) => (
+          {documents.map((document) => (
             <div
               key={document.id}
               className="flex min-h-[80px] sm:min-h-[124px] min-w-0 items-center justify-between gap-3 rounded-[1.45rem] border border-gray-100 bg-white p-3 sm:p-4 shadow-[0_10px_24px_rgba(17,24,39,0.05)]"

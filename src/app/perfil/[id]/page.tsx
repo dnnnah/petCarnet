@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
-import { DocumentsCard } from "@/components/features/pet-profile/DocumentsCard";
+import { DocumentsCard } from "@/components/features/documents/DocumentsCard";
+import { LostPetBanner } from "@/components/features/lost-pet/LostPetBanner";
+import { LostPetInstructions } from "@/components/features/lost-pet/LostPetInstructions";
+import { ThankYouBanner } from "@/components/features/lost-pet/ThankYouBanner";
 import { EmergencyContact } from "@/components/features/pet-profile/EmergencyContact";
 import { HealthCard } from "@/components/features/pet-profile/HealthCard";
 import { InfoCard } from "@/components/features/pet-profile/InfoCard";
-import { LostPetBanner } from "@/components/features/pet-profile/LostPetBanner";
-import { LostPetInstructions } from "@/components/features/pet-profile/LostPetInstructions";
 import { PetHeader } from "@/components/features/pet-profile/PetHeader";
 import { ProfileNav } from "@/components/features/pet-profile/ProfileNav";
 import { QRShareCard } from "@/components/features/pet-profile/QRShareCard";
 import { RecentPhotos } from "@/components/features/pet-profile/RecentPhotos";
-import { ThankYouBanner } from "@/components/features/pet-profile/ThankYouBanner";
 import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeline";
 import { VetCard } from "@/components/features/pet-profile/VetCard";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
+import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
 import { toProfileViewModel } from "@/lib/mapping/profile";
 
 type ProfilePageProps = {
@@ -48,11 +48,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const { id } = await params;
-  const pet = getPetById(id);
-
-  if (!pet) {
-    notFound();
-  }
+  const pet = getPetOrNotFound(id);
 
   const profile = toProfileViewModel(pet);
 

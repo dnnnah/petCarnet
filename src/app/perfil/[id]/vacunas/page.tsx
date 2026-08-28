@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -9,6 +8,7 @@ import { getVaccineSummary } from "@/lib/mapping/vaccines";
 import { VaccineDetailCard } from "@/components/features/pet-profile/VaccineDetailCard";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
+import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
 
 type VaccinesPageProps = {
   params: Promise<{ id: string }>;
@@ -36,11 +36,7 @@ export async function generateMetadata({ params }: VaccinesPageProps): Promise<M
 
 export default async function VaccinesPage({ params }: VaccinesPageProps) {
   const { id } = await params;
-  const pet = getPetById(id);
-
-  if (!pet) {
-    notFound();
-  }
+  const pet = getPetOrNotFound(id);
 
   const vaccines = pet.vacunas;
   const { total, alDia, proximas, vencidas } = getVaccineSummary(pet);

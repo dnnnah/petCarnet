@@ -1,5 +1,6 @@
-import { Cat, Dog, MapPin, Phone, Plus, Stethoscope } from "lucide-react";
+import { MapPin, Phone, Plus, Stethoscope } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { PetSpeciesIcon } from "@/lib/petIcon";
 
 type VetCardProps = {
   species: string;
@@ -12,7 +13,6 @@ type VetCardProps = {
 };
 
 export function VetCard({ vet, species }: VetCardProps) {
-  const PetIcon = species.toLowerCase().includes("gato") ? Cat : Dog;
 
   return (
     <GlassCard className="relative h-full overflow-hidden p-6 lg:p-7">
@@ -41,7 +41,7 @@ export function VetCard({ vet, species }: VetCardProps) {
 
       <div className="mt-8 flex justify-end">
         <div className="flex items-end gap-3 rounded-[2rem] bg-gradient-to-br from-emerald-50 to-amber-50 px-5 py-4 text-gray-900 ring-1 ring-emerald-100/80">
-          <PetIcon className="text-amber-400" size={64} strokeWidth={1.7} />
+          <PetSpeciesIcon species={species} className="text-amber-400" size={64} strokeWidth={1.7} />
           <Stethoscope className="mb-2 text-emerald-500" size={54} strokeWidth={1.7} />
         </div>
       </div>

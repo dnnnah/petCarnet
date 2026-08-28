@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, Cat, Dog, Heart, PawPrint, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, Heart, PawPrint, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { getAllPets } from "@/lib/getAllPets";
+import { PetSpeciesIcon } from "@/lib/petIcon";
 
 export default function Home() {
   const pets = getAllPets();
@@ -91,7 +92,7 @@ export default function Home() {
                               : "bg-pink-100 text-pink-500",
                           ].join(" ")}
                         >
-                          {pet.mascota.especie === "Gato" ? <Cat size={22} /> : <Dog size={22} />}
+                          <PetSpeciesIcon species={pet.mascota.especie} size={22} />
                         </div>
                         <div>
                           <div className="flex flex-wrap items-center gap-2">
@@ -112,8 +113,8 @@ export default function Home() {
                         className="text-gray-300 transition group-hover:text-emerald-500"
                         size={20}
                       />
-                    </Link>
-                  ))}
+                      </Link>
+                    ))}
                 </div>
               </div>
             </div>

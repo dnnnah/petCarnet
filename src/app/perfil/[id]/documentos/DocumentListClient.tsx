@@ -6,8 +6,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { DocumentFilters, type DocumentFilter } from "@/components/features/pet-profile/DocumentFilters";
-import { DocumentPreview } from "@/components/features/pet-profile/DocumentPreview";
+import { DocumentFilters, type DocumentFilter } from "@/components/features/documents/DocumentFilters";
+import { DocumentPreview } from "@/components/features/documents/DocumentPreview";
 import { formatMexicanDate } from "@/lib/dateFormat";
 import { getDocumentCategoryLabel, getDocumentMeta } from "@/lib/petDocuments";
 import type { PetDocument, PetDocumentCategory } from "@/types/pet";

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ArrowLeft, Folder } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -8,6 +7,7 @@ import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { DocumentListClient } from "./DocumentListClient";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
+import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
 import { getPublicDocuments } from "@/lib/petDocuments";
 
 type DocumentsPageProps = {
@@ -36,11 +36,7 @@ export async function generateMetadata({ params }: DocumentsPageProps): Promise<
 
 export default async function DocumentsPage({ params }: DocumentsPageProps) {
   const { id } = await params;
-  const pet = getPetById(id);
-
-  if (!pet) {
-    notFound();
-  }
+  const pet = getPetOrNotFound(id);
 
   const documents = getPublicDocuments(pet);
 

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ArrowLeft, AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
-import { LostPetAlertForm } from "@/components/features/pet-profile/LostPetAlertForm";
+import { LostPetAlertForm } from "@/components/features/lost-pet/LostPetAlertForm";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
+import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
 
 type AlertPageProps = {
   params: Promise<{ id: string }>;
@@ -34,11 +34,7 @@ export async function generateMetadata({ params }: AlertPageProps): Promise<Meta
 
 export default async function AlertPage({ params }: AlertPageProps) {
   const { id } = await params;
-  const pet = getPetById(id);
-
-  if (!pet) {
-    notFound();
-  }
+  const pet = getPetOrNotFound(id);
 
   return (
     <AppShell>

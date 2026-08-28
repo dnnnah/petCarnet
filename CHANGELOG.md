@@ -6,7 +6,7 @@ Registro de avances, cambios y decisiones tomadas durante el desarrollo.
 
 ## FASE 10 — Refactor de arquitectura (SOLID / DRY)
 
-**Estado:** En progreso (Fase 10.1 completada)
+**Estado:** En progreso (Fases 10.1–10.3 completadas)
 **Fecha:** 2026-08-27
 
 Trabajo de limpieza de arquitectura con foco en SOLID, DRY y eliminación de deuda técnica. Se mantiene la arquitectura base (Next.js App Router + capas `types`/`lib`/`ui`/`features`/páginas), que ya era la correcta; se corrigen acoplamientos, duplicaciones y un bug latente.
@@ -91,6 +91,53 @@ Dejar un proyecto con las piezas de dominio y presentación correctamente segreg
 ### Archivos modificados / creados
 - `src/lib/mapping/profile.ts` — nuevo (mapper de perfil)
 - `src/app/perfil/[id]/page.tsx` — usa `toProfileViewModel`; lógica del mapper removida
+
+---
+
+#### 10.3 Reorganización por feature y helpers (FASE COMPLETADA)
+
+##### 10.3.1 Reorganización por feature
+Se agruparon los componentes por responsabilidad de negocio (feature-slicing) para que el feature "perfil" deje de mezclar responsabilidades:
+- **`src/components/features/lost-pet/`** (nueva): `LostPetBanner`, `LostPetInstructions`, `ThankYouBanner`, `LostPetAlertForm`, `LostPetAlertImage`.
+- **`src/components/features/documents/`** (nueva): `DocumentsCard`, `DocumentFilters`, `DocumentPreview`.
+- **`src/components/features/pet-profile/`**: conserva Header, Info, Salud, Veterinario, Contacto, Fotos, Navegación, QR y Vacunas.
+
+Actualizados todos los imports afectados:
+- `perfil/[id]/page.tsx`, `perfil/[id]/alerta/page.tsx`, `perfil/[id]/documentos/DocumentListClient.tsx`, `documents/DocumentsCard.tsx`.
+
+##### 10.3.2 Helper de icono de especie
+- **Nuevo** `src/lib/petIcon.tsx`: componente `PetSpeciesIcon` que retorna `Cat`/`Dog` por especie.
+- Reemplazó el patrón duplicado `species.toLowerCase().includes("gato") ? Cat : Dog` en 4 lugares: `Home (page.tsx)`, `EmergencyContact`, `VetCard`, `ThankYouBanner`.
+- **Problema encontrado:** la versión inicial (`getPetIcon` que retornaba el componente) disparaba la regla de eslint `react-hooks/static-components` ("Cannot create components during render"). Resuelto convirtiéndolo en componente `PetSpeciesIcon`.
+
+##### 10.3.3 Helper `getPetOrNotFound`
+- **Nuevo** `src/lib/getPetOrNotFound.ts`: envuelve `getPetById` + `notFound()`.
+- Eliminó la repetición del patrón `if (!pet) { notFound(); }` en el cuerpo de las 4 páginas de perfil (`perfil`, `vacunas`, `documentos`, `alerta`).
+- `generateMetadata` sigue usando `getPetById` + comprobación (ahí no se lanza `notFound`, se devuelve metadata "no encontrada").
+
+##### 10.3.4 Limpieza de `DocumentsCard`
+- Eliminado el filtro redundante `documents.filter((document) => document.visiblePublico)`: los documentos que recibe ya son públicos (filtrados en el mapper).
+
+### Errores o problemas encontrados
+- **ESLint `react-hooks/static-components`:** crear un componente dentro del render (asignando `const PetIcon = getPetIcon(species)`) está prohibido. Se resolvió con un componente estático `PetSpeciesIcon`.
+- **TS2304** temporal: al mover `page.tsx` al helper, se quitó el import `getPetById` que `generateMetadata` aún necesitaba. Restaurado.
+
+### Verificación Fase 10.3
+- `tsc --noEmit` ✅ sin errores
+- `npm run lint` ✅ sin warnings
+- `npm run build` ✅ compila y genera 48 páginas SSG
+
+### Archivos modificados / creados
+- `src/components/features/lost-pet/` — carpeta nueva con 5 componentes movidos
+- `src/components/features/documents/` — carpeta nueva con 3 componentes movidos
+- `src/lib/petIcon.tsx` — nuevo (`PetSpeciesIcon`)
+- `src/lib/getPetOrNotFound.ts` — nuevo
+- `src/app/page.tsx` — usa `PetSpeciesIcon`
+- `src/components/features/pet-profile/EmergencyContact.tsx` — usa `PetSpeciesIcon`
+- `src/components/features/pet-profile/VetCard.tsx` — usa `PetSpeciesIcon`
+- `src/components/features/lost-pet/ThankYouBanner.tsx` — usa `PetSpeciesIcon`
+- `src/components/features/documents/DocumentsCard.tsx` — filtro redundante eliminado
+- `src/app/perfil/[id]/page.tsx`, `vacunas/page.tsx`, `documentos/page.tsx`, `alerta/page.tsx` — usan `getPetOrNotFound` y rutas actualizadas
 
 ---
 
