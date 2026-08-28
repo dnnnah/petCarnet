@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Check, ChevronRight, Clock, ShieldCheck } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
+import type { VaccineStatusLabel } from "@/lib/domain/vaccineStatus";
 
 type VaccineTimelineProps = {
   petId: string;
@@ -8,11 +9,13 @@ type VaccineTimelineProps = {
   vaccines: ReadonlyArray<{
     name: string;
     date: string;
-    status: "Al día" | "Próxima dosis";
+    status: VaccineStatusLabel;
   }>;
 };
 
 export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimelineProps) {
+  const isNextDose = (status: VaccineStatusLabel) => status === "Próxima dosis";
+
   return (
     <GlassCard className="overflow-hidden p-5 sm:p-6 lg:p-7">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -35,7 +38,7 @@ export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimeline
 
       <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {vaccines.map((vaccine) => {
-          const next = vaccine.status === "Próxima dosis";
+          const next = isNextDose(vaccine.status);
           return (
             <article key={vaccine.name} className="flex items-center gap-4">
               <span

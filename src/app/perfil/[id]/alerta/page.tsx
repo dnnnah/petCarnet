@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
+import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { LostPetAlertForm } from "@/components/features/pet-profile/LostPetAlertForm";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
@@ -51,22 +52,14 @@ export default async function AlertPage({ params }: AlertPageProps) {
             Volver al perfil
           </Link>
 
-          <section className="relative overflow-hidden rounded-[2.25rem] bg-gradient-to-r from-rose-50 via-white to-amber-50 p-6 shadow-[0_16px_38px_rgba(225,29,72,0.09)] ring-1 ring-rose-100 sm:p-8">
-            <div className="absolute -right-4 -top-6 text-rose-100">
-              <AlertTriangle size={96} />
-            </div>
-            <div className="relative">
-              <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-rose-600">
-                Generar alerta
-              </p>
-              <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl">
-                Alerta de {pet.mascota.nombre}
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg font-semibold leading-8 text-gray-600">
-                Genera una imagen para compartir en redes sociales y mensajería cuando tu mascota esté perdida.
-              </p>
-            </div>
-          </section>
+          <SubpageHeader
+            eyebrow="Generar alerta"
+            eyebrowTone="text-rose-600"
+            title={`Alerta de ${pet.mascota.nombre}`}
+            description="Genera una imagen para compartir en redes sociales y mensajería cuando tu mascota esté perdida."
+            icon={<AlertTriangle size={96} />}
+            background="bg-gradient-to-r from-rose-50 via-white to-amber-50 ring-rose-100"
+          />
 
           <LostPetAlertForm pet={pet} />
         </div>

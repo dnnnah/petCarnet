@@ -20,7 +20,8 @@ import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
 import { formatMexicanDate, formatOptionalMexicanDate, getPetAgeText } from "@/lib/dateFormat";
 import { getPublicDocuments } from "@/lib/petDocuments";
-import type { PetProfile, VaccineStatus } from "@/types/pet";
+import { getVaccineStatusMeta } from "@/lib/domain/vaccineStatus";
+import type { PetProfile } from "@/types/pet";
 
 type ProfilePageProps = {
   params: Promise<{ id: string }>;
@@ -187,7 +188,7 @@ function toProfileProps(pet: PetProfile) {
     vaccines: pet.vacunas.map((vaccine) => ({
       name: vaccine.nombre,
       date: formatMexicanDate(vaccine.estatus === "proxima_dosis" ? vaccine.proximaDosis : vaccine.fechaAplicacion, "short") ?? "Fecha pendiente",
-      status: toVaccineLabel(vaccine.estatus),
+      status: getVaccineStatusMeta(vaccine.estatus).label,
     })),
     documents: visibleDocuments.slice(0, 3),
     photos: visibleDocuments
@@ -200,10 +201,6 @@ function toProfileProps(pet: PetProfile) {
         description: doc.descripcion,
       })),
   };
-}
-
-function toVaccineLabel(status: VaccineStatus): "Al día" | "Próxima dosis" {
-  return status === "proxima_dosis" ? "Próxima dosis" : "Al día";
 }
 
 function formatPhoneForDisplay(phone: string) {

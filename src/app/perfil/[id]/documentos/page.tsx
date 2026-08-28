@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Folder } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { DocumentListClient } from "./DocumentListClient";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
@@ -55,22 +56,14 @@ export default async function DocumentsPage({ params }: DocumentsPageProps) {
             Volver al perfil
           </Link>
 
-          <section className="relative overflow-hidden rounded-[2.25rem] bg-gradient-to-r from-emerald-50 via-white to-amber-50 p-6 shadow-[0_16px_38px_rgba(16,185,129,0.09)] ring-1 ring-emerald-100 sm:p-8">
-            <div className="absolute -right-4 -top-6 text-amber-100">
-              <Folder size={96} />
-            </div>
-            <div className="relative">
-              <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-emerald-600">
-                Documentos públicos
-              </p>
-              <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl">
-                Documentos de {pet.mascota.nombre}
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg font-semibold leading-8 text-gray-600">
-                Archivos compartidos por su familia para consulta rápida.
-              </p>
-            </div>
-          </section>
+          <SubpageHeader
+            eyebrow="Documentos públicos"
+            eyebrowTone="text-emerald-600"
+            title={`Documentos de ${pet.mascota.nombre}`}
+            description="Archivos compartidos por su familia para consulta rápida."
+            icon={<Folder size={96} />}
+            background="bg-gradient-to-r from-emerald-50 via-white to-amber-50 ring-emerald-100"
+          />
 
           {documents.length > 0 ? (
             <DocumentListClient documents={documents} />

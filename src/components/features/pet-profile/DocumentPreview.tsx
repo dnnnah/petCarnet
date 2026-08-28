@@ -1,34 +1,9 @@
-import {
-  FileImage,
-  FileText,
-  HeartPulse,
-  IdCard,
-  ShieldCheck,
-  Stethoscope,
-} from "lucide-react";
-import type { PetDocument, PetDocumentCategory, PetDocumentType } from "@/types/pet";
+import { getDocumentCategoryMeta } from "@/lib/domain/documentCategory";
+import type { PetDocument, PetDocumentType } from "@/types/pet";
 
 type DocumentPreviewProps = {
   document: PetDocument;
   size?: "sm" | "md";
-};
-
-const categoryIcons: Record<PetDocumentCategory, typeof ShieldCheck> = {
-  vacunas: ShieldCheck,
-  veterinario: Stethoscope,
-  identificacion: IdCard,
-  salud: HeartPulse,
-  foto: FileImage,
-  otro: FileText,
-};
-
-const categoryTones: Record<PetDocumentCategory, string> = {
-  vacunas: "bg-emerald-50 text-emerald-600 ring-emerald-100",
-  veterinario: "bg-blue-50 text-blue-600 ring-blue-100",
-  identificacion: "bg-violet-50 text-violet-500 ring-violet-100",
-  salud: "bg-pink-50 text-pink-500 ring-pink-100",
-  foto: "bg-amber-50 text-amber-500 ring-amber-100",
-  otro: "bg-gray-50 text-gray-600 ring-gray-100",
 };
 
 const typeBadge: Record<PetDocumentType, { label: string; tones: string }> = {
@@ -38,7 +13,8 @@ const typeBadge: Record<PetDocumentType, { label: string; tones: string }> = {
 };
 
 export function DocumentPreview({ document, size = "md" }: DocumentPreviewProps) {
-  const Icon = categoryIcons[document.categoria];
+  const category = getDocumentCategoryMeta(document.categoria);
+  const Icon = category.icon;
   const badge = typeBadge[document.tipo];
   const isImage = document.tipo === "imagen";
   const iconSize = size === "sm" ? 20 : 28;
@@ -62,7 +38,7 @@ export function DocumentPreview({ document, size = "md" }: DocumentPreviewProps)
           </span>
         </div>
       ) : (
-        <span className={["relative grid shrink-0 place-items-center rounded-2xl ring-1", boxSize, categoryTones[document.categoria]].join(" ")}>
+        <span className={["relative grid shrink-0 place-items-center rounded-2xl ring-1", boxSize, category.chipTones].join(" ")}>
           <Icon size={iconSize} />
           <span className="absolute -bottom-1 -right-1 rounded-full bg-white px-1.5 py-0.5 text-[10px] font-extrabold text-gray-600 shadow ring-1 ring-gray-100">
             {badge.label}

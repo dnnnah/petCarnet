@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
+import { SubpageHeader } from "@/components/ui/SubpageHeader";
+import { getVaccineSummary } from "@/lib/mapping/vaccines";
 import { VaccineDetailCard } from "@/components/features/pet-profile/VaccineDetailCard";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
@@ -41,9 +43,7 @@ export default async function VaccinesPage({ params }: VaccinesPageProps) {
   }
 
   const vaccines = pet.vacunas;
-  const alDia = vaccines.filter((v) => v.estatus === "al_dia").length;
-  const proximas = vaccines.filter((v) => v.estatus === "proxima_dosis").length;
-  const vencidas = vaccines.filter((v) => v.estatus === "vencida").length;
+  const { total, alDia, proximas, vencidas } = getVaccineSummary(pet);
 
   return (
     <AppShell>
@@ -57,42 +57,34 @@ export default async function VaccinesPage({ params }: VaccinesPageProps) {
             Volver al perfil
           </Link>
 
-          <section className="relative overflow-hidden rounded-[2.25rem] bg-gradient-to-r from-emerald-50 via-white to-amber-50 p-6 shadow-[0_16px_38px_rgba(16,185,129,0.09)] ring-1 ring-emerald-100 sm:p-8">
-            <div className="absolute -right-4 -top-6 text-emerald-100">
-              <ShieldCheck size={96} />
-            </div>
-            <div className="relative">
-              <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-emerald-600">
-                Cartilla de vacunación
-              </p>
-              <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-gray-950 sm:text-5xl">
-                Vacunas de {pet.mascota.nombre}
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg font-semibold leading-8 text-gray-600">
-                Registro completo del esquema de vacunación.
-              </p>
-            </div>
+          <SubpageHeader
+            eyebrow="Cartilla de vacunación"
+            eyebrowTone="text-emerald-600"
+            title={`Vacunas de ${pet.mascota.nombre}`}
+            description="Registro completo del esquema de vacunación."
+            icon={<ShieldCheck size={96} />}
+            background="bg-gradient-to-r from-emerald-50 via-white to-amber-50 ring-emerald-100"
+          />
 
-            {vaccines.length > 0 ? (
-              <div className="relative mt-6 flex flex-wrap gap-3">
-                {alDia > 0 ? (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-2 text-sm font-extrabold text-emerald-700 ring-1 ring-emerald-200">
-                    {alDia} al día
-                  </span>
-                ) : null}
-                {proximas > 0 ? (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-sm font-extrabold text-amber-700 ring-1 ring-amber-200">
-                    {proximas} próxima dosis
-                  </span>
-                ) : null}
-                {vencidas > 0 ? (
-                  <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-4 py-2 text-sm font-extrabold text-rose-700 ring-1 ring-rose-200">
-                    {vencidas} vencidas
-                  </span>
-                ) : null}
-              </div>
-            ) : null}
-          </section>
+          {total > 0 ? (
+            <div className="flex flex-wrap gap-3">
+              {alDia > 0 ? (
+                <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-2 text-sm font-extrabold text-emerald-700 ring-1 ring-emerald-200">
+                  {alDia} al día
+                </span>
+              ) : null}
+              {proximas > 0 ? (
+                <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-sm font-extrabold text-amber-700 ring-1 ring-amber-200">
+                  {proximas} próxima dosis
+                </span>
+              ) : null}
+              {vencidas > 0 ? (
+                <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-4 py-2 text-sm font-extrabold text-rose-700 ring-1 ring-rose-200">
+                  {vencidas} vencidas
+                </span>
+              ) : null}
+            </div>
+          ) : null}
 
           {vaccines.length > 0 ? (
             <div className="space-y-4">

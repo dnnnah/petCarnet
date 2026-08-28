@@ -1,32 +1,15 @@
-import { Check, Clock, FileText, Syringe } from "lucide-react";
+import { FileText, Syringe } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { formatMexicanDate } from "@/lib/dateFormat";
-import type { PetVaccine, VaccineStatus } from "@/types/pet";
+import { getVaccineStatusMeta } from "@/lib/domain/vaccineStatus";
+import type { PetVaccine } from "@/types/pet";
 
 type VaccineDetailCardProps = {
   vaccine: PetVaccine;
 };
 
-const statusConfig: Record<VaccineStatus, { label: string; icon: typeof Check; tones: string }> = {
-  al_dia: {
-    label: "Al día",
-    icon: Check,
-    tones: "bg-emerald-50 text-emerald-700 ring-emerald-200",
-  },
-  proxima_dosis: {
-    label: "Próxima dosis",
-    icon: Clock,
-    tones: "bg-amber-50 text-amber-700 ring-amber-200",
-  },
-  vencida: {
-    label: "Vencida",
-    icon: Clock,
-    tones: "bg-rose-50 text-rose-700 ring-rose-200",
-  },
-};
-
 export function VaccineDetailCard({ vaccine }: VaccineDetailCardProps) {
-  const status = statusConfig[vaccine.estatus];
+  const status = getVaccineStatusMeta(vaccine.estatus);
   const StatusIcon = status.icon;
   const appliedDate = formatMexicanDate(vaccine.fechaAplicacion);
   const nextDose = formatMexicanDate(vaccine.proximaDosis);
@@ -37,11 +20,7 @@ export function VaccineDetailCard({ vaccine }: VaccineDetailCardProps) {
         <span
           className={[
             "grid h-14 w-14 shrink-0 place-items-center rounded-2xl ring-1",
-            vaccine.estatus === "al_dia"
-              ? "bg-emerald-100 text-emerald-600 ring-emerald-200"
-              : vaccine.estatus === "proxima_dosis"
-                ? "bg-amber-100 text-amber-600 ring-amber-200"
-                : "bg-rose-100 text-rose-600 ring-rose-200",
+            status.iconTones,
           ].join(" ")}
         >
           <Syringe size={26} />
