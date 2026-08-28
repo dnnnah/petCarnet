@@ -73,6 +73,27 @@ Dejar un proyecto con las piezas de dominio y presentación correctamente segreg
 
 ---
 
+#### 10.2 Extracción de mappers a `lib/mapping` (FASE COMPLETADA)
+
+##### 10.2.1 Mapper de perfil
+- **Nuevo** `src/lib/mapping/profile.ts`: concentra toda la lógica de transformación `PetProfile → ProfileViewModel` que antes vivía en `perfil/[id]/page.tsx`.
+  - `toProfileViewModel(pet)` (antes `toProfileProps`).
+  - `formatPhoneForDisplay`.
+  - Tipos del view-model exportados: `PetHeaderViewModel`, `ContactViewModel`, `InfoViewModel`, `HealthViewModel`, `VetViewModel`, `VaccineTimelineItem`, `PhotoViewModel`, `ProfileViewModel`.
+- **Mejora SOLID/SRP:** la página dejó de ser un "adaptador dominio→presentación". Ahora es un orquestador fino (fetch + `notFound` + render) que depende de una abstracción (el mapper) y no del formato crudo (principio de inversión de dependencias).
+- `formatPhoneForDisplay` ahora es consumible/reutilizable; si más adelante hay otra página que formatee teléfonos, se usa el mismo helper.
+- `perfil/[id]/page.tsx`: eliminadas las ~90 líneas de `toProfileProps`/`formatPhoneForDisplay`.
+
+### Verificación Fase 10.2
+- `tsc --noEmit` ✅ sin errores
+- `npm run lint` ✅ sin warnings
+
+### Archivos modificados / creados
+- `src/lib/mapping/profile.ts` — nuevo (mapper de perfil)
+- `src/app/perfil/[id]/page.tsx` — usa `toProfileViewModel`; lógica del mapper removida
+
+---
+
 ## FASE 0 — Limpieza de datos y tipos
 
 **Estado:** Completada

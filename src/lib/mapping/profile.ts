@@ -1,0 +1,174 @@
+import { formatMexicanDate, formatOptionalMexicanDate, getPetAgeText } from "@/lib/dateFormat";
+import { getPublicDocuments } from "@/lib/petDocuments";
+import { getVaccineStatusMeta } from "@/lib/domain/vaccineStatus";
+import type { PetProfile } from "@/types/pet";
+
+export type PetHeaderViewModel = {
+  name: string;
+  species: string;
+  breed: string;
+  age: string;
+  gender: string;
+  size: string;
+  id: string;
+  image: string;
+  status: {
+    vaccines: string;
+    sterilized: string;
+    microchip: string;
+  };
+};
+
+export type ContactViewModel = {
+  name: string;
+  phone: string;
+  phoneHref: string;
+  whatsapp: string;
+  locationUrl: string;
+  locationLabel: string;
+  neighborhood: string;
+};
+
+export type InfoViewModel = {
+  species: string;
+  breed: string;
+  color: string;
+  weight: string;
+  birthDate: string;
+  distinctive: ReadonlyArray<string>;
+};
+
+export type HealthViewModel = {
+  allergies: ReadonlyArray<string>;
+  conditions: ReadonlyArray<string>;
+  medications: ReadonlyArray<string>;
+  diet: string;
+  behavior: string;
+};
+
+export type VetViewModel = {
+  clinic: string;
+  doctor: string;
+  phone: string;
+  address: string;
+};
+
+export type VaccineTimelineItem = {
+  name: string;
+  date: string;
+  status: ReturnType<typeof getVaccineStatusMeta>["label"];
+};
+
+export type PhotoViewModel = {
+  id: string;
+  name: string;
+  url: string;
+  date: string;
+  description?: string;
+};
+
+export type ProfileViewModel = {
+  header: PetHeaderViewModel;
+  contact: ContactViewModel;
+  lost: {
+    lostDate: string | null;
+  };
+  info: InfoViewModel;
+  health: HealthViewModel;
+  vet: VetViewModel;
+  vaccineTotalCount: number;
+  vaccines: VaccineTimelineItem[];
+  documents: PetProfile["documentos"];
+  photos: PhotoViewModel[];
+};
+
+export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
+  const visibleDocuments = getPublicDocuments(pet);
+  const locationText = pet.emergencia.perdido && pet.emergencia.zonaPerdida
+    ? `Zona donde se perdió: ${pet.emergencia.zonaPerdida}`
+    : `Zona segura: ${pet.contacto.zonaSegura}`;
+  const locationQuery = pet.emergencia.perdido && pet.emergencia.zonaPerdida
+    ? pet.emergencia.zonaPerdida
+    : pet.contacto.zonaHabitual;
+
+  return {
+    header: {
+      name: pet.mascota.nombre,
+      species: pet.mascota.especie,
+      breed: pet.mascota.raza,
+      age: getPetAgeText(pet.mascota.fechaNacimiento),
+      gender: pet.mascota.genero,
+      size: pet.mascota.talla,
+      id: pet.identificacion.codigoPublico,
+      image: pet.mascota.fotoPerfilUrl,
+      status: {
+        vaccines: pet.vacunas.some((vaccine) => vaccine.estatus === "vencida") ? "Revisar" : "Al día",
+        sterilized: pet.mascota.esterilizado ? "Sí" : "No",
+        microchip: pet.identificacion.microchip ? "Registrado" : "No cuenta",
+      },
+    },
+    contact: {
+      name: pet.contacto.nombrePublico,
+      phone: formatPhoneForDisplay(pet.contacto.telefonoPrincipal),
+      phoneHref: pet.contacto.telefonoPrincipal,
+      whatsapp: `https://wa.me/${pet.contacto.whatsapp}?text=${encodeURIComponent(pet.contacto.mensajeWhatsapp)}`,
+      locationUrl: `https://maps.google.com/?q=${encodeURIComponent(locationQuery)}`,
+      locationLabel: pet.emergencia.perdido ? "Zona donde se perdió" : "Zona habitual",
+      neighborhood: locationText,
+    },
+    lost: {
+      lostDate: formatOptionalMexicanDate(pet.emergencia.fechaPerdida),
+    },
+    info: {
+      species: pet.mascota.especie,
+      breed: pet.mascota.raza,
+      color: pet.mascota.color,
+      weight: `${pet.mascota.pesoKg} kg`,
+      birthDate: formatMexicanDate(pet.mascota.fechaNacimiento) ?? pet.mascota.fechaNacimiento,
+      distinctive: pet.mascota.rasgosDistintivos,
+    },
+    health: {
+      allergies: pet.salud.alergias,
+      conditions: pet.salud.condicionesMedicas,
+      medications: pet.salud.medicamentosActuales,
+      diet: pet.salud.dietaEspecial,
+      behavior: pet.salud.comportamiento,
+    },
+    vet: {
+      clinic: pet.veterinario.clinica,
+      doctor: pet.veterinario.nombre,
+      phone: formatPhoneForDisplay(pet.veterinario.telefono),
+      address: pet.configuracionPublica.mostrarDireccionVet ? pet.veterinario.direccion : "Dirección privada",
+    },
+    vaccineTotalCount: pet.vacunas.length,
+    vaccines: pet.vacunas.map((vaccine) => ({
+      name: vaccine.nombre,
+      date: formatMexicanDate(vaccine.estatus === "proxima_dosis" ? vaccine.proximaDosis : vaccine.fechaAplicacion, "short") ?? "Fecha pendiente",
+      status: getVaccineStatusMeta(vaccine.estatus).label,
+    })),
+    documents: visibleDocuments.slice(0, 3),
+    photos: visibleDocuments
+      .filter((doc) => doc.categoria === "foto")
+      .map((doc) => ({
+        id: doc.id,
+        name: doc.nombre,
+        url: doc.url,
+        date: formatMexicanDate(doc.fecha) ?? doc.fecha,
+        description: doc.descripcion,
+      })),
+  };
+}
+
+export function formatPhoneForDisplay(phone: string) {
+  const digits = phone.replace(/\D/g, "");
+
+  if (digits.length === 12) {
+    return digits.replace(/^(\d{2})(\d{2})(\d{4})(\d{4})$/, "+$1 $2 $3 $4");
+  }
+
+  if (digits.length === 10) {
+    return digits.replace(/^(\d{2})(\d{4})(\d{4})$/, "$1 $2 $3");
+  }
+
+  return phone;
+}
