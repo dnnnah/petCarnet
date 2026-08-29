@@ -56,16 +56,16 @@ export function QRShareCard({ petName, profilePath }: QRShareCardProps) {
   }
 
   return (
-    <GlassCard className="h-full overflow-hidden bg-emerald-50/80 p-5 lg:p-6">
+    <GlassCard className="h-full overflow-hidden bg-emerald-50/80 p-5 lg:p-6 dark:bg-emerald-950/30">
       <div className="grid h-full grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-1">
         <div>
-          <div className="mb-4 grid h-10 w-10 place-items-center rounded-2xl bg-white text-emerald-600 shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
+          <div className="mb-4 grid h-10 w-10 place-items-center rounded-2xl bg-white text-emerald-600 shadow-[0_8px_18px_rgba(17,24,39,0.06)] dark:bg-gray-900 dark:text-emerald-400">
             <QrCode size={22} />
           </div>
-          <p className="max-w-[13rem] text-lg font-extrabold leading-6 text-gray-950">
+          <p className="max-w-[13rem] text-lg font-extrabold leading-6 text-gray-950 dark:text-white">
             Escanea para ver el perfil de {petName}
           </p>
-          <p className="mt-3 text-sm font-bold text-emerald-700">{fullUrl}</p>
+          <p className="mt-3 text-sm font-bold text-emerald-700 break-all dark:text-emerald-400">{fullUrl}</p>
           <div className="mt-4 flex gap-2 text-emerald-400">
             <Heart size={18} />
             <Heart size={18} />
