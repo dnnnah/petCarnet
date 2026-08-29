@@ -41,11 +41,19 @@ Rama `feat/rediseno-ui` (commits en español, Conventional Commits). Mejoras apl
 ### 12.3 Menú de navegación más compacto
 - `SiteNav.tsx`: reducido el espaciado del `nav` y de los enlaces; la huella de PawPrint queda pegada al texto "Inicio" (gap `gap-1`, icono de 15px) y se compactan los paddings.
 
+### 12.4 Fix dark mode de subpáginas, menú agrupado, "Carnet Digital" y story en galería
+- **Fix dark mode en Documentos/Vacunas/Alerta:** `SubpageHeader.tsx` recibía gradientes claros (`via-white`) sin variantes `dark:`, quedando como bloque blanco en modo oscuro. Se añade un overlay absoluto `hidden dark:block bg-gray-900 ring-gray-800` que lo tapa en dark; el icono decorativo pasa a `dark:text-gray-800`. Aplica automáticamente a Documentos, Vacunas, Alerta y Login. Se añaden también variantes `dark:` al enlace "Volver al perfil" en `alerta/page.tsx`.
+- **Menú agrupado en un solo pill:** `SiteNav.tsx` reescrito como un único bloque agrupado (`divide-x rounded-full bg-white px-1.5 py-1.5 ring-1`) que junta la huella (Inicio) con Mascotas, Iniciar sesión y el botón de modo oscuro, separados por divisores verticales. En `<640px` los textos se ocultan (`hidden sm:inline`) y `Mascotas` gana el icono `Bone`, evitando desbordes; `AppShell.tsx` reduce su `gap` en mobile (`gap-2 sm:gap-4`) para que todo quepa junto al logo.
+- **Subtítulo "Carnet Digital":** renombrado "Pasaporte Digital" → "Carnet Digital" en el header (`AppShell.tsx`), el hero (`page.tsx`) y la metadata de `layout.tsx` (título "PetCarnet | Carnet Digital").
+- **Círculo de story en la galería:** `RecentPhotos.tsx` añade la prop `profilePhoto: string`; renderiza un círculo con ring tipo Instagram (gradiente `#feda75→#4f5bd5`, padding 3px, interior blanco/dark) con la foto de perfil de 64px y la etiqueta "Perfil". `perfil/[id]/page.tsx` pasa `profilePhoto={pet.mascota.fotoPerfilUrl}`.
+- Verificado en browser: overlay `bg-gray-900` visible en dark en Documentos y Alerta; nav de 358px en desktop y 161px en mobile sin desborde; subtítulo y título "Carnet Digital" mostrados; 0 errores de consola.
+
 ### Verificación Fase 12
 - `tsc --noEmit` ✅ sin errores
 - `npm run lint` ✅ sin errores
-- `npm run build` ✅ compila y genera 49 rutas SSG
+- `npm run build` ✅ compila y genera rutas SSG
 - Prueba manual en browser (descarga de la imagen de alerta) ✅
+- Prueba manual en browser (dark mode y responsive) ✅
 
 ### Dependencias
 - **Añadida:** `html-to-image`
@@ -57,6 +65,16 @@ Rama `feat/rediseno-ui` (commits en español, Conventional Commits). Mejoras apl
 - `src/components/features/lost-pet/LostPetAlertForm.tsx`
 - `src/components/layout/SiteNav.tsx`
 - `package.json`, `package-lock.json`
+
+### Archivos de la sub-fase 12.4
+- `src/components/ui/SubpageHeader.tsx`
+- `src/components/layout/SiteNav.tsx`
+- `src/components/layout/AppShell.tsx`
+- `src/components/features/pet-profile/RecentPhotos.tsx`
+- `src/app/page.tsx`
+- `src/app/layout.tsx`
+- `src/app/perfil/[id]/page.tsx`
+- `src/app/perfil/[id]/alerta/page.tsx`
 
 ---
 
