@@ -110,7 +110,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             Generar alerta de mascota perdida
           </Link>
           <ThankYouBanner isLost={pet.emergencia.perdido} petName={pet.mascota.nombre} species={pet.mascota.especie} />
-          <p className="text-center text-sm font-bold text-gray-400">
+          <p className="text-center text-sm font-bold text-gray-400 dark:text-gray-500">
             PetCarnet © {new Date().getFullYear()} · Pasaporte Digital para Mascotas
           </p>
         </div>

@@ -71,10 +71,10 @@ export function PetHeader({ pet }: PetHeaderProps) {
             <Sparkles size={34} />
           </div>
 
-          <h1 className="text-5xl font-extrabold leading-none tracking-tight text-gray-950 sm:text-6xl lg:text-8xl">
+          <h1 className="text-5xl font-extrabold leading-none tracking-tight text-gray-950 dark:text-white sm:text-6xl lg:text-8xl">
             {pet.name}
           </h1>
-          <p className="mt-2 sm:mt-3 text-lg sm:text-2xl font-bold text-emerald-600">{pet.breed} · {pet.species}</p>
+          <p className="mt-2 sm:mt-3 text-lg sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400">{pet.breed} · {pet.species}</p>
 
           <div className="mt-7 flex flex-wrap gap-3">
             <Badge tone="mint" icon={<CalendarDays size={18} />}>
@@ -88,32 +88,32 @@ export function PetHeader({ pet }: PetHeaderProps) {
             </Badge>
           </div>
 
-          <div className="mt-7 flex max-w-sm items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-[0_10px_24px_rgba(17,24,39,0.05)]">
-            <span className="font-extrabold text-gray-950">ID PetCarnet: {pet.id}</span>
-            <Copy size={20} className="shrink-0 text-gray-700" />
+          <div className="mt-7 flex max-w-sm items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-[0_10px_24px_rgba(17,24,39,0.05)] dark:border-gray-700 dark:bg-gray-900">
+            <span className="font-extrabold text-gray-950 dark:text-white">ID PetCarnet: {pet.id}</span>
+            <Copy size={20} className="shrink-0 text-gray-700 dark:text-gray-300" />
           </div>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-3">
-            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)]">
-              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-600">
+            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)] dark:border-gray-800 dark:bg-gray-900/90">
+              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400">
                 <ShieldCheck size={27} />
               </span>
-              <p className="font-extrabold text-gray-950">Vacunas</p>
-              <p className="text-sm font-bold text-gray-600">{pet.status.vaccines}</p>
+              <p className="font-extrabold text-gray-950 dark:text-white">Vacunas</p>
+              <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{pet.status.vaccines}</p>
             </article>
-            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)]">
-              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-pink-100 text-pink-500">
+            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)] dark:border-gray-800 dark:bg-gray-900/90">
+              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-pink-100 text-pink-500 dark:bg-pink-500/15 dark:text-pink-400">
                 <Heart size={27} />
               </span>
-              <p className="font-extrabold text-gray-950">Esterilizado</p>
-              <p className="text-sm font-bold text-gray-600">{pet.status.sterilized}</p>
+              <p className="font-extrabold text-gray-950 dark:text-white">Esterilizado</p>
+              <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{pet.status.sterilized}</p>
             </article>
-            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)]">
-              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-blue-100 text-blue-600">
+            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)] dark:border-gray-800 dark:bg-gray-900/90">
+              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400">
                 <Microchip size={27} />
               </span>
-              <p className="font-extrabold text-gray-950">Microchip</p>
-              <p className="text-sm font-bold text-gray-600">{pet.status.microchip}</p>
+              <p className="font-extrabold text-gray-950 dark:text-white">Microchip</p>
+              <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{pet.status.microchip}</p>
             </article>
           </div>
         </div>

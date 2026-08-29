@@ -28,7 +28,7 @@ export function VaccineDetailCard({ vaccine }: VaccineDetailCardProps) {
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="text-xl font-extrabold leading-6 text-gray-950">
+            <h3 className="text-xl font-extrabold leading-6 text-gray-950 dark:text-white">
               {vaccine.nombre}
             </h3>
             <span
@@ -43,38 +43,38 @@ export function VaccineDetailCard({ vaccine }: VaccineDetailCardProps) {
           </div>
 
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-gray-100 bg-white/80 p-3">
+            <div className="rounded-xl border border-gray-100 bg-white/80 dark:border-gray-800 dark:bg-gray-900/80 p-3">
               <span className="block text-xs font-extrabold uppercase text-gray-400">
                 Fecha de aplicación
               </span>
-              <span className="mt-1 block font-bold text-gray-900">
+              <span className="mt-1 block font-bold text-gray-900 dark:text-white">
                 {appliedDate ?? "Sin registro"}
               </span>
             </div>
-            <div className="rounded-xl border border-gray-100 bg-white/80 p-3">
+            <div className="rounded-xl border border-gray-100 bg-white/80 dark:border-gray-800 dark:bg-gray-900/80 p-3">
               <span className="block text-xs font-extrabold uppercase text-gray-400">
                 Próxima dosis
               </span>
-              <span className="mt-1 block font-bold text-gray-900">
+              <span className="mt-1 block font-bold text-gray-900 dark:text-white">
                 {nextDose ?? "Sin registro"}
               </span>
             </div>
           </div>
 
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-gray-100 bg-white/80 p-3">
+            <div className="rounded-xl border border-gray-100 bg-white/80 dark:border-gray-800 dark:bg-gray-900/80 p-3">
               <span className="block text-xs font-extrabold uppercase text-gray-400">
                 Lote
               </span>
-              <span className="mt-1 block font-bold text-gray-900">
+              <span className="mt-1 block font-bold text-gray-900 dark:text-white">
                 {vaccine.lote || "Sin registro"}
               </span>
             </div>
-            <div className="rounded-xl border border-gray-100 bg-white/80 p-3">
+            <div className="rounded-xl border border-gray-100 bg-white/80 dark:border-gray-800 dark:bg-gray-900/80 p-3">
               <span className="block text-xs font-extrabold uppercase text-gray-400">
                 Veterinario
               </span>
-              <span className="mt-1 block font-bold text-gray-900">
+              <span className="mt-1 block font-bold text-gray-900 dark:text-white">
                 {vaccine.veterinario || "Sin registro"}
               </span>
             </div>
@@ -88,7 +88,7 @@ export function VaccineDetailCard({ vaccine }: VaccineDetailCardProps) {
             href={vaccine.documentoUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-extrabold text-emerald-700 ring-1 ring-emerald-100 transition hover:bg-emerald-100"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-extrabold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-1 ring-emerald-100 transition hover:bg-emerald-100 dark:hover:bg-emerald-500/25"
           >
             <FileText size={16} />
             Ver documento
