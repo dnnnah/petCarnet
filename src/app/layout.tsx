@@ -3,7 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "./providers";
 
 export const metadata: Metadata = {
-  title: "PetCarnet | Pasaporte Digital",
+  title: "PetCarnet | Carnet Digital",
   description: "Pasaporte digital publico para mascotas con QR de emergencia.",
 };
 

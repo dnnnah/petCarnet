@@ -22,7 +22,7 @@ export default function Home() {
               PetCarnet
             </h1>
             <p className="mt-2 sm:mt-3 text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
-              Pasaporte Digital
+              Carnet Digital
             </p>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-600 dark:text-gray-300">
               Una ficha publica, linda y clara para que cualquier persona pueda
