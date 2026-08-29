@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import html2canvas from "html2canvas";
+import { toBlob, toPng } from "html-to-image";
 import { AlertTriangle, Camera, Download, Share2, X } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { LostPetAlertImage } from "./LostPetAlertImage";
@@ -37,30 +37,25 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
     event.target.value = "";
   }
 
-  async function captureCanvas() {
+  async function captureDataUrl() {
     const element = alertRef.current;
     if (!element) return null;
-    return html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      logging: false,
+    return toPng(element, {
+      pixelRatio: 2,
       backgroundColor: "#ffffff",
-      scrollX: -window.scrollX,
-      scrollY: -window.scrollY,
-      windowWidth: document.documentElement.offsetWidth,
-    } as Parameters<typeof html2canvas>[1]);
+      cacheBust: true,
+    });
   }
 
   async function handleDownload() {
     setDownloading(true);
     try {
-      const canvas = await captureCanvas();
-      if (!canvas) return;
+      const dataUrl = await captureDataUrl();
+      if (!dataUrl) return;
 
       const link = document.createElement("a");
       link.download = `petcarnet-alerta-${pet.mascota.nombre.toLowerCase().replace(/\s+/g, "-")}.png`;
-      link.href = canvas.toDataURL("image/png");
+      link.href = dataUrl;
       link.click();
     } finally {
       setDownloading(false);
@@ -70,12 +65,15 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
   async function handleShare() {
     setSharing(true);
     try {
-      const canvas = await captureCanvas();
-      if (!canvas) return;
+      const element = alertRef.current;
+      if (!element) return;
 
-      const blob = await new Promise<Blob>((resolve) =>
-        canvas.toBlob((b) => resolve(b!), "image/png")
-      );
+      const blob = await toBlob(element, {
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+        cacheBust: true,
+      });
+      if (!blob) throw new Error("No se pudo generar la imagen para compartir");
 
       const text = `SE BUSCA: ${pet.mascota.nombre} (${pet.mascota.especie})\n${lostZone ? `Última vez visto: ${lostZone}\n` : ""}${message ? `${message}\n` : ""}Más info: ${profileUrl}`;
 
