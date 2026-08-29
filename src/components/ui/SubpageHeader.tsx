@@ -22,7 +22,11 @@ export function SubpageHeader({
         background,
       ].join(" ")}
     >
-      <div className="absolute -right-4 -top-6 text-gray-100">{icon}</div>
+      <div
+        aria-hidden
+        className="absolute inset-0 rounded-[2.25rem] bg-gray-900 ring-1 ring-gray-800 dark:block hidden"
+      />
+      <div className="absolute -right-4 -top-6 text-gray-100 dark:text-gray-800">{icon}</div>
       <div className="relative">
         <p className={["text-sm font-extrabold uppercase tracking-[0.18em]", eyebrowTone].join(" ")}>
           {eyebrow}
