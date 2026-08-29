@@ -16,9 +16,10 @@ type Photo = {
 
 type RecentPhotosProps = {
   photos: ReadonlyArray<Photo>;
+  profilePhoto: string;
 };
 
-export function RecentPhotos({ photos }: RecentPhotosProps) {
+export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const selected =
@@ -60,6 +61,25 @@ export function RecentPhotos({ photos }: RecentPhotosProps) {
           <span className="shrink-0 rounded-full bg-pink-50 px-3 py-1 text-sm font-extrabold text-pink-600 ring-1 ring-pink-100">
             {photos.length}
           </span>
+        </div>
+
+        <div className="mt-5 flex items-center gap-4">
+          <div className="group relative shrink-0 cursor-pointer">
+            <div className="rounded-full bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] p-[3px] transition hover:-translate-y-0.5">
+              <div className="rounded-full bg-white p-[3px] dark:bg-gray-900">
+                <Image
+                  src={profilePhoto}
+                  alt="Foto de perfil"
+                  width={80}
+                  height={80}
+                  className="h-16 w-16 rounded-full object-cover sm:h-20 sm:w-20"
+                />
+              </div>
+            </div>
+            <span className="mt-2 block text-center text-xs font-extrabold text-gray-500 dark:text-gray-400">
+              Perfil
+            </span>
+          </div>
         </div>
 
         <div className="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:gap-3">

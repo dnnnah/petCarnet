@@ -92,7 +92,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </div>
           {profile.photos.length > 0 ? (
             <div id="fotos">
-              <RecentPhotos photos={profile.photos} />
+              <RecentPhotos photos={profile.photos} profilePhoto={pet.mascota.fotoPerfilUrl} />
             </div>
           ) : null}
           <div id="vacunas">
