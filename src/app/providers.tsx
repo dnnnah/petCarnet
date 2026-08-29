@@ -1,8 +1,14 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useSyncExternalStore,
+} from "react";
 
-const THEME_KEY = "petcarnet-theme";
+const THEME_KEY = "petcarnet-theme:v1";
+const LEGACY_THEME_KEY = "petcarnet-theme";
 
 type Theme = "light" | "dark";
 
@@ -13,47 +19,84 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-function getInitialTheme(): Theme {
-  let stored: Theme | null = null;
+const storageCache = new Map<string, string | null>();
+
+function getStoredTheme(): Theme | null {
+  let stored: string | null = null;
   try {
-    stored = localStorage.getItem(THEME_KEY) as Theme | null;
+    if (storageCache.has(THEME_KEY)) {
+      stored = storageCache.get(THEME_KEY) as Theme | null;
+    } else {
+      stored = localStorage.getItem(THEME_KEY);
+      // Migración desde la clave anterior sin versión
+      if (!stored) {
+        const legacy = localStorage.getItem(LEGACY_THEME_KEY);
+        if (legacy === "light" || legacy === "dark") {
+          stored = legacy;
+          localStorage.setItem(THEME_KEY, legacy);
+          localStorage.removeItem(LEGACY_THEME_KEY);
+        }
+      }
+      storageCache.set(THEME_KEY, stored);
+    }
   } catch {
     stored = null;
   }
 
-  if (stored === "light" || stored === "dark") {
-    return stored;
-  }
+  return stored === "light" || stored === "dark" ? (stored as Theme) : null;
+}
 
-  if (
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    return "dark";
-  }
+function resolveTheme(): Theme {
+  const stored = getStoredTheme();
+  if (stored) return stored;
 
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+const listeners = new Set<() => void>();
+
+function emitChange() {
+  listeners.forEach((listener) => listener());
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function getSnapshot(): Theme {
+  if (typeof window === "undefined") return "light";
+  return resolveTheme();
+}
+
+function getServerSnapshot(): Theme {
   return "light";
 }
 
+function applyToDocument(theme: Theme) {
+  document.documentElement.classList.toggle("dark", theme === "dark");
+  document.documentElement.style.colorScheme = theme;
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    document.documentElement.style.colorScheme = theme;
+  const toggleTheme = useCallback(() => {
+    const next: Theme = theme === "dark" ? "light" : "dark";
+    try {
+      localStorage.setItem(THEME_KEY, next);
+      localStorage.removeItem(LEGACY_THEME_KEY);
+      storageCache.set(THEME_KEY, next);
+    } catch {
+      // almacenamiento no disponible
+    }
+    applyToDocument(next);
+    emitChange();
   }, [theme]);
-
-  function toggleTheme() {
-    setTheme((current) => {
-      const next: Theme = current === "dark" ? "light" : "dark";
-      try {
-        localStorage.setItem(THEME_KEY, next);
-      } catch {
-        // almacenamiento no disponible
-      }
-      return next;
-    });
-  }
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
