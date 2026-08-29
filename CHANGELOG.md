@@ -20,6 +20,46 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 12 — Mejoras de dark mode, fix de descarga de alerta y menú compacto
+
+**Estado:** Completada
+**Fecha:** 2026-08-29
+
+Rama `feat/rediseno-ui` (commits en español, Conventional Commits). Mejoras aplicando las reglas de la skill `vercel-react-best-practices` y corrección de un bug reportado de la visualización/descarga de la imagen de alerta.
+
+### 12.1 Modo oscuro según mejores prácticas de Vercel
+- `layout.tsx`: script inline síncrono en `<head>` que aplica la clase `dark` y `color-scheme` antes de la hidratación, eliminando el flash de tema claro→oscuro al cargar (regla `rendering-hydration-no-flicker`).
+- `providers.tsx`: clave de `localStorage` versionada (`petcarnet-theme:v1`) con **migración** automática desde la clave anterior sin versión (regla `client-localstorage-schema`); cache en memoria de las lecturas de storage (regla `js-cache-storage`).
+- Tema gestionado con `useSyncExternalStore` (`getServerSnapshot = "light"`), lo que **elimina el hydration mismatch** que ocurría en SSG (el render servidor `light` difería del cliente `dark` por `prefers-color-scheme`), respetando la regla `set-state-in-effect`.
+- Verificado en browser: 0 errores de consola tras estos cambios.
+
+### 12.2 Fix descarga/compartir del generador de alerta
+- **Causa raíz:** `html2canvas` no soporta los colores modernos (`oklab`/`lab`) que genera Tailwind CSS v4; al capturar la vista previa (que usa un gradiente) lanzaba `Attempting to parse an unsupported color function "lab"` y la imagen no se generaba → no se podía descargar ni compartir.
+- **Solución:** reemplazo de `html2canvas` por **`html-to-image`**, que renderiza vía SVG `foreignObject` usando el motor del navegador y soporta los colores v4. Se elimina la precarga innecesaria a data URL y se valida el `blob` antes de compartir.
+- Verificado en browser: la descarga genera un PNG válido (686×1788, RGBA, con foto y gradiente) con 0 errores de consola.
+
+### 12.3 Menú de navegación más compacto
+- `SiteNav.tsx`: reducido el espaciado del `nav` y de los enlaces; la huella de PawPrint queda pegada al texto "Inicio" (gap `gap-1`, icono de 15px) y se compactan los paddings.
+
+### Verificación Fase 12
+- `tsc --noEmit` ✅ sin errores
+- `npm run lint` ✅ sin errores
+- `npm run build` ✅ compila y genera 49 rutas SSG
+- Prueba manual en browser (descarga de la imagen de alerta) ✅
+
+### Dependencias
+- **Añadida:** `html-to-image`
+- **Eliminada:** `html2canvas`, `@types/html2canvas`
+
+### Archivos modificados
+- `src/app/layout.tsx`
+- `src/app/providers.tsx`
+- `src/components/features/lost-pet/LostPetAlertForm.tsx`
+- `src/components/layout/SiteNav.tsx`
+- `package.json`, `package-lock.json`
+
+---
+
 ## FASE 11 — Rediseño de UI, Modo Noche y 9 correcciones
 
 **Estado:** Completada
