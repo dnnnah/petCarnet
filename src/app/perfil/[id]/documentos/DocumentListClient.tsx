@@ -51,10 +51,10 @@ export function DocumentListClient({ documents }: DocumentListClientProps) {
         </div>
       ) : (
         <GlassCard className="p-8 text-center">
-          <p className="text-lg font-extrabold text-gray-950">
+          <p className="text-lg font-extrabold text-gray-950 dark:text-white">
             No hay documentos en esta categoría
           </p>
-          <p className="mt-2 font-semibold text-gray-600">
+          <p className="mt-2 font-semibold text-gray-600 dark:text-gray-300">
             Prueba con otro filtro o revisa todos los documentos.
           </p>
         </GlassCard>
@@ -70,23 +70,23 @@ function DocumentItem({ document }: { document: PetDocument }) {
         <DocumentPreview document={document} />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-xl font-extrabold leading-6 text-gray-950">
+            <h2 className="text-xl font-extrabold leading-6 text-gray-950 dark:text-white">
               {document.nombre}
             </h2>
             {document.estado ? (
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold uppercase text-emerald-700 ring-1 ring-emerald-100">
+              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold uppercase text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-500/15 dark:text-emerald-400 dark:ring-emerald-800">
                 {document.estado}
               </span>
             ) : null}
           </div>
-          <p className="mt-2 text-sm font-bold text-gray-500">{getDocumentMeta(document)}</p>
-          <p className="mt-1 text-sm font-extrabold uppercase text-gray-400">
+          <p className="mt-2 text-sm font-bold text-gray-500 dark:text-gray-400">{getDocumentMeta(document)}</p>
+          <p className="mt-1 text-sm font-extrabold uppercase text-gray-400 dark:text-gray-400">
             {getDocumentCategoryLabel(document.categoria)}
           </p>
           {document.descripcion ? (
-            <p className="mt-3 font-semibold leading-7 text-gray-700">{document.descripcion}</p>
+            <p className="mt-3 font-semibold leading-7 text-gray-700 dark:text-gray-200">{document.descripcion}</p>
           ) : null}
-          <p className="mt-3 text-sm font-semibold text-gray-500">
+          <p className="mt-3 text-sm font-semibold text-gray-500 dark:text-gray-400">
             Fecha: {formatMexicanDate(document.fecha) ?? "Fecha pendiente"}
           </p>
         </div>
@@ -105,7 +105,7 @@ function DocumentItem({ document }: { document: PetDocument }) {
         <a
           href={document.url}
           download
-          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-sm font-extrabold text-gray-900 shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 transition hover:-translate-y-0.5"
+          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-sm font-extrabold text-gray-900 shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 transition hover:-translate-y-0.5 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-800"
         >
           <Download className="shrink-0" size={18} />
           <span className="min-w-0 overflow-wrap-anywhere break-words">Descargar</span>

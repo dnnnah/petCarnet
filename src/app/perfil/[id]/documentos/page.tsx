@@ -38,7 +38,9 @@ export default async function DocumentsPage({ params }: DocumentsPageProps) {
   const { id } = await params;
   const pet = getPetOrNotFound(id);
 
-  const documents = getPublicDocuments(pet);
+  const documents = getPublicDocuments(pet).filter(
+    (document) => document.categoria !== "foto"
+  );
 
   return (
     <AppShell>
@@ -46,7 +48,7 @@ export default async function DocumentsPage({ params }: DocumentsPageProps) {
         <div className="space-y-6">
           <Link
             href={`/perfil/${pet.id}`}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-gray-800 shadow-[0_10px_24px_rgba(17,24,39,0.06)] ring-1 ring-gray-100"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-gray-800 shadow-[0_10px_24px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-800"
           >
             <ArrowLeft size={18} />
             Volver al perfil
@@ -65,13 +67,13 @@ export default async function DocumentsPage({ params }: DocumentsPageProps) {
             <DocumentListClient documents={documents} />
           ) : (
             <GlassCard className="p-8 text-center">
-              <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-100">
+              <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-100 dark:bg-emerald-500/15 dark:text-emerald-400 dark:ring-emerald-800">
                 <Folder size={32} />
               </div>
-              <p className="mt-5 text-2xl font-extrabold text-gray-950">
+              <p className="mt-5 text-2xl font-extrabold text-gray-950 dark:text-white">
                 No hay documentos públicos
               </p>
-              <p className="mx-auto mt-2 max-w-md font-semibold leading-7 text-gray-600">
+              <p className="mx-auto mt-2 max-w-md font-semibold leading-7 text-gray-600 dark:text-gray-300">
                 Los documentos privados no se muestran en el perfil público.
               </p>
             </GlassCard>
