@@ -64,7 +64,7 @@ export function ProfileNav() {
 
   return (
     <nav className="sticky top-0 z-40 -mx-4 mb-6 px-4 py-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div className="mx-auto flex gap-1.5 overflow-x-auto scrollbar-hide rounded-full border border-gray-100 bg-white/80 p-1.5 shadow-[0_14px_34px_rgba(17,24,39,0.07)] backdrop-blur-lg dark:border-gray-800 dark:bg-gray-900/80">
+      <div className="flex w-full items-center justify-between gap-1.5 overflow-x-auto scrollbar-hide rounded-full border border-gray-100 bg-white/80 p-1.5 shadow-[0_14px_34px_rgba(17,24,39,0.07)] backdrop-blur-lg dark:border-gray-800 dark:bg-gray-900/80">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
