@@ -27,8 +27,8 @@ export function InfoCard({ petName, info }: InfoCardProps) {
       <div className="absolute bottom-5 right-5 text-amber-100">
         <PawPrint size={42} fill="currentColor" />
       </div>
-      <h2 className="flex items-center gap-3 text-2xl font-extrabold text-gray-950">
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-blue-50 text-blue-500 ring-1 ring-blue-100">
+      <h2 className="flex items-center gap-3 text-2xl font-extrabold text-gray-950 dark:text-white">
+        <span className="grid h-9 w-9 place-items-center rounded-full bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300 ring-1 ring-blue-100">
           <Info size={21} />
         </span>
         Información de {petName}
@@ -37,19 +37,19 @@ export function InfoCard({ petName, info }: InfoCardProps) {
       <div className="relative mt-7 space-y-4">
         {rows.map(([label, value]) => (
           <div key={label} className="grid grid-cols-[22px_1fr] gap-3">
-            <PawPrint className="mt-1 text-gray-700" size={16} />
-            <p className="leading-6 text-gray-900">
+            <PawPrint className="mt-1 text-gray-700 dark:text-gray-200" size={16} />
+            <p className="leading-6 text-gray-900 dark:text-white">
               <span className="font-extrabold">{label}</span>{" "}
               <span className="font-semibold">{value}</span>
             </p>
           </div>
         ))}
         <div className="grid grid-cols-[22px_1fr] gap-3">
-          <PawPrint className="mt-1 text-gray-700" size={16} />
+          <PawPrint className="mt-1 text-gray-700 dark:text-gray-200" size={16} />
           <div>
-            <p className="font-extrabold text-gray-900">Rasgos distintivos:</p>
+            <p className="font-extrabold text-gray-900 dark:text-white">Rasgos distintivos:</p>
             {info.distinctive.map((item) => (
-              <p key={item} className="mt-1 font-semibold leading-6 text-gray-700">
+              <p key={item} className="mt-1 font-semibold leading-6 text-gray-700 dark:text-gray-200">
                 {item}
               </p>
             ))}

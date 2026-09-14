@@ -42,7 +42,7 @@ export default async function AlertPage({ params }: AlertPageProps) {
         <div className="space-y-6">
           <Link
             href={`/perfil/${pet.id}`}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-gray-800 shadow-[0_10px_24px_rgba(17,24,39,0.06)] ring-1 ring-gray-100"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-gray-800 shadow-[0_10px_24px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-800"
           >
             <ArrowLeft size={18} />
             Volver al perfil

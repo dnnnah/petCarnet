@@ -24,8 +24,6 @@ export type ContactViewModel = {
   phone: string;
   phoneHref: string;
   whatsapp: string;
-  locationUrl: string;
-  locationLabel: string;
   neighborhood: string;
 };
 
@@ -87,9 +85,6 @@ export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
   const locationText = pet.emergencia.perdido && pet.emergencia.zonaPerdida
     ? `Zona donde se perdió: ${pet.emergencia.zonaPerdida}`
     : `Zona segura: ${pet.contacto.zonaSegura}`;
-  const locationQuery = pet.emergencia.perdido && pet.emergencia.zonaPerdida
-    ? pet.emergencia.zonaPerdida
-    : pet.contacto.zonaHabitual;
 
   return {
     header: {
@@ -112,8 +107,6 @@ export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
       phone: formatPhoneForDisplay(pet.contacto.telefonoPrincipal),
       phoneHref: pet.contacto.telefonoPrincipal,
       whatsapp: `https://wa.me/${pet.contacto.whatsapp}?text=${encodeURIComponent(pet.contacto.mensajeWhatsapp)}`,
-      locationUrl: `https://maps.google.com/?q=${encodeURIComponent(locationQuery)}`,
-      locationLabel: pet.emergencia.perdido ? "Zona donde se perdió" : "Zona habitual",
       neighborhood: locationText,
     },
     lost: {
@@ -146,7 +139,9 @@ export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
       date: formatMexicanDate(vaccine.estatus === "proxima_dosis" ? vaccine.proximaDosis : vaccine.fechaAplicacion, "short") ?? "Fecha pendiente",
       status: getVaccineStatusMeta(vaccine.estatus).label,
     })),
-    documents: visibleDocuments.slice(0, 3),
+    documents: visibleDocuments
+      .filter((doc) => doc.categoria !== "foto")
+      .slice(0, 3),
     photos: visibleDocuments
       .filter((doc) => doc.categoria === "foto")
       .map((doc) => ({

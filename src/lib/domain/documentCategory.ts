@@ -72,7 +72,6 @@ const FILTER_ORDER: DocumentFilterValue[] = [
   "veterinario",
   "identificacion",
   "salud",
-  "foto",
   "otro",
 ];
 

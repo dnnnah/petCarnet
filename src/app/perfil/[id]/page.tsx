@@ -3,8 +3,7 @@ import Link from "next/link";
 import { AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { DocumentsCard } from "@/components/features/documents/DocumentsCard";
-import { LostPetBanner } from "@/components/features/lost-pet/LostPetBanner";
-import { LostPetInstructions } from "@/components/features/lost-pet/LostPetInstructions";
+import { LostModeAlertSections } from "@/components/features/lost-pet/LostModeAlertSections";
 import { ThankYouBanner } from "@/components/features/lost-pet/ThankYouBanner";
 import { EmergencyContact } from "@/components/features/pet-profile/EmergencyContact";
 import { HealthCard } from "@/components/features/pet-profile/HealthCard";
@@ -56,17 +55,18 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     <AppShell>
       <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="space-y-7">
-          {pet.emergencia.perdido ? (
-            <LostPetBanner
-              petName={pet.mascota.nombre}
-              message={pet.emergencia.mensajeEmergencia}
-              lostDate={profile.lost.lostDate}
-              lostZone={pet.emergencia.zonaPerdida}
-              reward={pet.emergencia.recompensa}
-            />
-          ) : null}
           <PetHeader pet={profile.header} />
           <ProfileNav />
+          <LostModeAlertSections
+            petId={pet.id}
+            petName={pet.mascota.nombre}
+            staticLost={pet.emergencia.perdido}
+            staticMessage={pet.emergencia.mensajeEmergencia}
+            staticLostDate={profile.lost.lostDate}
+            staticLostZone={pet.emergencia.zonaPerdida}
+            staticReward={pet.emergencia.recompensa}
+            staticInstructions={pet.emergencia.instrucciones}
+          />
           <div id="contacto">
             <EmergencyContact
               contact={profile.contact}
@@ -75,12 +75,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               species={pet.mascota.especie}
             />
           </div>
-          {pet.emergencia.perdido ? (
-            <LostPetInstructions
-              petName={pet.mascota.nombre}
-              instructions={pet.emergencia.instrucciones}
-            />
-          ) : null}
           <div id="info" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <InfoCard petName={pet.mascota.nombre} info={profile.info} />
             <div id="salud">
@@ -92,7 +86,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </div>
           {profile.photos.length > 0 ? (
             <div id="fotos">
-              <RecentPhotos photos={profile.photos} />
+              <RecentPhotos photos={profile.photos} profilePhoto={pet.mascota.fotoPerfilUrl} />
             </div>
           ) : null}
           <div id="vacunas">
@@ -110,7 +104,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             Generar alerta de mascota perdida
           </Link>
           <ThankYouBanner isLost={pet.emergencia.perdido} petName={pet.mascota.nombre} species={pet.mascota.especie} />
-          <p className="text-center text-sm font-bold text-gray-400">
+          <p className="text-center text-sm font-bold text-gray-400 dark:text-gray-500">
             PetCarnet © {new Date().getFullYear()} · Pasaporte Digital para Mascotas
           </p>
         </div>

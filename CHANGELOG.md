@@ -4,6 +4,165 @@ Registro de avances, cambios y decisiones tomadas durante el desarrollo.
 
 ---
 
+## Skills instaladas
+
+Skills de agente disponibles en este proyecto (`.agents/skills/`):
+
+| Skill | Fuente |
+| --- | --- |
+| `vercel-react-best-practices` | https://github.com/vercel-labs/agent-skills |
+| `nextjs-app-router-patterns` | https://github.com/wshobson/agents |
+| `frontend-design` | https://github.com/anthropics/skills |
+| `tailwind-css-patterns` | https://github.com/giuseppe-trisciuoglio/developer-kit |
+| `typescript-pro` | https://github.com/jeffallan/claude-skills |
+
+**Fecha de instalación:** 2026-08-28
+
+---
+
+## FASE 12 — Mejoras de dark mode, fix de descarga de alerta y menú compacto
+
+**Estado:** Completada
+**Fecha:** 2026-08-29
+
+Rama `feat/rediseno-ui` (commits en español, Conventional Commits). Mejoras aplicando las reglas de la skill `vercel-react-best-practices` y corrección de un bug reportado de la visualización/descarga de la imagen de alerta.
+
+### 12.1 Modo oscuro según mejores prácticas de Vercel
+- `layout.tsx`: script inline síncrono en `<head>` que aplica la clase `dark` y `color-scheme` antes de la hidratación, eliminando el flash de tema claro→oscuro al cargar (regla `rendering-hydration-no-flicker`).
+- `providers.tsx`: clave de `localStorage` versionada (`petcarnet-theme:v1`) con **migración** automática desde la clave anterior sin versión (regla `client-localstorage-schema`); cache en memoria de las lecturas de storage (regla `js-cache-storage`).
+- Tema gestionado con `useSyncExternalStore` (`getServerSnapshot = "light"`), lo que **elimina el hydration mismatch** que ocurría en SSG (el render servidor `light` difería del cliente `dark` por `prefers-color-scheme`), respetando la regla `set-state-in-effect`.
+- Verificado en browser: 0 errores de consola tras estos cambios.
+
+### 12.2 Fix descarga/compartir del generador de alerta
+- **Causa raíz:** `html2canvas` no soporta los colores modernos (`oklab`/`lab`) que genera Tailwind CSS v4; al capturar la vista previa (que usa un gradiente) lanzaba `Attempting to parse an unsupported color function "lab"` y la imagen no se generaba → no se podía descargar ni compartir.
+- **Solución:** reemplazo de `html2canvas` por **`html-to-image`**, que renderiza vía SVG `foreignObject` usando el motor del navegador y soporta los colores v4. Se elimina la precarga innecesaria a data URL y se valida el `blob` antes de compartir.
+- Verificado en browser: la descarga genera un PNG válido (686×1788, RGBA, con foto y gradiente) con 0 errores de consola.
+
+### 12.3 Menú de navegación más compacto
+- `SiteNav.tsx`: reducido el espaciado del `nav` y de los enlaces; la huella de PawPrint queda pegada al texto "Inicio" (gap `gap-1`, icono de 15px) y se compactan los paddings.
+
+### 12.4 Fix dark mode de subpáginas, menú agrupado, "Carnet Digital" y story en galería
+- **Fix dark mode en Documentos/Vacunas/Alerta:** `SubpageHeader.tsx` recibía gradientes claros (`via-white`) sin variantes `dark:`, quedando como bloque blanco en modo oscuro. Se añade un overlay absoluto `hidden dark:block bg-gray-900 ring-gray-800` que lo tapa en dark; el icono decorativo pasa a `dark:text-gray-800`. Aplica automáticamente a Documentos, Vacunas, Alerta y Login. Se añaden también variantes `dark:` al enlace "Volver al perfil" en `alerta/page.tsx`.
+- **Menú agrupado en un solo pill:** `SiteNav.tsx` reescrito como un único bloque agrupado (`divide-x rounded-full bg-white px-1.5 py-1.5 ring-1`) que junta la huella (Inicio) con Mascotas, Iniciar sesión y el botón de modo oscuro, separados por divisores verticales. En `<640px` los textos se ocultan (`hidden sm:inline`) y `Mascotas` gana el icono `Bone`, evitando desbordes; `AppShell.tsx` reduce su `gap` en mobile (`gap-2 sm:gap-4`) para que todo quepa junto al logo.
+- **Subtítulo "Carnet Digital":** renombrado "Pasaporte Digital" → "Carnet Digital" en el header (`AppShell.tsx`), el hero (`page.tsx`) y la metadata de `layout.tsx` (título "PetCarnet | Carnet Digital").
+- **Círculo de story en la galería:** `RecentPhotos.tsx` añade la prop `profilePhoto: string`; renderiza un círculo con ring tipo Instagram (gradiente `#feda75→#4f5bd5`, padding 3px, interior blanco/dark) con la foto de perfil de 64px y la etiqueta "Perfil". `perfil/[id]/page.tsx` pasa `profilePhoto={pet.mascota.fotoPerfilUrl}`.
+- Verificado en browser: overlay `bg-gray-900` visible en dark en Documentos y Alerta; nav de 358px en desktop y 161px en mobile sin desborde; subtítulo y título "Carnet Digital" mostrados; 0 errores de consola.
+
+### 12.5 Fix navbar del perfil, dark+WCAG en Instagram, imagen de alerta completa, modo alerta y filtro por especie
+- **Navbar del perfil (ProfileNav):** los botones pasan a iconos de 18px e igual talla en todas las pantallas. En móvil son botones cuadrados de 40×40 centrados (solo el icono, con `h-10 w-10`); en `md+` mantienen icono + texto alineados (`md:h-auto md:w-auto`). El contenedor pasa a `w-full justify-between` para distribuir los botones con espacio uniforme (equivalente a `space-between`), llenando todo el ancho de la barra tanto en escritorio como en móvil.
+- **Dark mode + WCAG en la sección Instagram (`RecentPhotos`):** el título, los chips (`pink`), el label "Perfil" y el grid ahora tienen variantes `dark:` con fondos translúcidos (`dark:bg-pink-500/15`, `dark:ring-pink-500/30`) y textos con contraste (`dark:text-pink-300`, `dark:text-gray-300`). El lightbox pasó a `dark:bg-gray-900` con textos e índices adaptados; los `alt` descriptivos se mantienen.
+- **Imagen de alerta completa:** `LostPetAlertImage` deja de limitarse a `max-w-[480px]` y ocupa todo el ancho disponible (`w-full`). La vista previa se amplía a `max-w-3xl` y la captura/descarga sube a `pixelRatio: 3`, generando un PNG de ~2304×2565px (completo y nítido).
+- **Modo alerta en el perfil restaurado:** nuevo hook `useLostAlerts` (localStorage versionado `petcarnet-alerta:v1:<id>`, con `useSyncExternalStore` para evitar hydration mismatch en SSG) que guarda zona/fecha/recompensa/mensaje. El generador de alerta (`LostPetAlertForm`) incorpora una tarjeta "Modo alerta en el perfil" para activar/desactivar. El perfil muestra vía `LostModeAlertSections` el banner "está perdido", las instrucciones y un panel con "Desactivar modo alerta" cuando está activo (además del flag estático `emergencia.perdido`).
+- **Filtro por especie en la home:** nuevo componente cliente `PetsList` con chips "Todos / Perro / Gato", contador de resultados y estado vacío; reemplaza el listado estático del `GlassCard`.
+- Verificado en browser: perfil con modo alerta muestra banner/instrucciones; preview de imagen 768px y PNG 2304×2565; filtro "Gato" muestra 8 mascotas; 0 errores de consola.
+
+### Verificación Fase 12
+- `tsc --noEmit` ✅ sin errores
+- `npm run lint` ✅ sin errores
+- `npm run build` ✅ compila y genera rutas SSG
+- Prueba manual en browser (descarga de la imagen de alerta) ✅
+- Prueba manual en browser (dark mode y responsive) ✅
+
+### Dependencias
+- **Añadida:** `html-to-image`
+- **Eliminada:** `html2canvas`, `@types/html2canvas`
+
+### Archivos modificados
+- `src/app/layout.tsx`
+- `src/app/providers.tsx`
+- `src/components/features/lost-pet/LostPetAlertForm.tsx`
+- `src/components/layout/SiteNav.tsx`
+- `package.json`, `package-lock.json`
+
+### Archivos de la sub-fase 12.4
+- `src/components/ui/SubpageHeader.tsx`
+- `src/components/layout/SiteNav.tsx`
+- `src/components/layout/AppShell.tsx`
+- `src/components/features/pet-profile/RecentPhotos.tsx`
+- `src/app/page.tsx`
+- `src/app/layout.tsx`
+- `src/app/perfil/[id]/page.tsx`
+- `src/app/perfil/[id]/alerta/page.tsx`
+
+### Archivos de la sub-fase 12.5
+- `src/components/features/pet-profile/ProfileNav.tsx`
+- `src/components/features/pet-profile/RecentPhotos.tsx`
+- `src/components/features/lost-pet/LostPetAlertImage.tsx`
+- `src/components/features/lost-pet/LostPetAlertForm.tsx`
+- `src/components/features/lost-pet/LostModeAlertSections.tsx` (creado)
+- `src/components/features/home/PetsList.tsx` (creado)
+- `src/lib/useLostAlerts.ts` (creado)
+- `src/app/perfil/[id]/page.tsx`
+- `src/app/page.tsx`
+
+---
+
+## FASE 11 — Rediseño de UI, Modo Noche y 9 correcciones
+
+**Estado:** Completada
+**Fecha:** 2026-08-29
+
+Rama `feat/rediseno-ui` (commits en español, Conventional Commits). Rediseño de la interfaz, menú global, dark mode, y resolución de 9 problemas detectados. Se aplicaron las 5 skills instaladas (frontend-design, tailwind patterns, vercel-react, nextjs-app-router, typescript-pro).
+
+### 11.1 Base de diseño: dark mode + tokens + menú global
+- Tokens de color/superficie/sombra en `globals.css` con variantes `.dark`; patrón Tailwind v4 `@custom-variant dark`.
+- `providers.tsx` nuevo: `ThemeProvider` + `useTheme` (persiste en `localStorage` `petcarnet-theme`, respeta `prefers-color-scheme`, aplica `color-scheme` y clase `.dark`).
+- Menú global `SiteNav.tsx`: Inicio, Mascotas (/#mascotas), Iniciar sesión (placeholder `/login`) y toggle de modo noche.
+- `layout.tsx`: envuelto en `ThemeProvider` + `suppressHydrationWarning`.
+- `AppShell.tsx`: integrado `SiteNav`, eliminado badge "Perfil Verificado".
+- **Fix**: corazón decorativo del hero ya no tapa el título "PetCarnet" en el rango `sm` (se quitó el decorativo que se superponía al `h1`).
+- `app/login/page.tsx`: placeholder de login.
+- **Nota lint:** corregido `set-state-in-effect` en `providers.tsx` con inicialización lazy del estado.
+
+### 11.2 Fotos separadas de documentos + galería Instagram
+- Los documentos de categoría `foto` se excluyen de la tarjeta "Documentos" y de la página de documentos (`profile.ts`, `documentos/page.tsx`); se quita la categoría/filtro "Fotos" de `documentCategory.ts`.
+- `RecentPhotos.tsx` rediseñado como **galería estilo Instagram**: grid responsive, lightbox con `framer-motion` (`AnimatePresence` + `MotionConfig reducedMotion`), navegación con flechas y teclado, contador, vista previa.
+
+### 11.3 Mini-nav del perfil
+- `ProfileNav.tsx` rediseñado: contenedor segmentado (glow por debajo) con conmutador activo, soporte dark mode y `aria-current`.
+
+### 11.4 Fix desborde de URL en QR
+- `QRShareCard.tsx`: la URL ahora usa `break-all` para no desbordar; dark mode en la tarjeta.
+
+### 11.5 Ubicación removida
+- Quitado el botón "Ubicación" / enlace a Google Maps de `EmergencyContact.tsx` (se conserva el texto de zona/vecindario).
+- Limpiados `locationUrl` y `locationLabel` del `ContactViewModel` en `profile.ts`.
+
+### 11.6 Generador de alerta: cambiar foto + captura robusta
+- `LostPetAlertForm.tsx`: opción "Cambiar foto" (subida de imagen local, vista previa, restaurar la del perfil) y captura `html2canvas` más robusta (sin `window`/`document` a nivel de módulo para no romper SSG; `scrollX/scrollY`, `windowWidth`, `allowTaint`, `logging`).
+
+### 11.7 Dark mode en componentes restantes
+- `.dark .soft-card` en `globals.css` hace los `GlassCard` oscuros automáticamente; `.dark body` con radial-gradients oscuros.
+- `dark:` variants en: `Badge`, `SubpageHeader`, `PetHeader`, `page.tsx` (hero + card), `InfoCard`, `HealthCard`, `VetCard`, `VaccineTimeline`, `VaccineDetailCard`, `DocumentsCard`, `DocumentPreview`, `DocumentListClient`, `documentos/page`, `vacunas/page`, `LostPetBanner`, `LostPetInstructions`, `ThankYouBanner`, `LostPetAlertForm`, `EmergencyContact`.
+
+### Verificación Fase 11
+- `tsc --noEmit` ✅ sin errores
+- `npm run lint` ✅ sin errores
+- `npm run build` ✅ compila y genera 49 rutas SSG (home, login, perfil, alerta, documentos, vacunas + not-found + icon)
+
+### Archivos creados
+- `src/app/providers.tsx`
+- `src/components/layout/SiteNav.tsx`
+- `src/app/login/page.tsx`
+
+### Archivos modificados
+- `src/app/globals.css`
+- `src/app/layout.tsx`
+- `src/app/page.tsx`
+- `src/components/layout/AppShell.tsx`
+- `src/components/ui/GlassCard.tsx`, `Badge.tsx`, `SubpageHeader.tsx`
+- `src/components/features/pet-profile/RecentPhotos.tsx`, `ProfileNav.tsx`, `PetHeader.tsx`, `EmergencyContact.tsx`, `QRShareCard.tsx`, `InfoCard.tsx`, `HealthCard.tsx`, `VetCard.tsx`, `VaccineTimeline.tsx`, `VaccineDetailCard.tsx`
+- `src/components/features/documents/DocumentsCard.tsx`, `DocumentPreview.tsx`
+- `src/components/features/lost-pet/LostPetAlertForm.tsx`, `LostPetBanner.tsx`, `LostPetInstructions.tsx`, `ThankYouBanner.tsx`
+- `src/lib/mapping/profile.ts`
+- `src/lib/domain/documentCategory.ts`
+- `src/app/perfil/[id]/page.tsx`
+- `src/app/perfil/[id]/documentos/page.tsx`
+- `src/app/perfil/[id]/documentos/DocumentListClient.tsx`
+- `src/app/perfil/[id]/vacunas/page.tsx`
+
+---
+
 ## FASE 10 — Refactor de arquitectura (SOLID / DRY)
 
 **Estado:** En progreso (Fases 10.1–10.3 completadas)

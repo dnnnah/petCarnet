@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #fffdf9;
   --foreground: #111827;
@@ -11,11 +13,42 @@
   --yellow-soft: #fef3c7;
   --purple-soft: #a78bfa;
   --border-soft: #e5e7eb;
+
+  --surface: #ffffff;
+  --surface-muted: #f7f6f2;
+  --surface-card: rgba(255, 255, 255, 0.92);
+  --surface-subtle: rgba(255, 255, 255, 0.72);
+
+  --ring-soft: rgba(229, 231, 235, 0.78);
+  --shadow-card: 0 18px 48px rgba(17, 24, 39, 0.08);
+}
+
+.dark {
+  --background: #0e1412;
+  --foreground: #edf2ef;
+  --muted: #a6afaa;
+  --mint: #3dd9a3;
+  --mint-soft: #0f2b21;
+  --pink-soft: #331f2c;
+  --blue-soft: #15263a;
+  --yellow-soft: #332a14;
+  --purple-soft: #2a2a4a;
+  --border-soft: #2a332e;
+
+  --surface: #151d1a;
+  --surface-muted: #1a2320;
+  --surface-card: rgba(21, 29, 26, 0.92);
+  --surface-subtle: rgba(21, 29, 26, 0.72);
+
+  --ring-soft: rgba(42, 51, 46, 0.8);
+  --shadow-card: 0 18px 48px rgba(0, 0, 0, 0.45);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
   --font-sans: "Nunito", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --shadow-soft: 0 16px 42px rgba(17, 24, 39, 0.07);
   --shadow-button: 0 16px 30px rgba(16, 185, 129, 0.2);
@@ -41,11 +74,11 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at 7% 6%, rgba(209, 250, 229, 0.54), transparent 24rem),
-    radial-gradient(circle at 94% 8%, rgba(252, 231, 243, 0.48), transparent 24rem),
-    radial-gradient(circle at 40% 82%, rgba(254, 243, 199, 0.38), transparent 26rem),
-    radial-gradient(circle at 87% 78%, rgba(219, 234, 254, 0.46), transparent 24rem),
-    linear-gradient(180deg, #fffdf9 0%, #fffefa 50%, #f8fffb 100%);
+    radial-gradient(circle at 7% 6%, rgba(209, 250, 229, 0.4), transparent 24rem),
+    radial-gradient(circle at 94% 8%, rgba(252, 231, 243, 0.38), transparent 24rem),
+    radial-gradient(circle at 40% 82%, rgba(254, 243, 199, 0.3), transparent 26rem),
+    radial-gradient(circle at 87% 78%, rgba(219, 234, 254, 0.38), transparent 24rem),
+    linear-gradient(180deg, var(--background) 0%, var(--surface-muted) 100%);
   color: var(--foreground);
   font-family: "Nunito", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   font-weight: 500;
@@ -53,6 +86,15 @@ body {
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark body {
+  background:
+    radial-gradient(circle at 7% 6%, rgba(61, 217, 163, 0.12), transparent 24rem),
+    radial-gradient(circle at 94% 8%, rgba(236, 72, 153, 0.1), transparent 24rem),
+    radial-gradient(circle at 40% 82%, rgba(251, 191, 36, 0.08), transparent 26rem),
+    radial-gradient(circle at 87% 78%, rgba(96, 165, 250, 0.1), transparent 24rem),
+    linear-gradient(180deg, var(--background) 0%, var(--surface-muted) 100%);
 }
 
 p,
@@ -114,6 +156,12 @@ a {
   border: 1px solid rgba(229, 231, 235, 0.78);
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 18px 48px rgba(17, 24, 39, 0.08);
+}
+
+.dark .soft-card {
+  border-color: rgba(55, 65, 81, 0.6);
+  background: rgba(17, 24, 39, 0.82);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
 }
 
 .doodle-line {

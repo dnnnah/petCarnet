@@ -19,18 +19,18 @@ export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimeline
   return (
     <GlassCard className="overflow-hidden p-5 sm:p-6 lg:p-7">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="flex items-center gap-3 text-xl sm:text-2xl font-extrabold text-gray-950">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100">
+        <h2 className="flex items-center gap-3 text-xl sm:text-2xl font-extrabold text-gray-950 dark:text-white">
+          <span className="grid h-9 w-9 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400 ring-1 ring-emerald-100">
             <ShieldCheck size={22} />
           </span>
           Registro de Vacunas
           {totalCount > 0 ? (
-            <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-extrabold text-emerald-700 ring-1 ring-emerald-200">
+            <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-extrabold text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-1 ring-emerald-200">
               {totalCount}
             </span>
           ) : null}
         </h2>
-        <Link href={`/perfil/${petId}/vacunas`} className="flex items-center gap-2 text-sm font-extrabold text-emerald-600">
+        <Link href={`/perfil/${petId}/vacunas`} className="flex items-center gap-2 text-sm font-extrabold text-emerald-600 dark:text-emerald-400">
           Ver cartilla completa
           <ChevronRight size={18} />
         </Link>
@@ -45,8 +45,8 @@ export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimeline
                 className={[
                   "relative z-10 grid h-14 w-14 sm:h-16 sm:w-16 shrink-0 place-items-center rounded-full shadow-[0_12px_26px_rgba(17,24,39,0.13)] ring-4 ring-white",
                   next
-                    ? "bg-amber-200 text-amber-700"
-                    : "bg-emerald-100 text-emerald-700",
+                    ? "bg-amber-200 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
+                    : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
                 ].join(" ")}
               >
                 {next ? (
@@ -56,14 +56,14 @@ export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimeline
                 )}
               </span>
               <span className="min-w-0">
-                <span className="block text-base sm:text-lg font-extrabold text-gray-950">{vaccine.name}</span>
-                <span className="mt-1 block text-sm font-bold text-gray-700">{vaccine.date}</span>
+                <span className="block text-base sm:text-lg font-extrabold text-gray-950 dark:text-white">{vaccine.name}</span>
+                <span className="mt-1 block text-sm font-bold text-gray-700 dark:text-gray-200">{vaccine.date}</span>
                 <span
                   className={[
                     "mt-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold ring-1",
                     next
-                      ? "bg-amber-50 text-amber-700 ring-amber-200"
-                      : "bg-emerald-50 text-emerald-700 ring-emerald-200",
+                      ? "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300 ring-amber-200"
+                      : "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-emerald-200",
                   ].join(" ")}
                 >
                   {vaccine.status}

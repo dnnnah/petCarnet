@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Heart, PawPrint, ShieldCheck, Sparkles } from "lucide-react";
+import { Heart, PawPrint, Sparkles } from "lucide-react";
+import { SiteNav } from "./SiteNav";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -23,27 +24,23 @@ export function AppShell({ children }: AppShellProps) {
         <Sparkles size={54} />
       </div>
 
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-4 py-5 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-5 sm:gap-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3">
-          <span className="grid h-11 w-11 sm:h-14 sm:w-14 place-items-center rounded-[1.1rem] sm:rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100">
+          <span className="grid h-11 w-11 sm:h-14 sm:w-14 place-items-center rounded-[1.1rem] sm:rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100 dark:bg-white/10 dark:text-white dark:ring-white/10">
             <PawPrint size={28} className="sm:hidden" />
             <PawPrint size={34} className="hidden sm:block" />
           </span>
           <span>
-            <span className="block text-2xl sm:text-3xl font-extrabold leading-7 tracking-tight text-gray-950">
+            <span className="block text-2xl sm:text-3xl font-extrabold leading-7 tracking-tight text-gray-950 dark:text-gray-50">
               PetCarnet
             </span>
-            <span className="block text-xs sm:text-base font-bold leading-5 text-gray-900">
-              Pasaporte Digital
+            <span className="block text-xs sm:text-base font-bold leading-5 text-gray-900 dark:text-gray-400">
+              Carnet Digital
             </span>
           </span>
         </Link>
 
-        <div className="hidden items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/82 px-3 py-2 text-xs font-extrabold text-gray-900 shadow-[0_12px_30px_rgba(16,185,129,0.1)] backdrop-blur sm:flex sm:gap-3 sm:px-6 sm:py-3 sm:text-base">
-          <ShieldCheck className="text-emerald-600" size={21} />
-          <span className="hidden md:inline">Perfil Verificado</span>
-          <span className="md:hidden">Verificado</span>
-        </div>
+        <SiteNav />
       </header>
 
       <main className="relative z-10">{children}</main>
