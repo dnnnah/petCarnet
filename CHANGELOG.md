@@ -48,6 +48,14 @@ Rama `feat/rediseno-ui` (commits en español, Conventional Commits). Mejoras apl
 - **Círculo de story en la galería:** `RecentPhotos.tsx` añade la prop `profilePhoto: string`; renderiza un círculo con ring tipo Instagram (gradiente `#feda75→#4f5bd5`, padding 3px, interior blanco/dark) con la foto de perfil de 64px y la etiqueta "Perfil". `perfil/[id]/page.tsx` pasa `profilePhoto={pet.mascota.fotoPerfilUrl}`.
 - Verificado en browser: overlay `bg-gray-900` visible en dark en Documentos y Alerta; nav de 358px en desktop y 161px en mobile sin desborde; subtítulo y título "Carnet Digital" mostrados; 0 errores de consola.
 
+### 12.5 Fix navbar del perfil, dark+WCAG en Instagram, imagen de alerta completa, modo alerta y filtro por especie
+- **Navbar del perfil (ProfileNav):** los botones pasan a iconos de 18px e igual talla en todas las pantallas. En móvil son botones cuadrados de 40×40 centrados (solo el icono, con `h-10 w-10`); en `md+` mantienen icono + texto alineados (`md:h-auto md:w-auto`). Se corrige el desajuste previo del tamaño (16px) y la posición de los iconos.
+- **Dark mode + WCAG en la sección Instagram (`RecentPhotos`):** el título, los chips (`pink`), el label "Perfil" y el grid ahora tienen variantes `dark:` con fondos translúcidos (`dark:bg-pink-500/15`, `dark:ring-pink-500/30`) y textos con contraste (`dark:text-pink-300`, `dark:text-gray-300`). El lightbox pasó a `dark:bg-gray-900` con textos e índices adaptados; los `alt` descriptivos se mantienen.
+- **Imagen de alerta completa:** `LostPetAlertImage` deja de limitarse a `max-w-[480px]` y ocupa todo el ancho disponible (`w-full`). La vista previa se amplía a `max-w-3xl` y la captura/descarga sube a `pixelRatio: 3`, generando un PNG de ~2304×2565px (completo y nítido).
+- **Modo alerta en el perfil restaurado:** nuevo hook `useLostAlerts` (localStorage versionado `petcarnet-alerta:v1:<id>`, con `useSyncExternalStore` para evitar hydration mismatch en SSG) que guarda zona/fecha/recompensa/mensaje. El generador de alerta (`LostPetAlertForm`) incorpora una tarjeta "Modo alerta en el perfil" para activar/desactivar. El perfil muestra vía `LostModeAlertSections` el banner "está perdido", las instrucciones y un panel con "Desactivar modo alerta" cuando está activo (además del flag estático `emergencia.perdido`).
+- **Filtro por especie en la home:** nuevo componente cliente `PetsList` con chips "Todos / Perro / Gato", contador de resultados y estado vacío; reemplaza el listado estático del `GlassCard`.
+- Verificado en browser: perfil con modo alerta muestra banner/instrucciones; preview de imagen 768px y PNG 2304×2565; filtro "Gato" muestra 8 mascotas; 0 errores de consola.
+
 ### Verificación Fase 12
 - `tsc --noEmit` ✅ sin errores
 - `npm run lint` ✅ sin errores
@@ -75,6 +83,17 @@ Rama `feat/rediseno-ui` (commits en español, Conventional Commits). Mejoras apl
 - `src/app/layout.tsx`
 - `src/app/perfil/[id]/page.tsx`
 - `src/app/perfil/[id]/alerta/page.tsx`
+
+### Archivos de la sub-fase 12.5
+- `src/components/features/pet-profile/ProfileNav.tsx`
+- `src/components/features/pet-profile/RecentPhotos.tsx`
+- `src/components/features/lost-pet/LostPetAlertImage.tsx`
+- `src/components/features/lost-pet/LostPetAlertForm.tsx`
+- `src/components/features/lost-pet/LostModeAlertSections.tsx` (creado)
+- `src/components/features/home/PetsList.tsx` (creado)
+- `src/lib/useLostAlerts.ts` (creado)
+- `src/app/perfil/[id]/page.tsx`
+- `src/app/page.tsx`
 
 ---
 
