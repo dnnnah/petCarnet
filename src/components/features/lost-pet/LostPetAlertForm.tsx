@@ -2,10 +2,11 @@
 
 import { useRef, useState } from "react";
 import { toBlob, toPng } from "html-to-image";
-import { AlertTriangle, Camera, Download, Share2, X } from "lucide-react";
+import { AlertTriangle, BellRing, Camera, Download, Share2, X } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { LostPetAlertImage } from "./LostPetAlertImage";
 import { formatMexicanDate } from "@/lib/dateFormat";
+import { useLostAlerts } from "@/lib/useLostAlerts";
 import type { PetProfile } from "@/types/pet";
 
 type LostPetAlertFormProps = {
@@ -24,9 +25,25 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
   const [reward, setReward] = useState(pet.emergencia.recompensa?.toString() ?? "");
   const [message, setMessage] = useState(pet.emergencia.mensajeEmergencia ?? "");
 
+  const { alert: lostAlert, activate: activateLostMode, deactivate: deactivateLostMode } = useLostAlerts(pet.id);
+  const isLostModeActive = lostAlert?.active === true;
+
   const profileUrl = `https://petcarnet.app/perfil/${pet.id}`;
   const formattedDate = lostDate ? formatMexicanDate(lostDate) ?? lostDate : "";
   const photoUrl = customPhoto ?? pet.mascota.fotoPerfilUrl;
+
+  function handleToggleLostMode() {
+    if (isLostModeActive) {
+      deactivateLostMode();
+      return;
+    }
+    activateLostMode({
+      zonaPerdida: lostZone,
+      fechaPerdida: lostDate,
+      recompensa: reward ? Number(reward) : null,
+      mensaje: message,
+    });
+  }
 
   function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
@@ -41,7 +58,7 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
     const element = alertRef.current;
     if (!element) return null;
     return toPng(element, {
-      pixelRatio: 2,
+      pixelRatio: 3,
       backgroundColor: "#ffffff",
       cacheBust: true,
     });
@@ -69,7 +86,7 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
       if (!element) return;
 
       const blob = await toBlob(element, {
-        pixelRatio: 2,
+        pixelRatio: 3,
         backgroundColor: "#ffffff",
         cacheBust: true,
       });
@@ -213,12 +230,51 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
         </div>
       </GlassCard>
 
+      <GlassCard className="p-6 lg:p-7">
+        <h3 className="flex items-center gap-3 text-xl font-extrabold text-gray-950 dark:text-white">
+          <span
+            className={[
+              "grid h-9 w-9 place-items-center rounded-full ring-1",
+              isLostModeActive
+                ? "bg-rose-500/15 text-rose-500 ring-rose-200 dark:text-rose-300 dark:ring-rose-900"
+                : "bg-gray-100 text-gray-500 ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700",
+            ].join(" ")}
+          >
+            <BellRing size={20} />
+          </span>
+          Modo alerta en el perfil
+        </h3>
+        <p className="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300">
+          Al activarlo, el perfil público de {pet.mascota.nombre} mostrará el banner de
+          mascota perdida con los datos que definiste arriba.
+        </p>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-gray-50/60 p-4 dark:border-gray-800 dark:bg-gray-800/60">
+          <p className="text-sm font-extrabold text-gray-900 dark:text-white">
+            {isLostModeActive ? "Modo alerta activo" : "Modo alerta inactivo"}
+          </p>
+          <button
+            type="button"
+            onClick={handleToggleLostMode}
+            aria-pressed={isLostModeActive}
+            className={[
+              "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(225,29,72,0.18)] transition hover:-translate-y-0.5",
+              isLostModeActive
+                ? "bg-gray-800 hover:bg-gray-900 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white"
+                : "bg-rose-600 hover:bg-rose-700",
+            ].join(" ")}
+          >
+            <BellRing size={16} />
+            {isLostModeActive ? "Desactivar en el perfil" : "Activar en el perfil"}
+          </button>
+        </div>
+      </GlassCard>
+
       <div className="flex flex-col items-center gap-6">
         <p className="text-sm font-extrabold uppercase tracking-wider text-gray-400">
           Vista previa de la imagen
         </p>
 
-        <div className="overflow-x-auto">
+        <div className="w-full max-w-3xl">
           <div ref={alertRef}>
             <LostPetAlertImage
               petName={pet.mascota.nombre}
