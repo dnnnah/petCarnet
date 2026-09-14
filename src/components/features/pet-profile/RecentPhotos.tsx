@@ -52,13 +52,13 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
     <MotionConfig reducedMotion="user">
       <GlassCard className="p-5 sm:p-6 lg:p-7">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="flex items-center gap-3 text-xl sm:text-2xl font-extrabold text-gray-950">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-pink-50 text-pink-500 ring-1 ring-pink-100">
+          <h2 className="flex items-center gap-3 text-xl sm:text-2xl font-extrabold text-gray-950 dark:text-white">
+            <span className="grid h-9 w-9 place-items-center rounded-full bg-pink-50 text-pink-500 ring-1 ring-pink-100 dark:bg-pink-500/15 dark:text-pink-400 dark:ring-pink-500/30">
               <Camera size={22} />
             </span>
             Fotos recientes
           </h2>
-          <span className="shrink-0 rounded-full bg-pink-50 px-3 py-1 text-sm font-extrabold text-pink-600 ring-1 ring-pink-100">
+          <span className="shrink-0 rounded-full bg-pink-50 px-3 py-1 text-sm font-extrabold text-pink-600 ring-1 ring-pink-100 dark:bg-pink-500/15 dark:text-pink-300 dark:ring-pink-500/30">
             {photos.length}
           </span>
         </div>
@@ -69,14 +69,14 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               <div className="rounded-full bg-white p-[3px] dark:bg-gray-900">
                 <Image
                   src={profilePhoto}
-                  alt="Foto de perfil"
+                  alt={`Foto de perfil de la mascota`}
                   width={80}
                   height={80}
                   className="h-16 w-16 rounded-full object-cover sm:h-20 sm:w-20"
                 />
               </div>
             </div>
-            <span className="mt-2 block text-center text-xs font-extrabold text-gray-500 dark:text-gray-400">
+            <span className="mt-2 block text-center text-xs font-extrabold text-gray-600 dark:text-gray-300">
               Perfil
             </span>
           </div>
@@ -88,7 +88,7 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               key={photo.id}
               onClick={() => setSelectedIndex(index)}
               aria-label={`Ver foto: ${photo.name}`}
-              className="group relative aspect-square overflow-hidden rounded-2xl ring-1 ring-gray-100 transition hover:-translate-y-0.5 hover:ring-pink-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+              className="group relative aspect-square overflow-hidden rounded-2xl ring-1 ring-gray-100 transition hover:-translate-y-0.5 hover:ring-pink-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:ring-gray-800 dark:hover:ring-pink-500/40"
             >
               <Image
                 src={photo.url}
@@ -152,10 +152,10 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="max-h-[85vh] w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl"
+              className="max-h-[85vh] w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl dark:bg-gray-900 dark:shadow-black/60"
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="relative max-h-[60vh] overflow-hidden bg-gray-100">
+              <div className="relative max-h-[60vh] overflow-hidden bg-gray-100 dark:bg-gray-800">
                 <Image
                   src={selected.url}
                   alt={selected.name}
@@ -167,15 +167,15 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-lg font-extrabold text-gray-950">{selected.name}</p>
-                    <p className="mt-1 text-sm font-semibold text-gray-500">{selected.date}</p>
+                    <p className="text-lg font-extrabold text-gray-950 dark:text-white">{selected.name}</p>
+                    <p className="mt-1 text-sm font-semibold text-gray-500 dark:text-gray-400">{selected.date}</p>
                   </div>
-                  <span className="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-xs font-extrabold text-gray-500">
+                  <span className="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-xs font-extrabold text-gray-500 dark:bg-gray-800 dark:text-gray-300">
                     {selectedIndex + 1} / {photos.length}
                   </span>
                 </div>
                 {selected.description ? (
-                  <p className="mt-3 font-bold leading-6 text-gray-700">{selected.description}</p>
+                  <p className="mt-3 font-bold leading-6 text-gray-700 dark:text-gray-200">{selected.description}</p>
                 ) : null}
               </div>
             </motion.div>
