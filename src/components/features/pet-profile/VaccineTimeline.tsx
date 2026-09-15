@@ -5,6 +5,7 @@ import type { VaccineStatusLabel } from "@/lib/domain/vaccineStatus";
 
 type VaccineTimelineProps = {
   petId: string;
+  petName: string;
   totalCount: number;
   vaccines: ReadonlyArray<{
     name: string;
@@ -13,7 +14,7 @@ type VaccineTimelineProps = {
   }>;
 };
 
-export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimelineProps) {
+export function VaccineTimeline({ petId, petName, totalCount, vaccines }: VaccineTimelineProps) {
   const isNextDose = (status: VaccineStatusLabel) => status === "Próxima dosis";
 
   return (
@@ -36,43 +37,55 @@ export function VaccineTimeline({ petId, totalCount, vaccines }: VaccineTimeline
         </Link>
       </div>
 
-      <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {vaccines.map((vaccine) => {
-          const next = isNextDose(vaccine.status);
-          return (
-            <article key={vaccine.name} className="flex items-center gap-4">
-              <span
-                className={[
-                  "relative z-10 grid h-14 w-14 sm:h-16 sm:w-16 shrink-0 place-items-center rounded-full shadow-[0_12px_26px_rgba(17,24,39,0.13)] ring-4 ring-white",
-                  next
-                    ? "bg-amber-200 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
-                    : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
-                ].join(" ")}
-              >
-                {next ? (
-                  <Clock size={28} strokeWidth={2.6} />
-                ) : (
-                  <Check size={32} strokeWidth={3.2} />
-                )}
-              </span>
-              <span className="min-w-0">
-                <span className="block text-base sm:text-lg font-extrabold text-gray-950 dark:text-white">{vaccine.name}</span>
-                <span className="mt-1 block text-sm font-bold text-gray-700 dark:text-gray-200">{vaccine.date}</span>
+      {vaccines.length > 0 ? (
+        <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {vaccines.map((vaccine) => {
+            const next = isNextDose(vaccine.status);
+            return (
+              <article key={vaccine.name} className="flex items-center gap-4">
                 <span
                   className={[
-                    "mt-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold ring-1",
+                    "relative z-10 grid h-14 w-14 sm:h-16 sm:w-16 shrink-0 place-items-center rounded-full shadow-[0_12px_26px_rgba(17,24,39,0.13)] ring-4 ring-white",
                     next
-                      ? "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300 ring-amber-200"
-                      : "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-emerald-200",
+                      ? "bg-amber-200 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
+                      : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
                   ].join(" ")}
                 >
-                  {vaccine.status}
+                  {next ? (
+                    <Clock size={28} strokeWidth={2.6} />
+                  ) : (
+                    <Check size={32} strokeWidth={3.2} />
+                  )}
                 </span>
-              </span>
-            </article>
-          );
-        })}
-      </div>
+                <span className="min-w-0">
+                  <span className="block text-base sm:text-lg font-extrabold text-gray-950 dark:text-white">{vaccine.name}</span>
+                  <span className="mt-1 block text-sm font-bold text-gray-700 dark:text-gray-200">{vaccine.date}</span>
+                  <span
+                    className={[
+                      "mt-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold ring-1",
+                      next
+                        ? "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300 ring-amber-200"
+                        : "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-emerald-200",
+                    ].join(" ")}
+                  >
+                    {vaccine.status}
+                  </span>
+                </span>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="mt-7 rounded-3xl border border-dashed border-gray-200 py-10 text-center dark:border-gray-700">
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-slate-50 text-slate-400 ring-1 ring-slate-100 dark:bg-slate-900 dark:text-slate-500 dark:ring-slate-800">
+            <ShieldCheck size={30} />
+          </span>
+          <p className="mt-4 text-xl font-extrabold text-gray-950 dark:text-white">Sin vacunas registradas</p>
+          <p className="mx-auto mt-2 max-w-md font-semibold leading-7 text-gray-600 dark:text-gray-300">
+            Aún no se han registrado vacunas para {petName}.
+          </p>
+        </div>
+      )}
     </GlassCard>
   );
 }

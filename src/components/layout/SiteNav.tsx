@@ -15,7 +15,8 @@ export function SiteNav() {
     >
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
+        aria-label="Inicio"
+        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
       >
         <PawPrint size={16} className="text-emerald-600 dark:text-emerald-400" />
         <span className="hidden sm:inline">Inicio</span>
@@ -23,7 +24,8 @@ export function SiteNav() {
 
       <Link
         href="/#mascotas"
-        className="inline-flex items-center gap-1 rounded-full px-2.5 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
+        aria-label="Ver mascotas"
+        className="inline-flex items-center gap-1 rounded-full px-2.5 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
       >
         <Bone size={16} className="text-emerald-600 dark:text-emerald-400" />
         <span className="hidden sm:inline">Mascotas</span>
@@ -31,7 +33,8 @@ export function SiteNav() {
 
       <Link
         href="/login"
-        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
+        aria-label="Iniciar sesión"
+        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
       >
         <LogIn size={16} className="text-emerald-600 dark:text-emerald-400" />
         <span className="hidden sm:inline">Iniciar sesión</span>
@@ -41,7 +44,7 @@ export function SiteNav() {
         type="button"
         onClick={toggleTheme}
         aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-        className="ml-0.5 inline-flex h-9 w-9 items-center justify-center rounded-full text-gray-600 transition hover:bg-white/70 dark:text-amber-300 dark:hover:bg-white/10"
+        className="ml-0.5 inline-flex h-11 w-11 items-center justify-center rounded-full text-gray-600 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-amber-300 dark:hover:bg-white/10"
       >
         {isDark ? <Sun size={16} /> : <Moon size={16} />}
       </button>

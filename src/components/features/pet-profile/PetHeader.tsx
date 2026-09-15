@@ -1,7 +1,6 @@
 import Image from "next/image";
 import {
   CalendarDays,
-  Copy,
   Heart,
   Mars,
   Microchip,
@@ -12,6 +11,7 @@ import {
   Venus,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { CopyButton } from "@/components/ui/CopyButton";
 
 type PetHeaderProps = {
   pet: {
@@ -88,9 +88,9 @@ export function PetHeader({ pet }: PetHeaderProps) {
             </Badge>
           </div>
 
-          <div className="mt-7 flex max-w-sm items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-[0_10px_24px_rgba(17,24,39,0.05)] dark:border-gray-700 dark:bg-gray-900">
+          <div className="mt-7 flex max-w-sm flex-wrap items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-[0_10px_24px_rgba(17,24,39,0.05)] dark:border-gray-700 dark:bg-gray-900">
             <span className="font-extrabold text-gray-950 dark:text-white">ID PetCarnet: {pet.id}</span>
-            <Copy size={20} className="shrink-0 text-gray-700 dark:text-gray-300" />
+            <CopyButton value={pet.id} label="Copiar ID" />
           </div>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-3">

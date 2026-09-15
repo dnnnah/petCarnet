@@ -58,7 +58,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
       <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="space-y-7">
           <PetHeader pet={profile.header} />
-          <ProfileNav />
+          <ProfileNav hasPhotos={profile.photos.length > 0} />
           <LostModeAlertSections
             petId={pet.id}
             petName={pet.mascota.nombre}
@@ -92,7 +92,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             </div>
           ) : null}
           <div id="vacunas">
-            <VaccineTimeline petId={pet.id} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
+            <VaccineTimeline petId={pet.id} petName={pet.mascota.nombre} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
           </div>
           <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
