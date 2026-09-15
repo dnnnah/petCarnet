@@ -157,12 +157,20 @@ export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
 export function formatPhoneForDisplay(phone: string) {
   const digits = phone.replace(/\D/g, "");
 
-  if (digits.length === 12) {
+  if (digits.length === 10) {
+    return digits.replace(/^(\d{2})(\d{4})(\d{4})$/, "$1 $2 $3");
+  }
+
+  if (digits.length === 12 && digits.startsWith("52")) {
     return digits.replace(/^(\d{2})(\d{2})(\d{4})(\d{4})$/, "+$1 $2 $3 $4");
   }
 
-  if (digits.length === 10) {
-    return digits.replace(/^(\d{2})(\d{4})(\d{4})$/, "$1 $2 $3");
+  if (digits.length === 13 && digits.startsWith("521")) {
+    return digits.replace(/^(\d{2})(\d)(\d{2})(\d{4})(\d{4})$/, "+$1 $2 $3 $4 $5");
+  }
+
+  if (digits.length === 12) {
+    return digits.replace(/^(\d{4})(\d{4})(\d{4})$/, "$1 $2 $3");
   }
 
   return phone;

@@ -29,7 +29,7 @@ export function VetCard({ vet, species }: VetCardProps) {
           <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">{vet.doctor}</p>
           <p className="mt-2 text-lg font-semibold text-gray-900 dark:text-white">{vet.clinic}</p>
         </div>
-        <a href={`tel:${vet.phone}`} className="flex items-center gap-3 font-semibold text-gray-950 dark:text-white">
+        <a href={`tel:${vet.phone.replace(/\D/g, "")}`} className="flex items-center gap-3 font-semibold text-gray-950 dark:text-white">
           <Phone size={20} />
           {vet.phone}
         </a>
