@@ -1,10 +1,32 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./providers";
+import { resolvePublicProfileBaseUrl } from "@/lib/services/publicProfileUrl";
+
+const siteUrl = (() => {
+  const baseUrl = resolvePublicProfileBaseUrl();
+  if (!baseUrl) {
+    return new URL("http://localhost:3000");
+  }
+  try {
+    return new URL(baseUrl);
+  } catch {
+    return new URL("http://localhost:3000");
+  }
+})();
 
 export const metadata: Metadata = {
+  metadataBase: siteUrl,
   title: "PetCarnet | Carnet Digital",
-  description: "Pasaporte digital publico para mascotas con QR de emergencia.",
+  description: "Pasaporte digital público para mascotas con QR de emergencia.",
+  openGraph: {
+    type: "website",
+    siteName: "PetCarnet",
+    locale: "es_MX",
+  },
+  twitter: {
+    card: "summary",
+  },
 };
 
 export default function RootLayout({

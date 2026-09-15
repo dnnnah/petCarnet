@@ -20,6 +20,48 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 16 — SEO, Open Graph y Twitter Card del perfil público (PR `feat/seo-og`)
+
+**Estado:** Completada
+**Fecha:** 2026-09-14
+
+Resuelve el hallazgo **M5** de `AUDITORIA.md` / **§3.10** de `UX_AUDIT.md` (metadata social ausente) y las mejoras «Revisar metadata SEO / Agregar Open Graph / Agregar Twitter card / Definir imagen social del perfil» del roadmap FASE 1 §1.1. Compatible con Next.js 16.3.5.
+
+### 16.1 `metadataBase` global en `src/app/layout.tsx`
+
+- `metadataBase` derivado de `NEXT_PUBLIC_APP_URL` (misma fuente que el servicio de URLs), con fallback a `http://localhost:3000` en desarrollo.
+- `openGraph` base (`type: website`, `siteName: PetCarnet`, `locale: es_MX`) y `twitter.card: summary` por defecto.
+- Corrige el typo «publico» → «público» en la description del layout.
+
+### 16.2 Metadata por perfil (`src/lib/seo.ts` + `generateMetadata`)
+
+- Nuevo helper testeable `buildPetProfileMetadata(pet)` y derivados `getPetProfileSeoTitle` / `getPetProfileSeoDescription`.
+- `title` y `description` derivados del perfil: `nombre`, `raza`, `especie` y aviso de «modo perdido» cuando `emergencia.perdido`.
+- `alternates.canonical` y `og:url` → `getPublicProfileUrl(pet)` (ruta canónica por `codigoPublico`), **nunca** `pet.id`.
+- `og:title`, `og:description`, `og:type=website`, `og:site_name`, `og:locale`, `og:image` (foto real del perfil, `alt` = nombre).
+- `twitter:card` con `summary_large_image` cuando hay foto; `summary` sin imagen (fallback).
+- Fallback sin invención de datos: si falta `fotoPerfilUrl` o `codigoPublico`, se omiten imagen/canonical.
+
+### 16.3 404 de perfiles inexistentes
+
+- `generateMetadata` de perfil no encontrado agrega `robots: { index: false }` (noindex).
+
+### 16.4 Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm test` ✅ (46 pruebas, +15 en `seo.test.ts`) · `npm run build` ✅ (SSG).
+- Smoke tests de metadata (servidor `npm start`):
+  - `/perfil/PC-LUCCA-001`: title, description, canonical, og:title/description/url/image, twitter:card/image todos correctos con URL canónica por `codigoPublico`.
+  - `/perfil/PC-VISERYS-001`: idem (og:image = `/pets/viserys.jpeg`).
+  - Ruta inexistente: HTTP 404 + `<meta name="robots" content="noindex"/>`.
+  - `/perfil/lucca` (ruta legacy): canonical y `og:url` apuntan a `PC-LUCCA-001`; sin referencias a `pet.id` en metadata (solo enlaces internos de navegación).
+
+### 16.5 Cambios
+
+- `src/app/layout.tsx`, `src/app/perfil/[id]/page.tsx`, `src/lib/seo.ts` (nuevo), `src/lib/seo.test.ts` (nuevo), `CHANGELOG.md`.
+- **No** se tocaron `package.json`/`package-lock.json`, `mascotas.json`, QR, accesibilidad, tipos de dominio, rutas públicas ni backend.
+
+---
+
 ## FASE 15 — Seguridad de dependencias: upgrade de Next.js y audit limpio (PR `feat/next-seguridad`)
 
 **Estado:** Completada
