@@ -1,8 +1,11 @@
 import mascotas from "@/data/mascotas.json";
+import { assertValidPetProfiles } from "@/lib/dataValidation";
 import type { PetProfile } from "@/types/pet";
 
-const pets = mascotas as PetProfile[];
+assertValidPetProfiles(mascotas);
 
-export function getAllPets() {
+const pets: PetProfile[] = mascotas;
+
+export function getAllPets(): PetProfile[] {
   return pets;
 }
