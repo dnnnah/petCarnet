@@ -7,6 +7,7 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { LostPetAlertImage } from "./LostPetAlertImage";
 import { formatMexicanDate } from "@/lib/dateFormat";
 import { useLostAlerts } from "@/lib/useLostAlerts";
+import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
 import type { PetProfile } from "@/types/pet";
 
 type LostPetAlertFormProps = {
@@ -28,7 +29,7 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
   const { alert: lostAlert, activate: activateLostMode, deactivate: deactivateLostMode } = useLostAlerts(pet.id);
   const isLostModeActive = lostAlert?.active === true;
 
-  const profileUrl = `https://petcarnet.app/perfil/${pet.id}`;
+  const profileUrl = getPublicProfileUrl(pet) ?? "";
   const formattedDate = lostDate ? formatMexicanDate(lostDate) ?? lostDate : "";
   const photoUrl = customPhoto ?? pet.mascota.fotoPerfilUrl;
 

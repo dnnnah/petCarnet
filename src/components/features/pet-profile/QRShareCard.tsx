@@ -7,13 +7,12 @@ import { GlassCard } from "@/components/ui/GlassCard";
 
 type QRShareCardProps = {
   petName: string;
-  profilePath: string;
+  profileUrl: string;
 };
 
-export function QRShareCard({ petName, profilePath }: QRShareCardProps) {
+export function QRShareCard({ petName, profileUrl }: QRShareCardProps) {
   const qrRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
-  const fullUrl = `https://petcarnet.app${profilePath}`;
 
   async function handleDownload() {
     setDownloading(true);
@@ -65,7 +64,7 @@ export function QRShareCard({ petName, profilePath }: QRShareCardProps) {
           <p className="max-w-[13rem] text-lg font-extrabold leading-6 text-gray-950 dark:text-white">
             Escanea para ver el perfil de {petName}
           </p>
-          <p className="mt-3 text-sm font-bold text-emerald-700 break-all dark:text-emerald-400">{fullUrl}</p>
+          <p className="mt-3 text-sm font-bold text-emerald-700 break-all dark:text-emerald-400">{profileUrl}</p>
           <div className="mt-4 flex gap-2 text-emerald-400">
             <Heart size={18} />
             <Heart size={18} />
@@ -78,7 +77,7 @@ export function QRShareCard({ petName, profilePath }: QRShareCardProps) {
             className="grid aspect-square w-32 shrink-0 place-items-center rounded-3xl bg-white p-2 shadow-[0_18px_32px_rgba(17,24,39,0.12)] sm:w-36 lg:mx-auto lg:w-40"
           >
             <QRCodeSVG
-              value={fullUrl}
+              value={profileUrl}
               size={112}
               bgColor="#ffffff"
               fgColor="#111827"

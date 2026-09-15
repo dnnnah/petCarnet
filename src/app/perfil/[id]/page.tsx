@@ -18,13 +18,14 @@ import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
 import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
 import { toProfileViewModel } from "@/lib/mapping/profile";
+import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
 
 type ProfilePageProps = {
   params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
-  return getAllPets().map((pet) => ({ id: pet.id }));
+  return getAllPets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
 }
 
 export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
@@ -50,6 +51,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const pet = getPetOrNotFound(id);
 
   const profile = toProfileViewModel(pet);
+  const publicProfileUrl = getPublicProfileUrl(pet) ?? "";
 
   return (
     <AppShell>
@@ -94,7 +96,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </div>
           <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
-            <QRShareCard petName={pet.mascota.nombre} profilePath={pet.qr.urlPublica} />
+            <QRShareCard petName={pet.mascota.nombre} profileUrl={publicProfileUrl} />
           </div>
           <Link
             href={`/perfil/${pet.id}/alerta`}

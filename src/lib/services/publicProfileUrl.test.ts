@@ -1,0 +1,78 @@
+import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+  getPublicProfilePath,
+  getPublicProfileUrl,
+  resolvePublicProfileBaseUrl,
+} from "./publicProfileUrl";
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
+
+describe("getPublicProfilePath", () => {
+  it("genera la ruta canónica con codigoPublico", () => {
+    expect(getPublicProfilePath("PC-LUCCA-001")).toBe("/perfil/PC-LUCCA-001");
+  });
+
+  it("normaliza espacios al inicio y al final", () => {
+    expect(getPublicProfilePath("  PC-LUCCA-001  ")).toBe("/perfil/PC-LUCCA-001");
+  });
+
+  it("retorna null ante código vacío, en blanco o ausente", () => {
+    expect(getPublicProfilePath("")).toBeNull();
+    expect(getPublicProfilePath("   ")).toBeNull();
+    expect(getPublicProfilePath(null)).toBeNull();
+    expect(getPublicProfilePath(undefined)).toBeNull();
+  });
+});
+
+describe("getPublicProfileUrl", () => {
+  const pet = {
+    id: "lucca",
+    identificacion: { codigoPublico: "PC-LUCCA-001" },
+  };
+
+  it("genera la URL canónica a partir del código público", () => {
+    expect(getPublicProfileUrl("PC-LUCCA-001")).toBe("/perfil/PC-LUCCA-001");
+  });
+
+  it("acepta un perfil y NO depende de pet.id", () => {
+    expect(getPublicProfileUrl(pet)).toBe("/perfil/PC-LUCCA-001");
+    expect(getPublicProfileUrl(pet)).not.toContain("lucca");
+  });
+
+  it("usa codigoPublico aunque pet.id sea distinto", () => {
+    const petWithDifferentId = { id: "otro-slug", identificacion: { codigoPublico: "PC-FREYA-001" } };
+    expect(getPublicProfileUrl(petWithDifferentId)).toBe("/perfil/PC-FREYA-001");
+  });
+
+  it("compone la URL completa cuando existe NEXT_PUBLIC_APP_URL", () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://petcarnet.example");
+    expect(getPublicProfileUrl(pet)).toBe("https://petcarnet.example/perfil/PC-LUCCA-001");
+  });
+
+  it("normaliza la base URL sin barra final", () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "https://petcarnet.example///");
+    expect(getPublicProfileUrl(pet)).toBe("https://petcarnet.example/perfil/PC-LUCCA-001");
+  });
+
+  it("colapsa a ruta relativa si la base URL está vacía", () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", "");
+    expect(getPublicProfileUrl(pet)).toBe("/perfil/PC-LUCCA-001");
+  });
+
+  it("retorna null ante datos inválidos (fuera del contrato)", () => {
+    expect(getPublicProfileUrl("")).toBeNull();
+    expect(getPublicProfileUrl({ identificacion: { codigoPublico: "" } })).toBeNull();
+    expect(
+      getPublicProfileUrl({ identificacion: { codigoPublico: undefined as unknown as string } }),
+    ).toBeNull();
+  });
+});
+
+describe("resolvePublicProfileBaseUrl", () => {
+  it("retorna cadena vacía sin variable de entorno", () => {
+    vi.stubEnv("NEXT_PUBLIC_APP_URL", undefined);
+    expect(resolvePublicProfileBaseUrl()).toBe("");
+  });
+});

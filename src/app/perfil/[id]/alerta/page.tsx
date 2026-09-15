@@ -13,7 +13,7 @@ type AlertPageProps = {
 };
 
 export function generateStaticParams() {
-  return getAllPets().map((pet) => ({ id: pet.id }));
+  return getAllPets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
 }
 
 export async function generateMetadata({ params }: AlertPageProps): Promise<Metadata> {

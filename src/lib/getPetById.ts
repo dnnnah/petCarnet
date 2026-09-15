@@ -1,5 +1,8 @@
 import { getAllPets } from "@/lib/getAllPets";
 
 export function getPetById(id: string) {
-  return getAllPets().find((pet) => pet.id === id);
+  const normalizedId = id.trim();
+  return getAllPets().find(
+    (pet) => pet.id === normalizedId || pet.identificacion.codigoPublico === normalizedId,
+  );
 }

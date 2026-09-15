@@ -64,7 +64,6 @@
       { "id": "lucca-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/lucca/foto-reciente.jpg", "fecha": "2025-03-12", "tamano": "620 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Imagen reciente para identificarlo rápido." },
       { "id": "lucca-doc-4", "nombre": "Estudios Médicos", "tipo": "pdf", "categoria": "salud", "url": "/docs/lucca/estudios-medicos.pdf", "fecha": "2025-03-12", "tamano": "3.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Resultados médicos privados." }
     ],
-    "qr": { "urlPublica": "/perfil/lucca", "texto": "QR temporal de Lucca" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -137,7 +136,6 @@
       { "id": "niko-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/niko/foto-reciente.jpg", "fecha": "2025-04-01", "tamano": "700 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerlo al instante." },
       { "id": "niko-doc-4", "nombre": "Plan Nutricional", "tipo": "pdf", "categoria": "salud", "url": "/docs/niko/estudios-medicos.pdf", "fecha": "2025-04-01", "tamano": "1.4 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre dieta y salud." }
     ],
-    "qr": { "urlPublica": "/perfil/niko", "texto": "QR temporal de Niko" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -210,7 +208,6 @@
       { "id": "alix-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/alix/foto-reciente.jpg", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocerla mejor." },
       { "id": "alix-doc-4", "nombre": "Notas de Conducta", "tipo": "pdf", "categoria": "salud", "url": "/docs/alix/estudios-medicos.pdf", "fecha": "2025-06-10", "tamano": "720 KB", "visiblePublico": false, "estado": "Privado", "descripcion": "Notas privadas sobre comportamiento." }
     ],
-    "qr": { "urlPublica": "/perfil/alix", "texto": "QR temporal de Alix" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -279,7 +276,6 @@
       { "id": "loki-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/loki/foto-reciente.jpg", "fecha": "2025-05-18", "tamano": "640 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente de Loki." },
       { "id": "loki-doc-4", "nombre": "Revisión General", "tipo": "pdf", "categoria": "salud", "url": "/docs/loki/estudios-medicos.pdf", "fecha": "2025-05-18", "tamano": "1.2 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Revisión médica privada." }
     ],
-    "qr": { "urlPublica": "/perfil/loki", "texto": "QR de Loki" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -348,7 +344,6 @@
       { "id": "viserys-doc-3", "nombre": "Foto Reciente", "tipo": "imagen", "categoria": "foto", "url": "/docs/viserys/foto-reciente.jpg", "fecha": "2025-04-16", "tamano": "680 KB", "visiblePublico": true, "estado": "Verificado", "descripcion": "Foto reciente para reconocer su pelaje." },
       { "id": "viserys-doc-4", "nombre": "Estudio Urinario", "tipo": "pdf", "categoria": "salud", "url": "/docs/viserys/estudios-medicos.pdf", "fecha": "2025-05-20", "tamano": "1.7 MB", "visiblePublico": false, "estado": "Privado", "descripcion": "Estudio médico privado." }
     ],
-    "qr": { "urlPublica": "/perfil/viserys", "texto": "QR de Viserys" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -412,7 +407,6 @@
     },
     "vacunas": [],
     "documentos": [],
-    "qr": { "urlPublica": "/perfil/frey", "texto": "QR de Frey" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -476,7 +470,6 @@
     },
     "vacunas": [],
     "documentos": [],
-    "qr": { "urlPublica": "/perfil/sandor", "texto": "QR de Sandor" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -540,7 +533,6 @@
     },
     "vacunas": [],
     "documentos": [],
-    "qr": { "urlPublica": "/perfil/bizcocho", "texto": "QR de Bizcocho" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -604,7 +596,6 @@
     },
     "vacunas": [],
     "documentos": [],
-    "qr": { "urlPublica": "/perfil/chicharrona", "texto": "QR de Chicharrona" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -668,7 +659,6 @@
     },
     "vacunas": [],
     "documentos": [],
-    "qr": { "urlPublica": "/perfil/freya", "texto": "QR de Freya" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -732,7 +722,6 @@
     },
     "vacunas": [],
     "documentos": [],
-    "qr": { "urlPublica": "/perfil/arya", "texto": "QR de Arya" },
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,

@@ -20,6 +20,41 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 13 — URL pública estable del perfil (PR1 `fix/qr-url-estable`)
+
+**Estado:** Completada
+**Fecha:** 2026-09-14
+
+Rama `fix/qr-url-estable` (commits en español, Conventional Commits). Resuelve C1 / R-2 / U-1 / M1 / DT2 / DT3: se eliminan las URLs de QR hardcodeadas y se introduce una única fuente de verdad para la URL pública del perfil, alineada a la arquitectura `Domain → Services → Mapping → View Models → UI` y al principio del roadmap «El QR identifica, no almacena».
+
+### 13.1 Contrato del servicio de URL pública
+
+Nuevo servicio `src/lib/services/publicProfileUrl.ts`:
+
+- `getPublicProfileUrl(source): string | null` — construye la URL canónica del perfil a partir del **identificador público estable** `codigoPublico`. Acepta `string` (`getPublicProfileUrl("PC-LUCCA-001")`) o un perfil/objeto `{ identificacion: { codigoPublico } }`. **No depende de `pet.id`.**
+- Ruta canónica producida: `/perfil/<codigoPublico>`.
+- Base URL: se toma de `NEXT_PUBLIC_APP_URL` (normalizada sin barra final); sin variable definida devuelve ruta relativa (funciona en cualquier origin / localhost).
+- Datos inválidos (vacío, en blanco, ausente) → `null` (convención del proyecto: degradación suave, sin excepciones propias).
+
+### 13.2 Navegación con alias estable de `codigoPublico`
+
+- `getPetById` ahora resuelve tanto por `pet.id` como por `pet.identificacion.codigoPublico` (alias estable).
+- `generateStaticParams` de las 4 rutas de perfil (`/perfil/[id]`, `/alerta`, `/vacunas`, `/documentos`) pre-renderiza ambas variantes. Los enlaces internos (home, navbar) siguen usando `pet.id`; el QR usa la ruta canónica por `codigoPublico`.
+
+### 13.3 Consumidores migrados al contrato
+
+- `QRShareCard` recibe `profileUrl` ya resuelto (elimina el `https://petcarnet.app` hardcodeado y deja de construir URLs).
+- `LostPetAlertForm` usa `getPublicProfileUrl(pet)` para el texto compartido y el QR de la imagen de alerta.
+- Campo `qr` (muerto: `urlPublica`/`texto`) eliminado de `PetProfile` y de `mascotas.json` (11 mascotas).
+
+### 13.4 Tooling de calidad
+
+- Agregado `vitest` con `vitest.config.ts` (alias `@` → `src`, entorno node).
+- Scripts: `npm run test` (vitest) y `npm run typecheck` (`tsc --noEmit`).
+- Pruebas unitarias del contrato en `src/lib/services/publicProfileUrl.test.ts` y del alias en `src/lib/getPetById.test.ts`.
+
+---
+
 ## FASE 12 — Mejoras de dark mode, fix de descarga de alerta y menú compacto
 
 **Estado:** Completada
