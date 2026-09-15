@@ -10,11 +10,11 @@ type ActionButtonProps = {
 };
 
 const tones = {
-  call: "from-emerald-300 to-teal-500 shadow-[0_16px_28px_rgba(16,185,129,0.22)]",
-  whatsapp: "from-[#65dda0] to-emerald-500 shadow-[0_16px_28px_rgba(37,211,102,0.2)]",
-  location: "from-violet-300 to-indigo-400 shadow-[0_16px_28px_rgba(129,140,248,0.22)]",
-  urgentCall: "from-rose-600 to-red-500 shadow-[0_20px_38px_rgba(225,29,72,0.28)] ring-4 ring-rose-100",
-  urgentWhatsapp: "from-emerald-500 to-green-600 shadow-[0_20px_38px_rgba(22,163,74,0.24)] ring-4 ring-emerald-100",
+  call: "from-emerald-700 to-teal-700 shadow-[0_16px_28px_rgba(16,185,129,0.28)]",
+  whatsapp: "from-green-700 to-emerald-700 shadow-[0_16px_28px_rgba(22,163,74,0.28)]",
+  location: "from-violet-600 to-indigo-600 shadow-[0_16px_28px_rgba(129,140,248,0.3)]",
+  urgentCall: "from-rose-600 to-red-700 shadow-[0_20px_38px_rgba(225,29,72,0.28)] ring-4 ring-rose-100",
+  urgentWhatsapp: "from-green-700 to-emerald-700 shadow-[0_20px_38px_rgba(22,163,74,0.26)] ring-4 ring-emerald-100",
 };
 
 export function ActionButton({
@@ -29,7 +29,7 @@ export function ActionButton({
     <a
       href={href}
       className={[
-        "grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 overflow-hidden rounded-[1.45rem] bg-gradient-to-br text-white transition hover:-translate-y-0.5",
+        "grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 overflow-hidden rounded-[1.45rem] bg-gradient-to-br text-white transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
         size === "large" ? "min-h-[104px] px-4 py-4 sm:px-5" : "min-h-[76px] px-4 py-3 sm:px-5",
         tones[tone],
       ].join(" ")}

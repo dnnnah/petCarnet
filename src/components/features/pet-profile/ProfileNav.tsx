@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Camera,
   FileText,
@@ -17,7 +17,7 @@ type NavItem = {
   icon: typeof Heart;
 };
 
-const navItems: NavItem[] = [
+const defaultNavItems: NavItem[] = [
   { id: "contacto", label: "Contacto", icon: Phone },
   { id: "info", label: "Información", icon: PawPrint },
   { id: "salud", label: "Salud", icon: Heart },
@@ -27,8 +27,16 @@ const navItems: NavItem[] = [
   { id: "documentos", label: "Documentos", icon: FileText },
 ];
 
-export function ProfileNav() {
+type ProfileNavProps = {
+  hasPhotos?: boolean;
+};
+
+export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
   const [active, setActive] = useState("");
+  const navItems = useMemo(
+    () => defaultNavItems.filter((item) => item.id !== "fotos" || hasPhotos),
+    [hasPhotos]
+  );
 
   useEffect(() => {
     const sections = navItems
@@ -53,7 +61,7 @@ export function ProfileNav() {
     }
 
     return () => observer.disconnect();
-  }, []);
+  }, [navItems]);
 
   function scrollTo(id: string) {
     const element = document.getElementById(id);
@@ -73,14 +81,15 @@ export function ProfileNav() {
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
+              aria-label={item.label}
               aria-current={isActive ? "true" : undefined}
               className={[
-                "inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-extrabold transition",
+                "inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-extrabold outline-none transition focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
                 "md:px-3.5 md:py-2 md:text-sm",
                 isActive
                   ? "bg-emerald-500 text-white shadow-[0_8px_18px_rgba(16,185,129,0.28)]"
                   : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800",
-                "h-10 w-10 md:h-auto md:w-auto",
+                "h-11 w-11 md:h-auto md:w-auto",
               ].join(" ")}
             >
               <Icon size={18} className="shrink-0" aria-hidden="true" />

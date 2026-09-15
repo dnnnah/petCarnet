@@ -24,6 +24,13 @@ export function AppShell({ children }: AppShellProps) {
         <Sparkles size={54} />
       </div>
 
+      <a
+        href="#contenido"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-emerald-600 focus:px-5 focus:py-3 focus:text-sm focus:font-extrabold focus:text-white"
+      >
+        Saltar al contenido
+      </a>
+
       <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-5 sm:gap-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3">
           <span className="grid h-11 w-11 sm:h-14 sm:w-14 place-items-center rounded-[1.1rem] sm:rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100 dark:bg-white/10 dark:text-white dark:ring-white/10">
@@ -43,7 +50,9 @@ export function AppShell({ children }: AppShellProps) {
         <SiteNav />
       </header>
 
-      <main className="relative z-10">{children}</main>
+      <main id="contenido" tabIndex={-1} className="relative z-10 focus:outline-none">
+        {children}
+      </main>
     </div>
   );
 }
