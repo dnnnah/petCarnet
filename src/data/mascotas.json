@@ -40,8 +40,8 @@
       "instrucciones": ["Háblale con calma por su nombre.", "No lo persigas si está asustado.", "Contacta por llamada o WhatsApp."]
     },
     "salud": {
-      "alergias": ["Ninguna registrada"],
-      "condicionesMedicas": ["Ninguna"],
+      "alergias": [],
+      "condicionesMedicas": [],
       "medicamentosActuales": [],
       "dietaEspecial": "",
       "comportamiento": "Amigable y curioso, puede asustarse con ruidos fuertes."
@@ -112,8 +112,8 @@
       "instrucciones": ["Llámalo por su nombre con voz tranquila.", "No le ofrezcas comida desconocida.", "Contacta por WhatsApp."]
     },
     "salud": {
-      "alergias": ["Ninguna registrada"],
-      "condicionesMedicas": ["Ninguna"],
+      "alergias": [],
+      "condicionesMedicas": [],
       "medicamentosActuales": [],
       "dietaEspecial": "",
       "comportamiento": "Muy sociable, muy noble, se emociona al ver pelotas."
@@ -184,7 +184,7 @@
       "instrucciones": ["Acércate despacio y agáchate.", "Puede esconderse si hay ruido.", "Contacta a su familia antes de moverla."]
     },
     "salud": {
-      "alergias": ["Ninguna registrada"],
+      "alergias": [],
       "condicionesMedicas": ["Ansiedad con fuegos artificiales"],
       "medicamentosActuales": [],
       "dietaEspecial": "",
@@ -550,7 +550,7 @@
       "raza": "Mestizo",
       "fotoPerfilUrl": "/pets/chicharrona.jpeg",
       "genero": "Hembra",
-      "talla": "Pequeña",
+      "talla": "Pequeño",
       "color": "Negro",
       "pesoKg": 1,
       "fechaNacimiento": "2025-07-01",
@@ -613,7 +613,7 @@
       "raza": "Mestizo",
       "fotoPerfilUrl": "/pets/freya.jpeg",
       "genero": "Hembra",
-      "talla": "Pequeña",
+      "talla": "Pequeño",
       "color": "Negro",
       "pesoKg": 1,
       "fechaNacimiento": "2025-07-01",
@@ -676,7 +676,7 @@
       "raza": "Mestizo (Carey)",
       "fotoPerfilUrl": "/pets/arya.jpeg",
       "genero": "Hembra",
-      "talla": "Mediana",
+      "talla": "Mediano",
       "color": "Gris",
       "pesoKg": 2,
       "fechaNacimiento": "2022-07-01",

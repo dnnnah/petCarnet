@@ -20,6 +20,47 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 14 — Higiene de datos y validación de `mascotas.json` (PR2 `fix/data-higiene`)
+
+**Estado:** Completada
+**Fecha:** 2026-09-14
+
+Rama `fix/data-higiene`. Elimina el drift entre `mascotas.json` y `PetProfile`, remplaza el cast silencioso `as PetProfile[]` por una validación real en runtime y documenta avisos no bloqueantes.
+
+### 14.1 Correcciones de datos
+
+- Tallas fuera del enum `PetSize`: `chicharrona` y `freya` tenían `"Pequeña"` (→ `"Pequeño"`), `arya` `"Mediana"` (→ `"Mediano"`).
+- Sentineles inconsistentes en salud normalizados a `[]`: `alergias: ["Ninguna registrada"]` y `condicionesMedicas: ["Ninguna"]` en `lucca` y `niko`, y `alergias: ["Ninguna registrada"]` en `alix`. `HealthCard` ya manejaba arrays vacíos, por lo que no requirió cambios de UI (los sentineles se conservan como aviso en el validador para detectar regresiones).
+
+### 14.2 Validación real de datos (nuevo `src/lib/dataValidation.ts`)
+
+- `collectValidationErrors(data)` — valida estructura y tipos contra `PetProfile`: enums cerrados (`especie`, `estado`, `genero`, `talla`, `estatus` de vacunas, `tipo`/`categoria` de documentos), fechas `YYYY-MM-DD`, objetos anidados, arrays de strings, `null` permitido (`microchip`, campos de emergencia), unicidad de `id` y `codigoPublico`, patrón `PC-XXX-NNN`.
+- `assertValidPetProfiles(data): asserts data is PetProfile[]` — lanza con el listado completo de errores (fails fast en build/dev) y estrecha el tipo sin `as`.
+- `collectDataWarnings(data)` — avisos no bloqueantes: sentineles de salud, teléfonos no mexicanos, desajuste `telefonoPrincipal` vs `whatsapp`, teléfono compartido por muchas mascotas y campo `notas` vacío.
+
+### 14.3 Eliminación del cast en `getAllPets`
+
+- `src/lib/getAllPets.ts` ya no usa `mascotas as PetProfile[]`; valida al cargar el módulo (`assertValidPetProfiles`) y devuelve `PetProfile[]` con el tipo garantizado por la aserción.
+- Ahora un drift de datos rompe la compilación/build en tiempo de ejecución en lugar de propagarse de forma silenciosa.
+
+### 14.4 CLI `npm run validate:data`
+
+- Nuevo `scripts/validate-data.mts` ejecutable con el type stripping de Node (sin compilación ni dependencias). Ejecuta la validación estructural + informe de avisos + comprobación de que existan los assets referenciados en `public/`.
+- `tsconfig.json`: se habilita `allowImportingTsExtensions` (requisito de los imports `.ts` del CLI bajo `noEmit`).
+
+### 14.5 Avisos pendientes (sin cambios en datos)
+
+- Las 8 mascotas de la familia (loki, viserys, frey, sandor, bizcocho, chicharrona, freya, arya) comparten idénticos `telefonoPrincipal` y `whatsapp` = `552201296480`, formato no mexicano → posible placeholder. **Pendiente de verificar en producción**; no se inventan números.
+- `alix`: `telefonoPrincipal` (10 dígitos) no coincide con `whatsapp` (`521...`).
+- `notas` vacío en 8 mascotas (válido como `string`, aviso informativo).
+- Los SVG legacy `public/pets/*.svg` (incl. `chicarrona.svg`, huérfano del rename) no tienen referencias en `src/` ni en los datos; se conservan sin uso.
+
+### 14.6 Tests
+
+- `src/lib/dataValidation.test.ts` (+16 pruebas): datos reales válidos, rechazo de enums inválidos, duplicados, fechas, microchip y avisos de sentineles/placeholders. Suite total: **31 pruebas pasando**.
+
+---
+
 ## FASE 13 — URL pública estable del perfil (PR1 `fix/qr-url-estable`)
 
 **Estado:** Completada
