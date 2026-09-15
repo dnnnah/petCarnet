@@ -18,6 +18,7 @@ import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
 import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
 import { toProfileViewModel } from "@/lib/mapping/profile";
+import { buildPetProfileMetadata } from "@/lib/seo";
 import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
 
 type ProfilePageProps = {
@@ -35,15 +36,11 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   if (!pet) {
     return {
       title: "Mascota no encontrada | PetCarnet",
+      robots: { index: false },
     };
   }
 
-  return {
-    title: pet.emergencia.perdido
-      ? `${pet.mascota.nombre} está perdido | PetCarnet`
-      : `${pet.mascota.nombre} | PetCarnet`,
-    description: `Perfil publico de ${pet.mascota.nombre}, ${pet.mascota.raza} · ${pet.mascota.especie}.`,
-  };
+  return buildPetProfileMetadata(pet);
 }
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
