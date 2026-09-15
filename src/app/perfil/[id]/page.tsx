@@ -96,7 +96,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </div>
           <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
-            <QRShareCard petName={pet.mascota.nombre} profileUrl={publicProfileUrl} />
+            <QRShareCard petName={pet.mascota.nombre} profileUrl={publicProfileUrl} petCode={pet.identificacion.codigoPublico} />
           </div>
           <Link
             href={`/perfil/${pet.id}/alerta`}
