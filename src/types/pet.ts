@@ -76,10 +76,6 @@ export interface PetProfile {
   };
   vacunas: PetVaccine[];
   documentos: PetDocument[];
-  qr: {
-    urlPublica: string;
-    texto: string;
-  };
   configuracionPublica: {
     mostrarEmail: boolean;
     mostrarTelefonoSecundario: boolean;
