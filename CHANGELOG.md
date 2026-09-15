@@ -20,6 +20,46 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 15 — Seguridad de dependencias: upgrade de Next.js y audit limpio (PR `feat/next-seguridad`)
+
+**Estado:** Completada
+**Fecha:** 2026-09-14
+
+Resuelve el hallazgo **A1 / R-3** (ALTA→CRÍTICA) de la auditoría FASE 0. Corresponde al **PR #1 de la secuencia coordinada** de FASE 1 (§9 de `FASE0_COORDINACION_A_B.md`), que permanecía pendiente tras integrarse los PRs 2-5.
+
+### 15.1 Upgrade de Next.js y ESLint
+
+- `next` `16.2.9` → `16.3.5` (versión `latest`, patch de seguridad de la misma familia 16.x).
+- `eslint-config-next` `16.2.9` → `16.3.5` (alineado al runtime).
+- Compatibilidad verificada: peers exigen `react ^19`; el proyecto usa `react@19.2.4` → sin divergencia de versión.
+
+### 15.2 Vulnerabilidades corregidas
+
+| Severidad | Paquete | Detalle |
+| --- | --- | --- |
+| CRÍTICA | `next` | Middleware/Proxy bypass en App Router con Turbopack y single locale (GHSA, RCE). Resuelto en 16.3.5. |
+| ALTA | `sharp` (transitiva de `next/image`) | CVEs de libvips/libheif; resuelto por el binario de 16.3.5. |
+| ALTA | `postcss` | XSS por `</style>` sin escapar en la salida de stringify (build-time); resuelto vía dependencias de 16.3.5. |
+| ALTA | `browserslist`, `brace-expansion`, `js-yaml` | DoS / consumo CPU (toolchain de build). |
+| MODERADA | `@tailwindcss/postcss`, `baseline-browser-mapping` | actualizadas a versiones seguras con `npm audit fix` (sin `--force`). |
+
+**Resultado:** `npm audit` → **0 vulnerabilidades** (antes: 1 crítica, 5 altas, 2 moderadas).
+
+### 15.3 Cambios
+
+- `package.json`: solo `next` y `eslint-config-next` (versiones exactas).
+- `package-lock.json`: regenerado (transitivas del toolchain en rangos seguros).
+- **Sin cambios de código funcional**: no se tocan capas `lib/`, `data/`, componentes ni rutas.
+
+### 15.4 Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm test` ✅ (31 pruebas, 3 archivos).
+- `npm run build` ✅ (SSG completo: 22 variantes de perfil + home/licencia).
+- Smoke test con `npm start` (servidor de producción): 200 en `/`, `/perfil/<id>`, `/perfil/<codigoPublico>`, `/alerta`, `/vacunas`, `/documentos`, `/login`, `/docs/lucca/cartilla-vacunacion.pdf`, `/docs/viserys/cartilla-vacunacion.pdf`; 404 correcto en `/perfil/inexistente` y `/perfil/<código inexistente>`; `/ _next/image` devuelve `200 image/jpeg` (optimizador funcional, superficie de la amenaza A1).
+- `npm audit` → 0.
+
+---
+
 ## FASE 14 — Higiene de datos y validación de `mascotas.json` (PR2 `fix/data-higiene`)
 
 **Estado:** Completada
