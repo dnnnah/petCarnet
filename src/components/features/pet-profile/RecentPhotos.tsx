@@ -21,9 +21,19 @@ type RecentPhotosProps = {
 
 export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [failedPhotos, setFailedPhotos] = useState<ReadonlySet<string>>(new Set());
 
   const selected =
     selectedIndex !== null ? photos[selectedIndex] : null;
+
+  const handleImageError = useCallback((photoId: string) => {
+    setFailedPhotos((current) => {
+      if (current.has(photoId)) return current;
+      const next = new Set(current);
+      next.add(photoId);
+      return next;
+    });
+  }, []);
 
   const move = useCallback(
     (offset: number) => {
@@ -91,10 +101,11 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               className="group relative aspect-square overflow-hidden rounded-2xl ring-1 ring-gray-100 transition hover:-translate-y-0.5 hover:ring-pink-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:ring-gray-800 dark:hover:ring-pink-500/40"
             >
               <Image
-                src={photo.url}
+                src={failedPhotos.has(photo.id) ? profilePhoto : photo.url}
                 alt={photo.name}
                 width={400}
                 height={400}
+                onError={() => handleImageError(photo.id)}
                 className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <span className="absolute inset-0 grid place-items-center bg-gray-950/0 text-white opacity-0 transition group-hover:bg-gray-950/35 group-hover:opacity-100">
@@ -157,7 +168,7 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
             >
               <div className="relative max-h-[60vh] overflow-hidden bg-gray-100 dark:bg-gray-800">
                 <Image
-                  src={selected.url}
+                  src={failedPhotos.has(selected.id) ? profilePhoto : selected.url}
                   alt={selected.name}
                   width={900}
                   height={900}
