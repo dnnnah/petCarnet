@@ -60,6 +60,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             petId={pet.id}
             petName={pet.mascota.nombre}
             emergency={pet.emergencia}
+            whatsappNumber={pet.contacto.whatsapp}
           />
           <div id="contacto">
             <EmergencyContact

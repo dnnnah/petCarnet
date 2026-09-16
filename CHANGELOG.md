@@ -20,6 +20,100 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 2 — Emergencias: Product/Frontend (PR `feat/emergencias-ui`)
+
+**Estado:** Completada (bloque Product/Frontend de FASE 2)
+**Fecha:** 2026-09-15
+
+Implementa la capa de UX de emergencias sobre el contrato Core ya mergeado
+(`feat/emergencias-core-estado-perdido`: `src/types/emergency.ts`,
+`src/lib/domain/emergency.ts`, `src/lib/lostAlertStorage.ts`,
+`src/lib/useLostAlerts.ts`). Corresponde al roadmap FASE 2 §§2.1–2.3 y a las
+prioridades **U-3/U-4** de `UX_AUDIT.md` («Encontré esta mascota» y
+«compartir ubicación voluntaria»).
+
+### Feature: "Encontré esta mascota"
+
+- Nuevo componente `FoundPetPanel` (`src/components/features/lost-pet/FoundPetPanel.tsx`),
+  visible **únicamente cuando el perfil está en modo perdido** (`resolveLostState`),
+  es decir «cuando corresponde».
+- Flujo guiado: CTA «Encontré esta mascota» → panel «Avisa que encontraste a {nombre}»
+  → compartir ubicación (voluntaria) → mensaje editable → enviar por WhatsApp o copiar.
+- Geolocalización con `navigator.geolocation.getCurrentPosition()`: voluntaria,
+  explícita, opcional, nunca recopilada en silencio (microcopy de privacidad visible).
+- Estados completos: `locating` (cargando), `located` (con «Abrir mapa»),
+  `error` contextual (denegado / no disponible / timeout) y cancelación.
+- Enlace de mapa `https://www.google.com/maps?q=lat,lng` y mensaje precargado
+  contextual (7.2 del roadmap: flujo QR → perfil → perdido → encontré → ubicación → mensaje).
+- Accesibilidad: targets ≥44 px, `focus-visible`, `aria-live`/`role="status"` para
+  estados, foco movido al título al abrir el panel, `aria-labelledby` en la sección.
+
+### Lógica UI testeable extraída
+
+- `src/lib/foundPetReport.ts` (puro, sin DOM): `buildFoundPetMessage`,
+  `buildMapsLocationUrl`, `buildWhatsAppHref`, `formatCoordinate`,
+  `getLocationErrorKey` y `LOCATION_ERROR_COPY` (con `src/lib/foundPetReport.test.ts`).
+  Usa `src/lib/clipboard.ts` (ya existente, Core) para el copiado.
+
+### Mejora visual del modo perdido
+
+- `LostPetBanner`: el «Por favor contacta inmediatamente» era un `<p>` con
+  estética de botón (engañoso para a11y). Ahora es un `<a href="#contacto">`
+  funcional con `focus-visible`. Se añade `role="status"` a la insignia
+  «Alerta activa» y `aria-labelledby` a la sección del banner.
+- Jerarquía en modo perdido: banner (estado) → «Encontré esta mascota» (acción
+  primaria) → instrucciones → contacto urgente con Llamar/WhatsApp. Coherente con
+  la dirección visual rosa/ámbar existente.
+
+### QR de emergencia — pendiente documentado (no implementado)
+
+No se crea QR de emergencia nuevo:
+
+- El QR de perfil (FASE 1, `QRShareCard`) ya cubre «escanear → perfil» con la URL
+  pública estable por `codigoPublico` via `getPublicProfileUrl()`.
+- Un QR específico de emergencia (p. ej. que codifique contacto/instrucciones o un
+  payload firmado) **no tiene contrato en el Core** (`emergency.ts`/
+  `lostAlertStorage.ts` no lo definen). Requiere decisión de Core/backend antes de
+  poder construirse sin duplicar lógica; se documenta como pendiente, no se inventa.
+- No se repitió la UX de QR de FASE 1.
+
+### Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm run test` ✅ (96 pruebas, +13 en
+  `foundPetReport.test.ts`) · `npm run build` ✅ (SSG, 49 páginas).
+- Smoke tests (Chrome headless sobre `npm start`):
+  - perfil normal sin banner ni CTA de emergencia;
+  - activar modo perdido desde `/alerta` → perfil muestra banner «está perdido» + panel;
+  - flujo completo «Encontré esta mascota» (compartir ubicación, mensaje con URL de
+    mapa, copiar mensaje, omitir ubicación, cancelar);
+  - error contextual cuando la geolocalización es denegada;
+  - desactivar modo perdido oculta banner y panel;
+  - responsive 375 px sin overflow horizontal;
+  - rutas públicas válidas (200) e inválidas (404);
+  - URLs públicas generadas con `codigoPublico` (nunca `pet.id`).
+
+### Cambios
+
+- `src/components/features/lost-pet/FoundPetPanel.tsx` (nuevo),
+  `src/lib/foundPetReport.ts` (nuevo), `src/lib/foundPetReport.test.ts` (nuevo),
+  `src/components/features/lost-pet/LostModeAlertSections.tsx`,
+  `src/components/features/lost-pet/LostPetBanner.tsx`,
+  `src/app/perfil/[id]/page.tsx`, `CHANGELOG.md`.
+- **No** se tocaron `package.json`/`package-lock.json`, `mascotas.json`,
+  `emergency.ts`, `lostAlertStorage.ts` ni `useLostAlerts.ts`; no se inventó
+  backend/Auth/RLS ni se adelantó FASE 3 ni adopciones.
+
+### Pendientes (fuera de alcance, requiere Core/producto)
+
+- QR de emergencia específico: requiere contrato de Core (ver arriba).
+- `EmergencyContact` recibe `isLost={pet.emergencia.perdido}` (flag estático); alinear
+  su estilo urgente con `resolveLostState` en una evolución posterior del perfil.
+- Números de WhatsApp de 10 dígitos sin código de país (`A2` de AUDITORIA.md):
+  higiene de datos de Core pendiente; este PR reutiliza la misma construcción
+  `wa.me/<número>` que usa el mapeo actual para no crear lógica paralela.
+
+---
+
 ## FASE 16 — SEO, Open Graph y Twitter Card del perfil público (PR `feat/seo-og`)
 
 **Estado:** Completada

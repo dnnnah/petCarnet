@@ -4,6 +4,7 @@ import { BellRing } from "lucide-react";
 import { formatMexicanDate } from "@/lib/dateFormat";
 import { resolveLostState } from "@/lib/domain/emergency";
 import { useLostAlerts } from "@/lib/useLostAlerts";
+import { FoundPetPanel } from "./FoundPetPanel";
 import { LostPetBanner } from "./LostPetBanner";
 import { LostPetInstructions } from "./LostPetInstructions";
 import type { PetEmergency } from "@/types/pet";
@@ -12,9 +13,15 @@ type LostModeAlertSectionsProps = {
   petId: string;
   petName: string;
   emergency: PetEmergency;
+  whatsappNumber?: string;
 };
 
-export function LostModeAlertSections({ petId, petName, emergency }: LostModeAlertSectionsProps) {
+export function LostModeAlertSections({
+  petId,
+  petName,
+  emergency,
+  whatsappNumber = "",
+}: LostModeAlertSectionsProps) {
   const { alert, deactivate } = useLostAlerts(petId);
   const resolved = resolveLostState(emergency, alert);
 
@@ -48,6 +55,12 @@ export function LostModeAlertSections({ petId, petName, emergency }: LostModeAle
         lostDate={lostDate}
         lostZone={resolved.zonaPerdida}
         reward={resolved.recompensa}
+      />
+
+      <FoundPetPanel
+        petName={petName}
+        lastZone={resolved.zonaPerdida}
+        whatsappNumber={whatsappNumber}
       />
 
       <LostPetInstructions petName={petName} instructions={emergency.instrucciones} />
