@@ -40,7 +40,10 @@ export function LostPetBanner({
   ].filter(isLostDetail);
 
   return (
-    <section className="relative overflow-hidden rounded-[2.25rem] border-2 border-rose-300 bg-gradient-to-r from-rose-100 via-pink-50 to-amber-100 p-4 shadow-[0_22px_58px_rgba(225,29,72,0.22)] ring-4 ring-rose-100 dark:from-rose-950/40 dark:via-gray-900 dark:to-amber-950/40 dark:ring-rose-900 sm:p-7 lg:p-8">
+    <section
+      aria-labelledby="lost-pet-banner-title"
+      className="relative overflow-hidden rounded-[2.25rem] border-2 border-rose-300 bg-gradient-to-r from-rose-100 via-pink-50 to-amber-100 p-4 shadow-[0_22px_58px_rgba(225,29,72,0.22)] ring-4 ring-rose-100 dark:from-rose-950/40 dark:via-gray-900 dark:to-amber-950/40 dark:ring-rose-900 sm:p-7 lg:p-8"
+    >
       <div className="absolute inset-x-0 top-0 h-3 bg-gradient-to-r from-rose-500 via-red-400 to-amber-400" />
       <div className="absolute -right-6 -top-10 text-rose-300/80">
         <AlertTriangle size={124} strokeWidth={1.8} />
@@ -50,11 +53,11 @@ export function LostPetBanner({
 
       <div className="relative grid gap-6 lg:grid-cols-[1.25fr_1fr] lg:items-center">
         <div>
-          <span className="inline-flex items-center gap-2 rounded-full bg-rose-600 px-5 py-2.5 text-sm font-extrabold uppercase text-white shadow-[0_12px_26px_rgba(225,29,72,0.24)] ring-4 ring-white/70 dark:ring-gray-900">
+          <span role="status" className="inline-flex items-center gap-2 rounded-full bg-rose-600 px-5 py-2.5 text-sm font-extrabold uppercase text-white shadow-[0_12px_26px_rgba(225,29,72,0.24)] ring-4 ring-white/70 dark:ring-gray-900">
             <AlertTriangle size={19} />
             Alerta activa
           </span>
-          <h2 className="mt-5 text-3xl sm:text-5xl font-extrabold leading-none tracking-tight text-gray-950 dark:text-white sm:text-6xl">
+          <h2 id="lost-pet-banner-title" className="mt-5 text-3xl sm:text-5xl font-extrabold leading-none tracking-tight text-gray-950 dark:text-white sm:text-6xl">
             {petName} está perdido
           </h2>
           <p className="mt-2 sm:mt-3 text-base sm:text-xl font-extrabold text-rose-700 dark:text-rose-300">
@@ -63,10 +66,13 @@ export function LostPetBanner({
           <p className="mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg font-bold leading-7 sm:leading-8 text-gray-800 dark:text-gray-100">
             {message ?? `Si viste o encontraste a ${petName}, por favor contacta a su familia.`}
           </p>
-          <p className="mt-4 sm:mt-5 inline-flex items-center gap-3 rounded-[1.35rem] bg-gradient-to-r from-rose-600 to-red-500 px-5 py-3 sm:px-6 sm:py-4 text-base sm:text-lg font-extrabold text-white shadow-[0_18px_34px_rgba(225,29,72,0.28)] ring-4 ring-white/75 dark:ring-gray-900">
+          <a
+            href="#contacto"
+            className="mt-4 sm:mt-5 inline-flex items-center gap-3 rounded-[1.35rem] bg-gradient-to-r from-rose-600 to-red-500 px-5 py-3 sm:px-6 sm:py-4 text-base sm:text-lg font-extrabold text-white shadow-[0_18px_34px_rgba(225,29,72,0.28)] ring-4 ring-white/75 dark:ring-gray-900 transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+          >
             <Phone size={23} />
             Por favor contacta inmediatamente
-          </p>
+          </a>
         </div>
 
         {details.length > 0 ? (
