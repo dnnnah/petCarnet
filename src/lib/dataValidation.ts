@@ -195,8 +195,12 @@ function validatePet(entry: Record<string, unknown>, petId: string, publicCodes:
     }
     expectNullableString(emergencia.zonaPerdida, `${petId}.emergencia.zonaPerdida`, errors);
     expectNullableString(emergencia.mensajeEmergencia, `${petId}.emergencia.mensajeEmergencia`, errors);
-    if (emergencia.recompensa !== null && typeof emergencia.recompensa !== "number") {
-      add(errors, `${petId}.emergencia.recompensa debe ser number o null.`);
+    if (emergencia.recompensa !== null) {
+      if (typeof emergencia.recompensa !== "number") {
+        add(errors, `${petId}.emergencia.recompensa debe ser number o null.`);
+      } else if (!Number.isFinite(emergencia.recompensa) || emergencia.recompensa < 0) {
+        add(errors, `${petId}.emergencia.recompensa debe ser un número >= 0.`);
+      }
     }
     expectStringArray(emergencia.instrucciones, `${petId}.emergencia.instrucciones`, errors);
   }
@@ -303,6 +307,30 @@ export function collectDataWarnings(data: unknown): string[] {
           if (sentinel !== undefined) {
             warnings.push(`${petId}: salud.${field} contiene el sentinel "${String(sentinel)}";  reemplazar por [] o un valor real.`);
           }
+        }
+      }
+    }
+
+const emergencia = entry.emergencia;
+    if (isRecord(emergencia)) {
+      const isLost = emergencia.perdido === true;
+      const fecha = emergencia.fechaPerdida;
+      const zona = emergencia.zonaPerdida;
+
+      if (isLost && (fecha == null || fecha === "")) {
+        warnings.push(`${petId}: emergencia.perdido es true pero falta fechaPerdida.`);
+      }
+      if (isLost && (zona == null || zona === "")) {
+        warnings.push(`${petId}: emergencia.perdido es true pero falta zonaPerdida.`);
+      }
+      if (!isLost) {
+        const stale = [fecha, zona, emergencia.mensajeEmergencia, emergencia.recompensa].some(
+          (value) => value != null && value !== "",
+        );
+        if (stale) {
+          warnings.push(
+            `${petId}: emergencia.perdido es false pero hay datos de emergencia (fecha/zona/mensaje/recompensa).`,
+          );
         }
       }
     }

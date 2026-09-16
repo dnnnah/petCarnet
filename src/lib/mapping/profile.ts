@@ -1,4 +1,4 @@
-import { formatMexicanDate, formatOptionalMexicanDate, getPetAgeText } from "@/lib/dateFormat";
+import { formatMexicanDate, getPetAgeText } from "@/lib/dateFormat";
 import { getPublicDocuments } from "@/lib/petDocuments";
 import { getVaccineStatusMeta } from "@/lib/domain/vaccineStatus";
 import type { PetProfile } from "@/types/pet";
@@ -68,9 +68,6 @@ export type PhotoViewModel = {
 export type ProfileViewModel = {
   header: PetHeaderViewModel;
   contact: ContactViewModel;
-  lost: {
-    lostDate: string | null;
-  };
   info: InfoViewModel;
   health: HealthViewModel;
   vet: VetViewModel;
@@ -108,9 +105,6 @@ export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
       phoneHref: pet.contacto.telefonoPrincipal,
       whatsapp: `https://wa.me/${pet.contacto.whatsapp}?text=${encodeURIComponent(pet.contacto.mensajeWhatsapp)}`,
       neighborhood: locationText,
-    },
-    lost: {
-      lostDate: formatOptionalMexicanDate(pet.emergencia.fechaPerdida),
     },
     info: {
       species: pet.mascota.especie,
