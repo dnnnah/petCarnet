@@ -157,6 +157,32 @@ describe("collectValidationErrors", () => {
     expect(errors.some((error) => error.includes("microchip"))).toBe(true);
   });
 
+  it("rechaza una recompensa negativa", () => {
+    const pet = buildPet({
+      emergencia: { ...buildPet().emergencia, recompensa: -100 },
+    });
+    const errors = collectValidationErrors([pet]);
+    expect(errors.some((error) => error.includes("recompensa") && error.includes(">= 0"))).toBe(true);
+  });
+
+  it("rechaza una recompensa que no es number ni null", () => {
+    const pet = buildPet({
+      emergencia: {
+        ...buildPet().emergencia,
+        recompensa: "500" as unknown as number | null,
+      },
+    });
+    const errors = collectValidationErrors([pet]);
+    expect(errors.some((error) => error.includes("recompensa"))).toBe(true);
+  });
+
+  it("acepta una recompensa válida", () => {
+    const pet = buildPet({
+      emergencia: { ...buildPet().emergencia, recompensa: 0 },
+    });
+    expect(collectValidationErrors([pet])).toEqual([]);
+  });
+
   it("rechaza datos que no son un array", () => {
     expect(collectValidationErrors({})).toHaveLength(1);
   });
@@ -209,5 +235,48 @@ describe("collectDataWarnings", () => {
   it("avisa cuando notas está vacío", () => {
     const warnings = collectDataWarnings([buildPet()]);
     expect(warnings.some((warning) => warning.includes("notas está vacío"))).toBe(true);
+  });
+
+  it("avisa cuando perdido es true pero falta fechaPerdida", () => {
+    const pet = buildPet({
+      emergencia: {
+        ...buildPet().emergencia,
+        perdido: true,
+        fechaPerdida: null,
+        zonaPerdida: "Parque",
+      },
+    });
+    const warnings = collectDataWarnings([pet]);
+    expect(warnings.some((w) => w.includes("perdido") && w.includes("fechaPerdida"))).toBe(true);
+  });
+
+  it("avisa cuando perdido es true pero falta zonaPerdida", () => {
+    const pet = buildPet({
+      emergencia: {
+        ...buildPet().emergencia,
+        perdido: true,
+        fechaPerdida: "2026-01-01",
+        zonaPerdida: null,
+      },
+    });
+    const warnings = collectDataWarnings([pet]);
+    expect(warnings.some((w) => w.includes("perdido") && w.includes("zonaPerdida"))).toBe(true);
+  });
+
+  it("avisa cuando perdido es false pero hay datos de emergencia huérfanos", () => {
+    const pet = buildPet({
+      emergencia: {
+        ...buildPet().emergencia,
+        perdido: false,
+        fechaPerdida: "2026-09-01",
+      },
+    });
+    const warnings = collectDataWarnings([pet]);
+    expect(warnings.some((w) => w.includes("perdido es false") && w.includes("emergencia"))).toBe(true);
+  });
+
+  it("no avisa de emergencia huérfana para mascotas en estado normal", () => {
+    const warnings = collectDataWarnings([buildPet()]);
+    expect(warnings.some((w) => w.includes("perdido es false"))).toBe(false);
   });
 });

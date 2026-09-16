@@ -20,6 +20,15 @@ export type PetDocumentCategory =
   | "foto"
   | "otro";
 
+export type PetEmergency = {
+  perdido: boolean;
+  fechaPerdida: string | null;
+  zonaPerdida: string | null;
+  mensajeEmergencia: string | null;
+  recompensa: number | null;
+  instrucciones: string[];
+};
+
 export interface PetProfile {
   id: PetId;
   estado: PetStatus;
@@ -52,14 +61,7 @@ export interface PetProfile {
     zonaHabitual: string;
     mensajeWhatsapp: string;
   };
-  emergencia: {
-    perdido: boolean;
-    fechaPerdida: string | null;
-    zonaPerdida: string | null;
-    mensajeEmergencia: string | null;
-    recompensa: number | null;
-    instrucciones: string[];
-  };
+  emergencia: PetEmergency;
   salud: {
     alergias: string[];
     condicionesMedicas: string[];

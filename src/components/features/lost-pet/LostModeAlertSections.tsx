@@ -2,47 +2,31 @@
 
 import { BellRing } from "lucide-react";
 import { formatMexicanDate } from "@/lib/dateFormat";
+import { resolveLostState } from "@/lib/domain/emergency";
 import { useLostAlerts } from "@/lib/useLostAlerts";
 import { LostPetBanner } from "./LostPetBanner";
 import { LostPetInstructions } from "./LostPetInstructions";
+import type { PetEmergency } from "@/types/pet";
 
 type LostModeAlertSectionsProps = {
   petId: string;
   petName: string;
-  staticLost: boolean;
-  staticMessage: string | null;
-  staticLostDate: string | null;
-  staticLostZone: string | null;
-  staticReward: number | null;
-  staticInstructions: ReadonlyArray<string>;
+  emergency: PetEmergency;
 };
 
-export function LostModeAlertSections({
-  petId,
-  petName,
-  staticLost,
-  staticMessage,
-  staticLostDate,
-  staticLostZone,
-  staticReward,
-  staticInstructions,
-}: LostModeAlertSectionsProps) {
+export function LostModeAlertSections({ petId, petName, emergency }: LostModeAlertSectionsProps) {
   const { alert, deactivate } = useLostAlerts(petId);
+  const resolved = resolveLostState(emergency, alert);
 
-  const isLost = alert?.active === true || staticLost;
+  if (!resolved.isLost) return null;
 
-  if (!isLost) return null;
-
-  const lostZone = alert?.zonaPerdida || staticLostZone;
-  const lostDate = alert?.fechaPerdida
-    ? formatMexicanDate(alert.fechaPerdida) ?? alert.fechaPerdida
-    : staticLostDate;
-  const reward = alert?.recompensa ?? staticReward;
-  const message = alert?.mensaje ?? staticMessage;
+  const lostDate = resolved.fechaPerdida
+    ? formatMexicanDate(resolved.fechaPerdida) ?? resolved.fechaPerdida
+    : null;
 
   return (
     <div className="space-y-6">
-      {alert?.active === true ? (
+      {alert !== null ? (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-rose-200 bg-rose-50/80 px-5 py-3.5 ring-1 ring-rose-100 dark:border-rose-900 dark:bg-rose-950/30 dark:ring-rose-900/60">
           <p className="inline-flex items-center gap-2 text-sm font-extrabold text-rose-700 dark:text-rose-300">
             <BellRing size={18} aria-hidden="true" />
@@ -60,13 +44,13 @@ export function LostModeAlertSections({
 
       <LostPetBanner
         petName={petName}
-        message={message}
+        message={resolved.mensaje}
         lostDate={lostDate}
-        lostZone={lostZone}
-        reward={reward}
+        lostZone={resolved.zonaPerdida}
+        reward={resolved.recompensa}
       />
 
-      <LostPetInstructions petName={petName} instructions={staticInstructions} />
+      <LostPetInstructions petName={petName} instructions={emergency.instrucciones} />
     </div>
   );
 }

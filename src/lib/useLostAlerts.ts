@@ -1,97 +1,82 @@
 import { useCallback, useSyncExternalStore } from "react";
+import { parseLostAlertDraft } from "@/lib/domain/emergency";
+import {
+  invalidateLostAlertCache,
+  readLostAlert,
+  writeLostAlert,
+} from "@/lib/lostAlertStorage";
+import type { LostAlert, LostAlertDraft } from "@/types/emergency";
 
-export type LostAlertPayload = {
-  active: boolean;
-  zonaPerdida?: string;
-  fechaPerdida?: string;
-  recompensa?: number | null;
-  mensaje?: string;
-};
+export type { LostAlert, LostAlertDraft };
 
 const PREFIX = "petcarnet-alerta:v1:";
 const EVENT = "petcarnet-lost-mode";
 
-const cache = new Map<string, LostAlertPayload | null>();
-
 function keyOf(petId: string) {
-  return PREFIX + petId;
+  return `${PREFIX}${String(petId)}`;
 }
 
-function read(petId: string): LostAlertPayload | null {
-  const key = keyOf(petId);
-  const cached = cache.get(key);
-  if (cached !== undefined) return cached;
-
-  let value: LostAlertPayload | null = null;
-  try {
-    const raw = window.localStorage.getItem(key);
-    if (raw) {
-      const parsed = JSON.parse(raw) as LostAlertPayload;
-      value = parsed && parsed.active === true ? parsed : null;
-    }
-  } catch {
-    value = null;
+function getStorage(): Storage | null {
+  if (typeof window === "undefined") {
+    return null;
   }
-  cache.set(key, value);
-  return value;
-}
 
-function invalidate(petId: string) {
-  cache.delete(keyOf(petId));
-}
-
-function write(petId: string, payload: LostAlertPayload | null) {
-  const key = keyOf(petId);
   try {
-    if (payload) {
-      window.localStorage.setItem(key, JSON.stringify(payload));
-    } else {
-      window.localStorage.removeItem(key);
-    }
+    return window.localStorage;
   } catch {
-    // sin acceso a storage, ignorar
+    return null;
   }
-  invalidate(petId);
-  window.dispatchEvent(new Event(EVENT));
 }
 
 function subscribe(petId: string, onChange: () => void) {
   const key = keyOf(petId);
+
   const onStorage = (event: StorageEvent) => {
     if (event.key === key) {
-      invalidate(petId);
+      invalidateLostAlertCache(key);
       onChange();
     }
   };
+
   const onCustom = () => {
-    invalidate(petId);
+    invalidateLostAlertCache(key);
     onChange();
   };
+
   window.addEventListener("storage", onStorage);
   window.addEventListener(EVENT, onCustom);
+
   return () => {
     window.removeEventListener("storage", onStorage);
     window.removeEventListener(EVENT, onCustom);
   };
 }
 
+function notifyAlertChange() {
+  window.dispatchEvent(new Event(EVENT));
+}
+
 export function useLostAlerts(petId: string) {
-  const alert = useSyncExternalStore<LostAlertPayload | null>(
+  const key = keyOf(petId);
+
+  const alert = useSyncExternalStore<LostAlert | null>(
     (onChange) => subscribe(petId, onChange),
-    () => read(petId),
+    () => readLostAlert(getStorage(), key),
     () => null
   );
 
   const activate = useCallback(
-    (payload: Omit<LostAlertPayload, "active">) => {
-      write(petId, { active: true, ...payload });
+    (draft: LostAlertDraft) => {
+      writeLostAlert(getStorage(), key, parseLostAlertDraft(draft));
+      notifyAlertChange();
     },
-    [petId]
+    [key]
   );
 
   const deactivate = useCallback(() => {
-    write(petId, null);
-  }, [petId]);
+    writeLostAlert(getStorage(), key, null);
+    notifyAlertChange();
+  }, [key]);
 
   return { alert, activate, deactivate };
 }

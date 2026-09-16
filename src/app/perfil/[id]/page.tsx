@@ -59,12 +59,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           <LostModeAlertSections
             petId={pet.id}
             petName={pet.mascota.nombre}
-            staticLost={pet.emergencia.perdido}
-            staticMessage={pet.emergencia.mensajeEmergencia}
-            staticLostDate={profile.lost.lostDate}
-            staticLostZone={pet.emergencia.zonaPerdida}
-            staticReward={pet.emergencia.recompensa}
-            staticInstructions={pet.emergencia.instrucciones}
+            emergency={pet.emergencia}
           />
           <div id="contacto">
             <EmergencyContact
