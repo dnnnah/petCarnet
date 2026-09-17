@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   buildFoundPetMessage,
   buildMapsLocationUrl,
-  buildWhatsAppHref,
   formatCoordinate,
   getLocationErrorKey,
   LOCATION_ERROR_COPY,
@@ -75,23 +74,5 @@ describe("buildFoundPetMessage", () => {
     const message = buildFoundPetMessage({ petName: "Niko", lastZone: "Zona X" });
     expect(message).not.toContain("ubicación actual");
     expect(message).toContain("Zona X");
-  });
-});
-
-describe("buildWhatsAppHref", () => {
-  it("construye un enlace wa.me con el mensaje codificado", () => {
-    const href = buildWhatsAppHref("5522576308", "Hola, tengo a Lucca");
-    expect(href.startsWith("https://wa.me/5522576308?text=")).toBe(true);
-    expect(decodeURIComponent(href.split("?text=")[1])).toBe("Hola, tengo a Lucca");
-  });
-
-  it("codifica saltos de línea del mensaje", () => {
-    const href = buildWhatsAppHref("5522576308", "Línea 1\nLínea 2");
-    expect(href).toContain("L%C3%ADnea%201%0AL%C3%ADnea%202");
-  });
-
-  it("devuelve vacío sin número o sin mensaje", () => {
-    expect(buildWhatsAppHref("", "mensaje")).toBe("");
-    expect(buildWhatsAppHref("5522576308", "   ")).toBe("");
   });
 });

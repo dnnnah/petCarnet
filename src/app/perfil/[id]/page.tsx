@@ -5,7 +5,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { DocumentsCard } from "@/components/features/documents/DocumentsCard";
 import { LostModeAlertSections } from "@/components/features/lost-pet/LostModeAlertSections";
 import { ThankYouBanner } from "@/components/features/lost-pet/ThankYouBanner";
-import { EmergencyContact } from "@/components/features/pet-profile/EmergencyContact";
+import { EmergencyContactSection } from "@/components/features/pet-profile/EmergencyContactSection";
 import { HealthCard } from "@/components/features/pet-profile/HealthCard";
 import { InfoCard } from "@/components/features/pet-profile/InfoCard";
 import { PetHeader } from "@/components/features/pet-profile/PetHeader";
@@ -63,11 +63,13 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             whatsappNumber={pet.contacto.whatsapp}
           />
           <div id="contacto">
-            <EmergencyContact
+            <EmergencyContactSection
               contact={profile.contact}
-              isLost={pet.emergencia.perdido}
+              emergency={pet.emergencia}
+              petId={pet.id}
               petName={pet.mascota.nombre}
               species={pet.mascota.especie}
+              zonaSegura={pet.contacto.zonaSegura}
             />
           </div>
           <div id="info" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

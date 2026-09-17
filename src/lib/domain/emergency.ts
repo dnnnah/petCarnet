@@ -72,3 +72,30 @@ export function resolveLostState(
     recompensa: alert?.recompensa ?? emergencia.recompensa,
   };
 }
+
+export function buildNeighborhoodLabel(input: {
+  isLost: boolean;
+  zonaPerdida: string | null | undefined;
+  zonaSegura: string;
+}): string {
+  return input.isLost && input.zonaPerdida
+    ? `Zona donde se perdió: ${input.zonaPerdida}`
+    : `Zona segura: ${input.zonaSegura}`;
+}
+
+export function resolveEmergencyContactState(
+  emergencia: PetEmergency,
+  alert: LostAlert | null,
+  zonaSegura: string,
+): { isLost: boolean; neighborhood: string } {
+  const resolved = resolveLostState(emergencia, alert);
+
+  return {
+    isLost: resolved.isLost,
+    neighborhood: buildNeighborhoodLabel({
+      isLost: resolved.isLost,
+      zonaPerdida: resolved.zonaPerdida,
+      zonaSegura,
+    }),
+  };
+}

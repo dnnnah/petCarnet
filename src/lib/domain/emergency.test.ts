@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildNeighborhoodLabel,
   isActiveLostAlert,
   parseLostAlert,
   parseLostAlertDraft,
+  resolveEmergencyContactState,
   resolveLostState,
 } from "@/lib/domain/emergency";
 import type { PetEmergency } from "@/types/pet";
@@ -150,5 +152,55 @@ describe("resolveLostState", () => {
   it("reporta perdido si solo la alerta de runtime está activa", () => {
     const resolved = resolveLostState({ ...EMERGENCIA, perdido: false }, { active: true });
     expect(resolved.isLost).toBe(true);
+  });
+});
+
+describe("buildNeighborhoodLabel", () => {
+  it("muestra la zona de pérdida cuando el estado es perdido", () => {
+    expect(
+      buildNeighborhoodLabel({ isLost: true, zonaPerdida: "Parque", zonaSegura: "casa" }),
+    ).toBe("Zona donde se perdió: Parque");
+  });
+
+  it("cae a zona segura cuando no está perdido", () => {
+    expect(
+      buildNeighborhoodLabel({ isLost: false, zonaPerdida: null, zonaSegura: "casa" }),
+    ).toBe("Zona segura: casa");
+  });
+
+  it("cae a zona segura si está perdido pero sin zona conocida", () => {
+    expect(buildNeighborhoodLabel({ isLost: true, zonaPerdida: null, zonaSegura: "casa" })).toBe(
+      "Zona segura: casa",
+    );
+  });
+});
+
+describe("resolveEmergencyContactState", () => {
+  it("refleja perdido activo cuando el estado estático lo indica", () => {
+    const state = resolveEmergencyContactState(EMERGENCIA, null, "casa");
+    expect(state).toEqual({
+      isLost: true,
+      neighborhood: "Zona donde se perdió: Parque de la Condesa",
+    });
+  });
+
+  it("refleja perdido cuando solo la alerta de runtime está activa", () => {
+    const state = resolveEmergencyContactState(
+      { ...EMERGENCIA, perdido: false },
+      { active: true, zonaPerdida: "Otra zona" },
+      "casa",
+    );
+    expect(state).toEqual({
+      isLost: true,
+      neighborhood: "Zona donde se perdió: Otra zona",
+    });
+  });
+
+  it("estado resuelto/inactivo no muestra urgencia", () => {
+    const state = resolveEmergencyContactState({ ...EMERGENCIA, perdido: false }, null, "casa");
+    expect(state).toEqual({
+      isLost: false,
+      neighborhood: "Zona segura: casa",
+    });
   });
 });

@@ -20,6 +20,77 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## Cierre de FASE 2 — Emergencias (PR `fix/emergencias-cierre`)
+
+**Estado:** Pendientes técnicos cerrados / FASE 2 técnicamente completada
+**Fecha:** 2026-09-17
+
+Cierra los dos pendientes técnicos identificados al cierre de FASE 2
+(Emergencias, Product/Frontend). No implementa funcionalidad nueva; solo
+corrige la fuente de verdad efectiva del estado perdido y la higiene de
+WhatsApp en el punto único de construcción de enlaces.
+
+### Pendiente 1 — `EmergencyContact` ahora usa el estado efectivo
+
+- `EmergencyContact` dejó de recibir `isLost={pet.emergencia.perdido}` (flag
+  estático). Ahora el perfil renderiza un nuevo componente cliente
+  `EmergencyContactSection` que usa `useLostAlerts` + la resolución del contrato
+  de Fase 2 (`resolveLostState`), igual que `LostModeAlertSections`.
+- Sin segunda fuente de verdad: un selector puro nuevo
+  `resolveEmergencyContactState` (en `src/lib/domain/emergency.ts`) deriva
+  `{ isLost, neighborhood }` a partir del contrato efectivo. La etiqueta de
+  vecindario se centraliza en `buildNeighborhoodLabel` y dejó de calcularse en el
+  mapeo a partir del flag estático (se elimina `neighborhood` de
+  `ContactViewModel`).
+
+### Pendiente 2 — Higiene de WhatsApp
+
+- Nuevo `src/lib/phone.ts`: `toE164Digits` normaliza los números de 10 dígitos
+  (formato nacional mexicano) a E.164 agregando el código de país `52` al
+  construir enlaces `wa.me` — sin alterar `mascotas.json` (el dato fuente se
+  mantiene como está documentado en FASE 14).
+- `buildWhatsAppHref` pasa a ser el **único** constructor de enlaces `wa.me`
+  (Core): `src/lib/mapping/profile.ts` y `src/lib/foundPetReport.ts` (como
+  facade) lo usan. Ya no hay construcción duplicada.
+- No se rompe ninguno de los números ya válidos: `52...` y `521...` se conservan
+  tal cual.
+- El placeholder `552201296480` (8 mascotas de la familia, formato no mexicano)
+  **no se normaliza ni se inventa**: queda documentado como pendiente de
+  verificar en producción (misma conclusión que FASE 14, sin cambios de datos).
+
+### Tests
+
+- `src/lib/phone.test.ts` (nuevo, +10): normalización E.164, no-regresión de
+  números válidos y construcción de `wa.me`.
+- `src/lib/domain/emergency.test.ts` (+6): `buildNeighborhoodLabel` y
+  `resolveEmergencyContactState` en estado perdido activo y resuelto/inactivo.
+- `src/components/features/pet-profile/EmergencyContact.test.ts` (nuevo, +2):
+  el componente refleja el estado urgente (perdido) y el normal (resuelto).
+- `src/lib/services/publicProfileUrl.test.ts` (+1): ninguna URL pública de los
+  datos reales usa `pet.id` (siempre `codigoPublico`).
+
+### Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm run test` ✅ (112 pruebas) ·
+  `npm run build` ✅ (SSG, 93 páginas) · `npm run validate:data` ✅ (26 avisos
+  informativos preexistentes, 0 errores).
+
+### Cambios
+
+- `src/lib/phone.ts` (nuevo), `src/lib/phone.test.ts` (nuevo),
+  `src/components/features/pet-profile/EmergencyContactSection.tsx` (nuevo),
+  `src/components/features/pet-profile/EmergencyContact.test.ts` (nuevo),
+  `src/lib/domain/emergency.ts`, `src/lib/domain/emergency.test.ts`,
+  `src/lib/mapping/profile.ts`, `src/lib/foundPetReport.ts`,
+  `src/lib/foundPetReport.test.ts`, `src/lib/services/publicProfileUrl.test.ts`,
+  `src/app/perfil/[id]/page.tsx`, `CHANGELOG.md`.
+- **No** se tocaron `package.json`/`package-lock.json`, `mascotas.json`,
+  `emergency.ts` (contrato `resolveLostState` no modificado),
+  `lostAlertStorage.ts` ni `useLostAlerts.ts`; no se inventaron números, no se
+  adelantó backend/Auth/RLS/FASE 3/adopciones.
+
+---
+
 ## FASE 2 — Emergencias: Product/Frontend (PR `feat/emergencias-ui`)
 
 **Estado:** Completada (bloque Product/Frontend de FASE 2)

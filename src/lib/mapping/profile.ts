@@ -1,6 +1,7 @@
 import { formatMexicanDate, getPetAgeText } from "@/lib/dateFormat";
 import { getPublicDocuments } from "@/lib/petDocuments";
 import { getVaccineStatusMeta } from "@/lib/domain/vaccineStatus";
+import { buildWhatsAppHref } from "@/lib/phone";
 import type { PetProfile } from "@/types/pet";
 
 export type PetHeaderViewModel = {
@@ -24,7 +25,6 @@ export type ContactViewModel = {
   phone: string;
   phoneHref: string;
   whatsapp: string;
-  neighborhood: string;
 };
 
 export type InfoViewModel = {
@@ -79,9 +79,6 @@ export type ProfileViewModel = {
 
 export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
   const visibleDocuments = getPublicDocuments(pet);
-  const locationText = pet.emergencia.perdido && pet.emergencia.zonaPerdida
-    ? `Zona donde se perdió: ${pet.emergencia.zonaPerdida}`
-    : `Zona segura: ${pet.contacto.zonaSegura}`;
 
   return {
     header: {
@@ -103,8 +100,7 @@ export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
       name: pet.contacto.nombrePublico,
       phone: formatPhoneForDisplay(pet.contacto.telefonoPrincipal),
       phoneHref: pet.contacto.telefonoPrincipal,
-      whatsapp: `https://wa.me/${pet.contacto.whatsapp}?text=${encodeURIComponent(pet.contacto.mensajeWhatsapp)}`,
-      neighborhood: locationText,
+      whatsapp: buildWhatsAppHref(pet.contacto.whatsapp, pet.contacto.mensajeWhatsapp),
     },
     info: {
       species: pet.mascota.especie,

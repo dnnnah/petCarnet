@@ -46,10 +46,4 @@ export function buildFoundPetMessage({
   return lines.join("\n");
 }
 
-export function buildWhatsAppHref(number: string, message: string): string {
-  const digits = number.replace(/\D/g, "");
-  if (!digits || message.trim() === "") {
-    return "";
-  }
-  return `https://wa.me/${digits}?text=${encodeURIComponent(message.trim())}`;
-}
+export { buildWhatsAppHref } from "@/lib/phone";
