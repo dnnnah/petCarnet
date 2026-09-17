@@ -4,6 +4,7 @@ import { PetSpeciesIcon } from "@/lib/petIcon";
 
 type EmergencyContactProps = {
   isLost?: boolean;
+  isTerminal?: boolean;
   petName: string;
   species: string;
   contact: {
@@ -18,9 +19,21 @@ type EmergencyContactProps = {
 export function EmergencyContact({
   contact,
   isLost = false,
+  isTerminal = false,
   petName,
   species,
 }: EmergencyContactProps) {
+  const heading = isLost
+    ? "Contacto urgente ahora"
+    : isTerminal
+      ? "Contacto de su familia"
+      : "Contacto de Emergencia";
+
+  const subtitle = isLost
+    ? `Si encontraste a ${petName}, llama o envía WhatsApp ahora.`
+    : isTerminal
+      ? `Si tienes información de ${petName}, puedes contactar a su familia.`
+      : `Si encontraste a ${petName}, por favor contáctanos.`;
 
   return (
     <section
@@ -46,12 +59,10 @@ export function EmergencyContact({
       <div className="relative grid items-center gap-5 lg:grid-cols-[1fr_1.7fr]">
         <div>
           <h2 className="text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white">
-            {isLost ? "Contacto urgente ahora" : "Contacto de Emergencia"}
+            {heading}
           </h2>
           <p className="mt-3 text-base font-bold text-gray-700 dark:text-gray-200">
-            {isLost
-              ? `Si encontraste a ${petName}, llama o envía WhatsApp ahora.`
-              : `Si encontraste a ${petName}, por favor contáctanos.`}
+            {subtitle}
           </p>
           <p className={["mt-2 text-sm font-bold", isLost ? "text-rose-700 dark:text-rose-300" : "text-emerald-700 dark:text-emerald-300"].join(" ")}>
             {contact.neighborhood}

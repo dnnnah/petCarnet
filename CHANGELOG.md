@@ -20,6 +20,98 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 3 — Estados y ciclo de vida de la mascota: Product/Frontend (PR `feat/estados-ui`)
+
+**Estado:** UI de estados conectada al estado efectivo (integr. de FASE 3 completada)
+**Fecha:** 2026-09-17
+
+Conecta el contrato Core de FASE 3 (§3.1–3.3) con la UI del perfil: el estado
+efectivo (`ProfileViewModel.status` + `resolveEffectivePetState`) se representa
+en la cabecera, como banner de estado, en el contacto y en el pie, sin repetir la
+fuente de verdad del dominio y **sin tocar** el lost mode runtime de FASE 2.
+No implementa flujos de negocio por estado (adopciones, refugios, panel, backend),
+que siguen en FASE 4+.
+
+### Una sola derivación
+
+- `EmergencyContactSection` y `LostModeAlertSections` consumen ahora el mismo
+  selector unificado `resolveEffectivePetState` (antes `resolveLostState` /
+  `resolveEmergencyContactState`). `resolveLostState` no se modificó.
+- `ProfileViewModel.status` ya se renderiza: badge de estado en `PetHeader` y
+  todos los gateos del perfil usan el estado canónico expuesto por el view model.
+
+### Nuevos componentes (`src/components/features/pet-status/`)
+
+- `PetStatusBadge` (cliente): badge del estado efectivo en la fila de badges de la
+  cabecera (mint=En casa, rose=Perdido, violet=En adopción, teal=Adoptado,
+  amber=Rescatado, stone=En memoria).
+- `PetStatusSection` (cliente): reemplaza el uso directo de `LostModeAlertSections`
+  en el perfil. Decide por `resolvePetStatusView`:
+  - estado perdido efectivo → delega en la UI de FASE 2 (sin cambios);
+  - `en_casa` → nada;
+  - resto → `PetStateBanner`.
+- `PetStateBanner` (presentacional): banner informativo por estado
+  (`en_adopcion` con ancla `#contacto`, `adoptado`, `rescatado`, `fallecido`
+  como memorial sin acciones).
+- `PetFooterBanner` (cliente): `ThankYouBanner` solo para estados `en_casa` /
+  `perdido` efectivos (ninguno para adopción/terminal).
+
+### Terminal y estados contradictorios
+
+- `fallecido` nunca muestra overlay de perdido: ni banner, ni contacto urgente, ni
+  animación, aunque exista una señal estática o runtime stale en `localStorage`.
+- `EmergencyContact` gana `isTerminal` → encabezado neutro «Contacto de su familia».
+- En el perfil se oculta el enlace «Generar alerta de mascota perdida» para
+  terminal; `/perfil/[id]/alerta` muestra un aviso de estado terminal y no genera
+  alertas (metadata acorde).
+
+### Presentación desacoplada del dominio
+
+- `src/lib/mapping/petStatusPresentation.ts`: `getPetStatusMeta` (label/tono/icono
+  por estado con fallback seguro) y `resolvePetStatusView` (decisión
+  lost-mode/banner/none desde `resolveEffectivePetState`). Sin duplicar el dominio
+  (§10.2: los colores no entran a `petStatus.ts`).
+- `Badge` gana el tono `rose`.
+
+### Tests
+
+- `petStatusPresentation.test.ts` (nuevo): meta de los 6 estados + fallback, y
+  `resolvePetStatusView` para en_casa, runtime→perdido, estático→perdido,
+  adopción→banner y terminal que bloquea el overlay.
+- `PetStatusBadge.test.ts` (nuevo): etiquetas por estado efectivo y tono rosa
+  para perdido.
+- `PetStateBanner.test.ts` (nuevo): adopción/adoptado/rescatado/fallecido/perdido
+  y accesibilidad (`aria-labelledby`).
+- `PetStatusSection.test.ts` (nuevo): en_casa vacío, estático delega en FASE 2,
+  adopción→banner, fallecido sin overlay.
+- `PetFooterBanner.test.ts` (nuevo): gracias en en_casa, llamado en perdido, nulo
+  en adopción/terminal.
+- `EmergencyContactSection.test.ts` (nuevo): contacto normal/urgente y terminal
+  que nunca es urgente.
+- `profile.test.ts` (extendido): passthrough de los 6 estados en el view model.
+
+### Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm run test` ✅ · `npm run build` ✅
+  (SSG) · `npm run validate:data` ✅.
+- Smoke tests: perfil normal, modo perdido runtime activado/desactivado, rutas por
+  `codigoPublico`, 375 px sin overflow y rutas de FASE 1+2 intactas.
+
+### Cambios
+
+- `src/lib/mapping/petStatusPresentation.ts` (nuevo) y su test,
+  `src/components/features/pet-status/*` (nuevos: 4 componentes + 5 tests),
+  `src/components/ui/Badge.tsx`, `src/components/features/pet-profile/PetHeader.tsx`,
+  `src/components/features/pet-profile/EmergencyContact.tsx`,
+  `src/components/features/pet-profile/EmergencyContactSection.tsx` (+test),
+  `src/app/perfil/[id]/page.tsx`, `src/app/perfil/[id]/alerta/page.tsx`,
+  `src/lib/mapping/profile.test.ts`, `CHANGELOG.md`.
+- **No** se tocaron `package.json`/`package-lock.json`, `mascotas.json`,
+  `petStatus.ts`, `resolveLostState`/`useLostAlerts`/`lostAlertStorage.ts`,
+  `getPublicProfileUrl()`, QR, ni se adelantó FASE 4+.
+
+---
+
 ## FASE 3 — Estados y ciclo de vida de la mascota: Contrato Core (PR `feat/estados-core`)
 
 **Estado:** Contrato de dominio y datos completado (base Core)

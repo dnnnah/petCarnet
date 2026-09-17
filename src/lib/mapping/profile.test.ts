@@ -80,4 +80,21 @@ describe("toProfileViewModel", () => {
     expect(vm.status).toBe("en_adopcion");
     expect(vm.header.name).toBe("Prueba");
   });
+
+  it("expone sin romper el mapeo todos los estados del ciclo de vida", () => {
+    const statuses: PetProfile["estado"][] = [
+      "en_casa",
+      "perdido",
+      "en_adopcion",
+      "adoptado",
+      "rescatado",
+      "fallecido",
+    ];
+
+    for (const status of statuses) {
+      const vm = toProfileViewModel(buildPet(status));
+      expect(vm.status).toBe(status);
+      expect(vm.header.name).toBe("Prueba");
+    }
+  });
 });

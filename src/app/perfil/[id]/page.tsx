@@ -3,8 +3,9 @@ import Link from "next/link";
 import { AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { DocumentsCard } from "@/components/features/documents/DocumentsCard";
-import { LostModeAlertSections } from "@/components/features/lost-pet/LostModeAlertSections";
-import { ThankYouBanner } from "@/components/features/lost-pet/ThankYouBanner";
+import { PetFooterBanner } from "@/components/features/pet-status/PetFooterBanner";
+import { PetStatusBadge } from "@/components/features/pet-status/PetStatusBadge";
+import { PetStatusSection } from "@/components/features/pet-status/PetStatusSection";
 import { EmergencyContactSection } from "@/components/features/pet-profile/EmergencyContactSection";
 import { HealthCard } from "@/components/features/pet-profile/HealthCard";
 import { InfoCard } from "@/components/features/pet-profile/InfoCard";
@@ -14,6 +15,7 @@ import { QRShareCard } from "@/components/features/pet-profile/QRShareCard";
 import { RecentPhotos } from "@/components/features/pet-profile/RecentPhotos";
 import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeline";
 import { VetCard } from "@/components/features/pet-profile/VetCard";
+import { isTerminalPetStatus } from "@/lib/domain/petStatus";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
 import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
@@ -49,18 +51,29 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   const profile = toProfileViewModel(pet);
   const publicProfileUrl = getPublicProfileUrl(pet) ?? "";
+  const isTerminal = isTerminalPetStatus(profile.status);
 
   return (
     <AppShell>
       <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="space-y-7">
-          <PetHeader pet={profile.header} />
+          <PetHeader
+            pet={profile.header}
+            statusBadge={
+              <PetStatusBadge
+                petId={pet.id}
+                emergency={pet.emergencia}
+                status={profile.status}
+              />
+            }
+          />
           <ProfileNav hasPhotos={profile.photos.length > 0} />
-          <LostModeAlertSections
+          <PetStatusSection
             petId={pet.id}
             petName={pet.mascota.nombre}
             emergency={pet.emergencia}
             whatsappNumber={pet.contacto.whatsapp}
+            status={profile.status}
           />
           <div id="contacto">
             <EmergencyContactSection
@@ -69,6 +82,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               petId={pet.id}
               petName={pet.mascota.nombre}
               species={pet.mascota.especie}
+              status={profile.status}
               zonaSegura={pet.contacto.zonaSegura}
             />
           </div>
@@ -93,14 +107,22 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
             <QRShareCard petName={pet.mascota.nombre} profileUrl={publicProfileUrl} petCode={pet.identificacion.codigoPublico} />
           </div>
-          <Link
-            href={`/perfil/${pet.id}/alerta`}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-red-500 px-5 py-3 text-sm font-extrabold text-white shadow-[0_14px_28px_rgba(225,29,72,0.2)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(225,29,72,0.28)]"
-          >
-            <AlertTriangle size={18} />
-            Generar alerta de mascota perdida
-          </Link>
-          <ThankYouBanner isLost={pet.emergencia.perdido} petName={pet.mascota.nombre} species={pet.mascota.especie} />
+          {!isTerminal ? (
+            <Link
+              href={`/perfil/${pet.id}/alerta`}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-red-500 px-5 py-3 text-sm font-extrabold text-white shadow-[0_14px_28px_rgba(225,29,72,0.2)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(225,29,72,0.28)]"
+            >
+              <AlertTriangle size={18} />
+              Generar alerta de mascota perdida
+            </Link>
+          ) : null}
+          <PetFooterBanner
+            petId={pet.id}
+            petName={pet.mascota.nombre}
+            species={pet.mascota.especie}
+            emergency={pet.emergencia}
+            status={profile.status}
+          />
           <p className="text-center text-sm font-bold text-gray-400 dark:text-gray-500">
             PetCarnet © {new Date().getFullYear()} · Pasaporte Digital para Mascotas
           </p>
