@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, AlertTriangle } from "lucide-react";
+import { ArrowLeft, HeartCrack } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { LostPetAlertForm } from "@/components/features/lost-pet/LostPetAlertForm";
+import { isTerminalPetStatus } from "@/lib/domain/petStatus";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
 import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
@@ -26,15 +27,22 @@ export async function generateMetadata({ params }: AlertPageProps): Promise<Meta
     };
   }
 
+  const isTerminal = isTerminalPetStatus(pet.estado);
+
   return {
-    title: `Generar alerta de ${pet.mascota.nombre} | PetCarnet`,
-    description: `Genera una imagen de alerta para compartir cuando ${pet.mascota.nombre} está perdido.`,
+    title: isTerminal
+      ? `En memoria de ${pet.mascota.nombre} | PetCarnet`
+      : `Generar alerta de ${pet.mascota.nombre} | PetCarnet`,
+    description: isTerminal
+      ? `El perfil de ${pet.mascota.nombre} se conserva como recuerdo en PetCarnet.`
+      : `Genera una imagen de alerta para compartir cuando ${pet.mascota.nombre} está perdido.`,
   };
 }
 
 export default async function AlertPage({ params }: AlertPageProps) {
   const { id } = await params;
   const pet = getPetOrNotFound(id);
+  const isTerminal = isTerminalPetStatus(pet.estado);
 
   return (
     <AppShell>
@@ -49,15 +57,19 @@ export default async function AlertPage({ params }: AlertPageProps) {
           </Link>
 
           <SubpageHeader
-            eyebrow="Generar alerta"
-            eyebrowTone="text-rose-600"
-            title={`Alerta de ${pet.mascota.nombre}`}
-            description="Genera una imagen para compartir en redes sociales y mensajería cuando tu mascota esté perdida."
-            icon={<AlertTriangle size={96} />}
-            background="bg-gradient-to-r from-rose-50 via-white to-amber-50 ring-rose-100"
+            eyebrow={isTerminal ? "Estado terminal" : "Generar alerta"}
+            eyebrowTone={isTerminal ? "text-stone-600" : "text-rose-600"}
+            title={isTerminal ? `En memoria de ${pet.mascota.nombre}` : `Alerta de ${pet.mascota.nombre}`}
+            description={isTerminal
+              ? "El estado actual de este perfil no admite la generación de alertas de mascota perdida."
+              : "Genera una imagen para compartir en redes sociales y mensajería cuando tu mascota esté perdida."}
+            icon={<HeartCrack size={96} />}
+            background={isTerminal
+              ? "bg-gradient-to-r from-stone-50 via-white to-gray-100 ring-stone-100"
+              : "bg-gradient-to-r from-rose-50 via-white to-amber-50 ring-rose-100"}
           />
 
-          <LostPetAlertForm pet={pet} />
+          {!isTerminal ? <LostPetAlertForm pet={pet} /> : null}
         </div>
       </div>
     </AppShell>

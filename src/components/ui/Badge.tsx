@@ -1,7 +1,7 @@
 type BadgeProps = {
   children: React.ReactNode;
   icon?: React.ReactNode;
-  tone?: "mint" | "pink" | "blue" | "yellow" | "purple" | "gray";
+  tone?: "mint" | "pink" | "blue" | "yellow" | "purple" | "gray" | "rose";
 };
 
 const tones = {
@@ -11,6 +11,7 @@ const tones = {
   yellow: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
   purple: "bg-violet-100 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300",
   gray: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
+  rose: "bg-rose-100/90 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300",
 };
 
 export function Badge({ children, icon, tone = "gray" }: BadgeProps) {

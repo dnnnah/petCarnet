@@ -29,9 +29,10 @@ type PetHeaderProps = {
       microchip: string;
     };
   };
+  statusBadge?: React.ReactNode;
 };
 
-export function PetHeader({ pet }: PetHeaderProps) {
+export function PetHeader({ pet, statusBadge }: PetHeaderProps) {
   return (
     <section className="soft-card relative overflow-hidden rounded-[2.25rem] px-5 py-7 sm:px-8 lg:px-14 lg:py-9">
       <div className="pointer-events-none absolute left-16 top-8 h-44 w-44 rounded-full bg-emerald-100/58" />
@@ -77,6 +78,7 @@ export function PetHeader({ pet }: PetHeaderProps) {
           <p className="mt-2 sm:mt-3 text-lg sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400">{pet.breed} · {pet.species}</p>
 
           <div className="mt-7 flex flex-wrap gap-3">
+            {statusBadge}
             <Badge tone="mint" icon={<CalendarDays size={18} />}>
               {pet.age}
             </Badge>
