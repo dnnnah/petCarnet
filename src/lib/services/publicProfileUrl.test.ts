@@ -4,6 +4,7 @@ import {
   getPublicProfileUrl,
   resolvePublicProfileBaseUrl,
 } from "./publicProfileUrl";
+import mascotas from "@/data/mascotas.json";
 
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -74,5 +75,15 @@ describe("resolvePublicProfileBaseUrl", () => {
   it("retorna cadena vacía sin variable de entorno", () => {
     vi.stubEnv("NEXT_PUBLIC_APP_URL", undefined);
     expect(resolvePublicProfileBaseUrl()).toBe("");
+  });
+});
+
+describe("URLs públicas de los datos reales (nunca pet.id)", () => {
+  it("cada perfil de mascotas.json genera su URL canónica por codigoPublico", () => {
+    for (const pet of mascotas) {
+      const url = getPublicProfileUrl(pet);
+      expect(url).toContain(pet.identificacion.codigoPublico);
+      expect(url).not.toContain(pet.id);
+    }
   });
 });
