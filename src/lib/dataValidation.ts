@@ -1,7 +1,9 @@
+import { isPetStatus, PET_STATUSES } from "./domain/petStatus.ts";
 import type { PetProfile } from "../types/pet";
 
+export { PET_STATUSES } from "./domain/petStatus.ts";
+
 export const PET_SPECIES: readonly string[] = ["Perro", "Gato"];
-export const PET_STATUSES: readonly string[] = ["en_casa", "perdido"];
 export const PET_GENDERS: readonly string[] = ["Macho", "Hembra"];
 export const PET_SIZES: readonly string[] = ["Pequeño", "Mediano", "Grande", "Miniatura"];
 export const VACCINE_STATUSES: readonly string[] = ["al_dia", "proxima_dosis", "vencida"];
@@ -203,6 +205,27 @@ function validatePet(entry: Record<string, unknown>, petId: string, publicCodes:
       }
     }
     expectStringArray(emergencia.instrucciones, `${petId}.emergencia.instrucciones`, errors);
+  }
+
+  const estado = entry.estado;
+  if (typeof estado === "string" && isPetStatus(estado) && isRecord(emergencia)) {
+    const isLostStatic = emergencia.perdido === true;
+
+    if (estado === "perdido" && !isLostStatic) {
+      add(errors, `${petId}.estado es "perdido" pero emergencia.perdido no es true.`);
+    }
+    if (estado !== "perdido" && isLostStatic) {
+      add(
+        errors,
+        `${petId}.estado es "${estado}" pero emergencia.perdido es true; para modo perdido el estado debe ser "perdido".`,
+      );
+    }
+    if (estado === "fallecido" && isLostStatic) {
+      add(
+        errors,
+        `${petId}.estado es "fallecido" pero emergencia.perdido es true; un estado terminal no admite modo perdido.`,
+      );
+    }
   }
 
   const salud = entry.salud;
