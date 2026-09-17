@@ -183,6 +183,60 @@ describe("collectValidationErrors", () => {
     expect(collectValidationErrors([pet])).toEqual([]);
   });
 
+  it("acepta cada estado válido del ciclo de vida cuando hay consistencia", () => {
+    const cases: Array<{ estado: PetProfile["estado"]; perdido: boolean }> = [
+      { estado: "en_casa", perdido: false },
+      { estado: "perdido", perdido: true },
+      { estado: "en_adopcion", perdido: false },
+      { estado: "adoptado", perdido: false },
+      { estado: "rescatado", perdido: false },
+      { estado: "fallecido", perdido: false },
+    ];
+
+    for (const { estado, perdido } of cases) {
+      const pet = buildPet({
+        estado,
+        emergencia: { ...buildPet().emergencia, perdido },
+      });
+      expect(collectValidationErrors([pet])).toEqual([]);
+    }
+  });
+
+  it("rechaza un estado inválido fuera de la unión", () => {
+    const pet = buildPet({
+      estado: "extraviado" as PetProfile["estado"],
+    });
+    const errors = collectValidationErrors([pet]);
+    expect(errors.some((error) => error.includes("estado"))).toBe(true);
+  });
+
+  it("rechaza estado perdido sin flag emergencia.perdido", () => {
+    const pet = buildPet({
+      estado: "perdido",
+      emergencia: { ...buildPet().emergencia, perdido: false },
+    });
+    const errors = collectValidationErrors([pet]);
+    expect(errors.some((error) => error.includes('estado es "perdido"') && error.includes("perdido no es true"))).toBe(true);
+  });
+
+  it("rechaza flag perdido con un estado canónico distinto de perdido", () => {
+    const pet = buildPet({
+      estado: "en_casa",
+      emergencia: { ...buildPet().emergencia, perdido: true },
+    });
+    const errors = collectValidationErrors([pet]);
+    expect(errors.some((error) => error.includes("pero emergencia.perdido es true"))).toBe(true);
+  });
+
+  it("rechaza modo perdido en un estado terminal (fallecido)", () => {
+    const pet = buildPet({
+      estado: "fallecido",
+      emergencia: { ...buildPet().emergencia, perdido: true },
+    });
+    const errors = collectValidationErrors([pet]);
+    expect(errors.some((error) => error.includes("un estado terminal no admite modo perdido"))).toBe(true);
+  });
+
   it("rechaza datos que no son un array", () => {
     expect(collectValidationErrors({})).toHaveLength(1);
   });

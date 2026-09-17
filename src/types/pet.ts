@@ -2,7 +2,13 @@ export type PetId = string;
 
 export type PetSpecies = "Perro" | "Gato";
 
-export type PetStatus = "en_casa" | "perdido";
+export type PetStatus =
+  | "en_casa"
+  | "perdido"
+  | "en_adopcion"
+  | "adoptado"
+  | "rescatado"
+  | "fallecido";
 
 export type PetGender = "Macho" | "Hembra";
 

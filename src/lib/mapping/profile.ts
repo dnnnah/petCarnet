@@ -2,7 +2,7 @@ import { formatMexicanDate, getPetAgeText } from "@/lib/dateFormat";
 import { getPublicDocuments } from "@/lib/petDocuments";
 import { getVaccineStatusMeta } from "@/lib/domain/vaccineStatus";
 import { buildWhatsAppHref } from "@/lib/phone";
-import type { PetProfile } from "@/types/pet";
+import type { PetProfile, PetStatus } from "@/types/pet";
 
 export type PetHeaderViewModel = {
   name: string;
@@ -66,6 +66,7 @@ export type PhotoViewModel = {
 };
 
 export type ProfileViewModel = {
+  status: PetStatus;
   header: PetHeaderViewModel;
   contact: ContactViewModel;
   info: InfoViewModel;
@@ -81,6 +82,7 @@ export function toProfileViewModel(pet: PetProfile): ProfileViewModel {
   const visibleDocuments = getPublicDocuments(pet);
 
   return {
+    status: pet.estado,
     header: {
       name: pet.mascota.nombre,
       species: pet.mascota.especie,

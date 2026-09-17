@@ -20,6 +20,103 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 3 — Estados y ciclo de vida de la mascota: Contrato Core (PR `feat/estados-core`)
+
+**Estado:** Contrato de dominio y datos completado (base Core)
+**Fecha:** 2026-09-17
+
+Implementa únicamente el **contrato de dominio y datos** de la FASE 3 del roadmap
+(§§3.1–3.3): tipo/unión de estados, estado canónico, reglas de validación,
+relación con el lost mode runtime y compatibilidad con los datos actuales.
+**No** implementa los flujos de negocio por estado (adopciones reales, refugios,
+panel, backend, etc.), que siguen fuera de alcance.
+
+### Modelo de estado
+
+- `PetStatus` (`src/types/pet.ts`) se amplía de `"en_casa" | "perdido"` a la unión
+  de ciclo de vida completa: `en_casa | perdido | en_adopcion | adoptado |
+  rescatado | fallecido` (roadmap §3.1). `PetProfile.estado` es el **estado
+  canónico** serializable, que mapea 1:1 al futuro `pets.status` (§6.4).
+- Nuevo módulo de dominio `src/lib/domain/petStatus.ts` (sin colores/labels de UI,
+  §10.2): única fuente de `PET_STATUSES` y guardas `isPetStatus`,
+  `isLostPetStatus`, `isTerminalPetStatus`, `isAdoptionPetStatus`; agrupaciones
+  `LOST_PET_STATUSES`, `TERMINAL_PET_STATUSES`, `ADOPTION_PET_STATUSES`.
+
+### Relación con el lost mode runtime (FASE 2)
+
+- `resolveLostState` (FASE 2) queda **intacto**: la alerta de `localStorage` y el
+  flag estático `emergencia.perdido` siguen alimentando el modo perdido; los
+  componentes de emergencia no se reescriben.
+- Nuevo selector unificado `resolveEffectivePetState({ estado, emergencia, alert })`
+  que **delega en `resolveLostState`** (una sola derivación) y añade:
+  - `status`: estado efectivo (runtime `perdido` si hay señal de pérdida, si no el
+    canónico);
+  - `lostOverlay`: `"runtime" | "static" | "none"` — de dónde viene la señal.
+- Precedencia: alerta runtime activa → efectivo `perdido`; en su ausencia manda el
+  `estado` canónico. Los estados terminales (`fallecido`) bloquean el overlay de
+  lost mode.
+
+### Evitar dos fuentes de verdad
+
+- `PET_STATUSES` deja de estar duplicado en `dataValidation.ts`: ahora re-exporta
+  el del dominio (una sola lista).
+- `dataValidation.ts` añade reglas de consistencia `estado` ↔ `emergencia.perdido`:
+  - `estado: "perdido"` exige `emergencia.perdido: true`;
+  - `emergencia.perdido: true` exige `estado: "perdido"`;
+  - `estado: "fallecido"` no admite modo perdido.
+- `ProfileViewModel` expone `status: PetStatus` (mapper, sin render nuevo).
+
+### Migración / compatibilidad
+
+- **No se modificó `mascotas.json`**: las 11 mascotas ya son `estado: "en_casa"` con
+  `emergencia.perdido: false`, válidas bajo la unión ampliada. No se inventan datos.
+- El schema se **ancha** (compatibilidad hacia atrás): los estados nuevos quedan
+  disponibles para FASE 4+, sin tocar los flujos actuales.
+
+### Tests
+
+- `src/lib/domain/petStatus.test.ts` (nuevo): estados válidos, estados inválidos,
+  agrupaciones (`perdido`/terminal/adopción), resolución del estado con overlay
+  runtime y estático, precedencia runtime sobre estático, fallback de campos y
+  bloqueo del overlay en estados terminales.
+- `src/lib/dataValidation.test.ts` (+6): acepta los 6 estados consistentes,
+  rechaza estados inválidos, y detecta las inconsistencias `estado` ↔
+  `emergencia.perdido` (incluido terminal).
+- `src/lib/mapping/profile.test.ts` (nuevo): el view model expone el estado
+  canónico (incluido `en_adopcion`) sin romper el mapeo.
+
+### Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm run test` ✅ (134 pruebas, 12
+  archivos) · `npm run build` ✅ (SSG, 93 páginas) · `npm run validate:data` ✅
+  (11 perfiles válidos, 26 avisos preexistentes, 0 errores).
+- Smoke tests (servidor `npm start`): `/`, `/perfil/lucca`, `/perfil/PC-LUCCA-001`,
+  `/perfil/PC-LUCCA-001/alerta`, `.../vacunas`, `.../documentos`, `/login` → 200;
+  `/perfil/inexistente` → 404. Modo perdido runtime (FASE 2) verificado en
+  navegador: sin alerta no hay banner; con alerta en `localStorage` aparecen banner,
+  «Modo alerta activo», «Encontré esta mascota», contacto urgente y la zona runtime;
+  al limpiar la alerta vuelve al estado normal.
+
+### Cambios
+
+- `src/types/pet.ts`, `src/lib/domain/petStatus.ts` (nuevo),
+  `src/lib/domain/petStatus.test.ts` (nuevo), `src/lib/dataValidation.ts`,
+  `src/lib/dataValidation.test.ts`, `src/lib/mapping/profile.ts`,
+  `src/lib/mapping/profile.test.ts` (nuevo), `CHANGELOG.md`.
+- **No** se tocaron `package.json`/`package-lock.json`, `mascotas.json`,
+  `emergency.ts`/`useLostAlerts.ts`/`lostAlertStorage.ts`, componentes de UI,
+  `getPublicProfileUrl()`, QR, ni se adelantó FASE 4+ (adopciones/refugios/backend).
+
+### Pendientes (para Product/Frontend)
+
+- Conectar `LostModeAlertSections`/`EmergencyContactSection` a
+  `resolveEffectivePetState` (misma derivación, hoy usan `resolveLostState`) y
+  usar `ProfileViewModel.status` para representar el estado canónico en el perfil.
+- Flujos de negocio por estado (`en_adopcion`, `rescatado`, `adoptado`,
+  `fallecido`) y migración de datos reales: FASE 4+.
+
+---
+
 ## Cierre de FASE 2 — Emergencias (PR `fix/emergencias-cierre`)
 
 **Estado:** Pendientes técnicos cerrados / FASE 2 técnicamente completada
