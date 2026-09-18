@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Heart, PawPrint, ShieldCheck } from "lucide-react";
+import { ArrowRight, Heart, HeartHandshake, PawPrint, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { Badge } from "@/components/ui/Badge";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -39,6 +39,14 @@ export default function Home() {
                   <ArrowRight size={20} />
                 </Link>
               ) : null}
+              <Link
+                href="/adopciones"
+                className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-7 text-base font-extrabold text-violet-700 shadow-[0_12px_26px_rgba(17,24,39,0.08)] ring-1 ring-violet-200 transition hover:-translate-y-0.5 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:bg-gray-900 dark:text-violet-300 dark:ring-violet-800 dark:hover:bg-violet-500/10"
+              >
+                <HeartHandshake size={20} />
+                Ver mascotas en adopción
+                <ArrowRight size={20} />
+              </Link>
             </div>
           </div>
 

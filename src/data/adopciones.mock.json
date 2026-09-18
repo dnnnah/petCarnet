@@ -1,0 +1,457 @@
+[
+  {
+    "id": "mila",
+    "estado": "en_adopcion",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Mila",
+      "especie": "Perro",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/alix.jpeg",
+      "genero": "Hembra",
+      "talla": "Mediano",
+      "color": "Café con blanco",
+      "pesoKg": 14,
+      "fechaNacimiento": "2021-03-15",
+      "rasgosDistintivos": ["Mancha blanca en el pecho", "Orejas medio caídas"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-MILA-001",
+      "microchip": "900123456789012",
+      "notas": "Mascota de demostración del prototipo de adopción de PetCarnet."
+    },
+    "contacto": {
+      "nombrePublico": "Patitas con Causa",
+      "telefonoPrincipal": "5550123456",
+      "whatsapp": "5215550123456",
+      "telefonoSecundario": "",
+      "email": "adopciones@patitasconcausa.mx",
+      "zonaSegura": "Roma Norte",
+      "zonaHabitual": "Colonia Roma Norte, Ciudad de México",
+      "mensajeWhatsapp": "Hola, me interesa adoptar a Mila. Vi su perfil en PetCarnet."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "Alimento balanceado, 2 raciones al día",
+      "comportamiento": "Tranquila y juguetona, se lleva bien con otros perros."
+    },
+    "veterinario": {
+      "nombre": "Clínica Patitas",
+      "clinica": "Clínica Patitas",
+      "telefono": "5550123456",
+      "direccion": "Roma Norte, CDMX",
+      "horario": "L-S 9am a 6pm"
+    },
+    "vacunas": [
+      { "id": "mila-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-20", "proximaDosis": "2027-01-20", "estatus": "al_dia", "lote": "A901", "veterinario": "Dr. López", "documentoUrl": "" },
+      { "id": "mila-vac-2", "nombre": "Octuple", "fechaAplicacion": "2026-02-10", "proximaDosis": "2027-02-10", "estatus": "al_dia", "lote": "O222", "veterinario": "Dr. López", "documentoUrl": "" }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "toby",
+    "estado": "en_adopcion",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Toby",
+      "especie": "Perro",
+      "raza": "Beagle",
+      "fotoPerfilUrl": "/pets/niko.jpeg",
+      "genero": "Macho",
+      "talla": "Mediano",
+      "color": "Tricolor",
+      "pesoKg": 11,
+      "fechaNacimiento": "2022-08-02",
+      "rasgosDistintivos": ["Mancha blanca en la frente", "Cola con punta blanca"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-TOBY-001",
+      "microchip": null,
+      "notas": "Mascota de demostración del prototipo de adopción de PetCarnet."
+    },
+    "contacto": {
+      "nombrePublico": "Patitas con Causa",
+      "telefonoPrincipal": "5550123456",
+      "whatsapp": "5215550123456",
+      "telefonoSecundario": "",
+      "email": "adopciones@patitasconcausa.mx",
+      "zonaSegura": "Roma Norte",
+      "zonaHabitual": "Colonia Roma Norte, Ciudad de México",
+      "mensajeWhatsapp": "Hola, me interesa adoptar a Toby. Vi su perfil en PetCarnet."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Muy activo y curioso, disfruta los paseos largos."
+    },
+    "veterinario": {
+      "nombre": "Clínica Patitas",
+      "clinica": "Clínica Patitas",
+      "telefono": "5550123456",
+      "direccion": "Roma Norte, CDMX",
+      "horario": "L-S 9am a 6pm"
+    },
+    "vacunas": [
+      { "id": "toby-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-05", "proximaDosis": "2027-01-05", "estatus": "al_dia", "lote": "A842", "veterinario": "Dr. López", "documentoUrl": "" }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "luna",
+    "estado": "en_adopcion",
+    "verificado": false,
+    "mascota": {
+      "nombre": "Luna",
+      "especie": "Perro",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/freya.jpeg",
+      "genero": "Hembra",
+      "talla": "Mediano",
+      "color": "Negro",
+      "pesoKg": 16,
+      "fechaNacimiento": "2020-11-30",
+      "rasgosDistintivos": ["Pelo negro brillante"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-LUNA-001",
+      "microchip": null,
+      "notas": "Mascota de demostración del prototipo de adopción de PetCarnet."
+    },
+    "contacto": {
+      "nombrePublico": "Rincón Canino Ixtapaluca",
+      "telefonoPrincipal": "5550987654",
+      "whatsapp": "5215550987654",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "Ixtapaluca Centro",
+      "zonaHabitual": "Ixtapaluca, Estado de México",
+      "mensajeWhatsapp": "Hola, me interesa adoptar a Luna. Vi su perfil en PetCarnet."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": ["Cicatriz en la pata trasera izquierda"],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Cariñosa aunque un poco tímida al principio."
+    },
+    "veterinario": {
+      "nombre": "Vet Rincón",
+      "clinica": "Veterinaria Rincón",
+      "telefono": "5550987654",
+      "direccion": "Ixtapaluca, EDOMEX",
+      "horario": "L-S 10am a 7pm"
+    },
+    "vacunas": [
+      { "id": "luna-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-03-02", "proximaDosis": "2027-03-02", "estatus": "al_dia", "lote": "A315", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "simba",
+    "estado": "en_adopcion",
+    "verificado": false,
+    "mascota": {
+      "nombre": "Simba",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/viserys.jpeg",
+      "genero": "Macho",
+      "talla": "Mediano",
+      "color": "Naranja atigrado",
+      "pesoKg": 5,
+      "fechaNacimiento": "2023-05-18",
+      "rasgosDistintivos": ["Bigotes blancos", "Ojos ámbar"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-SIMBA-001",
+      "microchip": null,
+      "notas": "Mascota de demostración del prototipo de adopción de PetCarnet."
+    },
+    "contacto": {
+      "nombrePublico": "Rincón Canino Ixtapaluca",
+      "telefonoPrincipal": "5550987654",
+      "whatsapp": "5215550987654",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "Ixtapaluca Centro",
+      "zonaHabitual": "Ixtapaluca, Estado de México",
+      "mensajeWhatsapp": "Hola, me interesa adoptar a Simba. Vi su perfil en PetCarnet."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Juguetón y muy social con humanos."
+    },
+    "veterinario": {
+      "nombre": "Vet Rincón",
+      "clinica": "Veterinaria Rincón",
+      "telefono": "5550987654",
+      "direccion": "Ixtapaluca, EDOMEX",
+      "horario": "L-S 10am a 7pm"
+    },
+    "vacunas": [
+      { "id": "simba-vac-1", "nombre": "Triple Felina", "fechaAplicacion": "2026-02-14", "proximaDosis": "2027-02-14", "estatus": "al_dia", "lote": "TF77", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "rocky",
+    "estado": "en_adopcion",
+    "verificado": false,
+    "mascota": {
+      "nombre": "Rocky",
+      "especie": "Perro",
+      "raza": "Bulldog Francés",
+      "fotoPerfilUrl": "/pets/loki.jpeg",
+      "genero": "Macho",
+      "talla": "Pequeño",
+      "color": "Atigrado",
+      "pesoKg": 10,
+      "fechaNacimiento": "2021-10-09",
+      "rasgosDistintivos": ["Máscara oscura en la cara"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-ROCKY-001",
+      "microchip": "900987654321098",
+      "notas": "Mascota de demostración del prototipo de adopción de PetCarnet."
+    },
+    "contacto": {
+      "nombrePublico": "Rosa Martínez",
+      "telefonoPrincipal": "5544332211",
+      "whatsapp": "5215544332211",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "Nápoles",
+      "zonaHabitual": "Colonia Nápoles, Ciudad de México",
+      "mensajeWhatsapp": "Hola, me interesa adoptar a Rocky. Vi su perfil en PetCarnet."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": ["Sensible a ciertos piensos"],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "Pienso hipoalergénico",
+      "comportamiento": "Tranquilo y hogareño, ideal para departamentos."
+    },
+    "veterinario": {
+      "nombre": "Vet Colonia",
+      "clinica": "Veterinaria La Nápoles",
+      "telefono": "5544332211",
+      "direccion": "Nápoles, CDMX",
+      "horario": "L-D 9am a 8pm"
+    },
+    "vacunas": [
+      { "id": "rocky-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-28", "proximaDosis": "2027-01-28", "estatus": "al_dia", "lote": "A118", "veterinario": "Dr. Soto", "documentoUrl": "" },
+      { "id": "rocky-vac-2", "nombre": "Poli", "fechaAplicacion": "2026-03-11", "proximaDosis": "2027-03-11", "estatus": "al_dia", "lote": "P530", "veterinario": "Dr. Soto", "documentoUrl": "" }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "canela",
+    "estado": "fallecido",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Canela",
+      "especie": "Gato",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/chicharrona.jpeg",
+      "genero": "Hembra",
+      "talla": "Pequeño",
+      "color": "Canela",
+      "pesoKg": 4,
+      "fechaNacimiento": "2018-04-22",
+      "rasgosDistintivos": ["Ojos verdes", "Pelo corto"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-CANELA-001",
+      "microchip": null,
+      "notas": "Mascota de demostración que muestra el estado 'fallecido' (memorial) en el prototipo de adopción."
+    },
+    "contacto": {
+      "nombrePublico": "Patitas con Causa",
+      "telefonoPrincipal": "5550123456",
+      "whatsapp": "5215550123456",
+      "telefonoSecundario": "",
+      "email": "adopciones@patitasconcausa.mx",
+      "zonaSegura": "Roma Norte",
+      "zonaHabitual": "Colonia Roma Norte, Ciudad de México",
+      "mensajeWhatsapp": "Hola, tengo una duda sobre Canela."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": ""
+    },
+    "veterinario": {
+      "nombre": "Clínica Patitas",
+      "clinica": "Clínica Patitas",
+      "telefono": "5550123456",
+      "direccion": "Roma Norte, CDMX",
+      "horario": "L-S 9am a 6pm"
+    },
+    "vacunas": [],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "bruno",
+    "estado": "perdido",
+    "verificado": false,
+    "mascota": {
+      "nombre": "Bruno",
+      "especie": "Perro",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/lucca.jpeg",
+      "genero": "Macho",
+      "talla": "Grande",
+      "color": "Negro con blanco",
+      "pesoKg": 22,
+      "fechaNacimiento": "2019-07-11",
+      "rasgosDistintivos": ["Collar azul", "Cola sin punta"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-BRUNO-001",
+      "microchip": "900556677889900",
+      "notas": "Mascota de demostración que muestra el estado 'perdido' en el prototipo de adopción (nunca es candidato a adopción)."
+    },
+    "contacto": {
+      "nombrePublico": "Rincón Canino Ixtapaluca",
+      "telefonoPrincipal": "5550987654",
+      "whatsapp": "5215550987654",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "Ixtapaluca Centro",
+      "zonaHabitual": "Ixtapaluca, Estado de México",
+      "mensajeWhatsapp": "Hola, encontré a Bruno. Escaneé el QR de su collar."
+    },
+    "emergencia": {
+      "perdido": true,
+      "fechaPerdida": "2026-09-10",
+      "zonaPerdida": "Parque Nacional Ixtapaluca",
+      "mensajeEmergencia": "Bruno se perdió cerca del acceso al parque. Por favor ayuda a regresarlo con su refugio.",
+      "recompensa": 0,
+      "instrucciones": ["Llámalo con voz tranquila.", "No lo persigas.", "Contacta al refugio por WhatsApp."]
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Noble, algo reservado con desconocidos."
+    },
+    "veterinario": {
+      "nombre": "Vet Rincón",
+      "clinica": "Veterinaria Rincón",
+      "telefono": "5550987654",
+      "direccion": "Ixtapaluca, EDOMEX",
+      "horario": "L-S 10am a 7pm"
+    },
+    "vacunas": [
+      { "id": "bruno-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-05-03", "proximaDosis": "2027-05-03", "estatus": "al_dia", "lote": "A660", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  }
+]

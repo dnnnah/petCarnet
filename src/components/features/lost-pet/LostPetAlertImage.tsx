@@ -154,7 +154,7 @@ export function LostPetAlertImage({
       {/* Footer */}
       <div className="bg-gray-950 px-8 py-4 text-center">
         <p className="text-xs font-bold text-gray-400">
-          PetCarnet · Pasaporte Digital para Mascotas
+          PetCarnet · Carnet Digital para Mascotas
         </p>
         <p className="mt-1 text-[10px] text-gray-500">
           Escanea el QR para ver el perfil completo

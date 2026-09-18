@@ -2,9 +2,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { collectDataWarnings, collectValidationErrors } from "../src/lib/dataValidation.ts";
+import { collectShelterValidationErrors } from "../src/lib/shelterValidation.ts";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const dataPath = resolve(root, "src/data/mascotas.json");
+const adoptionMockPath = resolve(root, "src/data/adopciones.mock.json");
+const sheltersMockPath = resolve(root, "src/data/shelters.mock.json");
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -84,4 +87,46 @@ if (failed) {
 }
 
 const count = Array.isArray(pets) ? pets.length : 0;
-console.log(`OK: ${count} perfiles válidos. Avisos: ${warnings.length}.`);
+console.log(`OK: ${count} perfiles reales válidos. Avisos: ${warnings.length}.`);
+
+const adoptionMocks = JSON.parse(readFileSync(adoptionMockPath, "utf8")) as unknown;
+const adoptionMockErrors = collectValidationErrors(adoptionMocks);
+const adoptionMockAssets = collectAssetErrors(adoptionMocks);
+
+if (adoptionMockErrors.length > 0) {
+  failed = true;
+  console.error(`ERRORES EN MOCKS DE ADOPCIÓN (${adoptionMockErrors.length}):`);
+  for (const error of adoptionMockErrors) {
+    console.error(`  - ${error}`);
+  }
+}
+
+if (adoptionMockAssets.length > 0) {
+  failed = true;
+  console.error(`ASSETS FALTANTES EN MOCKS DE ADOPCIÓN (${adoptionMockAssets.length}):`);
+  for (const asset of adoptionMockAssets) {
+    console.error(`  - ${asset}`);
+  }
+}
+
+const sheltersMocks = JSON.parse(readFileSync(sheltersMockPath, "utf8")) as unknown;
+const sheltersMockErrors = collectShelterValidationErrors(sheltersMocks);
+
+if (sheltersMockErrors.length > 0) {
+  failed = true;
+  console.error(`ERRORES EN MOCKS DE REFUGIOS (${sheltersMockErrors.length}):`);
+  for (const error of sheltersMockErrors) {
+    console.error(`  - ${error}`);
+  }
+}
+
+if (failed) {
+  console.error("Validación de datos (mocks) FALLÓ.");
+  process.exit(1);
+}
+
+const adoptionMockCount = Array.isArray(adoptionMocks) ? adoptionMocks.length : 0;
+const sheltersMockCount = Array.isArray(sheltersMocks) ? sheltersMocks.length : 0;
+console.log(
+  `OK: ${adoptionMockCount} mocks de adopción y ${sheltersMockCount} mocks de refugio válidos (prototipo).`,
+);

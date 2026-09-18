@@ -5,21 +5,20 @@ import { AppShell } from "@/components/layout/AppShell";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { LostPetAlertForm } from "@/components/features/lost-pet/LostPetAlertForm";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
-import { getAllPets } from "@/lib/getAllPets";
-import { getPetById } from "@/lib/getPetById";
-import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
+import { notFound } from "next/navigation";
 
 type AlertPageProps = {
   params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
-  return getAllPets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
+  return getAllProfilePets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
 }
 
 export async function generateMetadata({ params }: AlertPageProps): Promise<Metadata> {
   const { id } = await params;
-  const pet = getPetById(id);
+  const pet = getPetByIdAny(id);
 
   if (!pet) {
     return {
@@ -41,7 +40,12 @@ export async function generateMetadata({ params }: AlertPageProps): Promise<Meta
 
 export default async function AlertPage({ params }: AlertPageProps) {
   const { id } = await params;
-  const pet = getPetOrNotFound(id);
+  const pet = getPetByIdAny(id);
+
+  if (!pet) {
+    notFound();
+  }
+
   const isTerminal = isTerminalPetStatus(pet.estado);
 
   return (

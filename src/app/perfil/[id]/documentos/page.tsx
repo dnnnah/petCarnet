@@ -5,22 +5,21 @@ import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { DocumentListClient } from "./DocumentListClient";
-import { getAllPets } from "@/lib/getAllPets";
-import { getPetById } from "@/lib/getPetById";
-import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
 import { getPublicDocuments } from "@/lib/petDocuments";
+import { notFound } from "next/navigation";
 
 type DocumentsPageProps = {
   params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
-  return getAllPets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
+  return getAllProfilePets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
 }
 
 export async function generateMetadata({ params }: DocumentsPageProps): Promise<Metadata> {
   const { id } = await params;
-  const pet = getPetById(id);
+  const pet = getPetByIdAny(id);
 
   if (!pet) {
     return {
@@ -36,7 +35,11 @@ export async function generateMetadata({ params }: DocumentsPageProps): Promise<
 
 export default async function DocumentsPage({ params }: DocumentsPageProps) {
   const { id } = await params;
-  const pet = getPetOrNotFound(id);
+  const pet = getPetByIdAny(id);
+
+  if (!pet) {
+    notFound();
+  }
 
   const documents = getPublicDocuments(pet).filter(
     (document) => document.categoria !== "foto"
