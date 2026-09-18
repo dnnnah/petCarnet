@@ -20,6 +20,139 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 4 — Adopciones y refugios: Product/Frontend (PR `feat/adopciones-refugios-ui`)
+
+**Estado:** UI de adopción/refugios conectada al contrato Core de FASE 4 (prototipo)
+**Fecha:** 2026-09-18
+
+Implementa la UI de adopción/refugios (§§4.1–4.4) sobre el contrato de dominio de A
+(PR `feat/adopciones-refugios-core`, ya mergeado). Es la contraparte Product/Frontend
+de la FASE 4: catálogo de mascotas en adopción, perfil de refugio, CTA de adopción en
+el perfil de la mascota y formulario de solicitud de adopción **simulada**. La UI usa
+las funciones puras de A (`filterAdoptablePets`, `buildAdoptionCatalogEntry`,
+`resolveAdoptionAvailability`, `validateAdoptionRequest`, `findShelterForPet`) como
+**única** derivación; no duplica reglas de negocio ni redefine tipos. Los datos del
+catálogo son **mock de demostración** (sufijo `.mock.json`), claramente identificados
+como prototipo en la UI y en la documentación. **No** implementa backend/Supabase,
+Auth/RLS, adopciones reales, ni necesidades/transparencia (§4.5 → FASE 14).
+
+### Flujo de dominio reutilizado (sin duplicar)
+
+- Catálogo: `filterAdoptablePets(demoPets)` (canónico + efectivo, sin señal runtime en
+  servidor) → `buildAdoptionCatalogEntry(pet, findShelterForPet(...))` → view model.
+- CTA en el perfil: `AdoptionRequestCta` (cliente) re-evalúa en runtime con
+  `useLostAlerts` + `resolveAdoptionAvailability`; si una alerta de pérdida se activa,
+  el CTA desaparece (regla "perdido nunca es candidato a adopción" del Core).
+- Formulario: `validateAdoptionRequest({ pet, alert, draft })` bloquea solicitudes de
+  mascotas no disponibles en el envío (mismo mensaje que la validación del Core).
+
+### Datos de demostración (prototipo, separados de los reales)
+
+- `src/data/shelters.mock.json` (2 refugios: Patitas con Causa, Rincón Canino
+  Ixtapaluca) y `src/data/adopciones.mock.json` (7 perfiles `PetProfile` válidos:
+  5 `en_adopcion` [mila, toby, luna, simba, rocky], 1 `fallecido` [canela] para mostrar
+  el memorial y 1 `perdido` [bruno] para mostrar que nunca es candidato).
+- **No** se tocó `mascotas.json` (11 mascotas reales intactas) ni se inventaron datos
+  reales: las fotos reutilizan `public/pets/*.jpeg` como placeholders y los
+  cargadores (`getMockShelters`, `getAdoptionDemoPets`) validan los archivos al cargar
+  (`assertValidPetProfiles` / `assertValidShelters`).
+- `scripts/validate-data.mts` se extiende de forma aditiva para validar también los
+  mocks (estructura + assets), sin cambiar la salida de `mascotas.json`.
+
+### Rutas y componentes nuevos
+
+- `/adopciones`: catálogo (server) con `AdoptionCatalog` (cliente) — filtros por
+  especie y por refugio, contador de resultados, estado vacío accesible y tarjeta
+  `AdoptionPetCard` (imagen, badges En adopción/Verificado, género, talla, edad, zona,
+  refugio). Sección de "Refugios participantes" con enlaces a sus perfiles.
+- `/refugios/[id]`: perfil de refugio (server) con `generateStaticParams`, contacto
+  (llamada/WhatsApp con `buildWhatsAppHref`, correo, redes normalizadas), mascotas en
+  adopción (con CTA "Solicitar adopción") y "otras mascotas bajo su cuidado" (estado
+  efectivo sin CTA de adopción).
+- `/perfil/[id]/adopcion`: formulario de solicitud (server gate + cliente
+  `AdoptionRequestForm`). Las mascotas no disponibles (p. ej. `en_casa`, `fallecido`,
+  `perdido`) ven un panel explicativo según su estado efectivo; las disponibles
+  ven el formulario.
+- `AdoptionRequestCta` en el perfil: sección violeta visible **solo** cuando el estado
+  efectivo es `en_adopcion` (regla "CTA solo cuando corresponde"), tras `PetStatusSection`.
+- `PrototypeNotice`: aviso visible y consistente de "datos simulados / sin envío real".
+
+### Solicitud de adopción simulada
+
+- Formulario validado con `validateAdoptionRequest`: nombre, teléfono MX
+  (10/52/521), email opcional y motivo requeridos; errores por campo con
+  `aria-invalid`/`aria-describedby`, resumen `role="alert"` para errores generales y
+  foco al primer campo inválido.
+- Envío simulado → confirmación que muestra folio, fecha, mascota, estado `Enviada` y
+  enlace de regreso. Persistencia **prototipo** en `localStorage`
+  (`petcarnet-adopcion:v1:<petId>`) con `adoptionRequestStorage.ts` (mismo patrón
+  `StorageLike` + fallback en memoria que `lostAlertStorage`) y hook
+  `useAdoptionRequests`. La UI y el CHANGELOG lo documentan: no llega a ningún servidor.
+
+### Navegación
+
+- `SiteNav`: nuevo enlace "Adopciones" (icono `HeartHandshake`, texto visible en `sm+`,
+  icono solo en móvil) y CTA secundaria en la home "Ver mascotas en adopción".
+
+### Tests
+
+- `adoptionRequestForm.test.ts`: limpieza del draft, email/notas vacías → `null`,
+  `buildAdoptionRequestFromDraft` (folio `sol-<seed>`, estado `enviada`) y mapeo de
+  errores por campo/general.
+- `adoptionRequestStorage.test.ts`: round-trip con storage falso, fallback en memoria,
+  datos corruptos descartados y filtrado de entradas que no parecen solicitudes.
+- `adoptionPresentation.test.ts`: `buildCatalogCard` con datos mock, `buildShelterPetCard`
+  (adoptable/fallecido/perdido) y normalización de URLs sociales.
+- `adoptionMockData.test.ts`: los mocks validan, no comparten ids/códigos con
+  `mascotas.json`, y los refugios referencian mascotas existentes.
+- `AdoptionPetCard.test.ts` / `ShelterPetCard.test.ts`: render presentacional
+  (`renderToStaticMarkup`, con `next/image` mockeado).
+- Suite total estimada: **209 + 49 = 258 pruebas** al verificar.
+
+### Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm test` ✅ · `npm run build` ✅ (SSG;
+  se añaden `/adopciones` y 2 perfiles de refugio al build) · `npm run validate:data` ✅
+  (11 reales + 7 mocks adopción + 2 mocks refugio).
+- Smoke tests (Chrome): `/adopciones` (filtros por especie y refugio, 375 px sin
+  overflow), `/refugios/patitas-con-causa` y `/refugios/rincon-canino`, perfil de
+  mascota adoptable con CTA, flujo completo de solicitud → confirmación → guardado en
+  `localStorage`, y casos negativos (canela `fallecido`, bruno `perdido`, lucca
+  `en_casa`) sin CTA ni formulario.
+
+### Cambios
+
+- **Nuevos:** `src/components/features/adoption/*` (PrototypeNotice, AdoptionPetCard,
+  AdoptionCatalog, ShelterPetCard, AdoptionRequestCta, AdoptionRequestForm + 2 tests),
+  `src/app/adopciones/page.tsx`, `src/app/refugios/[id]/page.tsx`,
+  `src/app/perfil/[id]/adopcion/page.tsx`, `src/data/shelters.mock.json`,
+  `src/data/adopciones.mock.json`, `src/lib/getMockShelters.ts`,
+  `src/lib/getAdoptionDemoPets.ts`, `src/lib/getPetByIdAny.ts`,
+  `src/lib/mapping/adoptionPresentation.ts` (+test), `src/lib/adoptionRequestForm.ts`
+  (+test), `src/lib/adoptionRequestStorage.ts` (+test),
+  `src/lib/useAdoptionRequests.ts`, `src/lib/adoptionMockData.test.ts`.
+- **Modificados:** `src/app/perfil/[id]/page.tsx` (CTA de adopción),
+  `src/app/page.tsx` (enlace al catálogo), `src/components/layout/SiteNav.tsx`
+  (enlace "Adopciones"), `scripts/validate-data.mts` (validación aditiva de mocks),
+  `CHANGELOG.md`.
+- **No** se tocaron `package.json`/`package-lock.json`, `mascotas.json`,
+  `src/lib/domain/*` (incluido el Core de A), `petStatus.ts`, `useLostAlerts.ts`,
+  `lostAlertStorage.ts` ni los componentes de FASE 2/3.
+
+### Queda para backend / fases posteriores (explícitamente NO implementado)
+
+- `src/data/shelters.json` / `adoptions.json` reales con servicio (FASES 9–10) y
+  conector de catálogo con `filterAdoptablePets(data, resolverDeAlertas)`.
+- Persistencia real de solicitudes y ciclo `enviada → en_revision → aprobada|rechazada|
+  cancelada → completada` (FASES 10, 15), notificaciones al refugio y mapeo
+  `AdoptionRequest.shelterId` (hoy `null`: el refugio se asocia a la mascota vía
+  `Shelter.mascotas`).
+- Necesidades/transparencia del refugio (§4.5): FASE 14.
+- Enlace del formulario a canales reales del refugio (hoy simulado con
+  `localStorage`).
+
+---
+
 ## FASE 4 — Adopciones y refugios: Contrato Core (PR `feat/adopciones-refugios-core`)
 
 **Estado:** Contrato de dominio y datos completado (base Core)

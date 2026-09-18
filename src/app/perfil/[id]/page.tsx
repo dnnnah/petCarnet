@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
+import { AdoptionRequestCta } from "@/components/features/adoption/AdoptionRequestCta";
 import { DocumentsCard } from "@/components/features/documents/DocumentsCard";
 import { PetFooterBanner } from "@/components/features/pet-status/PetFooterBanner";
 import { PetStatusBadge } from "@/components/features/pet-status/PetStatusBadge";
@@ -16,9 +17,11 @@ import { RecentPhotos } from "@/components/features/pet-profile/RecentPhotos";
 import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeline";
 import { VetCard } from "@/components/features/pet-profile/VetCard";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
+import { findShelterForPet } from "@/lib/domain/shelter";
 import { getAllPets } from "@/lib/getAllPets";
 import { getPetById } from "@/lib/getPetById";
 import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
+import { getMockShelters } from "@/lib/getMockShelters";
 import { toProfileViewModel } from "@/lib/mapping/profile";
 import { buildPetProfileMetadata } from "@/lib/seo";
 import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
@@ -75,6 +78,13 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             whatsappNumber={pet.contacto.whatsapp}
             status={profile.status}
           />
+          <AdoptionRequestCta
+            petId={pet.id}
+            petName={pet.mascota.nombre}
+            emergency={pet.emergencia}
+            status={profile.status}
+            shelterName={findShelterForPet(pet.id, getMockShelters())?.nombre ?? null}
+          />
           <div id="contacto">
             <EmergencyContactSection
               contact={profile.contact}
@@ -124,7 +134,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             status={profile.status}
           />
           <p className="text-center text-sm font-bold text-gray-400 dark:text-gray-500">
-            PetCarnet © {new Date().getFullYear()} · Pasaporte Digital para Mascotas
+            PetCarnet © {new Date().getFullYear()} · Carnet Digital para Mascotas
           </p>
         </div>
       </div>

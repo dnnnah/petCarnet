@@ -31,14 +31,14 @@ export function AppShell({ children }: AppShellProps) {
         Saltar al contenido
       </a>
 
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-5 sm:gap-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3">
-          <span className="grid h-11 w-11 sm:h-14 sm:w-14 place-items-center rounded-[1.1rem] sm:rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100 dark:bg-white/10 dark:text-white dark:ring-white/10">
-            <PawPrint size={28} className="sm:hidden" />
+      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-1.5 px-4 py-5 sm:gap-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+        <Link href="/" className="flex items-center gap-2 sm:gap-3">
+          <span className="grid h-10 w-10 sm:h-14 sm:w-14 place-items-center rounded-[1.1rem] sm:rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100 dark:bg-white/10 dark:text-white dark:ring-white/10">
+            <PawPrint size={26} className="sm:hidden" />
             <PawPrint size={34} className="hidden sm:block" />
           </span>
           <span>
-            <span className="block text-2xl sm:text-3xl font-extrabold leading-7 tracking-tight text-gray-950 dark:text-gray-50">
+            <span className="block text-xl sm:text-3xl font-extrabold leading-7 tracking-tight text-gray-950 dark:text-gray-50">
               PetCarnet
             </span>
             <span className="block text-xs sm:text-base font-bold leading-5 text-gray-900 dark:text-gray-400">

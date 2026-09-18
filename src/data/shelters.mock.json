@@ -1,0 +1,37 @@
+[
+  {
+    "id": "patitas-con-causa",
+    "nombre": "Patitas con Causa",
+    "descripcion": "Refugio de demostración del prototipo de PetCarnet. Rescata, recupera y promueve la adopción responsable de perros y gatos en la zona de la Ciudad de México.",
+    "ubicacion": "Colonia Roma Norte, Ciudad de México",
+    "contacto": {
+      "nombreResponsable": "Marta Gómez",
+      "telefono": "5550123456",
+      "whatsapp": "5215550123456",
+      "email": "adopciones@patitasconcausa.mx"
+    },
+    "redes": [
+      "https://facebook.com/patitasconcausa",
+      "https://instagram.com/patitas.con.causa"
+    ],
+    "logoUrl": null,
+    "mascotas": ["mila", "toby", "canela"],
+    "verificado": true
+  },
+  {
+    "id": "rincon-canino",
+    "nombre": "Rincón Canino Ixtapaluca",
+    "descripcion": "Espacio de demostración del prototipo de PetCarnet dedicado al rescate canino en el oriente del Estado de México.",
+    "ubicacion": "Ixtapaluca, Estado de México",
+    "contacto": {
+      "nombreResponsable": "Luis Hernández",
+      "telefono": "5550987654",
+      "whatsapp": "5215550987654",
+      "email": null
+    },
+    "redes": [],
+    "logoUrl": null,
+    "mascotas": ["luna", "simba", "bruno"],
+    "verificado": false
+  }
+]

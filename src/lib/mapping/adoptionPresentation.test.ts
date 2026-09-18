@@ -1,0 +1,96 @@
+import { describe, expect, it } from "vitest";
+import { buildAdoptionCatalogEntry, filterAdoptablePets } from "@/lib/domain/adoption";
+import { findShelterForPet } from "@/lib/domain/shelter";
+import {
+  buildCatalogCard,
+  buildShelterPetCard,
+  normalizeSocialUrl,
+} from "@/lib/mapping/adoptionPresentation";
+import { getAdoptionDemoPets } from "@/lib/getAdoptionDemoPets";
+import { getMockShelters } from "@/lib/getMockShelters";
+
+describe("buildCatalogCard", () => {
+  const pets = getAdoptionDemoPets();
+  const shelters = getMockShelters();
+  const mila = pets.find((pet) => pet.id === "mila");
+
+  if (!mila) {
+    throw new Error("Falta la mascota mock 'mila'");
+  }
+
+  const entry = buildAdoptionCatalogEntry(mila, findShelterForPet(mila.id, shelters));
+  const card = buildCatalogCard(entry);
+
+  it("mapea los campos del catálogo", () => {
+    expect(card.petId).toBe("mila");
+    expect(card.name).toBe("Mila");
+    expect(card.species).toBe("Perro");
+    expect(card.breed).toBe("Mestizo");
+    expect(card.gender).toBe("Hembra");
+    expect(card.size).toBe("Mediano");
+    expect(card.code).toBe("PC-MILA-001");
+    expect(card.verified).toBe(true);
+    expect(card.shelterName).toBe("Patitas con Causa");
+    expect(card.href).toBe("/perfil/mila");
+  });
+
+  it("calcula una edad legible", () => {
+    expect(card.age).toMatch(/\d/);
+    expect(card.age.length).toBeGreaterThan(0);
+  });
+
+  it("usa la zona del refugio cuando la mascota pertenece a uno", () => {
+    expect(card.zone).toContain("Roma Norte");
+  });
+});
+
+describe("buildShelterPetCard", () => {
+  const pets = getAdoptionDemoPets();
+
+  it("marca como adoptable a una mascota en adopción", () => {
+    const mila = pets.find((pet) => pet.id === "mila");
+    if (mila) {
+      const card = buildShelterPetCard(mila);
+      expect(card.adoptable).toBe(true);
+      expect(card.statusLabel).toBe("En adopción");
+      expect(card.adoptionHref).toBe("/perfil/mila/adopcion");
+    }
+  });
+
+  it("nunca marca como adoptable a una mascota fallecida", () => {
+    const canela = pets.find((pet) => pet.id === "canela");
+    if (canela) {
+      const card = buildShelterPetCard(canela);
+      expect(card.adoptable).toBe(false);
+      expect(card.statusLabel).toBe("En memoria");
+    }
+  });
+
+  it("nunca marca como adoptable a una mascota perdida", () => {
+    const bruno = pets.find((pet) => pet.id === "bruno");
+    if (bruno) {
+      const card = buildShelterPetCard(bruno);
+      expect(card.adoptable).toBe(false);
+      expect(card.statusLabel).toBe("Perdido");
+    }
+  });
+});
+
+describe("filterAdoptablePets sobre los mocks", () => {
+  it("solo deja disponibles a las mascotas en adopción sin modo perdido ni estado terminal", () => {
+    const adoptable = filterAdoptablePets(getAdoptionDemoPets());
+    const ids = adoptable.map((pet) => pet.id).sort();
+    expect(ids).toEqual(["luna", "mila", "rocky", "simba", "toby"]);
+  });
+});
+
+describe("normalizeSocialUrl", () => {
+  it("normaliza URLs sin protocolo", () => {
+    expect(normalizeSocialUrl("facebook.com/patitas")).toBe("https://facebook.com/patitas");
+    expect(normalizeSocialUrl("https://instagram.com/patitas")).toBe("https://instagram.com/patitas");
+  });
+
+  it("devuelve vacío para cadenas vacías", () => {
+    expect(normalizeSocialUrl("   ")).toBe("");
+  });
+});
