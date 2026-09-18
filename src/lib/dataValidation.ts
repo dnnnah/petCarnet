@@ -1,12 +1,13 @@
 import { isPetStatus, PET_STATUSES } from "./domain/petStatus.ts";
+import { VACCINE_STATUSES } from "./domain/vaccine.ts";
 import type { PetProfile } from "../types/pet";
 
 export { PET_STATUSES } from "./domain/petStatus.ts";
+export { VACCINE_STATUSES } from "./domain/vaccine.ts";
 
 export const PET_SPECIES: readonly string[] = ["Perro", "Gato"];
 export const PET_GENDERS: readonly string[] = ["Macho", "Hembra"];
 export const PET_SIZES: readonly string[] = ["Pequeño", "Mediano", "Grande", "Miniatura"];
-export const VACCINE_STATUSES: readonly string[] = ["al_dia", "proxima_dosis", "vencida"];
 export const DOCUMENT_TYPES: readonly string[] = ["pdf", "imagen", "otro"];
 export const DOCUMENT_CATEGORIES: readonly string[] = [
   "vacunas",
@@ -110,6 +111,83 @@ function validateVaccines(value: unknown, petId: string, errors: string[]): void
     expectString(vacuna.lote, `${field}.lote`, errors);
     expectString(vacuna.veterinario, `${field}.veterinario`, errors);
     expectString(vacuna.documentoUrl, `${field}.documentoUrl`, errors);
+    if (vacuna.fechaCreacion !== undefined) expectDate(vacuna.fechaCreacion, `${field}.fechaCreacion`, errors);
+    if (vacuna.origen !== undefined) expectString(vacuna.origen, `${field}.origen`, errors);
+    if (vacuna.documentoId !== undefined) expectString(vacuna.documentoId, `${field}.documentoId`, errors);
+  });
+}
+
+function validateDewormings(value: unknown, petId: string, errors: string[]): void {
+  if (value === undefined) {
+    return;
+  }
+  if (!Array.isArray(value)) {
+    add(errors, `${petId}.desparasitaciones debe ser un array.`);
+    return;
+  }
+
+  value.forEach((item, index) => {
+    const field = `${petId}.desparasitaciones[${index}]`;
+    if (!isRecord(item)) {
+      add(errors, `${field} debe ser un objeto.`);
+      return;
+    }
+
+    expectNonEmptyString(item.id, `${field}.id`, errors);
+    expectNonEmptyString(item.producto, `${field}.producto`, errors);
+    expectDate(item.fecha, `${field}.fecha`, errors);
+    if (item.proximaFecha !== undefined) expectDate(item.proximaFecha, `${field}.proximaFecha`, errors);
+    if (item.dosis !== undefined) expectString(item.dosis, `${field}.dosis`, errors);
+    if (item.veterinario !== undefined) expectString(item.veterinario, `${field}.veterinario`, errors);
+    if (item.documentoUrl !== undefined) expectString(item.documentoUrl, `${field}.documentoUrl`, errors);
+    if (item.documentoId !== undefined) expectString(item.documentoId, `${field}.documentoId`, errors);
+    if (item.fechaCreacion !== undefined) expectDate(item.fechaCreacion, `${field}.fechaCreacion`, errors);
+    if (item.origen !== undefined) expectString(item.origen, `${field}.origen`, errors);
+  });
+}
+
+function validateConsultations(value: unknown, petId: string, errors: string[]): void {
+  if (value === undefined) {
+    return;
+  }
+  if (!Array.isArray(value)) {
+    add(errors, `${petId}.historialMedico debe ser un array.`);
+    return;
+  }
+
+  value.forEach((item, index) => {
+    const field = `${petId}.historialMedico[${index}]`;
+    if (!isRecord(item)) {
+      add(errors, `${field} debe ser un objeto.`);
+      return;
+    }
+
+    expectNonEmptyString(item.id, `${field}.id`, errors);
+    expectDate(item.fecha, `${field}.fecha`, errors);
+    expectNonEmptyString(item.motivo, `${field}.motivo`, errors);
+    if (item.diagnostico !== undefined) expectString(item.diagnostico, `${field}.diagnostico`, errors);
+    if (item.tratamiento !== undefined) expectString(item.tratamiento, `${field}.tratamiento`, errors);
+    expectStringArray(item.medicamentos, `${field}.medicamentos`, errors);
+    if (item.veterinario !== undefined) expectString(item.veterinario, `${field}.veterinario`, errors);
+    if (item.fechaCreacion !== undefined) expectDate(item.fechaCreacion, `${field}.fechaCreacion`, errors);
+    if (item.origen !== undefined) expectString(item.origen, `${field}.origen`, errors);
+
+    if (item.documentos !== undefined) {
+      if (!Array.isArray(item.documentos)) {
+        add(errors, `${field}.documentos debe ser un array.`);
+      } else {
+        item.documentos.forEach((doc, docIndex) => {
+          const docField = `${field}.documentos[${docIndex}]`;
+          if (!isRecord(doc)) {
+            add(errors, `${docField} debe ser un objeto.`);
+            return;
+          }
+          expectNonEmptyString(doc.id, `${docField}.id`, errors);
+          expectNonEmptyString(doc.nombre, `${docField}.nombre`, errors);
+          expectNonEmptyString(doc.url, `${docField}.url`, errors);
+        });
+      }
+    }
   });
 }
 
@@ -247,6 +325,8 @@ function validatePet(entry: Record<string, unknown>, petId: string, publicCodes:
   }
 
   validateVaccines(entry.vacunas, petId, errors);
+  validateDewormings(entry.desparasitaciones, petId, errors);
+  validateConsultations(entry.historialMedico, petId, errors);
   validateDocuments(entry.documentos, petId, errors);
 
   const configuracionPublica = entry.configuracionPublica;
