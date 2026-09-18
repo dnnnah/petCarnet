@@ -6,21 +6,20 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { getVaccineSummary } from "@/lib/mapping/vaccines";
 import { VaccineDetailCard } from "@/components/features/pet-profile/VaccineDetailCard";
-import { getAllPets } from "@/lib/getAllPets";
-import { getPetById } from "@/lib/getPetById";
-import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
+import { notFound } from "next/navigation";
 
 type VaccinesPageProps = {
   params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
-  return getAllPets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
+  return getAllProfilePets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
 }
 
 export async function generateMetadata({ params }: VaccinesPageProps): Promise<Metadata> {
   const { id } = await params;
-  const pet = getPetById(id);
+  const pet = getPetByIdAny(id);
 
   if (!pet) {
     return {
@@ -36,7 +35,11 @@ export async function generateMetadata({ params }: VaccinesPageProps): Promise<M
 
 export default async function VaccinesPage({ params }: VaccinesPageProps) {
   const { id } = await params;
-  const pet = getPetOrNotFound(id);
+  const pet = getPetByIdAny(id);
+
+  if (!pet) {
+    notFound();
+  }
 
   const vaccines = pet.vacunas;
   const { total, alDia, proximas, vencidas } = getVaccineSummary(pet);

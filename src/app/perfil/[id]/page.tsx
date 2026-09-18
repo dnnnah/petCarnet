@@ -18,25 +18,24 @@ import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeli
 import { VetCard } from "@/components/features/pet-profile/VetCard";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
 import { findShelterForPet } from "@/lib/domain/shelter";
-import { getAllPets } from "@/lib/getAllPets";
-import { getPetById } from "@/lib/getPetById";
-import { getPetOrNotFound } from "@/lib/getPetOrNotFound";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
 import { getMockShelters } from "@/lib/getMockShelters";
 import { toProfileViewModel } from "@/lib/mapping/profile";
 import { buildPetProfileMetadata } from "@/lib/seo";
 import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
+import { notFound } from "next/navigation";
 
 type ProfilePageProps = {
   params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
-  return getAllPets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
+  return getAllProfilePets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
 }
 
 export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
   const { id } = await params;
-  const pet = getPetById(id);
+  const pet = getPetByIdAny(id);
 
   if (!pet) {
     return {
@@ -50,7 +49,11 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const { id } = await params;
-  const pet = getPetOrNotFound(id);
+  const pet = getPetByIdAny(id);
+
+  if (!pet) {
+    notFound();
+  }
 
   const profile = toProfileViewModel(pet);
   const publicProfileUrl = getPublicProfileUrl(pet) ?? "";

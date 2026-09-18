@@ -75,6 +75,9 @@ Auth/RLS, adopciones reales, ni necesidades/transparencia (§4.5 → FASE 14).
   ven el formulario.
 - `AdoptionRequestCta` en el perfil: sección violeta visible **solo** cuando el estado
   efectivo es `en_adopcion` (regla "CTA solo cuando corresponde"), tras `PetStatusSection`.
+- Los mocks de adopción son navegables en todo el perfil (`/perfil/[id]` y sub-rutas
+  `alerta`, `documentos`, `vacunas`, `adopcion`) vía `getPetByIdAny` (fusiona reales +
+  demo) sin tocar el flujo de las 11 mascotas reales.
 - `PrototypeNotice`: aviso visible y consistente de "datos simulados / sin envío real".
 
 ### Solicitud de adopción simulada
