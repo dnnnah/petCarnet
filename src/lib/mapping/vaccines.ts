@@ -1,3 +1,4 @@
+import { countVaccinesByStatus } from "@/lib/domain/vaccine";
 import type { PetProfile } from "@/types/pet";
 
 export type VaccineSummary = {
@@ -8,11 +9,11 @@ export type VaccineSummary = {
 };
 
 export function getVaccineSummary(pet: PetProfile): VaccineSummary {
-  const vaccines = pet.vacunas;
+  const counts = countVaccinesByStatus(pet.vacunas);
   return {
-    total: vaccines.length,
-    alDia: vaccines.filter((v) => v.estatus === "al_dia").length,
-    proximas: vaccines.filter((v) => v.estatus === "proxima_dosis").length,
-    vencidas: vaccines.filter((v) => v.estatus === "vencida").length,
+    total: counts.total,
+    alDia: counts.al_dia,
+    proximas: counts.proxima_dosis,
+    vencidas: counts.vencida,
   };
 }

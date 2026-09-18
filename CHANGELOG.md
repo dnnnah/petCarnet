@@ -20,6 +20,146 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 5 — Salud y expediente digital: Contrato Core (PR `feat/salud-core`)
+
+**Estado:** Contrato de dominio de salud completado (base Core)
+**Fecha:** 2026-09-18
+
+Implementa únicamente el **contrato de dominio** de la FASE 5 del roadmap
+(§§5.1–5.4): reglas puras de vacunación, contratos de desparasitación y
+consultas del historial médico, reporte de "datos faltantes" y el contenido
+del resumen sanitario exportable. No implementa UI (bloque B), PDF/PNG/SVG,
+Supabase, Auth/RLS, backend, persistencia remota, dashboard de tutor ni de
+veterinario.
+
+### Contratos de dominio nuevos (`src/types/health.ts`)
+
+- `HealthDeworming` (§5.2): `id`, `producto`, `fecha`, `proximaFecha`,
+  `dosis`, `veterinario`, `documentoUrl`, `documentoId`, `fechaCreacion`,
+  `origen`. El único conjunto obligatorio es `id`/`producto`/`fecha`; el
+  resto son opcionales y se tratan como "datos faltantes", no como error.
+- `HealthConsultation` (§5.3): `id`, `fecha`, `motivo`, `diagnostico`,
+  `tratamiento`, `medicamentos[]`, `veterinario`, `documentos[]`
+  (`HealthDocumentRef`), `fechaCreacion`, `origen`.
+- `HealthDocumentRef`: referencia de documento (mismo `id`/`url` que
+  `PetDocument` o adjunto independiente).
+- `HealthExportSummary` (§5.4): proyección plana del resumen sanitario con
+  el contenido exacto del roadmap — identificación, vacunas,
+  desparasitación, alergias, condiciones, medicamentos, veterinario e
+  historial médico. Es el contrato de **contenido**; la generación del PDF en
+  sí es capa de servicio/UI (FASE 6), no dominio.
+
+### Evolución backward-compatible de contratos existentes (`src/types/pet.ts`)
+
+- `PetVaccine` gana **campos opcionales** (§5.1): `fechaCreacion`, `origen`
+  y `documentoId` (vínculo explícito a `PetDocument`). Los campos existentes
+  quedan intactos → `mascotas.json`, `adopciones.mock.json` y toda la UI
+  siguen compilando sin cambios.
+- `PetProfile` gana **arrays opcionales**: `desparasitaciones?` y
+  `historialMedico?` (ausentes = sin registros; no se inventan arrays
+  vacíos en los datos actuales).
+- Sin ciclo de imports en runtime: los nuevos contratos solo usan `import
+  type`.
+
+### Reglas puras de dominio
+
+`src/lib/domain/dateRules.ts` — fechas ISO `YYYY-MM-DD`: `isIsoDate`,
+`normalizeIsoDate`, `compareIsoDates`, `todayIsoDate` (fecha de hoy
+**inyectable**, cálculo determinista sin huso horario).
+
+`src/lib/domain/vaccine.ts` (§5.1):
+- `isVaccineStatus` / `VACCINE_STATUSES` (ahora en domain; `dataValidation`
+  re-exporta desde aquí para no duplicar).
+- `parseVaccineRecord` (parseo tolerante de payloads desconocidos; normaliza
+  vacíos a null y descarta fechas inválidas).
+- `evaluateVaccineCore` / `getVaccineMissingFields`: núcleo (id, nombre,
+  fecha, estatus) y campos informativos (próxima dosis, lote, veterinario,
+  documento) — base del concepto "datos faltantes".
+- `sortVaccinesByDate(`cronologico`/`reverso`)`: orden cronológico; sin fecha
+  válida van al final conservando orden relativo (orden estable).
+- `filterVaccinesByStatus` / `filterVaccinesByQuery` / `filterVaccines`:
+  filtros de historial con búsqueda sin distinguir mayúsculas **ni acentos**
+  (normalización NFD sobre texto plano, sin reglas clínicas).
+- `countVaccinesByStatus`: conteo por estado explícito; un estatus no
+  reconocido se cuenta como `desconocido` (no se inventa un estado).
+- `resolveVaccineNextDoseAlert` / `getVaccinesNeedingNextDose`: alertas de
+  próxima dosis **exclusivamente calendáricas**. El `estatus` explícito del
+  dato tiene prioridad; la fecha solo afina: `vencida` (marcada o fecha ya
+  pasada), `vence_hoy` (fecha == hoy), `marcada_proxima` (marcada y aún
+  futura). Sin fecha y sin marcado no hay alerta. **No** se recalcula el
+  `estatus` almacenado.
+- `linkVaccineDocument`: documento asociado por `documentoId` (preferente) o
+  `documentoUrl` (equivalencia histórica).
+
+`src/lib/domain/health.ts` (§5.2–5.4):
+- Desparasitación: `parseHealthDeworming`, `sortDewormingsByDate`,
+  `resolveNextDewormingDue` (elige `vencida` > `entrega_hoy` > `programada`
+  más cercana, comparación de fechas únicamente) y campos faltantes.
+- Historial: `parseHealthConsultation`, `sortConsultationsByDate`,
+  `getConsultationsSummary` (totales con diagnóstico/tratamiento/
+  medicamentos/sin veterinario) y campos faltantes.
+- `getHealthCompletenessReport(pet)`: reporte de "datos faltantes" del
+  expediente (por entidad e ítem con la lista de campos ausentes).
+- `getHealthRecordCounts` / `hasHealthRecord`: existencia de contenido para
+  estados vacíos de la UI (sin duplicar lógica en componentes).
+- `buildHealthExportSummary(pet, today?)`: ensambla el resumen §5.4. Los
+  datos ausentes se exportan como `null` (no se inventan).
+
+### Compatibilidad
+
+- `mascotas.json` y `adopciones.mock.json` intactos; `dataValidation.ts`
+  solo se **extiende** de forma aditiva: re-exporta `VACCINE_STATUSES` desde
+  el domain y valida los campos opcionales nuevos **cuando existen**.
+- `mapping/vaccines.ts` se migra a `countVaccinesByStatus` del domain
+  (misma API pública `getVaccineSummary`, cero cambio de UI).
+- `vaccineStatus.ts` y `documentCategory.ts` siguen en `domain/` con metadata
+  de iconos lucide-react (legado previo a FASE 5); se documentan y se
+  blindan con un test de pureza: **cualquier archivo nuevo en `domain/` no
+  puede importar React/Next/Supabase/lucide ni la capa de mapeo/componentes**
+  (`src/lib/domain/purity.test.ts`).
+
+### Tests
+
+- `dateRules.test.ts` (+14), `vaccine.test.ts` (+57), `health.test.ts`
+  (+39), `purity.test.ts` (+3): casos normales, datos incompletos, fechas
+  límite (hoy, pasadas, futuras, inválidas), arrays vacíos, valores
+  inválidos y orden estable.
+- `getVaccineSummary` existente sigue pasando (ahora derivado del domain).
+- Suite total: **359 pruebas** (antes 246), 30 archivos.
+
+### Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm test` ✅ (359) · `npm run
+  build` ✅ (SSG; mismo árbol de rutas que FASE 4) · `npm run validate:data`
+  ✅ (11 reales + 7 mocks adopción + 2 mocks refugio; 26 avisos
+  preexistentes, 0 errores).
+- Smoke tests (`npm start`): rutas FASE 2–4 intactas (ver detalle al final).
+
+### Cambios
+
+- `src/types/health.ts` (nuevo), `src/types/pet.ts` (campos opcionales),
+  `src/lib/domain/dateRules.ts` (nuevo), `src/lib/domain/vaccine.ts` (nuevo),
+  `src/lib/domain/health.ts` (nuevo), `src/lib/domain/vaccine.test.ts`,
+  `src/lib/domain/health.test.ts`, `src/lib/domain/dateRules.test.ts`,
+  `src/lib/domain/purity.test.ts` (nuevos), `src/lib/dataValidation.ts`
+  (aditivo), `src/lib/mapping/vaccines.ts` (deriva del domain),
+  `CHANGELOG.md`.
+- **No** se tocaron `mascotas.json`, componentes de UI, páginas, QR,
+  servicios remotos, `vaccineStatus.ts`, `petStatus.ts` ni `emergency.ts`.
+
+### Queda para B (Product/Frontend)
+
+- Mappers de presentación de salud (view models de vacunas,
+  desparasitación, historial y expediente) sobre estos contratos.
+- Páginas/secciones UI de salud (§5.1–5.3), filtros, alertas de próxima
+  dosis y recuperación del resumen exportable con `buildHealthExportSummary`.
+- Datos de demostración (`desparasitaciones` / `historialMedico`) en los
+  mocks que validen con `dataValidation`.
+- Generación final del PDF del resumen (FASE 5.4 / 6) usando el contrato
+  `HealthExportSummary`.
+
+---
+
 ## FASE 4 — Adopciones y refugios: Product/Frontend (PR `feat/adopciones-refugios-ui`)
 
 **Estado:** UI de adopción/refugios conectada al contrato Core de FASE 4 (prototipo)

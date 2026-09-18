@@ -1,3 +1,5 @@
+import type { HealthConsultation, HealthDeworming } from "./health";
+
 export type PetId = string;
 
 export type PetSpecies = "Perro" | "Gato";
@@ -83,6 +85,16 @@ export interface PetProfile {
     horario: string;
   };
   vacunas: PetVaccine[];
+  /**
+   * Registros de desparasitación (FASE 5.2). Opcional: las mascotas sin
+   * registros simplemente no incluyen la clave.
+   */
+  desparasitaciones?: HealthDeworming[];
+  /**
+   * Historial médico (FASE 5.3). Opcional: las mascotas sin historial
+   * simplemente no incluyen la clave.
+   */
+  historialMedico?: HealthConsultation[];
   documentos: PetDocument[];
   configuracionPublica: {
     mostrarEmail: boolean;
@@ -101,6 +113,12 @@ export interface PetVaccine {
   lote: string;
   veterinario: string;
   documentoUrl: string;
+  /** Fecha de creación del registro (FASE 5.1, evolución opcional). */
+  fechaCreacion?: string;
+  /** Origen del registro (FASE 5.1, evolución opcional, texto libre). */
+  origen?: string;
+  /** Vínculo explícito a un `PetDocument` (FASE 5.1, evolución opcional). */
+  documentoId?: string;
 }
 
 export interface PetDocument {
