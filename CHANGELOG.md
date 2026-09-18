@@ -20,6 +20,129 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 4 — Adopciones y refugios: Contrato Core (PR `feat/adopciones-refugios-core`)
+
+**Estado:** Contrato de dominio y datos completado (base Core)
+**Fecha:** 2026-09-18
+
+Implementa únicamente el **contrato de dominio y datos** de la FASE 4 del
+roadmap (§§4.1–4.4): perfil de refugio, catálogo de mascotas en adopción,
+estado `en_adopcion` y solicitud de adopción **simulada**. Es la base que
+conectará con backend real en Fases 9–10 (services/Supabase) sin rehacer el
+dominio. **No** implementa UI/catálogo visual (bloque B), backend, Supabase,
+Auth/RLS, adopciones reales, necesidades/transparencia (FASE 14) ni
+persistencia remota.
+
+### Contratos de dominio nuevos
+
+- `src/types/shelter.ts`: `Shelter` / `ShelterId` / `ShelterContact` (roadmap
+  §4.1, sin `necesidades`: transparencia es FASE 14). El refugio referencia
+  mascotas por `mascotas: PetId[]`, lo que habilita el filtro "Por refugio"
+  (§4.2).
+- `src/types/adoption.ts`: `AdoptionRequest` / `AdoptionRequestDraft`,
+  `AdoptionApplicant`, `AdoptionRequestStatus` (ciclo completo
+  `enviada → en_revision → aprobada | rechazada | cancelada → completada`,
+  según la regla "una solicitud debe tener estado" de FASE 15) y
+  `AdoptionCatalogEntry` (proyección normalizada de `PetProfile` para el
+  catálogo §4.2).
+- Una mascota en adopción **no requiere entidad nueva**: `PetProfile` ya
+  contiene los datos mínimos (nombre, especie, raza, talla, fecha, foto, zona,
+  estado, contacto); `AdoptionCatalogEntry` es una proyección de lo que ya
+  existe.
+
+### Funciones puras de dominio (`src/lib/domain/adoption.ts`)
+
+- `resolveAdoptionAvailability({ estado, emergencia, alert })`: reutiliza
+  `resolveEffectivePetState` (FASE 3) como **única** derivación del estado
+  efectivo. Devuelve `{ available, reason, effectiveStatus }` con razones
+  `"estado_no_disponible" | "perdido" | "terminal"`.
+  - `en_adopcion` + señal de pérdida (runtime o estática) → **no** disponible;
+  - `fallecido` → nunca disponible, aunque haya datos/alertas inconsistentes
+    (se conserva la regla de FASE 3: terminal no se comporta como perdido);
+  - `adoptado` / `rescatado` / `en_casa` / `perdido` → no disponibles.
+- `isPetAvailableForAdoption(...)`: boolean de conveniencia sobre la
+  disponibilidad resuelta.
+- `filterPetsInAdoption(pets)`: filtro por estado canónico `en_adopcion`
+  (`PetStatus` sigue siendo la fuente canónica del catálogo).
+- `filterAdoptablePets(pets, alertResolver?)`: catálogo completo = filtro
+  canónico + disponibilidad efectiva (sacando mascotas perdidas/terminales);
+  acepta un resolver de `LostAlert` por mascota (para conectar `useLostAlerts`
+  en UI sin acoplar el dominio a localStorage).
+- `buildAdoptionCatalogEntry(pet, shelter?)`: normalización de la tarjeta de
+  catálogo (formatos sin acoplar: la edad queda como `fechaNacimiento` cruda;
+  la zona cae a `contacto.zonaHabitual` cuando no hay refugio).
+- `validateAdoptionRequest({ pet, alert?, draft })`: validación de solicitudes
+  **simuladas** que bloquea solicitudes de mascotas no disponibles
+  (`pet_no_disponible`), exige nombre/teléfono/motivo, valida formato de
+  teléfono MX (10/52/521), email opcional y fecha `YYYY-MM-DD`, y comprueba que
+  el borrador refiera a la misma mascota.
+- `isAdoptionRequestStatus` / `ADOPTION_REQUEST_STATUSES` /
+  `initialAdoptionRequestStatus()` (las simuladas nacen `enviada`).
+
+### Búsquedas de refugio (`src/lib/domain/shelter.ts`)
+
+- `findShelterById(shelters, id)` y `findShelterForPet(petId, shelters)`
+  (primer refugio cuya lista incluye a la mascota) para el catálogo "Por
+  refugio" (§4.2).
+
+### Compatibilidad con FASE 2 y FASE 3
+
+- No se tocaron `petStatus.ts`, `resolveEffectivePetState`, `emergency.ts`,
+  `useLostAlerts.ts`, `lostAlertStorage.ts`, `dataValidation.ts` ni
+  `mascotas.json` (11 mascotas intactas, `validate:data` sin errores).
+- `PetStatus` sigue siendo la fuente canónica; `resolveEffectivePetState` el
+  mecanismo único de resolución; la regla terminal→no-lost se preserva y se
+  prueba explícitamente.
+- Datos mock: solo fixtures tipados dentro de los tests (misma política que
+  FASE 3); no se inventan `shelters.json`/`adoptions.json` ni arquitectura de
+  backend.
+
+### Tests
+
+- `src/lib/domain/adoption.test.ts` (nuevo, +37): ciclo de estados de
+  solicitud, guardas, disponibilidad con overlay runtime/estático/terminal,
+  filtros de catálogo canónico y efectivo, normalización de tarjeta (con y sin
+  refugio, y compuesta con `findShelterForPet`), validación de solicitudes
+  (incluye rechazo de mascota no disponible, terminal, perdida por alerta y
+  acumulación de errores).
+- `src/lib/domain/shelter.test.ts` (nuevo, +7): búsquedas por id y por
+  mascota, lista vacía y primer coincidencia.
+- Suite total: **209 pruebas** (antes 165), 20 archivos.
+
+### Verificación
+
+- `npm run lint` ✅ · `npm run typecheck` ✅ · `npm test` ✅ (209) · `npm run
+  build` ✅ (SSG, 93 páginas) · `npm run validate:data` ✅ (11 perfiles
+  válidos, 26 avisos preexistentes, 0 errores).
+- Smoke tests (`npm start`): `/`, `/perfil/lucca`, `/perfil/PC-LUCCA-001`,
+  `.../alerta`, `.../vacunas`, `.../documentos`, `/perfil/niko`,
+  `/perfil/PC-LOKI-001`, `/login` → 200; `/perfil/inexistente` → 404. El
+  badge de estado FASE 3 se renderiza en el perfil.
+
+### Cambios
+
+- `src/types/shelter.ts` (nuevo), `src/types/adoption.ts` (nuevo),
+  `src/lib/domain/adoption.ts` (nuevo), `src/lib/domain/adoption.test.ts`
+  (nuevo), `src/lib/domain/shelter.ts` (nuevo),
+  `src/lib/domain/shelter.test.ts` (nuevo), `CHANGELOG.md`.
+- **No** se tocaron `package.json`/`package-lock.json`, `mascotas.json`,
+  `petStatus.ts`, componentes de UI, QR, `dataValidation.ts`, servicios ni
+  rutas; no hay UI de catálogo/solicitud (bloque B) ni backend/Auth/RLS.
+
+### Queda para B (Product/Frontend)
+
+- `src/data/shelters.json` / `adoptions.json` reales (o el servicio que los
+  cargue) y conector de catálogo con `filterAdoptablePets(data, resolverDeAlertas)`.
+- Vista de catálogo de adopción (home §4.2) y perfil de refugio (§4.1).
+- En `en_adopcion`, reemplazar el CTA de contacto por «Solicitar adopción»
+  (§4.3) y flujo formulario → confirmación (§4.4) con estado local
+  (`localStorage`) y los contratos de este Core.
+- Mapper de presentación del catálogo (formatear edad/zona, roles por especie
+  y refugio) y URLs públicas por `codigoPublico`.
+- Necesidades/transparencia (§4.5): FASE 14, fuera de este contrato.
+
+---
+
 ## FASE 3 — Estados y ciclo de vida de la mascota: Product/Frontend (PR `feat/estados-ui`)
 
 **Estado:** UI de estados conectada al estado efectivo (integr. de FASE 3 completada)
