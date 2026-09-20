@@ -88,3 +88,49 @@ describe("pureza de los contratos FASE 5", () => {
     expect(specifiers.filter(isForbiddenSpecifier)).toEqual([]);
   });
 });
+
+describe("pureza del Core FASE 6 (carnet físico)", () => {
+  const BROWSER_TOKENS = [
+    "window.",
+    "document.",
+    "document.createElement",
+    "navigator.",
+    "localStorage",
+    "sessionStorage",
+    "fetch(",
+    "URL.createObjectURL",
+    "React",
+    "createElement(",
+  ];
+
+  it("src/types/carnet.ts no importa de dependencias de UI ni de la capa de presentación", () => {
+    const source = readFileSync(resolve(process.cwd(), "src/types/carnet.ts"), "utf8");
+    const specifiers = extractSpecifiers(source);
+    expect(specifiers.map(normalizeSpecifier).filter(isForbiddenSpecifier)).toEqual([]);
+    expect(specifiers.map(normalizeSpecifier).filter(isBusinessImport)).toEqual([]);
+  });
+
+  it("src/lib/domain/carnet.ts no importa de dependencias de UI ni de la capa de presentación", () => {
+    const source = readFileSync(resolve(DOMAIN_DIR, "carnet.ts"), "utf8");
+    const specifiers = extractSpecifiers(source).map(normalizeSpecifier);
+    expect(specifiers.filter(isForbiddenSpecifier)).toEqual([]);
+    expect(specifiers.filter(isBusinessImport)).toEqual([]);
+  });
+
+  it("src/lib/domain/carnet.ts no contiene API de navegador ni tokens de framework", () => {
+    const source = readFileSync(resolve(DOMAIN_DIR, "carnet.ts"), "utf8");
+    const codeWithoutComments = source
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    const found = BROWSER_TOKENS.filter((token) => codeWithoutComments.includes(token));
+    expect(found, `tokens de browser/framework en domain/carnet.ts: ${found.join(", ")}`).toEqual([]);
+  });
+
+  it("el dominio de FASE 6 contiene el módulo del carnet", () => {
+    expect(listDomainFiles()).toContain("carnet.ts");
+  });
+});
+
+function normalizeSpecifier(specifier: string): string {
+  return specifier.replace(/\.(test|ts|mts)$/, "");
+}
