@@ -9,6 +9,7 @@ import { PetStatusBadge } from "@/components/features/pet-status/PetStatusBadge"
 import { PetStatusSection } from "@/components/features/pet-status/PetStatusSection";
 import { EmergencyContactSection } from "@/components/features/pet-profile/EmergencyContactSection";
 import { HealthCard } from "@/components/features/pet-profile/HealthCard";
+import { HealthExpedientePreview } from "@/components/features/pet-profile/health/HealthExpedientePreview";
 import { InfoCard } from "@/components/features/pet-profile/InfoCard";
 import { PetHeader } from "@/components/features/pet-profile/PetHeader";
 import { ProfileNav } from "@/components/features/pet-profile/ProfileNav";
@@ -18,9 +19,11 @@ import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeli
 import { VetCard } from "@/components/features/pet-profile/VetCard";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
 import { findShelterForPet } from "@/lib/domain/shelter";
+import { sortVaccinesByDate } from "@/lib/domain/vaccine";
 import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
 import { getMockShelters } from "@/lib/getMockShelters";
 import { toProfileViewModel } from "@/lib/mapping/profile";
+import { toVaccineItemViewModel } from "@/lib/mapping/health";
 import { buildPetProfileMetadata } from "@/lib/seo";
 import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
 import { notFound } from "next/navigation";
@@ -58,6 +61,14 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const profile = toProfileViewModel(pet);
   const publicProfileUrl = getPublicProfileUrl(pet) ?? "";
   const isTerminal = isTerminalPetStatus(profile.status);
+
+  const vaccineViewModels = sortVaccinesByDate(pet.vacunas, "reverso")
+    .slice(0, 3)
+    .map((vaccine) =>
+      toVaccineItemViewModel(vaccine, pet.documentos, undefined, {
+        suppressAlerts: isTerminal,
+      }),
+    );
 
   return (
     <AppShell>
@@ -114,7 +125,15 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             </div>
           ) : null}
           <div id="vacunas">
-            <VaccineTimeline petId={pet.id} petName={pet.mascota.nombre} totalCount={profile.vaccineTotalCount} vaccines={profile.vaccines} />
+            <VaccineTimeline
+              petId={pet.id}
+              petName={pet.mascota.nombre}
+              totalCount={pet.vacunas.length}
+              vaccines={vaccineViewModels}
+            />
+          </div>
+          <div id="expediente">
+            <HealthExpedientePreview pet={pet} />
           </div>
           <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />

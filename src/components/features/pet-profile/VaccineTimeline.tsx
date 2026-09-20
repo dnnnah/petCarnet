@@ -1,22 +1,50 @@
 import Link from "next/link";
-import { Check, ChevronRight, Clock, ShieldCheck } from "lucide-react";
+import { AlertTriangle, Check, ChevronRight, Clock, ShieldCheck } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
-import type { VaccineStatusLabel } from "@/lib/domain/vaccineStatus";
+import type { VaccineItemViewModel } from "@/lib/mapping/health";
 
 type VaccineTimelineProps = {
   petId: string;
   petName: string;
   totalCount: number;
-  vaccines: ReadonlyArray<{
-    name: string;
-    date: string;
-    status: VaccineStatusLabel;
-  }>;
+  vaccines: ReadonlyArray<VaccineItemViewModel>;
 };
 
-export function VaccineTimeline({ petId, petName, totalCount, vaccines }: VaccineTimelineProps) {
-  const isNextDose = (status: VaccineStatusLabel) => status === "Próxima dosis";
+type VaccineVisual = {
+  icon: typeof Check;
+  circleTone: string;
+  chipTone: string;
+};
 
+function visualFor(vaccine: VaccineItemViewModel): VaccineVisual {
+  if (vaccine.alert?.kind === "vencida") {
+    return {
+      icon: AlertTriangle,
+      circleTone:
+        "bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300",
+      chipTone:
+        "bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300 ring-rose-200",
+    };
+  }
+  if (vaccine.alert) {
+    return {
+      icon: Clock,
+      circleTone:
+        "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
+      chipTone:
+        "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300 ring-amber-200",
+    };
+  }
+  return {
+    icon: Check,
+    circleTone:
+      "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+    chipTone:
+      "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-emerald-200",
+  };
+}
+
+export function VaccineTimeline({ petId, petName, totalCount, vaccines }: VaccineTimelineProps) {
   return (
     <GlassCard className="overflow-hidden p-5 sm:p-6 lg:p-7">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -40,35 +68,30 @@ export function VaccineTimeline({ petId, petName, totalCount, vaccines }: Vaccin
       {vaccines.length > 0 ? (
         <div className="mt-7 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {vaccines.map((vaccine) => {
-            const next = isNextDose(vaccine.status);
+            const visual = visualFor(vaccine);
+            const Icon = visual.icon;
             return (
-              <article key={vaccine.name} className="flex items-center gap-4">
+              <article key={vaccine.id} className="flex items-center gap-4">
                 <span
                   className={[
-                    "relative z-10 grid h-14 w-14 sm:h-16 sm:w-16 shrink-0 place-items-center rounded-full shadow-[0_12px_26px_rgba(17,24,39,0.13)] ring-4 ring-white",
-                    next
-                      ? "bg-amber-200 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300"
-                      : "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+                    "relative z-10 grid h-14 w-14 sm:h-16 sm:w-16 shrink-0 place-items-center rounded-full shadow-[0_12px_26px_rgba(17,24,39,0.13)] ring-4 ring-white dark:ring-background",
+                    visual.circleTone,
                   ].join(" ")}
                 >
-                  {next ? (
-                    <Clock size={28} strokeWidth={2.6} />
-                  ) : (
-                    <Check size={32} strokeWidth={3.2} />
-                  )}
+                  <Icon size={26} strokeWidth={2.6} aria-hidden="true" />
                 </span>
                 <span className="min-w-0">
                   <span className="block text-base sm:text-lg font-extrabold text-gray-950 dark:text-white">{vaccine.name}</span>
-                  <span className="mt-1 block text-sm font-bold text-gray-700 dark:text-gray-200">{vaccine.date}</span>
+                  <span className="mt-1 block text-sm font-bold text-gray-700 dark:text-gray-200">
+                    {vaccine.applicationDate ?? "Fecha no registrada"}
+                  </span>
                   <span
                     className={[
-                      "mt-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold ring-1",
-                      next
-                        ? "bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300 ring-amber-200"
-                        : "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300 ring-emerald-200",
+                      "mt-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold ring-1 dark:ring-0",
+                      visual.chipTone,
                     ].join(" ")}
                   >
-                    {vaccine.status}
+                    {vaccine.alert ? vaccine.alert.label : "Al día"}
                   </span>
                 </span>
               </article>

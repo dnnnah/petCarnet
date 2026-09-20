@@ -54,10 +54,23 @@
       "horario": "L-S 9am a 6pm"
     },
     "vacunas": [
-      { "id": "mila-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-20", "proximaDosis": "2027-01-20", "estatus": "al_dia", "lote": "A901", "veterinario": "Dr. López", "documentoUrl": "" },
-      { "id": "mila-vac-2", "nombre": "Octuple", "fechaAplicacion": "2026-02-10", "proximaDosis": "2027-02-10", "estatus": "al_dia", "lote": "O222", "veterinario": "Dr. López", "documentoUrl": "" }
+      { "id": "mila-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-20", "proximaDosis": "2027-01-20", "estatus": "al_dia", "lote": "A901", "veterinario": "Dr. López", "documentoUrl": "/docs/alix/cartilla-vacunacion.pdf", "documentoId": "mila-doc-cartilla", "fechaCreacion": "2026-01-20", "origen": "clínica" },
+      { "id": "mila-vac-2", "nombre": "Octuple", "fechaAplicacion": "2026-02-10", "proximaDosis": "2027-02-10", "estatus": "al_dia", "lote": "O222", "veterinario": "Dr. López", "documentoUrl": "", "fechaCreacion": "2026-02-10", "origen": "clínica" },
+      { "id": "mila-vac-3", "nombre": "Moquillo", "fechaAplicacion": "2024-01-10", "proximaDosis": "2025-01-10", "estatus": "vencida", "lote": "M110", "veterinario": "Dr. López", "documentoUrl": "" }
     ],
-    "documentos": [],
+    "desparasitaciones": [
+      { "id": "mila-desp-1", "producto": "Praziquantel", "fecha": "2026-03-14", "proximaFecha": "2026-09-14", "dosis": "1 tableta", "veterinario": "Dr. López", "documentoUrl": "/docs/alix/estudios-medicos.pdf" },
+      { "id": "mila-desp-2", "producto": "Fenbendazol", "fecha": "2026-09-15", "proximaFecha": "2027-03-15", "dosis": "2 ml", "veterinario": "Dr. López", "documentoUrl": "" }
+    ],
+    "historialMedico": [
+      { "id": "mila-cons-1", "fecha": "2026-01-18", "motivo": "Chequeo anual", "diagnostico": "Sin hallazgos relevantes", "tratamiento": "Refuerzo del esquema de vacunación", "medicamentos": ["Desparasitante oral"], "veterinario": "Dr. López", "documentos": [{ "id": "mila-doc-consulta", "nombre": "Nota de chequeo anual", "url": "/docs/alix/comprobante-veterinario.pdf" }] },
+      { "id": "mila-cons-2", "fecha": "2026-03-14", "motivo": "Evaluación digestiva", "diagnostico": "GIADA", "tratamiento": "Control de parásitos y dieta ligera", "medicamentos": ["Praziquantel"], "veterinario": "Dr. López", "documentos": [{ "id": "mila-doc-estudios", "nombre": "Estudios médicos", "url": "/docs/alix/estudios-medicos.pdf" }] }
+    ],
+    "documentos": [
+      { "id": "mila-doc-cartilla", "nombre": "Cartilla de vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/alix/cartilla-vacunacion.pdf", "fecha": "2026-01-20", "visiblePublico": true },
+      { "id": "mila-doc-comprobante", "nombre": "Comprobante veterinario", "tipo": "pdf", "categoria": "veterinario", "url": "/docs/alix/comprobante-veterinario.pdf", "fecha": "2026-01-18", "visiblePublico": false },
+      { "id": "mila-doc-estudios", "nombre": "Estudios médicos", "tipo": "pdf", "categoria": "salud", "url": "/docs/alix/estudios-medicos.pdf", "fecha": "2026-03-14", "visiblePublico": false }
+    ],
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -185,7 +198,14 @@
       "horario": "L-S 10am a 7pm"
     },
     "vacunas": [
-      { "id": "luna-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-03-02", "proximaDosis": "2027-03-02", "estatus": "al_dia", "lote": "A315", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+      { "id": "luna-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-03-02", "proximaDosis": "2027-03-02", "estatus": "al_dia", "lote": "", "veterinario": "", "documentoUrl": "" },
+      { "id": "luna-vac-2", "nombre": "Leptospira", "fechaAplicacion": "2024-05-10", "proximaDosis": "2025-05-10", "estatus": "vencida", "lote": "L007", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+    ],
+    "desparasitaciones": [
+      { "id": "luna-desp-1", "producto": "Pirantel", "fecha": "2026-06-20", "veterinario": "Dr. Pacheco" }
+    ],
+    "historialMedico": [
+      { "id": "luna-cons-1", "fecha": "2026-08-05", "motivo": "Revisión por herida", "diagnostico": "Cicatriz en pata trasera izquierda en proceso", "medicamentos": [], "documentos": [] }
     ],
     "documentos": [],
     "configuracionPublica": {
@@ -315,10 +335,19 @@
       "horario": "L-D 9am a 8pm"
     },
     "vacunas": [
-      { "id": "rocky-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-28", "proximaDosis": "2027-01-28", "estatus": "al_dia", "lote": "A118", "veterinario": "Dr. Soto", "documentoUrl": "" },
-      { "id": "rocky-vac-2", "nombre": "Poli", "fechaAplicacion": "2026-03-11", "proximaDosis": "2027-03-11", "estatus": "al_dia", "lote": "P530", "veterinario": "Dr. Soto", "documentoUrl": "" }
+      { "id": "rocky-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-28", "proximaDosis": "2027-01-28", "estatus": "al_dia", "lote": "A118", "veterinario": "Dr. Soto", "documentoUrl": "/docs/loki/cartilla-vacunacion.pdf", "documentoId": "rocky-doc-cartilla" },
+      { "id": "rocky-vac-2", "nombre": "Poli", "fechaAplicacion": "2026-03-11", "proximaDosis": "2027-03-11", "estatus": "al_dia", "lote": "P530", "veterinario": "Dr. Soto", "documentoUrl": "" },
+      { "id": "rocky-vac-3", "nombre": "Bordetella", "fechaAplicacion": "2026-08-20", "proximaDosis": "2027-08-20", "estatus": "al_dia", "lote": "B456", "veterinario": "Dr. Soto", "documentoUrl": "" }
     ],
-    "documentos": [],
+    "desparasitaciones": [
+      { "id": "rocky-desp-1", "producto": "Pipeta antipulgas y garrapatas", "fecha": "2026-07-10", "proximaFecha": "2026-10-10", "dosis": "1 pipeta", "veterinario": "Dr. Soto", "documentoUrl": "" }
+    ],
+    "historialMedico": [
+      { "id": "rocky-cons-1", "fecha": "2026-07-05", "motivo": "Consulta dermatológica", "diagnostico": "Dermatitis leve por alergia alimentaria", "tratamiento": "Cambio de dieta a pienso hipoalergénico", "medicamentos": ["Antihistamínico oral"], "veterinario": "Dr. Soto", "documentos": [{ "id": "rocky-doc-derma", "nombre": "Nota de dermatología", "url": "/docs/loki/comprobante-veterinario.pdf" }] }
+    ],
+    "documentos": [
+      { "id": "rocky-doc-cartilla", "nombre": "Cartilla de vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/loki/cartilla-vacunacion.pdf", "fecha": "2026-01-28", "visiblePublico": true }
+    ],
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -380,8 +409,21 @@
       "direccion": "Roma Norte, CDMX",
       "horario": "L-S 9am a 6pm"
     },
-    "vacunas": [],
-    "documentos": [],
+    "vacunas": [
+      { "id": "canela-vac-1", "nombre": "Triple Felina", "fechaAplicacion": "2025-11-12", "proximaDosis": "2026-11-12", "estatus": "al_dia", "lote": "TF55", "veterinario": "Dr. Pacheco", "documentoUrl": "/docs/chicharrona/cartilla-vacunacion.pdf", "documentoId": "canela-doc-cartilla" },
+      { "id": "canela-vac-2", "nombre": "Rabia Felina", "fechaAplicacion": "2025-11-12", "proximaDosis": "2026-11-12", "estatus": "al_dia", "lote": "RF08", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+    ],
+    "desparasitaciones": [
+      { "id": "canela-desp-1", "producto": "Praziquantel", "fecha": "2026-01-15", "dosis": "½ tableta", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+    ],
+    "historialMedico": [
+      { "id": "canela-cons-1", "fecha": "2024-05-20", "motivo": "Control geriátrico", "diagnostico": "Enfermedad renal crónica en seguimiento", "tratamiento": "Dieta renal y control de líquidos", "medicamentos": ["Suplemento renal"], "veterinario": "Dra. Ríos", "documentos": [{ "id": "canela-doc-geriatrico", "nombre": "Expediente geriátrico", "url": "/docs/chicharrona/estudios-medicos.pdf" }] },
+      { "id": "canela-cons-2", "fecha": "2025-11-12", "motivo": "Vacunación anual", "diagnostico": "", "tratamiento": "Esquema de vacunación felina", "medicamentos": [], "veterinario": "Dr. Pacheco", "documentos": [] }
+    ],
+    "documentos": [
+      { "id": "canela-doc-cartilla", "nombre": "Cartilla de vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/chicharrona/cartilla-vacunacion.pdf", "fecha": "2025-11-12", "visiblePublico": true },
+      { "id": "canela-doc-estudios", "nombre": "Estudios médicos", "tipo": "pdf", "categoria": "salud", "url": "/docs/chicharrona/estudios-medicos.pdf", "fecha": "2024-05-20", "visiblePublico": false }
+    ],
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,
@@ -444,9 +486,17 @@
       "horario": "L-S 10am a 7pm"
     },
     "vacunas": [
-      { "id": "bruno-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-05-03", "proximaDosis": "2027-05-03", "estatus": "al_dia", "lote": "A660", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+      { "id": "bruno-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-05-03", "proximaDosis": "2027-05-03", "estatus": "al_dia", "lote": "A660", "veterinario": "Dr. Pacheco", "documentoUrl": "/docs/lucca/cartilla-vacunacion.pdf", "documentoId": "bruno-doc-cartilla" }
     ],
-    "documentos": [],
+    "desparasitaciones": [
+      { "id": "bruno-desp-1", "producto": "Praziquantel", "fecha": "2026-04-22", "proximaFecha": "2026-10-22", "dosis": "1 tableta", "veterinario": "Dr. Pacheco", "documentoUrl": "" }
+    ],
+    "historialMedico": [
+      { "id": "bruno-cons-1", "fecha": "2026-04-20", "motivo": "Chequeo previo a identificación", "diagnostico": "Buen estado general", "tratamiento": "", "medicamentos": [], "veterinario": "Dr. Pacheco", "documentos": [] }
+    ],
+    "documentos": [
+      { "id": "bruno-doc-cartilla", "nombre": "Cartilla de vacunación", "tipo": "pdf", "categoria": "vacunas", "url": "/docs/lucca/cartilla-vacunacion.pdf", "fecha": "2026-05-03", "visiblePublico": true }
+    ],
     "configuracionPublica": {
       "mostrarEmail": false,
       "mostrarTelefonoSecundario": false,

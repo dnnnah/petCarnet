@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   Camera,
+  ClipboardList,
   FileText,
   Heart,
   PawPrint,
@@ -24,6 +25,7 @@ const defaultNavItems: NavItem[] = [
   { id: "veterinario", label: "Veterinario", icon: Stethoscope },
   { id: "fotos", label: "Fotos", icon: Camera },
   { id: "vacunas", label: "Vacunas", icon: ShieldCheck },
+  { id: "expediente", label: "Expediente", icon: ClipboardList },
   { id: "documentos", label: "Documentos", icon: FileText },
 ];
 

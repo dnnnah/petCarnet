@@ -4,17 +4,20 @@ import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
-import { getVaccineSummary } from "@/lib/mapping/vaccines";
-import { VaccineDetailCard } from "@/components/features/pet-profile/VaccineDetailCard";
 import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
+import { toVaccineSummaryViewModel } from "@/lib/mapping/health";
 import { notFound } from "next/navigation";
+import { VaccineListClient } from "./VaccineListClient";
 
 type VaccinesPageProps = {
   params: Promise<{ id: string }>;
 };
 
 export function generateStaticParams() {
-  return getAllProfilePets().flatMap((pet) => [{ id: pet.id }, { id: pet.identificacion.codigoPublico }]);
+  return getAllProfilePets().flatMap((pet) => [
+    { id: pet.id },
+    { id: pet.identificacion.codigoPublico },
+  ]);
 }
 
 export async function generateMetadata({ params }: VaccinesPageProps): Promise<Metadata> {
@@ -41,8 +44,9 @@ export default async function VaccinesPage({ params }: VaccinesPageProps) {
     notFound();
   }
 
-  const vaccines = pet.vacunas;
-  const { total, alDia, proximas, vencidas } = getVaccineSummary(pet);
+  const { total, al_dia, proxima_dosis, vencida, desconocido } = toVaccineSummaryViewModel(
+    pet.vacunas,
+  );
 
   return (
     <AppShell>
@@ -67,30 +71,37 @@ export default async function VaccinesPage({ params }: VaccinesPageProps) {
 
           {total > 0 ? (
             <div className="flex flex-wrap gap-3">
-              {alDia > 0 ? (
+              {al_dia > 0 ? (
                 <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-2 text-sm font-extrabold text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-500/15 dark:text-emerald-400 dark:ring-emerald-800">
-                  {alDia} al día
+                  {al_dia} al día
                 </span>
               ) : null}
-              {proximas > 0 ? (
+              {proxima_dosis > 0 ? (
                 <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-sm font-extrabold text-amber-700 ring-1 ring-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:ring-amber-800">
-                  {proximas} próxima dosis
+                  {proxima_dosis} próxima dosis
                 </span>
               ) : null}
-              {vencidas > 0 ? (
+              {vencida > 0 ? (
                 <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-4 py-2 text-sm font-extrabold text-rose-700 ring-1 ring-rose-200 dark:bg-rose-500/15 dark:text-rose-300 dark:ring-rose-800">
-                  {vencidas} vencidas
+                  {vencida} vencidas
+                </span>
+              ) : null}
+              {desconocido > 0 ? (
+                <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-sm font-extrabold text-slate-600 ring-1 ring-slate-200 dark:bg-slate-500/15 dark:text-slate-300 dark:ring-slate-700">
+                  {desconocido} sin estado
                 </span>
               ) : null}
             </div>
           ) : null}
 
-          {vaccines.length > 0 ? (
-            <div className="space-y-4">
-              {vaccines.map((vaccine) => (
-                <VaccineDetailCard key={vaccine.id} vaccine={vaccine} />
-              ))}
-            </div>
+          {total > 0 ? (
+            <GlassCard className="p-5 sm:p-6 lg:p-7">
+              <VaccineListClient
+                petName={pet.mascota.nombre}
+                vaccines={pet.vacunas}
+                documents={pet.documentos}
+              />
+            </GlassCard>
           ) : (
             <GlassCard className="p-8 text-center">
               <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-100 dark:bg-emerald-500/15 dark:text-emerald-400 dark:ring-emerald-800">
