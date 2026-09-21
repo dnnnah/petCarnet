@@ -555,7 +555,7 @@ function AmbulanciaBand({ card }: { card: PhysicalPetCard }) {
             href={card.contacto.whatsappUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-emerald-700"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-emerald-700 print:hidden"
           >
             <MessageCircle size={16} aria-hidden="true" /> WhatsApp
           </a>
@@ -563,7 +563,7 @@ function AmbulanciaBand({ card }: { card: PhysicalPetCard }) {
         {phoneHref ? (
           <a
             href={phoneHref}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gray-950 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-gray-800"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-gray-950 px-4 py-2 text-sm font-extrabold text-white transition hover:bg-gray-800 print:hidden"
           >
             <Phone size={16} aria-hidden="true" /> Llamar
           </a>
@@ -587,8 +587,9 @@ export function CarnetDocument({ card }: CarnetDocumentProps) {
 
   return (
     <article
+      id="carnet-print"
       aria-label={`Carnet físico de ${card.mascota.nombre ?? "la mascota"} (${vm.formatoLabel})`}
-      className="mx-auto w-full max-w-3xl overflow-hidden rounded-[1.75rem] bg-white text-gray-900 shadow-[0_28px_70px_rgba(17,24,39,0.16)] ring-1 ring-gray-200"
+      className="print-panel mx-auto w-full max-w-3xl overflow-hidden rounded-[1.75rem] bg-white text-gray-900 shadow-[0_28px_70px_rgba(17,24,39,0.16)] ring-1 ring-gray-200"
     >
       {/* Letra del documento */}
       <header className="flex flex-wrap items-center justify-between gap-3 border-b-4 border-emerald-500 px-6 py-5 sm:px-8">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CreditCard, FileOutput, KeyRound } from "lucide-react";
+import { CreditCard, FileOutput, KeyRound, Printer } from "lucide-react";
 import { CarnetDocument } from "@/components/features/carnet/CarnetDocument";
 import {
   CARNET_FORMATO_LABELS,
@@ -64,9 +64,19 @@ export function CarnetStudio({ petName, cards }: CarnetStudioProps) {
             );
           })}
         </div>
-        <span className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-extrabold text-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:ring-1 dark:ring-gray-800">
-          Orientación: {CARNET_ORIENTACION_LABELS[vm.orientacion]}
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-extrabold text-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:ring-1 dark:ring-gray-800">
+            Orientación: {CARNET_ORIENTACION_LABELS[vm.orientacion]}
+          </span>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="print:hidden inline-flex min-h-11 items-center gap-2 rounded-full bg-gray-950 px-5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+          >
+            <Printer size={17} aria-hidden="true" />
+            Imprimir
+          </button>
+        </div>
       </div>
 
       <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
