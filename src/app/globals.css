@@ -216,6 +216,17 @@ a {
     box-shadow: none !important;
   }
 
+  #expediente-print,
+  #expediente-print * {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border-color: #e5e7eb !important;
+  }
+
+  #expediente-print h3 {
+    color: #059669 !important;
+  }
+
   #carnet-print,
   #carnet-print * {
     visibility: visible;

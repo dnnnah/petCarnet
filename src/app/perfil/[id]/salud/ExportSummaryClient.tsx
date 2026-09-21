@@ -14,7 +14,7 @@ function PrintRow({ label, value }: { label: string; value: string | null }) {
   return (
     <div className="print-row">
       <span className="print-row-label">{label}</span>
-      <span className="font-bold text-gray-900">{value ?? "Sin registro"}</span>
+      <span className="font-bold text-gray-900 dark:text-gray-100">{value ?? "Sin registro"}</span>
     </div>
   );
 }
@@ -22,7 +22,9 @@ function PrintRow({ label, value }: { label: string; value: string | null }) {
 function PrintSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="print-section">
-      <h3 className="print-section-title">{title}</h3>
+      <h3 className="print-section-title mt-5 mb-2 text-xs font-extrabold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+        {title}
+      </h3>
       {children}
     </section>
   );
@@ -79,15 +81,15 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
             </button>
           </div>
 
-          <div id="expediente-print" className="print-panel mt-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_18px_48px_rgba(17,24,39,0.08)]">
-            <header className="border-b border-gray-200 pb-4">
-              <p className="text-xs font-extrabold uppercase tracking-widest text-emerald-600">
+          <div id="expediente-print" className="print-panel mt-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-[0_18px_48px_rgba(17,24,39,0.08)] dark:border-gray-800 dark:bg-gray-900 dark:shadow-[0_18px_48px_rgba(0,0,0,0.45)]">
+            <header className="border-b border-gray-200 pb-4 dark:border-gray-800">
+              <p className="text-xs font-extrabold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
                 Carnet de salud
               </p>
-              <h2 className="mt-1 text-3xl font-black text-gray-950">
+              <h2 className="mt-1 text-3xl font-black text-gray-950 dark:text-gray-100">
                 Expediente sanitario de {petName}
               </h2>
-              <p className="mt-2 text-sm font-semibold text-gray-500">
+              <p className="mt-2 text-sm font-semibold text-gray-500 dark:text-gray-400">
                 Código público: {summary.pet.codigoPublico} · Generado:{" "}
                 {formatMexicanDate(summary.generadoEn) ?? summary.generadoEn}
               </p>
@@ -120,21 +122,21 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
                     <PrintRow label="Teléfono" value={summary.veterinario.telefono} />
                   </>
                 ) : (
-                  <p className="relative line-clamp-3 print-row">Sin veterinario del expediente.</p>
+                  <p className="relative line-clamp-3 print-row text-gray-600 dark:text-gray-300">Sin veterinario del expediente.</p>
                 )}
               </PrintSection>
             </div>
 
             <PrintSection title="Alergias y condiciones">
-              <p className="print-row">
+              <p className="print-row text-gray-600 dark:text-gray-300">
                 {summary.alergias.length > 0 ? summary.alergias.join(" · ") : "Sin alergias registradas"}
               </p>
-              <p className="print-row">
+              <p className="print-row text-gray-600 dark:text-gray-300">
                 {summary.condicionesMedicas.length > 0
                   ? summary.condicionesMedicas.join(" · ")
                   : "Sin condiciones médicas registradas"}
               </p>
-              <p className="print-row">
+              <p className="print-row text-gray-600 dark:text-gray-300">
                 {summary.medicamentosActuales.length > 0
                   ? summary.medicamentosActuales.join(" · ")
                   : "Sin medicamentos actuales registrados"}
@@ -145,9 +147,9 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
               {summary.vacunas.length > 0 ? (
                 <ul className="space-y-2">
                   {summary.vacunas.map((vaccine) => (
-                    <li key={vaccine.nombre} className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-100 pb-2">
-                      <span className="font-bold text-gray-900">{vaccine.nombre}</span>
-                      <span className="text-sm font-semibold text-gray-600">
+                    <li key={vaccine.nombre} className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-100 pb-2 dark:border-gray-800">
+                      <span className="font-bold text-gray-900 dark:text-gray-100">{vaccine.nombre}</span>
+                      <span className="text-sm font-semibold text-gray-600 dark:text-gray-400">
                         {vaccine.fechaAplicacion ? `Aplicada ${formatMexicanDate(vaccine.fechaAplicacion)}` : "Sin fecha"}{" "}
                         {vaccine.proximaDosis ? `· próxima ${formatMexicanDate(vaccine.proximaDosis)}` : ""} · {vaccine.estatus ?? "Sin estado"}
                       </span>
@@ -155,7 +157,7 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
                   ))}
                 </ul>
               ) : (
-                <p className="print-row">Sin vacunas registradas.</p>
+                <p className="print-row text-gray-600 dark:text-gray-300">Sin vacunas registradas.</p>
               )}
             </PrintSection>
 
@@ -163,16 +165,16 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
               {summary.desparasitaciones.length > 0 ? (
                 <ul className="space-y-2">
                   {summary.desparasitaciones.map((deworming) => (
-                    <li key={deworming.producto} className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-100 pb-2">
-                      <span className="font-bold text-gray-900">{deworming.producto}</span>
-                      <span className="text-sm font-semibold text-gray-600">
+                    <li key={deworming.producto} className="flex flex-wrap items-baseline justify-between gap-2 border-b border-gray-100 pb-2 dark:border-gray-800">
+                      <span className="font-bold text-gray-900 dark:text-gray-100">{deworming.producto}</span>
+                      <span className="text-sm font-semibold text-gray-600 dark:text-gray-400">
                         {formatMexicanDate(deworming.fecha)} · {deworming.dosis ?? "Sin dosis"}
                       </span>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="print-row">Sin desparasitaciones registradas.</p>
+                <p className="print-row text-gray-600 dark:text-gray-300">Sin desparasitaciones registradas.</p>
               )}
             </PrintSection>
 
@@ -180,22 +182,22 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
               {summary.historialMedico.length > 0 ? (
                 <ul className="space-y-3">
                   {summary.historialMedico.map((consultation) => (
-                    <li key={consultation.motivo} className="border-b border-gray-100 pb-3">
-                      <p className="font-bold text-gray-900">
+                    <li key={consultation.motivo} className="border-b border-gray-100 pb-3 dark:border-gray-800">
+                      <p className="font-bold text-gray-900 dark:text-gray-100">
                         {formatMexicanDate(consultation.fecha)} · {consultation.motivo}
                       </p>
                       {consultation.diagnostico ? (
-                        <p className="mt-1 text-sm font-semibold text-gray-600">
+                        <p className="mt-1 text-sm font-semibold text-gray-600 dark:text-gray-400">
                           Diagnóstico: {consultation.diagnostico}
                         </p>
                       ) : null}
                       {consultation.tratamiento ? (
-                        <p className="mt-1 text-sm font-semibold text-gray-600">
+                        <p className="mt-1 text-sm font-semibold text-gray-600 dark:text-gray-400">
                           Tratamiento: {consultation.tratamiento}
                         </p>
                       ) : null}
                       {consultation.medicamentos.length > 0 ? (
-                        <p className="mt-1 text-sm font-semibold text-gray-600">
+                        <p className="mt-1 text-sm font-semibold text-gray-600 dark:text-gray-400">
                           Medicamentos: {consultation.medicamentos.join(", ")}
                         </p>
                       ) : null}
@@ -203,11 +205,11 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
                   ))}
                 </ul>
               ) : (
-                <p className="print-row">Sin historial médico registrado.</p>
+                <p className="print-row text-gray-600 dark:text-gray-300">Sin historial médico registrado.</p>
               )}
             </PrintSection>
 
-            <footer className="mt-6 border-t border-gray-200 pt-4 text-center text-xs font-semibold text-gray-400">
+            <footer className="mt-6 border-t border-gray-200 pt-4 text-center text-xs font-semibold text-gray-400 dark:border-gray-800 dark:text-gray-500">
               Documento informativo generado desde PetCarnet. No sustituye la consulta veterinaria.
             </footer>
           </div>
