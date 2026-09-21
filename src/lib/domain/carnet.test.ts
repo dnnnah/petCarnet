@@ -145,6 +145,12 @@ describe("FASE 6 — carnet físico: identidad e identificación", () => {
     expect(card.salud.condicionesMedicas).toEqual(["Cardiopatía"]);
     expect(card.salud.medicamentosActuales).toEqual(["Cardipet"]);
     expect(card.salud.vacunas).toEqual([{ nombre: "Rabia", estatus: "al_dia" }]);
+    expect(card.salud.desparasitaciones).toEqual([
+      { producto: "Praziquantel", fecha: "2026-06-01", proximaFecha: "2026-12-01", dosis: null, veterinario: null },
+    ]);
+    expect(card.salud.historialMedico).toEqual([
+      { fecha: "2026-08-10", motivo: "Chequeo", diagnostico: "Sano", tratamiento: null, medicamentos: [] },
+    ]);
     expect(card.salud.veterinario).toEqual({
       nombre: "Dr. López",
       clinica: "Vet Central",
@@ -230,6 +236,8 @@ describe("FASE 6 — carnet físico: identidad e identificación", () => {
     expect(card.salud.condicionesMedicas).toEqual([]);
     expect(card.salud.medicamentosActuales).toEqual([]);
     expect(card.salud.vacunas).toEqual([]);
+    expect(card.salud.desparasitaciones).toEqual([]);
+    expect(card.salud.historialMedico).toEqual([]);
     expect(card.salud.veterinario).toBeNull();
   });
 
@@ -445,6 +453,8 @@ describe("FASE 6 — carnet físico: identidad e identificación", () => {
     expect(card.qr.disponible).toBe(false);
     expect(card.contacto.whatsappUrl).toBeNull();
     expect(card.salud.vacunas).toEqual([]);
+    expect(card.salud.desparasitaciones).toEqual([]);
+    expect(card.salud.historialMedico).toEqual([]);
     expect(card.salud.veterinario).toBeNull();
     expect(card.emergencia.activo).toBe(false);
   });

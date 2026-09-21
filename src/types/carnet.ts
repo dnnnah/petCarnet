@@ -121,6 +121,30 @@ export type PhysicalPetCard = {
     condicionesMedicas: ReadonlyArray<string>;
     medicamentosActuales: ReadonlyArray<string>;
     vacunas: ReadonlyArray<PhysicalPetCardVacuna>;
+    /**
+     * Vista de desparasitación (FASE 5.2) derivada del resumen sanitario
+     * exportable. Sigue siendo el resumen del Core el que ordena/normaliza;
+     * aquí solo se proyectan los datos hacia el carnet.
+     */
+    desparasitaciones: ReadonlyArray<{
+      producto: string;
+      fecha: string;
+      proximaFecha: string | null;
+      dosis: string | null;
+      veterinario: string | null;
+    }>;
+    /**
+     * Resumen informativo del historial médico (FASE 5.3) derivado del
+     * resumen sanitario exportable. No es el expediente completo: sirve al
+     * carnet para exponer la información médica relevante sin duplicar reglas.
+     */
+    historialMedico: ReadonlyArray<{
+      fecha: string;
+      motivo: string;
+      diagnostico: string | null;
+      tratamiento: string | null;
+      medicamentos: ReadonlyArray<string>;
+    }>;
     veterinario: {
       nombre: string;
       clinica: string;
