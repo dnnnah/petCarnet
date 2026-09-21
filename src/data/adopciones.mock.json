@@ -503,5 +503,208 @@
       "mostrarDireccionVet": false,
       "mostrarDocumentosPrivados": false
     }
+  },
+  {
+    "id": "mocha",
+    "estado": "adoptado",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Mocha",
+      "especie": "Perro",
+      "raza": "Mestizo",
+      "fotoPerfilUrl": "/pets/frey.jpeg",
+      "genero": "Hembra",
+      "talla": "Mediano",
+      "color": "Café con orejas oscuras",
+      "pesoKg": 12,
+      "fechaNacimiento": "2020-06-10",
+      "rasgosDistintivos": ["Cicatriz en pata trasera izquierda", "Mancha clara en el lomo"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-MOCHA-001",
+      "microchip": "900987654321098",
+      "notas": "Rescatada y adoptada: muestra visual del estado adoptado tras el proceso de adopción (Fase 6)."
+    },
+    "contacto": {
+      "nombrePublico": "Familia Ramírez",
+      "telefonoPrincipal": "5567890123",
+      "whatsapp": "5215567890123",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "cerca de casa",
+      "zonaHabitual": "Nezahualcóyotl, EDOMEX",
+      "mensajeWhatsapp": "Hola, encontré a Mocha. Escaneé el QR de su perfil."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": ["Artrosis leve"],
+      "medicamentosActuales": ["Glucosamina"],
+      "dietaEspecial": "Alimento hipocalórico",
+      "comportamiento": "Tranquila y muy leal; se lleva bien con niños."
+    },
+    "veterinario": {
+      "nombre": "Dr. Ruiz",
+      "clinica": "Vet de Barrio",
+      "telefono": "5567890123",
+      "direccion": "Av. Central 45, Neza",
+      "horario": "L-S 9am a 6pm"
+    },
+    "vacunas": [
+      { "id": "mocha-vac-1", "nombre": "Rabia", "fechaAplicacion": "2025-11-02", "proximaDosis": "2026-11-02", "estatus": "al_dia", "lote": "R401", "veterinario": "Dr. Ruiz", "documentoUrl": "", "fechaCreacion": "2025-11-02", "origen": "clínica" },
+      { "id": "mocha-vac-2", "nombre": "Octuple", "fechaAplicacion": "2025-11-02", "proximaDosis": "2026-11-02", "estatus": "al_dia", "lote": "O301", "veterinario": "Dr. Ruiz", "documentoUrl": "", "fechaCreacion": "2025-11-02", "origen": "clínica" }
+    ],
+    "desparasitaciones": [
+      { "id": "mocha-desp-1", "producto": "Praziquantel", "fecha": "2025-11-02", "proximaFecha": "2026-11-02", "dosis": "1 tableta", "veterinario": "Dr. Ruiz", "documentoUrl": "" }
+    ],
+    "historialMedico": [
+      { "id": "mocha-cons-1", "fecha": "2025-11-02", "motivo": "Valoración post adopción", "diagnostico": "Buena condición general; controlar peso.", "tratamiento": "Dieta hipocalórica", "medicamentos": ["Glucosamina"], "veterinario": "Dr. Ruiz", "documentos": [] }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "copito",
+    "estado": "rescatado",
+    "verificado": false,
+    "mascota": {
+      "nombre": "Copito",
+      "especie": "Perro",
+      "raza": "Criollo",
+      "fotoPerfilUrl": "/pets/sandor.jpeg",
+      "genero": "Macho",
+      "talla": "Pequeño",
+      "color": "Blanco con manchas grises",
+      "pesoKg": 6,
+      "fechaNacimiento": "2023-09-21",
+      "rasgosDistintivos": ["Pata delantera derecha de color blanco", "Muy sociable"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-COPITO-001",
+      "microchip": "900111122233344",
+      "notas": "Rescatado por el refugio: muestra visual del estado rescatado (Fase 6)."
+    },
+    "contacto": {
+      "nombrePublico": "Refugio Esperanza",
+      "telefonoPrincipal": "5576543210",
+      "whatsapp": "5215576543210",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "dentro del refugio",
+      "zonaHabitual": "Iztapalapa, CDMX",
+      "mensajeWhatsapp": "Hola, encontré a Copito. Escaneé el QR de su perfil."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "Alimento balanceado para talla pequeña",
+      "comportamiento": "Juguetón y muy sociable con otros perros."
+    },
+    "veterinario": {
+      "nombre": "Dra. Paz",
+      "clinica": "Vet Esperanza",
+      "telefono": "5576543210",
+      "direccion": "Calz. Ermita 300, Iztapalapa",
+      "horario": "L-D 9am a 5pm"
+    },
+    "vacunas": [
+      { "id": "copito-vac-1", "nombre": "Rabia", "fechaAplicacion": "2026-01-15", "proximaDosis": "2027-01-15", "estatus": "al_dia", "lote": "R502", "veterinario": "Dra. Paz", "documentoUrl": "" }
+    ],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
+  },
+  {
+    "id": "nube",
+    "estado": "en_casa",
+    "verificado": true,
+    "mascota": {
+      "nombre": "Nube",
+      "especie": "Gato",
+      "raza": "Siamés",
+      "fotoPerfilUrl": "/pets/arya.jpeg",
+      "genero": "Hembra",
+      "talla": "Pequeño",
+      "color": "Cremita con puntas oscuras",
+      "pesoKg": 3.5,
+      "fechaNacimiento": "2021-12-05",
+      "rasgosDistintivos": ["Ojos azules", "Muy vocal"],
+      "esterilizado": true
+    },
+    "identificacion": {
+      "codigoPublico": "PC-NUBE-001",
+      "microchip": "900555667788899",
+      "notas": "Mascota de casa sin número de contacto registrado: prueba el estado sin teléfono del carnet (Fase 6)."
+    },
+    "contacto": {
+      "nombrePublico": "Fam. de Nube",
+      "telefonoPrincipal": "",
+      "whatsapp": "",
+      "telefonoSecundario": "",
+      "email": "",
+      "zonaSegura": "cerca de casa",
+      "zonaHabitual": "Coyoacán, CDMX",
+      "mensajeWhatsapp": "Hola, encontré a Nube. Vi su perfil en PetCarnet."
+    },
+    "emergencia": {
+      "perdido": false,
+      "fechaPerdida": null,
+      "zonaPerdida": null,
+      "mensajeEmergencia": null,
+      "recompensa": null,
+      "instrucciones": []
+    },
+    "salud": {
+      "alergias": [],
+      "condicionesMedicas": [],
+      "medicamentosActuales": [],
+      "dietaEspecial": "",
+      "comportamiento": "Juguetona y cariñosa, ronronea mucho."
+    },
+    "veterinario": {
+      "nombre": "Dra. Mora",
+      "clinica": "Clínica Felina CDMX",
+      "telefono": "5559876543",
+      "direccion": "Copilco 88, CDMX",
+      "horario": "L-D 10am a 8pm"
+    },
+    "vacunas": [],
+    "desparasitaciones": [],
+    "historialMedico": [],
+    "documentos": [],
+    "configuracionPublica": {
+      "mostrarEmail": false,
+      "mostrarTelefonoSecundario": false,
+      "mostrarDireccionVet": false,
+      "mostrarDocumentosPrivados": false
+    }
   }
+
 ]

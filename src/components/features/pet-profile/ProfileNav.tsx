@@ -6,6 +6,7 @@ import {
   ClipboardList,
   FileText,
   Heart,
+  IdCard,
   PawPrint,
   Phone,
   ShieldCheck,
@@ -26,6 +27,7 @@ const defaultNavItems: NavItem[] = [
   { id: "fotos", label: "Fotos", icon: Camera },
   { id: "vacunas", label: "Vacunas", icon: ShieldCheck },
   { id: "expediente", label: "Expediente", icon: ClipboardList },
+  { id: "carnet", label: "Carnet", icon: IdCard },
   { id: "documentos", label: "Documentos", icon: FileText },
 ];
 

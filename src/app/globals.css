@@ -216,6 +216,39 @@ a {
     box-shadow: none !important;
   }
 
+  #expediente-print,
+  #expediente-print * {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border-color: #e5e7eb !important;
+  }
+
+  #expediente-print h3 {
+    color: #059669 !important;
+  }
+
+  #carnet-print,
+  #carnet-print * {
+    visibility: visible;
+  }
+
+  #carnet-print {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  #carnet-print > * {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
   .print-panel h3 {
     margin-top: 1.25rem;
     margin-bottom: 0.5rem;

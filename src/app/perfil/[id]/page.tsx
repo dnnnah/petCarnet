@@ -4,6 +4,7 @@ import { AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { AdoptionRequestCta } from "@/components/features/adoption/AdoptionRequestCta";
 import { DocumentsCard } from "@/components/features/documents/DocumentsCard";
+import { PhysicalCardCta } from "@/components/features/carnet/PhysicalCardCta";
 import { PetFooterBanner } from "@/components/features/pet-status/PetFooterBanner";
 import { PetStatusBadge } from "@/components/features/pet-status/PetStatusBadge";
 import { PetStatusSection } from "@/components/features/pet-status/PetStatusSection";
@@ -17,6 +18,7 @@ import { QRShareCard } from "@/components/features/pet-profile/QRShareCard";
 import { RecentPhotos } from "@/components/features/pet-profile/RecentPhotos";
 import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeline";
 import { VetCard } from "@/components/features/pet-profile/VetCard";
+import { buildPhysicalPetCard } from "@/lib/domain/carnet";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
 import { findShelterForPet } from "@/lib/domain/shelter";
 import { sortVaccinesByDate } from "@/lib/domain/vaccine";
@@ -69,6 +71,8 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         suppressAlerts: isTerminal,
       }),
     );
+
+  const physicalCard = buildPhysicalPetCard(pet);
 
   return (
     <AppShell>
@@ -134,6 +138,13 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </div>
           <div id="expediente">
             <HealthExpedientePreview pet={pet} />
+          </div>
+          <div id="carnet">
+            <PhysicalCardCta
+              petId={pet.id}
+              petName={pet.mascota.nombre}
+              card={physicalCard}
+            />
           </div>
           <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
