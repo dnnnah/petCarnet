@@ -20,6 +20,99 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 7 — PWA / CAMPO: Core e infraestructura (PR `feat/pwa-campo-core`)
+
+**Estado:** Base PWA/offline completada (infraestructura Core)
+**Fecha:** 2026-09-21
+
+Prepara técnicamente PetCarnet para uso en campo desde móvil: Web App
+Manifest, service worker conservador, estrategia offline explícita, capa de
+almacenamiento local robusta y contratos de conectividad. No incluye la UI
+de instalación/offline ni rediseño visual (bloque B posterior).
+
+### Web App Manifest (`src/app/manifest.ts`)
+
+- Manifest generado en `GET /manifest.webmanifest` con `name`, `short_name`,
+  `description`, `lang`, `start_url`, `scope`, `display: standalone`,
+  `theme_color`/`background_color` coherentes con la marca (esmeralda).
+- Íconos: solo se referencia `/icon.svg` (existe, servido por Next desde
+  `src/app/icon.svg`) con `purpose` `any` y `maskable`. **No se inventan
+  assets**: los PNG 192/512 y el `apple-touch-icon` los aportará el bloque de
+  diseño B.
+- Metadata de instalación en `layout.tsx`: `applicationName`,
+  `appleWebApp`, `formatDetection` y `viewport.themeColor`.
+
+### Service worker (`public/sw.js`)
+
+- Infraestructura nativa, sin dependencias nuevas. Registro solo en
+  producción (`registerServiceWorker` guarda por `NODE_ENV`), montado en el
+  layout a través del componente de infraestructura
+  `ServiceWorkerRegistration`. En `next dev` nunca se registra.
+- Estrategia conservadora:
+  - Navegaciones (documentos): **network-first**, fallback a la copia local
+    y, en último caso, al shell raíz `/`.
+  - Assets estáticos con hash y medios públicos (`/_next/static/*`,
+    `/pets/*`, `/docs/*`, `/manifest.webmanifest`, `/icon.svg`):
+    **stale-while-revalidate**.
+  - No se cachean respuestas no `ok` ni tráfico de datos/API (hoy no hay
+    backend). `VERSION` debe incrementarse en cada despliegue.
+
+### Estrategia offline
+
+- **Funciona offline:** páginas visitadas previamente (SSG cacheado), assets
+  cacheados, perfil estático, alerta perdido/solicitudes de adopción en
+  `localStorage` (con fallback en memoria), QR ya renderizado.
+- **No funciona offline (por diseño, sin backend):** sincronización remota,
+  datos que hoy provienen solo de SSR/SSG en primer acceso, operaciones que
+  dependerán de servidor en fases futuras.
+
+### Almacenamiento local robusto (`src/lib/pwa/storage.ts`)
+
+- Capa única y tipada (`StorageLike`, `getBrowserStorage`,
+  `isStorageAvailable`, `safeGetItem`/`safeSetItem`/`safeRemoveItem`,
+  `readStoredJson`). SSR-safe y tolerante a storage bloqueado, corrupto,
+  lleno o inexistente. Sin React/Next.
+- `useLostAlerts` y `useAdoptionRequests` ahora usan `getBrowserStorage()`.
+  `lostAlertStorage` y `adoptionRequestStorage` reutilizan la capa y exponen
+  `StorageLike` desde ella (mismo contrato, sin cambios de reglas).
+
+### Conectividad (`src/lib/pwa/connectivity.ts` + `useOnlineStatus`)
+
+- `ConnectivityStatus = "online" | "offline" | "unknown"`; SSR introduce
+  `"unknown"`. `navigator.onLine` se documenta como indicador del dispositivo,
+  no como verdad de conectividad con servidor. La UI la construye B.
+
+### Comportamiento visible
+
+- Sin cambios funcionales en perfiles, QR, emergencia, lost mode, estados,
+  adopciones, refugios, salud, carnet físico, impresión o dark mode.
+- `lostAlertStorage`/`adoptionRequestStorage` mantienen exactamente el mismo
+  contrato público (`StorageLike` re-exportado desde `src/lib/pwa/storage`).
+
+### Archivos creados
+
+- `src/app/manifest.ts`, `src/app/manifest.test.ts`
+- `src/lib/pwa/storage.ts`, `connectivity.ts`, `useOnlineStatus.ts`,
+  `registerServiceWorker.ts` y sus tests (`storage`, `connectivity`,
+  `registerServiceWorker`, `purity`)
+- `src/components/pwa/ServiceWorkerRegistration.tsx`
+- `public/sw.js`
+- `docs/fase-7-pwa-offline.md`
+
+### Archivos modificados
+
+- `src/app/layout.tsx` (metadata PWA, viewport, montaje del registro)
+- `src/lib/lostAlertStorage.ts`, `src/lib/adoptionRequestStorage.ts`
+- `src/lib/useLostAlerts.ts`, `src/lib/useAdoptionRequests.ts`
+
+### Tests
+
+398 previos + 34 nuevos (storage, connectivity, manifest, registro de SW,
+pureza de la capa) → **432 tests** en verde. `lint`, `typecheck`, `build`
+(280 páginas SSG) y `validate:data` en verde.
+
+---
+
 ## FASE 5 — Salud y expediente digital: Contrato Core (PR `feat/salud-core`)
 
 **Estado:** Contrato de dominio de salud completado (base Core)

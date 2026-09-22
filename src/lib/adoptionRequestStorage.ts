@@ -1,7 +1,9 @@
 import { isAdoptionRequestStatus } from "@/lib/domain/adoption";
+import { readStoredJson, safeSetItem } from "@/lib/pwa/storage";
+import type { StorageLike } from "@/lib/pwa/storage";
 import type { AdoptionRequest } from "@/types/adoption";
 
-export type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
+export type { StorageLike };
 
 const memory = new Map<string, AdoptionRequest[]>();
 
@@ -48,6 +50,13 @@ function isAdoptionRequest(value: unknown): value is AdoptionRequest {
   return true;
 }
 
+function decodeAdoptionRequests(raw: unknown): AdoptionRequest[] {
+  if (!Array.isArray(raw)) {
+    return [];
+  }
+  return raw.filter(isAdoptionRequest);
+}
+
 export function readAdoptionRequests(
   storage: StorageLike | null | undefined,
   key: string,
@@ -56,21 +65,7 @@ export function readAdoptionRequests(
     return memory.get(key) ?? [];
   }
 
-  let value: AdoptionRequest[] = [];
-
-  if (storage) {
-    try {
-      const raw = storage.getItem(key);
-      if (raw) {
-        const parsed: unknown = JSON.parse(raw);
-        if (Array.isArray(parsed)) {
-          value = parsed.filter(isAdoptionRequest);
-        }
-      }
-    } catch {
-      value = memory.get(key) ?? [];
-    }
-  }
+  const value = readStoredJson(storage, key, decodeAdoptionRequests) ?? [];
 
   memory.set(key, value);
   return value;
@@ -84,15 +79,8 @@ export function appendAdoptionRequest(
   const next = [...readAdoptionRequests(storage, key), request];
   memory.set(key, next);
 
-  if (!storage) {
-    return next;
-  }
-
-  try {
-    storage.setItem(key, JSON.stringify(next));
-  } catch {
-    // Almacenamiento bloqueado o lleno: el estado se conserva en memoria (fallback de sesión).
-  }
+  safeSetItem(storage, key, JSON.stringify(next));
+  // Almacenamiento bloqueado o lleno: el estado se conserva en memoria (fallback de sesión).
 
   return next;
 }

@@ -5,6 +5,7 @@ import {
   readLostAlert,
   writeLostAlert,
 } from "@/lib/lostAlertStorage";
+import { getBrowserStorage } from "@/lib/pwa/storage";
 import type { LostAlert, LostAlertDraft } from "@/types/emergency";
 
 export type { LostAlert, LostAlertDraft };
@@ -14,18 +15,6 @@ const EVENT = "petcarnet-lost-mode";
 
 function keyOf(petId: string) {
   return `${PREFIX}${String(petId)}`;
-}
-
-function getStorage(): Storage | null {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  try {
-    return window.localStorage;
-  } catch {
-    return null;
-  }
 }
 
 function subscribe(petId: string, onChange: () => void) {
@@ -61,20 +50,20 @@ export function useLostAlerts(petId: string) {
 
   const alert = useSyncExternalStore<LostAlert | null>(
     (onChange) => subscribe(petId, onChange),
-    () => readLostAlert(getStorage(), key),
+    () => readLostAlert(getBrowserStorage(), key),
     () => null
   );
 
   const activate = useCallback(
     (draft: LostAlertDraft) => {
-      writeLostAlert(getStorage(), key, parseLostAlertDraft(draft));
+      writeLostAlert(getBrowserStorage(), key, parseLostAlertDraft(draft));
       notifyAlertChange();
     },
     [key]
   );
 
   const deactivate = useCallback(() => {
-    writeLostAlert(getStorage(), key, null);
+    writeLostAlert(getBrowserStorage(), key, null);
     notifyAlertChange();
   }, [key]);
 
