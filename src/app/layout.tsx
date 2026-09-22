@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "./providers";
+import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
+import { PWA_THEME_COLOR } from "./manifest";
 import { resolvePublicProfileBaseUrl } from "@/lib/services/publicProfileUrl";
 
 const siteUrl = (() => {
@@ -19,6 +21,15 @@ export const metadata: Metadata = {
   metadataBase: siteUrl,
   title: "PetCarnet | Carnet Digital",
   description: "Pasaporte digital público para mascotas con QR de emergencia.",
+  applicationName: "PetCarnet",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "PetCarnet",
+  },
+  formatDetection: {
+    telephone: false,
+  },
   openGraph: {
     type: "website",
     siteName: "PetCarnet",
@@ -27,6 +38,12 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: PWA_THEME_COLOR,
 };
 
 export default function RootLayout({
@@ -45,6 +62,7 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );

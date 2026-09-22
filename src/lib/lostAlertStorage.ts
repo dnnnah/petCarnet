@@ -1,7 +1,9 @@
 import { parseLostAlert } from "@/lib/domain/emergency";
+import { readStoredJson, safeRemoveItem, safeSetItem } from "@/lib/pwa/storage";
+import type { StorageLike } from "@/lib/pwa/storage";
 import type { LostAlert } from "@/types/emergency";
 
-export type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
+export type { StorageLike };
 
 const memory = new Map<string, LostAlert | null>();
 
@@ -13,18 +15,7 @@ export function readLostAlert(
     return memory.get(key) ?? null;
   }
 
-  let value: LostAlert | null = null;
-
-  if (storage) {
-    try {
-      const raw = storage.getItem(key);
-      if (raw) {
-        value = parseLostAlert(JSON.parse(raw));
-      }
-    } catch {
-      value = memory.get(key) ?? null;
-    }
-  }
+  const value = readStoredJson(storage, key, parseLostAlert);
 
   memory.set(key, value);
   return value;
@@ -37,17 +28,10 @@ export function writeLostAlert(
 ): void {
   memory.set(key, alert);
 
-  if (!storage) {
-    return;
-  }
-
-  try {
-    if (alert === null) {
-      storage.removeItem(key);
-    } else {
-      storage.setItem(key, JSON.stringify(alert));
-    }
-  } catch {
+  if (alert === null) {
+    safeRemoveItem(storage, key);
+  } else {
+    safeSetItem(storage, key, JSON.stringify(alert));
     // Storage bloqueado o lleno: el estado se conserva en memoria (fallback de sesión).
   }
 }

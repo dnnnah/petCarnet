@@ -4,6 +4,7 @@ import {
   invalidateAdoptionRequestsCache,
   readAdoptionRequests,
 } from "@/lib/adoptionRequestStorage";
+import { getBrowserStorage } from "@/lib/pwa/storage";
 import type { AdoptionRequest } from "@/types/adoption";
 
 export type { AdoptionRequest };
@@ -13,18 +14,6 @@ const EVENT = "petcarnet-adoption-requests";
 
 function keyOf(petId: string) {
   return `${PREFIX}${String(petId)}`;
-}
-
-function getStorage(): Storage | null {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  try {
-    return window.localStorage;
-  } catch {
-    return null;
-  }
 }
 
 function subscribe(petId: string, onChange: () => void) {
@@ -60,13 +49,13 @@ export function useAdoptionRequests(petId: string) {
 
   const requests = useSyncExternalStore<AdoptionRequest[]>(
     (onChange) => subscribe(petId, onChange),
-    () => readAdoptionRequests(getStorage(), key),
+    () => readAdoptionRequests(getBrowserStorage(), key),
     () => []
   );
 
   const submit = useCallback(
     (request: AdoptionRequest) => {
-      const result = appendAdoptionRequest(getStorage(), key, request);
+      const result = appendAdoptionRequest(getBrowserStorage(), key, request);
       notifyRequestsChange();
       return result;
     },
