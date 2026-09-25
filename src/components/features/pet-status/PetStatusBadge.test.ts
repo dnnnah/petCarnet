@@ -35,9 +35,9 @@ describe("PetStatusBadge", () => {
     expect(renderBadge("fallecido")).toContain("En memoria");
   });
 
-  it("usa el tono rosa para perdido", () => {
-    const html = renderBadge("perdido");
-    expect(html).toContain("bg-rose-100");
+  it("usa la familia de peligro para perdido y la neutra para el estado terminal", () => {
+    expect(renderBadge("perdido")).toContain("bg-danger-soft");
+    expect(renderBadge("fallecido")).toContain("bg-muted-soft");
   });
 
   it("muestra el estado terminal sin tono de alerta", () => {

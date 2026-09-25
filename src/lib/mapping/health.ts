@@ -52,21 +52,22 @@ export type DocumentLink = {
 export type VaccineAlertViewModel = {
   kind: VaccineNextDoseAlertKind;
   label: string;
+  /** Tono semántico; la capa de UI lo resuelve con `resolveTone`. */
   tone: string;
 };
 
 const VACCINE_ALERT_META: Record<VaccineNextDoseAlertKind, { label: string; tone: string }> = {
   vencida: {
     label: "Próxima dosis vencida",
-    tone: "bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-500/15 dark:text-rose-300 dark:ring-rose-800",
+    tone: "danger",
   },
   vence_hoy: {
     label: "Vence hoy",
-    tone: "bg-amber-50 text-amber-700 ring-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:ring-amber-800",
+    tone: "warning",
   },
   marcada_proxima: {
     label: "Próxima dosis pendiente",
-    tone: "bg-sky-50 text-sky-700 ring-sky-200 dark:bg-sky-500/15 dark:text-sky-300 dark:ring-sky-800",
+    tone: "info",
   },
 };
 
@@ -79,7 +80,8 @@ export type VaccineItemViewModel = {
   nextDoseDate: string | null;
   /** Estado explícito (tal como viene en el dato) o null si es desconocido. */
   status: VaccineStatusLabel | null;
-  statusTones: string;
+  /** Tono semántico del estado; la capa de UI lo resuelve con `resolveTone`. */
+  statusTone: string;
   hasDocument: boolean;
   document: DocumentLink;
   /** Alerta de próxima dosis calculada por Core (null si no hay alerta). */
@@ -136,13 +138,11 @@ export function toVaccineItemViewModel(
     : null;
 
   let statusLabel: VaccineStatusLabel | null = null;
-  let statusTones = "";
+  let statusTone = "muted";
   if (isVaccineStatus(vaccine.estatus)) {
     const meta = getVaccineStatusMeta(vaccine.estatus);
     statusLabel = meta.label;
-    statusTones = meta.tones;
-  } else {
-    statusTones = "bg-slate-50 text-slate-600 ring-slate-200 dark:bg-slate-500/15 dark:text-slate-300 dark:ring-slate-800";
+    statusTone = meta.tone;
   }
 
   const alert = options?.suppressAlerts ? null : resolveVaccineNextDoseAlert(vaccine, today);
@@ -153,7 +153,7 @@ export function toVaccineItemViewModel(
     applicationDate: applicationDate !== null ? formatMexicanDate(applicationDate) : null,
     nextDoseDate: nextDoseDate !== null ? formatMexicanDate(nextDoseDate) : null,
     status: statusLabel,
-    statusTones,
+    statusTone,
     hasDocument: hasVaccineDocument(vaccine) || document !== null,
     document,
     alert: alert !== null
@@ -199,15 +199,15 @@ export type DewormingKindMeta = {
 const DEWORMING_DUE_META: Record<DewormingDueKind, { label: string; tone: string }> = {
   vencida: {
     label: "Desparasitación vencida",
-    tone: "bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-500/15 dark:text-rose-300 dark:ring-rose-800",
+    tone: "danger",
   },
   entrega_hoy: {
     label: "Corresponde hoy",
-    tone: "bg-amber-50 text-amber-700 ring-amber-200 dark:bg-amber-500/15 dark:text-amber-300 dark:ring-amber-800",
+    tone: "warning",
   },
   programada: {
     label: "Programada",
-    tone: "bg-teal-50 text-teal-700 ring-teal-200 dark:bg-teal-500/15 dark:text-teal-300 dark:ring-teal-800",
+    tone: "info",
   },
 };
 

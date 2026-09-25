@@ -1,10 +1,28 @@
-import Link from "next/link";
-import { ArrowRight, Heart, HeartHandshake, PawPrint, ShieldCheck } from "lucide-react";
+
+import { ArrowRight, HeartHandshake, QrCode, ShieldCheck, UserRound } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
-import { Badge } from "@/components/ui/Badge";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Button } from "@/components/ui/Button";
 import { PetsList } from "@/components/features/home/PetsList";
+import { Section } from "@/components/ui/Section";
 import { getAllPets } from "@/lib/getAllPets";
+
+const STEPS = [
+  {
+    icon: UserRound,
+    title: "El tutor publica lo que decide",
+    body: "Nombre, foto, rasgo y contacto. Nada se comparte sin permiso.",
+  },
+  {
+    icon: QrCode,
+    title: "El perfil se imprime o se comparte",
+    body: "Un QR en el collar o la mochila lleva al carnet público.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Cualquiera puede ayudar",
+    body: "Quien encuentre a la mascota ve teléfono, salud y cómo reportarla.",
+  },
+];
 
 export default function Home() {
   const pets = getAllPets();
@@ -12,74 +30,67 @@ export default function Home() {
 
   return (
     <AppShell>
-      <section className="relative overflow-hidden px-4 pb-16 pt-8 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <Badge tone="mint" icon={<ShieldCheck size={16} />}>
-              QR publico para emergencias
-            </Badge>
-            <h1 className="mt-5 max-w-3xl text-4xl sm:text-5xl font-extrabold leading-[0.95] text-gray-950 dark:text-white sm:text-6xl lg:text-7xl">
-              PetCarnet
-            </h1>
-            <p className="mt-2 sm:mt-3 text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
-              Carnet Digital
-            </p>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-gray-600 dark:text-gray-300">
-              Una ficha publica, linda y clara para que cualquier persona pueda
-              ayudar a una mascota a volver a casa.
-            </p>
+      <section className="border-b border-rule">
+        <div className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+          <p className="overline text-brand">Carnet digital para mascotas</p>
+          <h1 className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] text-ink sm:text-6xl">
+            Si la pierdes, que cualquiera pueda devolverla.
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-ink-2">
+            PetCarnet convierte los datos de tu mascota en un carnet público con QR: identidad,
+            salud y contacto de emergencia en un solo lugar, siempre a tu control.
+          </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              {featuredPet ? (
-                <Link
-                  href={`/perfil/${featuredPet.id}`}
-                  className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-emerald-500 px-7 text-base font-extrabold text-white shadow-[0_16px_30px_rgba(16,185,129,0.22)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
-                >
-                  Ver perfil de {featuredPet.mascota.nombre}
-                  <ArrowRight size={20} />
-                </Link>
-              ) : null}
-              <Link
-                href="/adopciones"
-                className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-7 text-base font-extrabold text-violet-700 shadow-[0_12px_26px_rgba(17,24,39,0.08)] ring-1 ring-violet-200 transition hover:-translate-y-0.5 hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:bg-gray-900 dark:text-violet-300 dark:ring-violet-800 dark:hover:bg-violet-500/10"
-              >
-                <HeartHandshake size={20} />
-                Ver mascotas en adopción
-                <ArrowRight size={20} />
-              </Link>
-            </div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            {featuredPet ? (
+              <Button href={`/perfil/${featuredPet.id}`} size="lg" iconEnd={<ArrowRight size={18} />}>
+                Ver el perfil de {featuredPet.mascota.nombre}
+              </Button>
+            ) : null}
+            <Button
+              href="/adopciones"
+              variant="secondary"
+              size="lg"
+              icon={<HeartHandshake size={18} />}
+            >
+              Ver mascotas en adopción
+            </Button>
           </div>
-
-          <GlassCard id="mascotas" className="relative mx-auto w-full max-w-md p-5 sm:p-6">
-            <div className="absolute -left-3 top-8 h-8 w-8 rounded-full bg-pink-100 dark:bg-pink-500/20" />
-            <div className="absolute -right-2 bottom-16 h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-500/20" />
-            <div className="relative rounded-[2rem] bg-gradient-to-br from-emerald-100 via-white to-pink-100 p-5 dark:from-emerald-950/40 dark:via-gray-900 dark:to-pink-950/40">
-              <div className="rounded-[1.7rem] bg-white/85 p-5 shadow-soft dark:bg-gray-900/85">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-600">
-                      <PawPrint size={26} fill="currentColor" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-gray-400 dark:text-gray-400">
-                        PetCarnet
-                      </p>
-                      <p className="text-xl font-extrabold text-gray-950 dark:text-white">
-                        Mascotas activas
-                      </p>
-                    </div>
-                  </div>
-                  <Heart className="text-pink-300" fill="currentColor" size={26} />
-                </div>
-
-                <div className="mt-6">
-                  <PetsList pets={pets} />
-                </div>
-              </div>
-            </div>
-          </GlassCard>
         </div>
       </section>
+
+      <section aria-label="Cómo funciona" className="border-b border-rule bg-surface">
+        <div className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-14 lg:px-8">
+          <ol className="grid gap-8 sm:grid-cols-3 sm:gap-6">
+            {STEPS.map(({ icon: Icon, title, body }, index) => (
+              <li key={title} className="border-t border-rule pt-5">
+                <div className="flex items-center gap-2.5">
+                  <span className="grid h-8 w-8 place-items-center rounded-md bg-brand-soft text-brand">
+                    <Icon size={17} aria-hidden="true" />
+                  </span>
+                  <span className="tnum text-xs font-semibold text-ink-3">
+                    0{index + 1}
+                  </span>
+                </div>
+                <h2 className="mt-3.5 text-lg font-semibold text-ink">{title}</h2>
+                <p className="mt-1.5 text-sm leading-6 text-ink-2">{body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <Section
+        id="mascotas"
+        as="h2"
+        eyebrow="Mascotas registradas"
+        title="Elige un carnet para verlo completo"
+        description="Cada perfil reúne identificación, salud y contacto de emergencia."
+        className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8"
+        bodyClassName="scroll-mt-24"
+      >
+        <PetsList pets={pets} />
+      </Section>
     </AppShell>
   );
 }

@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Download,
-  ExternalLink,
-} from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Download, ExternalLink } from "lucide-react";
 import { DocumentFilters, type DocumentFilter } from "@/components/features/documents/DocumentFilters";
 import { DocumentPreview } from "@/components/features/documents/DocumentPreview";
+import { Pill } from "@/components/ui/Pill";
+import { Surface } from "@/components/ui/Surface";
 import { formatMexicanDate } from "@/lib/dateFormat";
 import { getDocumentCategoryLabel, getDocumentMeta } from "@/lib/petDocuments";
 import type { PetDocument, PetDocumentCategory } from "@/types/pet";
@@ -35,9 +33,10 @@ export function DocumentListClient({ documents }: DocumentListClientProps) {
     }
   }
 
-  const filtered = activeFilter === "todos"
-    ? documents
-    : documents.filter((doc) => doc.categoria === activeFilter);
+  const filtered =
+    activeFilter === "todos"
+      ? documents
+      : documents.filter((doc) => doc.categoria === activeFilter);
 
   return (
     <>
@@ -50,14 +49,12 @@ export function DocumentListClient({ documents }: DocumentListClientProps) {
           ))}
         </div>
       ) : (
-        <GlassCard className="p-8 text-center">
-          <p className="text-lg font-extrabold text-gray-950 dark:text-white">
-            No hay documentos en esta categoría
-          </p>
-          <p className="mt-2 font-semibold text-gray-600 dark:text-gray-300">
+        <Surface className="p-8 text-center">
+          <p className="font-display text-lg text-ink">No hay documentos en esta categoría</p>
+          <p className="mt-1.5 text-sm text-ink-2">
             Prueba con otro filtro o revisa todos los documentos.
           </p>
-        </GlassCard>
+        </Surface>
       )}
     </>
   );
@@ -65,52 +62,50 @@ export function DocumentListClient({ documents }: DocumentListClientProps) {
 
 function DocumentItem({ document }: { document: PetDocument }) {
   return (
-    <GlassCard className="p-5 lg:p-6">
+    <Surface className="flex flex-col p-5">
       <div className="flex items-start gap-4">
         <DocumentPreview document={document} />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="text-xl font-extrabold leading-6 text-gray-950 dark:text-white">
-              {document.nombre}
-            </h2>
+            <h2 className="font-display text-lg leading-snug text-ink">{document.nombre}</h2>
             {document.estado ? (
-              <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold uppercase text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-500/15 dark:text-emerald-400 dark:ring-emerald-800">
+              <Pill tone="success" size="sm">
                 {document.estado}
-              </span>
+              </Pill>
             ) : null}
           </div>
-          <p className="mt-2 text-sm font-bold text-gray-500 dark:text-gray-400">{getDocumentMeta(document)}</p>
-          <p className="mt-1 text-sm font-extrabold uppercase text-gray-400 dark:text-gray-400">
+          <p className="mt-1.5 text-sm text-ink-2">{getDocumentMeta(document)}</p>
+          <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-ink-3">
             {getDocumentCategoryLabel(document.categoria)}
           </p>
           {document.descripcion ? (
-            <p className="mt-3 font-semibold leading-7 text-gray-700 dark:text-gray-200">{document.descripcion}</p>
+            <p className="mt-2.5 text-sm leading-6 text-ink-2">{document.descripcion}</p>
           ) : null}
-          <p className="mt-3 text-sm font-semibold text-gray-500 dark:text-gray-400">
+          <p className="mt-2.5 text-xs text-ink-3">
             Fecha: {formatMexicanDate(document.fecha) ?? "Fecha pendiente"}
           </p>
         </div>
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+      <div className="mt-auto grid gap-2 pt-5 sm:grid-cols-2">
         <a
           href={document.url}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(16,185,129,0.18)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
+          className="inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
         >
-          <ExternalLink className="shrink-0" size={18} />
-          <span className="min-w-0 overflow-wrap-anywhere break-words">Abrir</span>
+          <ExternalLink className="shrink-0" size={17} aria-hidden="true" />
+          <span className="min-w-0 break-words">Abrir</span>
         </a>
         <a
           href={document.url}
           download
-          className="inline-flex min-h-12 min-w-0 items-center justify-center gap-2 rounded-2xl bg-white px-4 text-sm font-extrabold text-gray-900 shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 transition hover:-translate-y-0.5 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-800"
+          className="inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md border border-rule bg-surface px-4 text-sm font-semibold text-ink-2 transition-colors hover:border-brand-rule hover:text-brand"
         >
-          <Download className="shrink-0" size={18} />
-          <span className="min-w-0 overflow-wrap-anywhere break-words">Descargar</span>
+          <Download className="shrink-0" size={17} aria-hidden="true" />
+          <span className="min-w-0 break-words">Descargar</span>
         </a>
       </div>
-    </GlassCard>
+    </Surface>
   );
 }

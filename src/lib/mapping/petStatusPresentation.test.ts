@@ -28,7 +28,14 @@ const runtimeAlert: LostAlert = {
   recompensa: 500,
 };
 
-const TONES: ReadonlyArray<PetStatusTone> = ["mint", "rose", "purple", "yellow", "gray"];
+const TONES: ReadonlyArray<PetStatusTone> = [
+  "success",
+  "danger",
+  "adoption",
+  "settled",
+  "rescue",
+  "muted",
+];
 
 describe("getPetStatusMeta", () => {
   it("expone presentación para cada estado válido", () => {
@@ -49,14 +56,15 @@ describe("getPetStatusMeta", () => {
     expect(getPetStatusMeta("fallecido").label).toBe("En memoria");
   });
 
-  it("usa rosa para perdido y gris para terminal", () => {
-    expect(getPetStatusMeta("perdido").tone).toBe("rose");
-    expect(getPetStatusMeta("fallecido").tone).toBe("gray");
+  it("mantiene un color estable por estado: rojo para perdido, neutro para terminal", () => {
+    expect(getPetStatusMeta("perdido").tone).toBe("danger");
+    expect(getPetStatusMeta("fallecido").tone).toBe("muted");
+    expect(getPetStatusMeta("en_casa").tone).toBe("success");
   });
 
   it("cae a un fallback seguro para estado desconocido", () => {
     expect(getPetStatusMeta("nuevo_estado" as PetStatus).label).toBe("Estado desconocido");
-    expect(getPetStatusMeta("nuevo_estado" as PetStatus).tone).toBe("gray");
+    expect(getPetStatusMeta("nuevo_estado" as PetStatus).tone).toBe("muted");
     expect(getPetStatusMeta(null).label).toBe("Estado desconocido");
     expect(getPetStatusMeta(undefined).label).toBe("Estado desconocido");
   });

@@ -58,18 +58,17 @@ export function labelsEspecieRaza(especie: string, raza: string | null): string 
 
 export type CarnetVaccineBadge = {
   label: string;
-  tone: "emerald" | "amber" | "rose" | "gray";
+  /** Tono semántico; la capa de UI lo resuelve con `resolveTone`. */
+  tone: string;
 };
 
 /** Etiqueta legible del estatus de vacuna en el carnet (nunca el código crudo). */
 export function carnetVaccineBadge(estatus: string | null): CarnetVaccineBadge {
   if (estatus && isVaccineStatus(estatus)) {
     const meta = getVaccineStatusMeta(estatus);
-    const tone =
-      estatus === "al_dia" ? "emerald" : estatus === "proxima_dosis" ? "amber" : "rose";
-    return { label: meta.label, tone };
+    return { label: meta.label, tone: meta.tone };
   }
-  return { label: "Sin estado", tone: "gray" };
+  return { label: "Sin estado", tone: "muted" };
 }
 
 export type CarnetViewModel = {

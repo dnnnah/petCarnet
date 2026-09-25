@@ -34,7 +34,6 @@ function renderContactSection(
     createElement(EmergencyContactSection, {
       petId: "test-1",
       petName: "Lucca",
-      species: "Perro",
       emergency: emergency ?? buildEmergency(),
       status,
       zonaSegura: "Colonia Centro",
@@ -46,7 +45,7 @@ function renderContactSection(
 describe("EmergencyContactSection", () => {
   it("muestra contacto normal para en_casa", () => {
     const html = renderContactSection("en_casa");
-    expect(html).toContain("Contacto de Emergencia");
+    expect(html).toContain("Contacto de emergencia");
     expect(html).not.toContain("Contacto urgente ahora");
     expect(html).toContain("Zona segura: Colonia Centro");
   });

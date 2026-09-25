@@ -20,7 +20,6 @@ function render(contact: Contact, isLost: boolean): string {
       contact,
       isLost,
       petName: "Lucca",
-      species: "Perro",
     }),
   );
 }
@@ -28,13 +27,13 @@ function render(contact: Contact, isLost: boolean): string {
 describe("EmergencyContact", () => {
   it("refleja el estado resuelto sin urgencia", () => {
     const html = render(BASE_CONTACT, false);
-    expect(html).toContain("Contacto de Emergencia");
+    expect(html).toContain("Contacto de emergencia");
     expect(html).not.toContain("Contacto urgente ahora");
-    expect(html).toContain("Si encontraste a Lucca, por favor contáctanos.");
+    expect(html).toContain("Si encontraste a Lucca, por favor contacta a su familia.");
     expect(html).not.toContain("llama o envía WhatsApp ahora");
     expect(html).toContain("Zona segura: cerca de casa");
     expect(html).toContain("href=\"tel:5656091856\"");
-    expect(html).toContain("from-emerald-700 to-teal-700");
+    expect(html).toContain("bg-brand text-white");
   });
 
   it("refleja el estado perdido activo con urgencia", () => {
@@ -44,10 +43,10 @@ describe("EmergencyContact", () => {
     };
     const html = render(contact, true);
     expect(html).toContain("Contacto urgente ahora");
-    expect(html).not.toContain("Contacto de Emergencia");
+    expect(html).not.toContain("Contacto de emergencia");
     expect(html).toContain("llama o envía WhatsApp ahora");
-    expect(html).not.toContain("Si encontraste a Lucca, por favor contáctanos.");
+    expect(html).not.toContain("Si encontraste a Lucca, por favor contacta a su familia.");
     expect(html).toContain("Zona donde se perdió: Parque de la Condesa");
-    expect(html).toContain("from-rose-600 to-red-700");
+    expect(html).toContain("bg-danger");
   });
 });

@@ -1,58 +1,90 @@
 import Link from "next/link";
-import { Heart, PawPrint, Sparkles } from "lucide-react";
+import { PawPrint } from "lucide-react";
 import { SiteNav } from "./SiteNav";
+import { ThemeToggle } from "./ThemeToggle";
 
 type AppShellProps = {
   children: React.ReactNode;
 };
 
+const footerLinks = [
+  { href: "/", label: "Inicio" },
+  { href: "/#mascotas", label: "Mascotas" },
+  { href: "/adopciones", label: "Adopciones" },
+  { href: "/login", label: "Iniciar sesión" },
+];
+
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 dotted-path opacity-40" />
-      <div className="pointer-events-none absolute left-3 top-8 rotate-12 text-amber-200/70 hidden sm:block">
-        <Sparkles size={26} />
-      </div>
-      <div className="pointer-events-none absolute right-3 top-20 h-24 w-14 rotate-[20deg] doodle-line hidden sm:block" />
-      <div className="pointer-events-none absolute left-5 top-36 rotate-12 text-emerald-200/80 hidden sm:block">
-        <PawPrint size={46} fill="currentColor" />
-      </div>
-      <div className="pointer-events-none absolute right-7 top-36 -rotate-12 text-pink-300/80 hidden sm:block">
-        <Heart size={30} />
-      </div>
-      <div className="pointer-events-none absolute bottom-28 left-8 text-blue-100 hidden md:block">
-        <Sparkles size={54} />
-      </div>
-
+    <div className="flex min-h-dvh flex-col">
       <a
         href="#contenido"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-emerald-600 focus:px-5 focus:py-3 focus:text-sm focus:font-extrabold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
       >
         Saltar al contenido
       </a>
 
-      <header className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-1.5 px-4 py-5 sm:gap-4 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-        <Link href="/" className="flex items-center gap-2 sm:gap-3">
-          <span className="grid h-10 w-10 sm:h-14 sm:w-14 place-items-center rounded-[1.1rem] sm:rounded-[1.35rem] bg-white text-gray-950 shadow-[0_12px_28px_rgba(17,24,39,0.09)] ring-1 ring-gray-100 dark:bg-white/10 dark:text-white dark:ring-white/10">
-            <PawPrint size={26} className="sm:hidden" />
-            <PawPrint size={34} className="hidden sm:block" />
-          </span>
-          <span>
-            <span className="block text-xl sm:text-3xl font-extrabold leading-7 tracking-tight text-gray-950 dark:text-gray-50">
-              PetCarnet
+      <header className="border-b border-rule bg-canvas">
+        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-3 px-4 py-3.5 sm:px-6 sm:py-4 lg:px-8">
+          <Link
+            href="/"
+            className="flex min-h-11 min-w-0 items-center gap-2.5"
+            aria-label="PetCarnet, inicio"
+          >
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-brand text-white">
+              <PawPrint size={20} aria-hidden="true" />
             </span>
-            <span className="block text-xs sm:text-base font-bold leading-5 text-gray-900 dark:text-gray-400">
-              Carnet Digital
+            <span className="min-w-0">
+              <span className="block font-display text-xl font-semibold leading-none tracking-tight text-ink">
+                PetCarnet
+              </span>
+              <span className="mt-0.5 block text-[11px] font-medium leading-none text-ink-3">
+                Carnet digital
+              </span>
             </span>
-          </span>
-        </Link>
+          </Link>
 
-        <SiteNav />
+          <ThemeToggle />
+
+          <SiteNav />
+        </div>
       </header>
 
-      <main id="contenido" tabIndex={-1} className="relative z-10 focus:outline-none">
+      <main id="contenido" tabIndex={-1} className="flex-1 focus:outline-none">
         {children}
       </main>
+
+      <footer className="mt-16 border-t border-rule bg-surface">
+        <div className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-6">
+            <div className="max-w-xs">
+              <p className="font-display text-lg font-semibold text-ink">PetCarnet</p>
+              <p className="mt-1.5 text-sm leading-6 text-ink-2">
+                El carnet digital de tu mascota: identidad, salud y contacto de emergencia en un
+                solo lugar.
+              </p>
+            </div>
+            <nav aria-label="Menú del pie">
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                {footerLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="-mx-2 inline-flex min-h-11 items-center rounded-xs px-2 text-sm font-medium text-ink-2 transition-colors hover:text-brand"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+          <p className="mt-8 border-t border-rule pt-6 text-xs text-ink-3">
+            Los perfiles públicos muestran únicamente la información que cada tutor decide
+            compartir.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }

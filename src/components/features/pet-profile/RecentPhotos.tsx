@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { Camera, ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Pill } from "@/components/ui/Pill";
+import { Surface } from "@/components/ui/Surface";
 
 type Photo = {
   id: string;
@@ -60,36 +61,28 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
 
   return (
     <MotionConfig reducedMotion="user">
-      <GlassCard className="p-5 sm:p-6 lg:p-7">
+      <Surface className="p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="flex items-center gap-3 text-xl sm:text-2xl font-extrabold text-gray-950 dark:text-white">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-pink-50 text-pink-500 ring-1 ring-pink-100 dark:bg-pink-500/15 dark:text-pink-400 dark:ring-pink-500/30">
-              <Camera size={22} />
-            </span>
+          <h2 className="flex items-center gap-2.5 font-display text-xl leading-tight text-ink">
+            <Camera size={19} aria-hidden="true" className="shrink-0 text-ink-3" />
             Fotos recientes
           </h2>
-          <span className="shrink-0 rounded-full bg-pink-50 px-3 py-1 text-sm font-extrabold text-pink-600 ring-1 ring-pink-100 dark:bg-pink-500/15 dark:text-pink-300 dark:ring-pink-500/30">
+          <Pill tone="muted" size="sm">
             {photos.length}
-          </span>
+          </Pill>
         </div>
 
-        <div className="mt-5 flex items-center gap-4">
-          <div className="group relative shrink-0 cursor-pointer">
-            <div className="rounded-full bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] p-[3px] transition hover:-translate-y-0.5">
-              <div className="rounded-full bg-white p-[3px] dark:bg-gray-900">
-                <Image
-                  src={profilePhoto}
-                  alt={`Foto de perfil de la mascota`}
-                  width={80}
-                  height={80}
-                  className="h-16 w-16 rounded-full object-cover sm:h-20 sm:w-20"
-                />
-              </div>
-            </div>
-            <span className="mt-2 block text-center text-xs font-extrabold text-gray-600 dark:text-gray-300">
-              Perfil
-            </span>
-          </div>
+        <div className="mt-5 flex items-center gap-3">
+          <Image
+            src={profilePhoto}
+            alt="Foto de perfil de la mascota"
+            width={80}
+            height={80}
+            className="size-16 shrink-0 rounded-md object-cover ring-1 ring-rule sm:size-20"
+          />
+          <p className="text-sm text-ink-2">
+            <span className="font-medium text-ink">Perfil</span> · foto principal
+          </p>
         </div>
 
         <div className="mt-5 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:gap-3">
@@ -98,7 +91,7 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               key={photo.id}
               onClick={() => setSelectedIndex(index)}
               aria-label={`Ver foto: ${photo.name}`}
-              className="group relative aspect-square overflow-hidden rounded-2xl ring-1 ring-gray-100 transition hover:-translate-y-0.5 hover:ring-pink-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:ring-gray-800 dark:hover:ring-pink-500/40"
+              className="group relative aspect-square overflow-hidden rounded-md ring-1 ring-rule transition-colors hover:ring-brand-rule"
             >
               <Image
                 src={failedPhotos.has(photo.id) ? profilePhoto : photo.url}
@@ -106,15 +99,15 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
                 width={400}
                 height={400}
                 onError={() => handleImageError(photo.id)}
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="size-full object-cover"
               />
-              <span className="absolute inset-0 grid place-items-center bg-gray-950/0 text-white opacity-0 transition group-hover:bg-gray-950/35 group-hover:opacity-100">
-                <Expand size={22} />
+              <span className="absolute inset-0 grid place-items-center bg-ink/40 text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+                <Expand size={20} aria-hidden="true" />
               </span>
             </button>
           ))}
         </div>
-      </GlassCard>
+      </Surface>
 
       <AnimatePresence>
         {selected && selectedIndex !== null ? (
@@ -122,7 +115,7 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-ink/80 p-4"
             onClick={() => setSelectedIndex(null)}
             role="dialog"
             aria-modal="true"
@@ -131,9 +124,9 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
             <button
               onClick={() => setSelectedIndex(null)}
               aria-label="Cerrar"
-              className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/25"
+              className="absolute right-4 top-4 grid size-11 place-items-center rounded-md bg-surface text-ink transition-colors hover:bg-canvas"
             >
-              <X size={24} />
+              <X size={22} aria-hidden="true" />
             </button>
 
             <button
@@ -142,9 +135,9 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
                 move(-1);
               }}
               aria-label="Foto anterior"
-              className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/25"
+              className="absolute left-3 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-md bg-surface text-ink transition-colors hover:bg-canvas"
             >
-              <ChevronLeft size={26} />
+              <ChevronLeft size={22} aria-hidden="true" />
             </button>
             <button
               onClick={(event) => {
@@ -152,9 +145,9 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
                 move(1);
               }}
               aria-label="Foto siguiente"
-              className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/25"
+              className="absolute right-3 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-md bg-surface text-ink transition-colors hover:bg-canvas"
             >
-              <ChevronRight size={26} />
+              <ChevronRight size={22} aria-hidden="true" />
             </button>
 
             <motion.div
@@ -163,10 +156,10 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="max-h-[85vh] w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl dark:bg-gray-900 dark:shadow-black/60"
+              className="max-h-[85vh] w-full max-w-xl overflow-hidden rounded-lg bg-surface ring-1 ring-rule"
               onClick={(event) => event.stopPropagation()}
             >
-              <div className="relative max-h-[60vh] overflow-hidden bg-gray-100 dark:bg-gray-800">
+              <div className="relative max-h-[60vh] overflow-hidden bg-sunken">
                 <Image
                   src={failedPhotos.has(selected.id) ? profilePhoto : selected.url}
                   alt={selected.name}
@@ -178,15 +171,15 @@ export function RecentPhotos({ photos, profilePhoto }: RecentPhotosProps) {
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-lg font-extrabold text-gray-950 dark:text-white">{selected.name}</p>
-                    <p className="mt-1 text-sm font-semibold text-gray-500 dark:text-gray-400">{selected.date}</p>
+                    <p className="font-display text-lg leading-snug text-ink">{selected.name}</p>
+                    <p className="mt-1 text-sm text-ink-2">{selected.date}</p>
                   </div>
-                  <span className="shrink-0 rounded-full bg-gray-100 px-3 py-1 text-xs font-extrabold text-gray-500 dark:bg-gray-800 dark:text-gray-300">
+                  <Pill tone="muted" size="sm">
                     {selectedIndex + 1} / {photos.length}
-                  </span>
+                  </Pill>
                 </div>
                 {selected.description ? (
-                  <p className="mt-3 font-bold leading-6 text-gray-700 dark:text-gray-200">{selected.description}</p>
+                  <p className="mt-2.5 text-sm leading-6 text-ink-2">{selected.description}</p>
                 ) : null}
               </div>
             </motion.div>

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { copyTextToClipboard } from "@/lib/clipboard";
+import { cx } from "@/lib/ui/tone";
 
 type CopyButtonProps = {
   value: string;
@@ -37,14 +38,18 @@ export function CopyButton({ value, label, copiedLabel = "¡Copiado!" }: CopyBut
       type="button"
       onClick={handleCopy}
       aria-label={copied ? copiedLabel : label}
-      className={[
-        "inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-extrabold transition outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
+      className={cx(
+        "inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition-colors duration-150",
         copied
-          ? "bg-emerald-500 text-white shadow-[0_8px_18px_rgba(16,185,129,0.28)]"
-          : "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 hover:bg-emerald-100 hover:ring-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-800 dark:hover:bg-emerald-500/25",
-      ].join(" ")}
+          ? "bg-success-soft text-success ring-1 ring-inset ring-success-rule"
+          : "bg-surface text-ink-2 ring-1 ring-inset ring-rule hover:bg-sunken hover:text-ink"
+      )}
     >
-      {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
+      {copied ? (
+        <Check size={15} aria-hidden="true" />
+      ) : (
+        <Copy size={15} aria-hidden="true" />
+      )}
       <span aria-live="polite">{copied ? copiedLabel : label}</span>
     </button>
   );

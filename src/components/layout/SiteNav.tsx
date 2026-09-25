@@ -1,62 +1,57 @@
 "use client";
 
 import Link from "next/link";
-import { Bone, HeartHandshake, LogIn, Moon, PawPrint, Sun } from "lucide-react";
-import { useTheme } from "@/app/providers";
+import { usePathname } from "next/navigation";
+import { Bone, HeartHandshake, LogIn, PawPrint } from "lucide-react";
+
+const links = [
+  { href: "/", label: "Inicio", icon: PawPrint, match: (p: string) => p === "/" },
+  {
+    href: "/#mascotas",
+    label: "Mascotas",
+    icon: Bone,
+    match: (p: string) => p.startsWith("/perfil"),
+  },
+  {
+    href: "/adopciones",
+    label: "Adopciones",
+    icon: HeartHandshake,
+    match: (p: string) => p.startsWith("/adopciones") || p.startsWith("/refugios"),
+  },
+  { href: "/login", label: "Iniciar sesión", icon: LogIn, match: (p: string) => p === "/login" },
+];
 
 export function SiteNav() {
-  const { theme, toggleTheme } = useTheme();
-  const isDark = theme === "dark";
+  const pathname = usePathname();
 
   return (
     <nav
-      className="flex items-center divide-x divide-gray-200 rounded-full bg-white px-1 py-1.5 shadow-[0_10px_24px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 dark:divide-gray-700/70 dark:bg-white/5 dark:ring-white/10"
       aria-label="Menú principal"
+      className="order-last -mx-4 w-[calc(100%+2rem)] px-4 sm:order-none sm:mx-0 sm:w-auto sm:px-0"
     >
-      <Link
-        href="/"
-        aria-label="Inicio"
-        className="inline-flex items-center gap-1.5 rounded-full px-2 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
-      >
-        <PawPrint size={16} className="text-emerald-600 dark:text-emerald-400" />
-        <span className="hidden sm:inline">Inicio</span>
-      </Link>
+      <ul className="flex flex-wrap items-center gap-0.5 border-t border-rule pt-2 sm:border-0 sm:pt-0">
+        {links.map(({ href, label, icon: Icon, match }) => {
+          const active = match(pathname ?? "");
 
-      <Link
-        href="/#mascotas"
-        aria-label="Ver mascotas"
-        className="inline-flex items-center gap-1 rounded-full px-2 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
-      >
-        <Bone size={16} className="text-emerald-600 dark:text-emerald-400" />
-        <span className="hidden sm:inline">Mascotas</span>
-      </Link>
-
-      <Link
-        href="/adopciones"
-        aria-label="Adopciones"
-        className="inline-flex items-center gap-1.5 rounded-full px-2 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
-      >
-        <HeartHandshake size={16} className="text-violet-600 dark:text-violet-400" />
-        <span className="hidden sm:inline">Adopciones</span>
-      </Link>
-
-      <Link
-        href="/login"
-        aria-label="Iniciar sesión"
-        className="inline-flex items-center gap-1.5 rounded-full px-2 py-2 text-sm font-extrabold text-gray-700 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-gray-200 dark:hover:bg-white/10 sm:px-3"
-      >
-        <LogIn size={16} className="text-emerald-600 dark:text-emerald-400" />
-        <span className="hidden sm:inline">Iniciar sesión</span>
-      </Link>
-
-      <button
-        type="button"
-        onClick={toggleTheme}
-        aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-        className="ml-0.5 inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-600 transition hover:bg-white/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:text-amber-300 dark:hover:bg-white/10"
-      >
-        {isDark ? <Sun size={16} /> : <Moon size={16} />}
-      </button>
+          return (
+            <li key={href} className="shrink-0">
+              <Link
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={[
+                  "flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-sm font-semibold transition-colors duration-150 sm:px-3",
+                  active
+                    ? "bg-brand-soft text-brand-ink"
+                    : "text-ink-2 hover:bg-sunken hover:text-ink",
+                ].join(" ")}
+              >
+                <Icon size={16} aria-hidden="true" className="shrink-0" />
+                <span className="whitespace-nowrap">{label}</span>
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
     </nav>
   );
 }

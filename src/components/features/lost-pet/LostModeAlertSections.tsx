@@ -34,15 +34,15 @@ export function LostModeAlertSections({
   return (
     <div className="space-y-6">
       {alert !== null ? (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-rose-200 bg-rose-50/80 px-5 py-3.5 ring-1 ring-rose-100 dark:border-rose-900 dark:bg-rose-950/30 dark:ring-rose-900/60">
-          <p className="inline-flex items-center gap-2 text-sm font-extrabold text-rose-700 dark:text-rose-300">
-            <BellRing size={18} aria-hidden="true" />
+        <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-danger-rule bg-surface px-4 py-3">
+          <p className="inline-flex items-center gap-2 text-sm font-semibold text-danger">
+            <BellRing size={16} aria-hidden="true" />
             Modo alerta activo en el perfil
           </p>
           <button
             type="button"
             onClick={deactivate}
-            className="inline-flex items-center rounded-full bg-rose-600 px-4 py-2 text-xs font-extrabold text-white transition hover:bg-rose-700"
+            className="inline-flex min-h-9 items-center rounded-md bg-danger-soft px-3 text-xs font-semibold text-danger ring-1 ring-inset ring-danger-rule transition-colors hover:bg-danger hover:text-white"
           >
             Desactivar modo alerta
           </button>

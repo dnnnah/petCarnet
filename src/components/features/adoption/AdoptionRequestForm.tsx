@@ -1,15 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
-import {
-  ArrowLeft,
-  CheckCircle2,
-  HeartHandshake,
-  Loader2,
-  Send,
-} from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { HeartHandshake, Send } from "lucide-react";
+import { BackLink } from "@/components/ui/BackLink";
+import { Field, SubmitButton } from "@/components/ui/Field";
+import { Pill } from "@/components/ui/Pill";
+import { Surface } from "@/components/ui/Surface";
 import { validateAdoptionRequest } from "@/lib/domain/adoption";
 import {
   buildAdoptionRequestDraft,
@@ -29,13 +25,6 @@ type AdoptionRequestFormProps = {
   pet: PetProfile;
   shelterName?: string | null;
 };
-
-const inputClass =
-  "mt-1 w-full rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none ring-emerald-300 transition focus:border-emerald-400 focus:ring-2";
-
-function inputErrorClass(hasError: boolean, base: string) {
-  return hasError ? `${base} border-rose-300 ring-rose-200 focus:border-rose-400 focus:ring-rose-200` : base;
-}
 
 export function AdoptionRequestForm({ pet, shelterName = null }: AdoptionRequestFormProps) {
   const [values, setValues] = useState<AdoptionFormValues>({
@@ -68,6 +57,7 @@ export function AdoptionRequestForm({ pet, shelterName = null }: AdoptionRequest
   const { requests, submit } = useAdoptionRequests(pet.id);
 
   const petName = pet.mascota.nombre;
+  const viaText = shelterName ? `A través del refugio ${shelterName}` : "Adopción directa";
 
   function handleChange(field: keyof AdoptionFormValues, value: string) {
     setValues((current) => ({ ...current, [field]: value }));
@@ -91,7 +81,7 @@ export function AdoptionRequestForm({ pet, shelterName = null }: AdoptionRequest
     const draft = buildAdoptionRequestDraft(pet.id, todayInMexicoISO(), values);
     const validation = validateAdoptionRequest({ pet, alert, draft });
 
-if (!validation.valid) {
+    if (!validation.valid) {
       const mapped = mapAdoptionValidationErrors(validation.errors);
       setFieldErrors(mapped.fields);
       setGeneralErrors(mapped.general);
@@ -127,78 +117,63 @@ if (!validation.valid) {
     const formattedDate = formatMexicanDate(submitted.fechaEnviada) ?? submitted.fechaEnviada;
 
     return (
-      <div className="space-y-6">
-        <GlassCard className="p-6 lg:p-8">
-          <div className="text-center">
-            <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400">
-              <CheckCircle2 size={34} aria-hidden="true" />
-            </span>
-            <h3 className="mt-4 text-2xl font-extrabold text-gray-950 dark:text-white sm:text-3xl">
-              Solicitud registrada
-            </h3>
-            <p className="mx-auto mt-2 max-w-md text-sm font-semibold text-gray-600 dark:text-gray-300">
-              ¡Gracias por querer darle un hogar a {petName}! Registramos tu solicitud con el
-              estado <strong>Enviada</strong>.
-            </p>
-          </div>
+      <Surface className="p-6 sm:p-8">
+        <div className="max-w-xl">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-adoption">
+            Adopción
+          </p>
+          <h2 className="mt-2 font-display text-2xl leading-snug text-ink sm:text-3xl">
+            Solicitud registrada
+          </h2>
+          <p className="mt-2.5 text-sm leading-6 text-ink-2">
+            Gracias por querer darle un hogar a {petName}. Registramos tu solicitud con el estado{" "}
+            <strong className="font-semibold text-ink">Enviada</strong>.
+          </p>
 
-          <dl className="mx-auto mt-6 grid max-w-xl gap-3 rounded-2xl border border-gray-100 bg-gray-50/60 p-5 dark:border-gray-800 dark:bg-gray-800/60">
-            <div className="flex items-center justify-between gap-4">
-              <dt className="text-sm font-extrabold text-gray-500 dark:text-gray-400">Folio</dt>
-              <dd className="font-mono text-sm font-bold text-gray-900 dark:text-white">
-                {submitted.id}
-              </dd>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <dt className="text-sm font-extrabold text-gray-500 dark:text-gray-400">Fecha</dt>
-              <dd className="text-sm font-bold text-gray-900 dark:text-white">{formattedDate}</dd>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <dt className="text-sm font-extrabold text-gray-500 dark:text-gray-400">Mascota</dt>
-              <dd className="text-sm font-bold text-gray-900 dark:text-white">{petName}</dd>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <dt className="text-sm font-extrabold text-gray-500 dark:text-gray-400">Estado</dt>
-              <dd className="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-3 py-1 text-xs font-extrabold text-violet-700 dark:bg-violet-500/15 dark:text-violet-300">
-                Enviada
-              </dd>
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <dt className="text-sm font-extrabold text-gray-500 dark:text-gray-400">A través de</dt>
-              <dd className="text-sm font-bold text-gray-900 dark:text-white">
-                {shelterName ?? "Adopción directa"}
+          <dl className="mt-6 divide-y divide-rule border-y border-rule">
+            {[
+              ["Folio", submitted.id],
+              ["Fecha", formattedDate],
+              ["Mascota", petName],
+              ["A través de", shelterName ?? "Adopción directa"],
+            ].map(([term, value]) => (
+              <div key={term} className="flex items-center justify-between gap-4 py-2.5">
+                <dt className="text-sm text-ink-2">{term}</dt>
+                <dd className="text-sm font-medium text-ink">{value}</dd>
+              </div>
+            ))}
+            <div className="flex items-center justify-between gap-4 py-2.5">
+              <dt className="text-sm text-ink-2">Estado</dt>
+              <dd>
+                <Pill tone="adoption" size="sm">
+                  Enviada
+                </Pill>
               </dd>
             </div>
           </dl>
 
-          <p className="mx-auto mt-5 max-w-md rounded-2xl border border-dashed border-violet-300 bg-violet-50/70 p-4 text-center text-xs font-bold leading-5 text-violet-800 dark:border-violet-700/60 dark:bg-violet-500/10 dark:text-violet-200">
-            Esto es un prototipo: tu solicitud no llegó a ningún refugio real. Quedó guardada solo en
-            este navegador para demostrar el flujo.
+          <p className="mt-5 rounded-md border border-dashed border-rule-strong bg-sunken p-4 text-xs leading-5 text-ink-2">
+            Esto es un prototipo: tu solicitud no llegó a ningún refugio real. Quedó guardada solo
+            en este navegador para demostrar el flujo.
           </p>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <Link
-              href={`/perfil/${pet.id}`}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(124,58,237,0.28)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
-            >
-              <ArrowLeft size={18} aria-hidden="true" />
-              Volver al perfil de {petName}
-            </Link>
+          <div className="mt-6">
+            <BackLink href={`/perfil/${pet.id}`}>Volver al perfil de {petName}</BackLink>
           </div>
-        </GlassCard>
-      </div>
+        </div>
+      </Surface>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {generalErrors.length > 0 ? (
         <div
           role="alert"
-          className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm font-bold text-rose-700 dark:border-rose-800 dark:bg-rose-500/10 dark:text-rose-200"
+          className="rounded-md border border-danger-rule bg-danger-soft p-4 text-sm text-danger"
         >
-          <p className="font-extrabold">No se pudo enviar la solicitud:</p>
-          <ul className="mt-1 list-inside list-disc space-y-1">
+          <p className="font-semibold">No se pudo enviar la solicitud:</p>
+          <ul className="mt-1.5 list-inside list-disc space-y-1">
             {generalErrors.map((error) => (
               <li key={error}>{error}</li>
             ))}
@@ -206,173 +181,139 @@ if (!validation.valid) {
         </div>
       ) : null}
 
-      <GlassCard className="p-6 lg:p-8">
-        <div className="flex items-center gap-3">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-violet-100 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300">
-            <HeartHandshake size={22} aria-hidden="true" />
+      <Surface className="p-6 sm:p-8">
+        <div className="flex items-start gap-3">
+          <span
+            aria-hidden="true"
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-adoption-soft text-adoption"
+          >
+            <HeartHandshake size={21} />
           </span>
           <div>
-            <h3 className="text-xl font-extrabold text-gray-950 dark:text-white">
+            <h2 className="font-display text-xl leading-snug text-ink">
               Solicitud de adopción de {petName}
-            </h3>
-            <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
-              {shelterName ? `A través del refugio ${shelterName}` : "Adopción directa"} · Prototipo,
-              sin envío real
-            </p>
+            </h2>
+            <p className="mt-1 text-sm text-ink-2">{viaText} · Prototipo, sin envío real</p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} noValidate className="mt-6 grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="adopcion-nombre" className="block text-xs font-extrabold uppercase text-gray-400">
-              Tu nombre completo
-            </label>
-            <input
-              ref={nombreRef}
-              id="adopcion-nombre"
-              name="nombre"
-              type="text"
-              autoComplete="name"
-              value={values.nombre}
-              onChange={(event) => handleChange("nombre", event.target.value)}
-              aria-invalid={fieldErrors.nombre ? true : undefined}
-              aria-describedby={fieldErrors.nombre ? "adopcion-nombre-error" : undefined}
-              placeholder="Ej: Ana López"
-              className={inputErrorClass(Boolean(fieldErrors.nombre), inputClass)}
-            />
-            {fieldErrors.nombre ? (
-              <p id="adopcion-nombre-error" className="mt-1 text-sm font-bold text-rose-600 dark:text-rose-300">
-                {fieldErrors.nombre}
-              </p>
-            ) : null}
-          </div>
-
-          <div>
-            <label htmlFor="adopcion-telefono" className="block text-xs font-extrabold uppercase text-gray-400">
-              Teléfono (WhatsApp)
-            </label>
-            <input
-              ref={telefonoRef}
-              id="adopcion-telefono"
-              name="telefono"
-              type="tel"
-              autoComplete="tel"
-              inputMode="numeric"
-              value={values.telefono}
-              onChange={(event) => handleChange("telefono", event.target.value)}
-              aria-invalid={fieldErrors.telefono ? true : undefined}
-              aria-describedby={fieldErrors.telefono ? "adopcion-telefono-error" : "adopcion-telefono-helper"}
-              placeholder="10 dígitos"
-              className={inputErrorClass(Boolean(fieldErrors.telefono), inputClass)}
-            />
-            {fieldErrors.telefono ? (
-              <p id="adopcion-telefono-error" className="mt-1 text-sm font-bold text-rose-600 dark:text-rose-300">
-                {fieldErrors.telefono}
-              </p>
-            ) : (
-              <p id="adopcion-telefono-helper" className="mt-1 text-xs font-semibold text-gray-400">
-                10 dígitos o formato México (52/521).
-              </p>
+        <form onSubmit={handleSubmit} noValidate className="mt-6 grid gap-5 sm:grid-cols-2">
+          <Field
+            id="adopcion-nombre"
+            label="Tu nombre completo"
+            error={fieldErrors.nombre}
+          >
+            {(control) => (
+              <input
+                {...control}
+                ref={nombreRef}
+                name="nombre"
+                type="text"
+                autoComplete="name"
+                value={values.nombre}
+                onChange={(event) => handleChange("nombre", event.target.value)}
+                placeholder="Ej: Ana López"
+              />
             )}
-          </div>
+          </Field>
 
-          <div>
-            <label htmlFor="adopcion-email" className="block text-xs font-extrabold uppercase text-gray-400">
-              Correo electrónico <span className="font-semibold normal-case text-gray-300 dark:text-gray-500">(opcional)</span>
-            </label>
-            <input
-              ref={emailRef}
-              id="adopcion-email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={values.email}
-              onChange={(event) => handleChange("email", event.target.value)}
-              aria-invalid={fieldErrors.email ? true : undefined}
-              aria-describedby={fieldErrors.email ? "adopcion-email-error" : undefined}
-              placeholder="opcional@correo.mx"
-              className={inputErrorClass(Boolean(fieldErrors.email), inputClass)}
-            />
-            {fieldErrors.email ? (
-              <p id="adopcion-email-error" className="mt-1 text-sm font-bold text-rose-600 dark:text-rose-300">
-                {fieldErrors.email}
-              </p>
-            ) : null}
-          </div>
+          <Field
+            id="adopcion-telefono"
+            label="Teléfono (WhatsApp)"
+            error={fieldErrors.telefono}
+            help="10 dígitos o formato México (52/521)."
+          >
+            {(control) => (
+              <input
+                {...control}
+                ref={telefonoRef}
+                name="telefono"
+                type="tel"
+                autoComplete="tel"
+                inputMode="numeric"
+                value={values.telefono}
+                onChange={(event) => handleChange("telefono", event.target.value)}
+                placeholder="10 dígitos"
+              />
+            )}
+          </Field>
 
-          <div>
-            <label htmlFor="adopcion-motivo" className="block text-xs font-extrabold uppercase text-gray-400">
-              ¿Por qué quieres adoptar a {petName}?
-            </label>
-            <textarea
-              ref={motivoRef}
-              id="adopcion-motivo"
-              name="motivo"
-              rows={3}
-              value={values.motivo}
-              onChange={(event) => handleChange("motivo", event.target.value)}
-              aria-invalid={fieldErrors.motivo ? true : undefined}
-              aria-describedby={fieldErrors.motivo ? "adopcion-motivo-error" : undefined}
-              placeholder="Cuéntanos sobre tu hogar y el cuidado que le ofrecerías."
-              className={inputErrorClass(Boolean(fieldErrors.motivo), `${inputClass} resize-none`)}
-            />
-            {fieldErrors.motivo ? (
-              <p id="adopcion-motivo-error" className="mt-1 text-sm font-bold text-rose-600 dark:text-rose-300">
-                {fieldErrors.motivo}
-              </p>
-            ) : null}
-          </div>
+          <Field
+            id="adopcion-email"
+            label="Correo electrónico"
+            optional
+            error={fieldErrors.email}
+          >
+            {(control) => (
+              <input
+                {...control}
+                ref={emailRef}
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={values.email}
+                onChange={(event) => handleChange("email", event.target.value)}
+                placeholder="opcional@correo.mx"
+              />
+            )}
+          </Field>
+
+          <Field
+            id="adopcion-motivo"
+            label={`¿Por qué quieres adoptar a ${petName}?`}
+            error={fieldErrors.motivo}
+            className="sm:col-span-2"
+          >
+            {(control) => (
+              <textarea
+                {...control}
+                ref={motivoRef}
+                name="motivo"
+                rows={3}
+                value={values.motivo}
+                onChange={(event) => handleChange("motivo", event.target.value)}
+                placeholder="Cuéntanos sobre tu hogar y el cuidado que le ofrecerías."
+                className={`${control.className} resize-none`}
+              />
+            )}
+          </Field>
+
+          <Field id="adopcion-notas" label="Notas adicionales" optional className="sm:col-span-2">
+            {(control) => (
+              <textarea
+                {...control}
+                name="notas"
+                rows={2}
+                value={values.notas}
+                onChange={(event) => handleChange("notas", event.target.value)}
+                placeholder="Ej: vivo en un departamento, tengo espacio para pasearla."
+                className={`${control.className} resize-none`}
+              />
+            )}
+          </Field>
 
           <div className="sm:col-span-2">
-            <label htmlFor="adopcion-notas" className="block text-xs font-extrabold uppercase text-gray-400">
-              Notas adicionales <span className="font-semibold normal-case text-gray-300 dark:text-gray-500">(opcional)</span>
-            </label>
-            <textarea
-              id="adopcion-notas"
-              name="notas"
-              rows={2}
-              value={values.notas}
-              onChange={(event) => handleChange("notas", event.target.value)}
-              placeholder="Ej: vivo en un departamento, tengo espacio para pasearla."
-              className={`${inputClass} resize-none`}
-            />
-          </div>
-
-          <div className="sm:col-span-2">
-            <button
-              type="submit"
-              disabled={phase === "sending"}
-              className="inline-flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-violet-600 px-8 py-3 text-base font-extrabold text-white shadow-[0_16px_30px_rgba(124,58,237,0.3)] transition hover:-translate-y-0.5 hover:bg-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+            <SubmitButton
+              busy={phase === "sending"}
+              busyLabel="Enviando…"
+              icon={<Send size={17} aria-hidden="true" />}
             >
-              {phase === "sending" ? (
-                <>
-                  <Loader2 size={20} className="animate-spin" aria-hidden="true" />
-                  Enviando...
-                </>
-              ) : (
-                <>
-                  <Send size={20} aria-hidden="true" />
-                  Enviar solicitud
-                </>
-              )}
-            </button>
+              Enviar solicitud
+            </SubmitButton>
           </div>
         </form>
 
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-dashed border-violet-300 bg-violet-50/70 p-4 text-xs font-bold leading-5 text-violet-800 dark:border-violet-700/60 dark:bg-violet-500/10 dark:text-violet-200">
-          <p>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-md border border-dashed border-rule-strong bg-sunken p-4">
+          <p className="max-w-md text-xs leading-5 text-ink-2">
             Prototipo: la solicitud no se envía a ningún servidor. Queda registrada solo en este
-            navegador. {requests.length > 0 ? `Solicitudes guardadas en este dispositivo: ${requests.length}.` : ""}
+            navegador.
+            {requests.length > 0
+              ? ` Solicitudes guardadas en este dispositivo: ${requests.length}.`
+              : ""}
           </p>
-          <Link
-            href={`/perfil/${pet.id}`}
-            className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 font-extrabold text-violet-700 ring-1 ring-violet-200 transition hover:bg-violet-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:bg-gray-900 dark:text-violet-300 dark:ring-violet-700"
-          >
-            <ArrowLeft size={16} aria-hidden="true" />
-            Cancelar y volver al perfil
-          </Link>
+          <BackLink href={`/perfil/${pet.id}`}>Cancelar y volver al perfil</BackLink>
         </div>
-      </GlassCard>
+      </Surface>
     </div>
   );
 }

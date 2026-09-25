@@ -3,7 +3,10 @@
 import { useRef, useState } from "react";
 import { toBlob, toPng } from "html-to-image";
 import { AlertTriangle, BellRing, Camera, Download, Share2, X } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Field } from "@/components/ui/Field";
+import { Pill } from "@/components/ui/Pill";
+import { Surface } from "@/components/ui/Surface";
+import { cx } from "@/lib/ui/tone";
 import { LostPetAlertImage } from "./LostPetAlertImage";
 import { formatMexicanDate } from "@/lib/dateFormat";
 import { useLostAlerts } from "@/lib/useLostAlerts";
@@ -114,45 +117,49 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
 
   return (
     <div className="space-y-6">
-      <GlassCard className="p-6 lg:p-7">
-        <h3 className="flex items-center gap-3 text-xl font-extrabold text-gray-950 dark:text-white">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300 ring-1 ring-amber-100">
-            <AlertTriangle size={20} />
+      <Surface className="p-6">
+        <h3 className="flex items-center gap-2.5 font-display text-xl leading-tight text-ink">
+          <span
+            aria-hidden="true"
+            className="grid size-9 shrink-0 place-items-center rounded-md bg-warning-soft text-warning"
+          >
+            <AlertTriangle size={19} />
           </span>
           Personalizar alerta
         </h3>
-        <p className="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300">
-          Modifica los datos antes de generar la imagen. Los campos se pre-rellenan con la información existente.
+        <p className="mt-2 max-w-xl text-sm leading-6 text-ink-2">
+          Modifica los datos antes de generar la imagen. Los campos se pre-rellenan con la
+          información existente.
         </p>
 
-        <div className="mt-5 flex items-center gap-4 rounded-2xl border border-gray-100 bg-gray-50/60 dark:border-gray-800 dark:bg-gray-800/60 p-4">
+        <div className="mt-5 flex items-center gap-4 rounded-md border border-rule bg-sunken p-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={photoUrl}
             alt="Foto de la alerta"
-            className="h-20 w-20 rounded-2xl object-cover ring-1 ring-gray-200"
+            className="size-20 rounded-md object-cover"
           />
           <div className="min-w-0">
-            <p className="text-sm font-extrabold text-gray-900 dark:text-white">Foto de la alerta</p>
-            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400">
+            <p className="text-sm font-medium text-ink">Foto de la alerta</p>
+            <p className="mt-0.5 text-xs text-ink-2">
               {customPhoto ? "Cargaste una foto nueva" : "Se usa la foto del perfil por defecto"}
             </p>
             <div className="mt-2 flex flex-wrap gap-2">
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-gray-900 px-3 py-1.5 text-xs font-extrabold text-gray-800 dark:text-gray-100 ring-1 ring-gray-200 dark:ring-gray-700 transition hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md border border-rule bg-surface px-3 text-xs font-semibold text-ink-2 transition-colors hover:border-brand-rule hover:text-brand"
               >
-                <Camera size={14} />
+                <Camera size={14} aria-hidden="true" />
                 Cambiar foto
               </button>
               {customPhoto ? (
                 <button
                   type="button"
                   onClick={() => setCustomPhoto(null)}
-                  className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-gray-900 px-3 py-1.5 text-xs font-extrabold text-rose-600 dark:text-rose-300 ring-1 ring-rose-200 transition hover:bg-rose-50 dark:hover:bg-rose-500/15"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-md border border-rule bg-surface px-3 text-xs font-semibold text-ink-2 transition-colors hover:border-danger-rule hover:text-danger"
                 >
-                  <X size={14} />
+                  <X size={14} aria-hidden="true" />
                   Restaurar foto del perfil
                 </button>
               ) : null}
@@ -168,110 +175,111 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
         </div>
 
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          <div>
-            <label className="block text-xs font-extrabold uppercase text-gray-400">
-              Última vez visto
-            </label>
-            <input
-              type="text"
-              value={lostZone}
-              onChange={(e) => setLostZone(e.target.value)}
-              placeholder="Ej: Parque de la Condesa"
-              className="mt-1 w-full rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none ring-emerald-300 transition focus:border-emerald-400 focus:ring-2"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-extrabold uppercase text-gray-400">
-              Fecha de pérdida
-            </label>
-            <input
-              type="date"
-              value={lostDate}
-              onChange={(e) => setLostDate(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none ring-emerald-300 transition focus:border-emerald-400 focus:ring-2"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-extrabold uppercase text-gray-400">
-              Recompensa (MXN)
-            </label>
-            <input
-              type="number"
-              value={reward}
-              onChange={(e) => setReward(e.target.value)}
-              placeholder="Opcional"
-              min="0"
-              className="mt-1 w-full rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none ring-emerald-300 transition focus:border-emerald-400 focus:ring-2"
-            />
-          </div>
-          <div>
-            <label className="block text-xs font-extrabold uppercase text-gray-400">
-              Teléfono de contacto
-            </label>
-            <input
-              type="text"
-              value={pet.contacto.telefonoPrincipal}
-              disabled
-              className="mt-1 w-full rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800/60 px-4 py-3 text-sm font-bold text-gray-500 dark:text-gray-400"
-            />
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <label className="block text-xs font-extrabold uppercase text-gray-400">
-            Mensaje de alerta
-          </label>
-          <textarea
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Ej: Se perdió cerca del parque. Por favor ayúdame a encontrarlo."
-            rows={3}
-            className="mt-1 w-full rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white outline-none ring-emerald-300 transition focus:border-emerald-400 focus:ring-2 resize-none"
-          />
-        </div>
-      </GlassCard>
-
-      <GlassCard className="p-6 lg:p-7">
-        <h3 className="flex items-center gap-3 text-xl font-extrabold text-gray-950 dark:text-white">
-          <span
-            className={[
-              "grid h-9 w-9 place-items-center rounded-full ring-1",
-              isLostModeActive
-                ? "bg-rose-500/15 text-rose-500 ring-rose-200 dark:text-rose-300 dark:ring-rose-900"
-                : "bg-gray-100 text-gray-500 ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700",
-            ].join(" ")}
+          <Field id="alerta-zona" label="Última vez visto">
+            {(control) => (
+              <input
+                {...control}
+                type="text"
+                value={lostZone}
+                onChange={(e) => setLostZone(e.target.value)}
+                placeholder="Ej: Parque de la Condesa"
+              />
+            )}
+          </Field>
+          <Field id="alerta-fecha" label="Fecha de pérdida">
+            {(control) => (
+              <input
+                {...control}
+                type="date"
+                value={lostDate}
+                onChange={(e) => setLostDate(e.target.value)}
+              />
+            )}
+          </Field>
+          <Field id="alerta-recompensa" label="Recompensa (MXN)">
+            {(control) => (
+              <input
+                {...control}
+                type="number"
+                value={reward}
+                onChange={(e) => setReward(e.target.value)}
+                placeholder="Opcional"
+                min="0"
+              />
+            )}
+          </Field>
+          <Field id="alerta-telefono" label="Teléfono de contacto">
+            {(control) => (
+              <input {...control} type="text" value={pet.contacto.telefonoPrincipal} disabled />
+            )}
+          </Field>
+          <Field
+            id="alerta-mensaje"
+            label="Mensaje de alerta"
+            className="sm:col-span-2"
           >
-            <BellRing size={20} />
+            {(control) => (
+              <textarea
+                {...control}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Ej: Se perdió cerca del parque. Por favor ayúdame a encontrarlo."
+                rows={3}
+                className={`${control.className} resize-none`}
+              />
+            )}
+          </Field>
+        </div>
+      </Surface>
+
+      <Surface className="p-6">
+        <h3 className="flex items-center gap-2.5 font-display text-xl leading-tight text-ink">
+          <span
+            aria-hidden="true"
+            className={cx(
+              "grid size-9 shrink-0 place-items-center rounded-md",
+              isLostModeActive ? "bg-danger-soft text-danger" : "bg-sunken text-ink-3"
+            )}
+          >
+            <BellRing size={19} />
           </span>
           Modo alerta en el perfil
         </h3>
-        <p className="mt-2 text-sm font-semibold text-gray-600 dark:text-gray-300">
-          Al activarlo, el perfil público de {pet.mascota.nombre} mostrará el banner de
-          mascota perdida con los datos que definiste arriba.
+        <p className="mt-2 max-w-xl text-sm leading-6 text-ink-2">
+          Al activarlo, el perfil público de {pet.mascota.nombre} mostrará el banner de mascota
+          perdida con los datos que definiste arriba.
         </p>
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gray-100 bg-gray-50/60 p-4 dark:border-gray-800 dark:bg-gray-800/60">
-          <p className="text-sm font-extrabold text-gray-900 dark:text-white">
-            {isLostModeActive ? "Modo alerta activo" : "Modo alerta inactivo"}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-md border border-rule bg-sunken p-4">
+          <p className="flex items-center gap-2 text-sm font-medium text-ink">
+            {isLostModeActive ? (
+              <Pill tone="danger" size="sm" icon={<BellRing size={13} />}>
+                Modo alerta activo
+              </Pill>
+            ) : (
+              <Pill tone="muted" size="sm">
+                Modo alerta inactivo
+              </Pill>
+            )}
           </p>
           <button
             type="button"
             onClick={handleToggleLostMode}
             aria-pressed={isLostModeActive}
-            className={[
-              "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(225,29,72,0.18)] transition hover:-translate-y-0.5",
+            className={cx(
+              "inline-flex min-h-11 items-center gap-2 rounded-md px-4 text-sm font-semibold transition-colors",
               isLostModeActive
-                ? "bg-gray-800 hover:bg-gray-900 dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white"
-                : "bg-rose-600 hover:bg-rose-700",
-            ].join(" ")}
+                ? "border border-rule bg-surface text-ink-2 hover:border-brand-rule hover:text-brand"
+                : "bg-danger text-white hover:brightness-110"
+            )}
           >
-            <BellRing size={16} />
+            <BellRing size={16} aria-hidden="true" />
             {isLostModeActive ? "Desactivar en el perfil" : "Activar en el perfil"}
           </button>
         </div>
-      </GlassCard>
+      </Surface>
 
       <div className="flex flex-col items-center gap-6">
-        <p className="text-sm font-extrabold uppercase tracking-wider text-gray-400">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-3">
           Vista previa de la imagen
         </p>
 
@@ -298,18 +306,18 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
           <button
             onClick={handleDownload}
             disabled={downloading}
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-6 py-3 text-sm font-extrabold text-white shadow-[0_16px_30px_rgba(16,185,129,0.2)] transition hover:-translate-y-0.5 hover:bg-emerald-600 disabled:opacity-50"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2 disabled:opacity-50"
           >
-            <Download size={18} />
-            {downloading ? "Generando..." : "Descargar imagen PNG"}
+            <Download size={17} aria-hidden="true" />
+            {downloading ? "Generando…" : "Descargar imagen PNG"}
           </button>
           <button
             onClick={handleShare}
             disabled={sharing}
-            className="inline-flex items-center gap-2 rounded-full bg-white dark:bg-gray-900 px-6 py-3 text-sm font-extrabold text-gray-900 dark:text-white shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 dark:ring-gray-700 transition hover:-translate-y-0.5 disabled:opacity-50"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md border border-rule bg-surface px-4 text-sm font-semibold text-ink-2 transition-colors hover:border-brand-rule hover:text-brand disabled:opacity-50"
           >
-            <Share2 size={18} />
-            {sharing ? "Compartiendo..." : "Compartir"}
+            <Share2 size={17} aria-hidden="true" />
+            {sharing ? "Compartiendo…" : "Compartir"}
           </button>
         </div>
       </div>

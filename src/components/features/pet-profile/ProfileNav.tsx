@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Stethoscope,
 } from "lucide-react";
+import { cx } from "@/lib/ui/tone";
 
 type NavItem = {
   id: string;
@@ -75,33 +76,35 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
   }
 
   return (
-    <nav className="sticky top-0 z-40 -mx-4 mb-6 px-4 py-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div className="flex w-full items-center justify-between gap-1.5 overflow-x-auto scrollbar-hide rounded-full border border-gray-100 bg-white/80 p-1.5 shadow-[0_14px_34px_rgba(17,24,39,0.07)] backdrop-blur-lg dark:border-gray-800 dark:bg-gray-900/80">
+    <nav
+      aria-label="Secciones del perfil"
+      className="sticky top-0 z-40 -mx-4 border-y border-rule bg-canvas/95 px-4 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+    >
+      <ul className="scrollbar-none -mx-1 flex items-center gap-0.5 overflow-x-auto py-1.5">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
 
           return (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              aria-label={item.label}
-              aria-current={isActive ? "true" : undefined}
-              className={[
-                "inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-extrabold outline-none transition focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
-                "md:px-3.5 md:py-2 md:text-sm",
-                isActive
-                  ? "bg-emerald-500 text-white shadow-[0_8px_18px_rgba(16,185,129,0.28)]"
-                  : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800",
-                "h-11 w-11 md:h-auto md:w-auto",
-              ].join(" ")}
-            >
-              <Icon size={18} className="shrink-0" aria-hidden="true" />
-              <span className="hidden md:inline">{item.label}</span>
-            </button>
+            <li key={item.id} className="shrink-0">
+              <button
+                type="button"
+                onClick={() => scrollTo(item.id)}
+                aria-current={isActive ? "true" : undefined}
+                className={cx(
+                  "flex min-h-11 items-center gap-1.5 rounded-md px-2.5 text-sm font-medium transition-colors duration-150",
+                  isActive
+                    ? "bg-brand-soft text-brand-ink"
+                    : "text-ink-3 hover:bg-sunken hover:text-ink"
+                )}
+              >
+                <Icon size={15} className="shrink-0" aria-hidden="true" />
+                <span className="whitespace-nowrap">{item.label}</span>
+              </button>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </nav>
   );
 }

@@ -1,29 +1,34 @@
+import { cx, resolveTone } from "@/lib/ui/tone";
+
 type BadgeProps = {
   children: React.ReactNode;
   icon?: React.ReactNode;
-  tone?: "mint" | "pink" | "blue" | "yellow" | "purple" | "gray" | "rose";
+  tone?: string;
+  className?: string;
 };
 
-const tones = {
-  mint: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
-  pink: "bg-pink-100 text-pink-600 dark:bg-pink-500/15 dark:text-pink-300",
-  blue: "bg-blue-100/78 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300",
-  yellow: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
-  purple: "bg-violet-100 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300",
-  gray: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
-  rose: "bg-rose-100/90 text-rose-700 dark:bg-rose-500/20 dark:text-rose-300",
-};
+/**
+ * Etiqueta de estado. A diferencia de `Pill` no se trunca: si el texto es
+ * largo, se ajusta. Se reserva a información que identifica ("Perdido",
+ * "En casa", "Vacunas al día") — nunca a decoración.
+ */
+export function Badge({ children, icon, tone = "muted", className }: BadgeProps) {
+  const classes = resolveTone(tone);
 
-export function Badge({ children, icon, tone = "gray" }: BadgeProps) {
   return (
     <span
-      className={[
-        "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-sm font-extrabold",
-        tones[tone],
-      ].join(" ")}
+      className={cx(
+        "inline-flex max-w-full items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset",
+        classes.soft,
+        className
+      )}
     >
-      {icon}
-      {children}
+      {icon ? (
+        <span aria-hidden="true" className="shrink-0">
+          {icon}
+        </span>
+      ) : null}
+      <span className="min-w-0">{children}</span>
     </span>
   );
 }

@@ -1,5 +1,6 @@
-import { Info, PawPrint } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Info } from "lucide-react";
+import { Section } from "@/components/ui/Section";
+import { DataList } from "@/components/ui/DataList";
 
 type InfoCardProps = {
   petName: string;
@@ -14,48 +15,34 @@ type InfoCardProps = {
 };
 
 export function InfoCard({ petName, info }: InfoCardProps) {
-  const rows = [
-    ["Especie:", info.species],
-    ["Raza:", info.breed],
-    ["Color:", info.color],
-    ["Peso:", info.weight],
-    ["Fecha de nacimiento:", info.birthDate],
-  ];
-
   return (
-    <GlassCard className="relative h-full overflow-hidden p-6 lg:p-7">
-      <div className="absolute bottom-5 right-5 text-amber-100">
-        <PawPrint size={42} fill="currentColor" />
-      </div>
-      <h2 className="flex items-center gap-3 text-2xl font-extrabold text-gray-950 dark:text-white">
-        <span className="grid h-9 w-9 place-items-center rounded-full bg-blue-50 text-blue-500 dark:bg-blue-500/15 dark:text-blue-300 ring-1 ring-blue-100">
-          <Info size={21} />
-        </span>
-        Información de {petName}
-      </h2>
-
-      <div className="relative mt-7 space-y-4">
-        {rows.map(([label, value]) => (
-          <div key={label} className="grid grid-cols-[22px_1fr] gap-3">
-            <PawPrint className="mt-1 text-gray-700 dark:text-gray-200" size={16} />
-            <p className="leading-6 text-gray-900 dark:text-white">
-              <span className="font-extrabold">{label}</span>{" "}
-              <span className="font-semibold">{value}</span>
-            </p>
-          </div>
-        ))}
-        <div className="grid grid-cols-[22px_1fr] gap-3">
-          <PawPrint className="mt-1 text-gray-700 dark:text-gray-200" size={16} />
-          <div>
-            <p className="font-extrabold text-gray-900 dark:text-white">Rasgos distintivos:</p>
-            {info.distinctive.map((item) => (
-              <p key={item} className="mt-1 font-semibold leading-6 text-gray-700 dark:text-gray-200">
-                {item}
-              </p>
-            ))}
-          </div>
-        </div>
-      </div>
-    </GlassCard>
+    <Section
+      title="Ficha de identificación"
+      eyebrow={`Datos de ${petName}`}
+      icon={<Info size={18} />}
+    >
+      <DataList
+        items={[
+          { label: "Especie", value: info.species },
+          { label: "Raza", value: info.breed },
+          { label: "Color", value: info.color },
+          { label: "Peso", value: info.weight },
+          { label: "Nacimiento", value: info.birthDate },
+          {
+            label: "Rasgos distintivos",
+            value:
+              info.distinctive.length > 0 ? (
+                <ul className="list-disc space-y-1 pl-5">
+                  {info.distinctive.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                "Sin registrar"
+              ),
+          },
+        ]}
+      />
+    </Section>
   );
 }
