@@ -25,7 +25,7 @@ const sizes = {
 };
 
 const variants = {
-  primary: "bg-brand text-white hover:bg-brand-hover shadow-1",
+  primary: "bg-brand text-on-solid hover:bg-brand-hover shadow-1",
   secondary: "bg-surface text-ink ring-1 ring-inset ring-rule-strong hover:bg-sunken",
   quiet: "bg-transparent text-ink-2 hover:bg-sunken hover:text-ink",
   danger: resolveTone("danger").solid,

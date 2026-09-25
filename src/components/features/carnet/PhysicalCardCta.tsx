@@ -40,7 +40,7 @@ export function PhysicalCardCta({ petId, petName, card }: PhysicalCardCtaProps) 
         </div>
         <Link
           href={`/perfil/${petId}/carnet`}
-          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-brand-hover"
         >
           <IdCard size={16} aria-hidden="true" />
           Estudio del carnet

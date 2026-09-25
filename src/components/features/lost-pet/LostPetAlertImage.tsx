@@ -32,7 +32,7 @@ export function LostPetAlertImage({
   return (
     <div
       id="lost-pet-alert-image"
-      className="w-full overflow-hidden bg-white text-ink"
+      className="alert-card w-full overflow-hidden"
     >
       <div className="bg-danger px-8 py-6 text-center">
         <p className="text-sm font-semibold uppercase tracking-[0.25em] text-white/85">

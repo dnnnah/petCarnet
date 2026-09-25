@@ -39,7 +39,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   brand: {
     text: "text-brand",
     soft: "bg-brand-soft text-brand-ink ring-brand-rule",
-    solid: "bg-brand text-white hover:bg-brand-hover",
+    solid: "bg-brand text-on-solid hover:bg-brand-hover",
     rule: "border-brand-rule",
     accent: "bg-brand",
     panel: "bg-brand-soft",
@@ -47,7 +47,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   success: {
     text: "text-success",
     soft: "bg-success-soft text-success ring-success-rule",
-    solid: "bg-success text-white hover:brightness-110",
+    solid: "bg-success text-on-solid hover:brightness-110",
     rule: "border-success-rule",
     accent: "bg-success",
     panel: "bg-success-soft",
@@ -55,7 +55,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   warning: {
     text: "text-warning",
     soft: "bg-warning-soft text-warning ring-warning-rule",
-    solid: "bg-warning text-white hover:brightness-110",
+    solid: "bg-warning text-on-solid hover:brightness-110",
     rule: "border-warning-rule",
     accent: "bg-warning",
     panel: "bg-warning-soft",
@@ -63,7 +63,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   danger: {
     text: "text-danger",
     soft: "bg-danger-soft text-danger ring-danger-rule",
-    solid: "bg-danger text-white hover:brightness-110",
+    solid: "bg-danger text-on-solid hover:brightness-110",
     rule: "border-danger-rule",
     accent: "bg-danger",
     panel: "bg-danger-soft",
@@ -71,7 +71,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   info: {
     text: "text-info",
     soft: "bg-info-soft text-info ring-info-rule",
-    solid: "bg-info text-white hover:brightness-110",
+    solid: "bg-info text-on-solid hover:brightness-110",
     rule: "border-info-rule",
     accent: "bg-info",
     panel: "bg-info-soft",
@@ -79,7 +79,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   adoption: {
     text: "text-adoption",
     soft: "bg-adoption-soft text-adoption ring-adoption-rule",
-    solid: "bg-adoption text-white hover:brightness-110",
+    solid: "bg-adoption text-on-solid hover:brightness-110",
     rule: "border-adoption-rule",
     accent: "bg-adoption",
     panel: "bg-adoption-soft",
@@ -87,7 +87,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   settled: {
     text: "text-settled",
     soft: "bg-settled-soft text-settled ring-settled-rule",
-    solid: "bg-settled text-white hover:brightness-110",
+    solid: "bg-settled text-on-solid hover:brightness-110",
     rule: "border-settled-rule",
     accent: "bg-settled",
     panel: "bg-settled-soft",
@@ -95,7 +95,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   rescue: {
     text: "text-rescue",
     soft: "bg-rescue-soft text-rescue ring-rescue-rule",
-    solid: "bg-rescue text-white hover:brightness-110",
+    solid: "bg-rescue text-on-solid hover:brightness-110",
     rule: "border-rescue-rule",
     accent: "bg-rescue",
     panel: "bg-rescue-soft",
@@ -103,7 +103,7 @@ export const TONE_CLASSES: Record<ToneName, ToneClasses> = {
   muted: {
     text: "text-ink-2",
     soft: "bg-muted-soft text-ink-2 ring-muted-rule",
-    solid: "bg-ink-2 text-white hover:brightness-110",
+    solid: "bg-ink-2 text-on-solid hover:brightness-110",
     rule: "border-rule",
     accent: "bg-ink-3",
     panel: "bg-muted-soft",

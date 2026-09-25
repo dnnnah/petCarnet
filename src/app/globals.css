@@ -19,47 +19,53 @@
   /* Ink scale */
   --ink: #1b1815;
   --ink-2: #56504a;
-  --ink-3: #7f786d;
+  --ink-3: #6f675f;
 
   /* Rules & borders */
   --rule: #e2dcd0;
   --rule-strong: #c7bfb0;
 
-  /* Brand — forest evergreen */
-  --brand: #14503e;
-  --brand-hover: #0e3d2f;
-  --brand-ink: #123f31;
-  --brand-soft: #e6eee9;
-  --brand-rule: #b9d0c5;
+  /* Texto sobre un fondo sólido. En claro los sólidos son oscuros; en oscuro
+     son claros, así que este token se invierte y `text-white` deja de usarse
+     en botones (era ilegible en modo oscuro). */
+  --on-solid: #ffffff;
 
-  /* Semantic */
-  --success: #1c6639;
-  --success-soft: #e3f0e7;
-  --success-rule: #b4d6c0;
+  /* Marca — pino profundo, no esmeralda */
+  --brand: #1f4a3a;
+  --brand-hover: #17382c;
+  --brand-ink: #1b4133;
+  --brand-soft: #e7ede8;
+  --brand-rule: #b3c8bd;
 
-  --warning: #85570a;
-  --warning-soft: #f9efdb;
-  --warning-rule: #e0c894;
+  /* Semánticos — pino, ocre, granate, terracota, pizarra y petróleo.
+     Fuera azul, celeste, esmeralda brillante, rosa y violeta. */
+  --success: #2c5f45;
+  --success-soft: #e4ede7;
+  --success-rule: #b0c9b8;
 
-  --danger: #a41c15;
-  --danger-soft: #fbe8e5;
-  --danger-rule: #e9b3ac;
+  --warning: #8a5a12;
+  --warning-soft: #f7eeda;
+  --warning-rule: #ddc596;
 
-  --info: #29536d;
-  --info-soft: #e6eef3;
-  --info-rule: #b6cddb;
+  --danger: #8f2b23;
+  --danger-soft: #f7e6e2;
+  --danger-rule: #e0aca4;
 
-  --adoption: #8b4715;
-  --adoption-soft: #f8ecdf;
-  --adoption-rule: #e0c1a0;
+  --info: #4a4a46;
+  --info-soft: #edebe6;
+  --info-rule: #cec9bf;
 
-  --settled: #384873;
-  --settled-soft: #e9ecf4;
-  --settled-rule: #bec5db;
+  --adoption: #8a4b1f;
+  --adoption-soft: #f6e9dc;
+  --adoption-rule: #ddbc9b;
 
-  --rescue: #0d515c;
-  --rescue-soft: #e2eef0;
-  --rescue-rule: #b2d0d5;
+  --settled: #4a5563;
+  --settled-soft: #e9e9e6;
+  --settled-rule: #c3c3bd;
+
+  --rescue: #2f5d62;
+  --rescue-soft: #e2ebeb;
+  --rescue-rule: #aec9ca;
 
   --muted-soft: #eceae4;
   --muted-rule: #d6d0c4;
@@ -79,44 +85,46 @@
 
   --ink: #f4f0e9;
   --ink-2: #b4ada2;
-  --ink-3: #8a8277;
+  --ink-3: #95867f;
 
   --rule: #302b27;
   --rule-strong: #47413a;
 
-  --brand: #56b394;
-  --brand-hover: #6cc3a5;
-  --brand-ink: #a9ddc9;
-  --brand-soft: #16261f;
-  --brand-rule: #2c4539;
+  --on-solid: #14110f;
 
-  --success: #79c894;
-  --success-soft: #14251a;
-  --success-rule: #2a4433;
+  --brand: #7fb8a0;
+  --brand-hover: #93c6b2;
+  --brand-ink: #b6dccb;
+  --brand-soft: #17251f;
+  --brand-rule: #2e4539;
 
-  --warning: #dfab54;
-  --warning-soft: #2a2010;
-  --warning-rule: #4a3a1a;
+  --success: #86bd93;
+  --success-soft: #17251c;
+  --success-rule: #2d4335;
 
-  --danger: #ef8879;
-  --danger-soft: #2e1613;
-  --danger-rule: #4f2721;
+  --warning: #d2a24c;
+  --warning-soft: #271f11;
+  --warning-rule: #46371a;
 
-  --info: #84b3d0;
-  --info-soft: #131f27;
-  --info-rule: #243a4a;
+  --danger: #e08a80;
+  --danger-soft: #2b1714;
+  --danger-rule: #4c2620;
 
-  --adoption: #dda56c;
-  --adoption-soft: #2a1c10;
-  --adoption-rule: #4a3520;
+  --info: #b5b0a6;
+  --info-soft: #24231f;
+  --info-rule: #3d3b35;
 
-  --settled: #98a7d3;
-  --settled-soft: #191d2a;
-  --settled-rule: #2c3348;
+  --adoption: #d9a06a;
+  --adoption-soft: #281c11;
+  --adoption-rule: #46331f;
 
-  --rescue: #72b8c2;
-  --rescue-soft: #102225;
-  --rescue-rule: #224047;
+  --settled: #a8b0bd;
+  --settled-soft: #1e2024;
+  --settled-rule: #343740;
+
+  --rescue: #7fb3b8;
+  --rescue-soft: #122224;
+  --rescue-rule: #253e41;
 
   --muted-soft: #242120;
   --muted-rule: #383330;
@@ -127,6 +135,7 @@
 }
 
 @theme inline {
+  --color-on-solid: var(--on-solid);
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
   --color-sunken: var(--sunken);
@@ -188,88 +197,131 @@
   --shadow-3: var(--elev-3);
 }
 
-* {
-  box-sizing: border-box;
-}
+/* Los estilos base de elemento deben vivir en `@layer base`: sin capa, CSS
+   da prioridad a lo no-capaado sobre `@layer utilities`, y `button {
+   color: inherit }` anulaba todos los `text-*` de botones, inputs y
+   selects. Con la capa, cualquier utilidad de Tailwind gana. */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
 
-html {
-  min-height: 100%;
-  background: var(--canvas);
-  -webkit-text-size-adjust: 100%;
-}
+  html {
+    min-height: 100%;
+    background: var(--canvas);
+    -webkit-text-size-adjust: 100%;
+  }
 
-body {
-  min-height: 100dvh;
-  margin: 0;
-  background: var(--canvas);
-  color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.6;
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-wrap: break-word;
-}
+  body {
+    min-height: 100dvh;
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-wrap: break-word;
+  }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.015em;
-  text-wrap: balance;
-  color: var(--ink);
-}
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
 
-p,
-li {
-  text-wrap: pretty;
-}
+  p,
+  li {
+    text-wrap: pretty;
+  }
 
-button,
-input,
-select,
-textarea {
-  font: inherit;
-  color: inherit;
-}
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
 
-button,
-[role="button"] {
-  cursor: pointer;
-}
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
 
-button:disabled,
-[aria-disabled="true"] {
-  cursor: not-allowed;
-}
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
 
-img,
-svg,
-video {
-  display: block;
-  max-width: 100%;
-}
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
 
-/* One focus treatment for the whole product. */
-:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
-  border-radius: var(--radius-xs);
-}
+  /* Un único tratamiento de foco para todo el producto. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
 
-::selection {
-  background: var(--brand-soft);
-  color: var(--brand-ink);
+  ::selection {
+    background: var(--brand-soft);
+    color: var(--brand-ink);
+  }
 }
 
 .tnum {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
+}
+
+/* La tarjeta de alerta de pérdida es un artefacto para imprimir y compartir, no
+   una pantalla: su identidad (papel blanco, tinta oscura, rojo de aviso) no debe
+   cambiar con el tema. Redefiniendo las variables en el subárbol, todas las
+   utilidades que usan tokens resuelven a valores de papel en claro y en oscuro,
+   y la impresión queda idéntica. */
+.alert-card {
+  --canvas: #f4f1ea;
+  --surface: #ffffff;
+  --sunken: #ede8de;
+  --on-solid: #ffffff;
+  --ink: #1b1815;
+  --ink-2: #56504a;
+  --ink-3: #6f675f;
+  --rule: #e2dcd0;
+  --rule-strong: #c7bfb0;
+  --brand: #1f4a3a;
+  --brand-ink: #1b4133;
+  --brand-soft: #e7ede8;
+  --brand-rule: #b3c8bd;
+  --success: #2c5f45;
+  --success-soft: #e4ede7;
+  --success-rule: #b0c9b8;
+  --warning: #8a5a12;
+  --warning-soft: #f7eeda;
+  --warning-rule: #ddc596;
+  --danger: #8f2b23;
+  --danger-soft: #f7e6e2;
+  --danger-rule: #e0aca4;
+  --info: #4a4a46;
+  --info-soft: #edebe6;
+  --info-rule: #cec9bf;
+  --muted-soft: #eceae4;
+  --muted-rule: #d6d0c4;
+  background: var(--surface);
+  color: var(--ink);
 }
 
 .overline {
@@ -315,6 +367,55 @@ video {
 }
 
 @media print {
+  /* Imprimir siempre en papel: si el tema del navegador es oscuro, el panel
+     saldría con fondo #1c1917 (tinta desperdiciada y texto ilegible). Se fijan
+     aquí los valores claros derivados de `:root` para que la impresión sea
+     idéntica en ambos temas. */
+  #expediente-print,
+  #carnet-print {
+    --canvas: #f4f1ea;
+    --surface: #ffffff;
+    --sunken: #ede8de;
+    --ink: #1b1815;
+    --ink-2: #56504a;
+    --ink-3: #6f675f;
+    --rule: #e2dcd0;
+    --rule-strong: #c7bfb0;
+    --brand: #1f4a3a;
+    --brand-hover: #17382c;
+    --brand-ink: #1b4133;
+    --brand-soft: #e7ede8;
+    --brand-rule: #b3c8bd;
+    --success: #2c5f45;
+    --success-soft: #e4ede7;
+    --success-rule: #b0c9b8;
+    --warning: #8a5a12;
+    --warning-soft: #f7eeda;
+    --warning-rule: #ddc596;
+    --danger: #8f2b23;
+    --danger-soft: #f7e6e2;
+    --danger-rule: #e0aca4;
+    --info: #4a4a46;
+    --info-soft: #edebe6;
+    --info-rule: #cec9bf;
+    --adoption: #8a4b1f;
+    --adoption-soft: #f6e9dc;
+    --adoption-rule: #ddbc9b;
+    --settled: #4a5563;
+    --settled-soft: #e9e9e6;
+    --settled-rule: #c3c3bd;
+    --rescue: #2f5d62;
+    --rescue-soft: #e2ebeb;
+    --rescue-rule: #aec9ca;
+    --muted-soft: #eceae4;
+    --muted-rule: #d6d0c4;
+    --elev-1: 0 1px 2px rgba(27, 24, 21, 0.05);
+    --elev-2: 0 4px 14px -4px rgba(27, 24, 21, 0.1), 0 1px 2px rgba(27, 24, 21, 0.04);
+    --elev-3: 0 18px 44px -14px rgba(27, 24, 21, 0.2), 0 2px 6px rgba(27, 24, 21, 0.05);
+    --on-solid: #ffffff;
+    color-scheme: light;
+  }
+
   body,
   body * {
     visibility: hidden;

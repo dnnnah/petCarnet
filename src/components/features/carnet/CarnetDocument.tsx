@@ -88,11 +88,11 @@ function EstadoBand({ card, className }: { card: PhysicalPetCard; className?: st
         role="status"
       >
         <div className="flex flex-wrap items-start gap-4">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-danger text-white">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-danger text-on-solid">
             <TriangleAlert size={22} aria-hidden="true" />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="inline-flex items-center gap-2 rounded-full bg-danger px-3 py-1.5 text-sm font-semibold uppercase tracking-[0.1em] text-white">
+            <p className="inline-flex items-center gap-2 rounded-full bg-danger px-3 py-1.5 text-sm font-semibold uppercase tracking-[0.1em] text-on-solid">
               <StatusIcon size={14} aria-hidden="true" /> Perdido
             </p>
             {card.emergencia.mensaje ? (
@@ -275,7 +275,7 @@ function QrBlock({ card }: { card: PhysicalPetCard }) {
         </div>
         {/* Esquinas de zona de escaneo: son corchetes de encuadre de 28px sobre el QR
             físico, no un filete de estado sobre una tarjeta. */}
-        {/* impeccable-disable-next-line side-tab, border-accent-on-rounded: viewfinder brackets, not a card accent */}
+        {/* impeccable-disable-next-line side-tab, border-accent-on-rounded: corchetes de encuadre, no un acento de tarjeta */}
         <span className="pointer-events-none absolute -left-2 -top-2 h-7 w-7 border-l-4 border-t-4 rounded-tl-lg border-brand" aria-hidden="true" />
         {/* impeccable-disable-next-line side-tab, border-accent-on-rounded */}
         <span className="pointer-events-none absolute -right-2 -top-2 h-7 w-7 border-r-4 border-t-4 rounded-tr-lg border-brand" aria-hidden="true" />
@@ -351,7 +351,7 @@ function ContactBlock({ card }: { card: PhysicalPetCard }) {
                 href={card.contacto.whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-success px-4 text-sm font-semibold text-white transition-colors hover:brightness-110"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-success px-4 text-sm font-semibold text-on-solid transition-colors hover:brightness-110"
               >
                 <MessageCircle size={17} aria-hidden="true" />
                 Contactar por WhatsApp
@@ -360,7 +360,7 @@ function ContactBlock({ card }: { card: PhysicalPetCard }) {
             {phoneHref ? (
               <a
                 href={phoneHref}
-                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2"
               >
                 <Phone size={17} aria-hidden="true" />
                 Llamar
@@ -537,7 +537,7 @@ function AmbulanciaBand({ card }: { card: PhysicalPetCard }) {
             href={card.contacto.whatsappUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-success px-4 text-sm font-semibold text-white transition-colors hover:brightness-110 print:hidden"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-success px-4 text-sm font-semibold text-on-solid transition-colors hover:brightness-110 print:hidden"
           >
             <MessageCircle size={16} aria-hidden="true" /> WhatsApp
           </a>
@@ -545,7 +545,7 @@ function AmbulanciaBand({ card }: { card: PhysicalPetCard }) {
         {phoneHref ? (
           <a
             href={phoneHref}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2 print:hidden"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2 print:hidden"
           >
             <Phone size={16} aria-hidden="true" /> Llamar
           </a>

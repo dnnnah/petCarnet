@@ -105,7 +105,7 @@ export default async function ShelterPage({ params }: ShelterPageProps) {
               {phoneDigits ? (
                 <a
                   href={`tel:${phoneDigits}`}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-brand-hover"
                 >
                   <Phone size={16} aria-hidden="true" />
                   Llamar
@@ -116,7 +116,7 @@ export default async function ShelterPage({ params }: ShelterPageProps) {
                   href={whatsappHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex min-h-11 items-center gap-2 rounded-md bg-success px-4 text-sm font-semibold text-white transition-colors hover:brightness-110"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-md bg-success px-4 text-sm font-semibold text-on-solid transition-colors hover:brightness-110"
                 >
                   <MessageCircle size={16} aria-hidden="true" />
                   WhatsApp

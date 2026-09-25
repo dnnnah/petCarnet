@@ -49,7 +49,7 @@ export function SegmentedControl<T extends string>({
             className={cx(
               "inline-flex min-h-11 items-center gap-2 rounded-md px-3.5 text-sm font-semibold transition-colors",
               isActive
-                ? "bg-ink text-white"
+                ? "bg-ink text-on-solid"
                 : "border border-rule bg-surface text-ink-2 hover:border-brand-rule hover:text-brand"
             )}
           >

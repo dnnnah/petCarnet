@@ -108,7 +108,7 @@ export function VaccineListClient({ petName, vaccines, documents }: VaccineListC
               setStatus(VACCINE_STATUS_ALL);
               setQuery("");
             }}
-            className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2"
+            className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2"
           >
             Mostrar todas
           </button>

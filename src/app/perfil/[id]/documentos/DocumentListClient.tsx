@@ -92,7 +92,7 @@ function DocumentItem({ document }: { document: PetDocument }) {
           href={document.url}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
+          className="inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-brand-hover"
         >
           <ExternalLink className="shrink-0" size={17} aria-hidden="true" />
           <span className="min-w-0 break-words">Abrir</span>

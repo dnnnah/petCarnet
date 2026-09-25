@@ -63,7 +63,7 @@ export function CarnetStudio({ petName, cards }: CarnetStudioProps) {
           <button
             type="button"
             onClick={() => window.print()}
-            className="print:hidden inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2"
+            className="print:hidden inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2"
           >
             <Printer size={17} aria-hidden="true" />
             Imprimir

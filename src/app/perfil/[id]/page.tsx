@@ -145,7 +145,12 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               card={physicalCard}
             />
           </div>
-          <div id="documentos" className="grid scroll-mt-24 gap-6 md:grid-cols-[1fr_auto]">
+          {/* Columna derecha con ancho fijo: antes `auto` dejaba que la tarjeta
+              del QR marcara el ancho y descuadrara la de documentos. */}
+          <div
+            id="documentos"
+            className="grid scroll-mt-24 items-start gap-6 md:grid-cols-[minmax(0,1fr)_20rem]"
+          >
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
             <QRShareCard petName={pet.mascota.nombre} profileUrl={publicProfileUrl} petCode={pet.identificacion.codigoPublico} />
           </div>

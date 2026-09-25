@@ -52,7 +52,7 @@ export function AdoptionRequestCta({
         </div>
         <Link
           href={`/perfil/${petId}/adopcion`}
-          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-adoption px-4 text-sm font-semibold text-white transition-colors hover:brightness-110"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-adoption px-4 text-sm font-semibold text-on-solid transition-colors hover:brightness-110"
         >
           <HeartHandshake size={17} aria-hidden="true" />
           Solicitar adopción

@@ -149,7 +149,7 @@ export function FoundPetPanel({
           <button
             type="button"
             onClick={openFlow}
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-danger px-5 text-base font-semibold text-white transition-colors hover:brightness-110"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-danger px-5 text-base font-semibold text-on-solid transition-colors hover:brightness-110"
           >
             <Send size={22} aria-hidden="true" />
             Encontré esta mascota
@@ -197,7 +197,7 @@ export function FoundPetPanel({
                 onClick={handleShareLocation}
                 disabled={location.status === "locating"}
                 className={[
-                  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-info px-4 text-sm font-semibold text-white transition-colors hover:brightness-110",
+                  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-info px-4 text-sm font-semibold text-on-solid transition-colors hover:brightness-110",
                   "disabled:cursor-not-allowed disabled:opacity-60",
                 ].join(" ")}
               >

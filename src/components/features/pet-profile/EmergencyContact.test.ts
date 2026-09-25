@@ -33,7 +33,10 @@ describe("EmergencyContact", () => {
     expect(html).not.toContain("llama o envía WhatsApp ahora");
     expect(html).toContain("Zona segura: cerca de casa");
     expect(html).toContain("href=\"tel:5656091856\"");
-    expect(html).toContain("bg-brand text-white");
+    // `text-on-solid` se invierte con el tema: `text-white` quedaba ilegible
+    // en modo oscuro, donde el fondo sólido es claro.
+    expect(html).toContain("bg-brand text-on-solid");
+    expect(html).not.toContain("text-white");
   });
 
   it("refleja el estado perdido activo con urgencia", () => {

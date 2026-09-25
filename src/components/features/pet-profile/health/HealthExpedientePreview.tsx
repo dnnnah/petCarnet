@@ -194,7 +194,7 @@ export function HealthExpedientePreview({ pet }: HealthExpedientePreviewProps) {
           </p>
           <Link
             href={`/perfil/${pet.id}/salud`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2"
           >
             Ver expediente
             <ArrowRight size={16} aria-hidden="true" />

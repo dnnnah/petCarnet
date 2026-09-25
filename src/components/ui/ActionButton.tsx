@@ -19,27 +19,27 @@ type ActionButtonProps = {
 const tones = {
   call: {
     card: "bg-surface border-rule hover:border-brand-rule hover:bg-brand-soft",
-    icon: "bg-brand text-white",
+    icon: "bg-brand text-on-solid",
     label: "text-ink",
   },
   whatsapp: {
     card: "bg-surface border-rule hover:border-success-rule hover:bg-success-soft",
-    icon: "bg-success text-white",
+    icon: "bg-success text-on-solid",
     label: "text-ink",
   },
   location: {
     card: "bg-surface border-rule hover:border-info-rule hover:bg-info-soft",
-    icon: "bg-info text-white",
+    icon: "bg-info text-on-solid",
     label: "text-ink",
   },
   urgentCall: {
     card: "bg-danger-soft border-danger-rule hover:bg-danger hover:border-danger",
-    icon: "bg-danger text-white",
+    icon: "bg-danger text-on-solid",
     label: "text-ink",
   },
   urgentWhatsapp: {
     card: "bg-success-soft border-success-rule hover:bg-success hover:border-success",
-    icon: "bg-success text-white",
+    icon: "bg-success text-on-solid",
     label: "text-ink",
   },
 } as const;

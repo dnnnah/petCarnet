@@ -19,7 +19,7 @@ export function AppShell({ children }: AppShellProps) {
     <div className="flex min-h-dvh flex-col">
       <a
         href="#contenido"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-on-solid"
       >
         Saltar al contenido
       </a>
@@ -31,7 +31,7 @@ export function AppShell({ children }: AppShellProps) {
             className="flex min-h-11 min-w-0 items-center gap-2.5"
             aria-label="PetCarnet, inicio"
           >
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-brand text-white">
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-brand text-on-solid">
               <PawPrint size={20} aria-hidden="true" />
             </span>
             <span className="min-w-0">

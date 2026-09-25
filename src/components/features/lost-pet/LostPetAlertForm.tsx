@@ -269,7 +269,7 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
               "inline-flex min-h-11 items-center gap-2 rounded-md px-4 text-sm font-semibold transition-colors",
               isLostModeActive
                 ? "border border-rule bg-surface text-ink-2 hover:border-brand-rule hover:text-brand"
-                : "bg-danger text-white hover:brightness-110"
+                : "bg-danger text-on-solid hover:brightness-110"
             )}
           >
             <BellRing size={16} aria-hidden="true" />
@@ -306,7 +306,7 @@ export function LostPetAlertForm({ pet }: LostPetAlertFormProps) {
           <button
             onClick={handleDownload}
             disabled={downloading}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2 disabled:opacity-50"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2 disabled:opacity-50"
           >
             <Download size={17} aria-hidden="true" />
             {downloading ? "Generando…" : "Descargar imagen PNG"}

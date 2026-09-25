@@ -87,7 +87,7 @@ export function SubmitButton({
       disabled={busy}
       aria-busy={busy || undefined}
       className={cx(
-        "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-brand px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-60",
+        "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-brand px-5 text-sm font-semibold text-on-solid transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-60",
         className,
       )}
     >

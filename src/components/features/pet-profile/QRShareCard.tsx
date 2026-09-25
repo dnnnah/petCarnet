@@ -180,14 +180,16 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
   }, [fileName, busy, announce, later]);
 
   const buttonClasses = [
-    "inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md px-3.5 text-sm font-semibold",
+    "inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold",
     "border border-rule bg-surface text-ink-2 transition-colors hover:border-brand-rule hover:text-brand",
     "disabled:cursor-not-allowed disabled:opacity-50",
   ].join(" ");
 
   return (
-    <Surface className="h-full p-5 lg:p-6">
-      <div className="grid h-full gap-6">
+    <Surface className="p-5">
+      {/* `min-w-0` en cada nivel: sin esto la URL larga y la rejilla de
+          botones ensanchan la tarjeta y descuadran la columna de documentos. */}
+      <div className="grid min-w-0 gap-5">
         <div className="flex items-start gap-3">
           <span
             aria-hidden="true"
@@ -196,7 +198,7 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
             <QrCode size={20} />
           </span>
           <div className="min-w-0">
-            <h2 className="font-display text-lg leading-snug text-ink">
+            <h2 className="font-display text-lg leading-snug text-ink [overflow-wrap:anywhere]">
               Comparte el perfil de {petName}
             </h2>
             <p className="mt-1 text-sm text-ink-2">Escanea con la cámara para ver el perfil.</p>
@@ -212,7 +214,7 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
           </div>
         ) : (
           <>
-            <div className="mx-auto w-fit">
+            <div className="mx-auto w-fit min-w-0 max-w-full">
               <div
                 ref={qrRef}
                 className="grid size-44 place-items-center rounded-md bg-white p-2 ring-1 ring-rule sm:size-48"
@@ -230,14 +232,14 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                   style={{ width: "100%", height: "100%" }}
                 />
               </div>
-              <p className="mt-2 flex w-48 items-center justify-center gap-1 truncate text-xs text-ink-3">
+              <p className="mx-auto mt-2 flex w-48 max-w-full items-center justify-center gap-1 text-xs text-ink-3">
                 <Link2 size={12} aria-hidden="true" className="shrink-0" />
-                <span className="truncate">{profileUrl}</span>
+                <span className="truncate [overflow-wrap:anywhere]">{profileUrl}</span>
               </p>
-              <p className="mt-1 text-center text-xs text-ink-2">ID PetCarnet: {petCode}</p>
+              <p className="mt-1 break-words text-center text-xs text-ink-2">ID PetCarnet: {petCode}</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 [&>*]:min-w-0">
               <button
                 type="button"
                 onClick={() => handleCopy("url")}
@@ -283,8 +285,8 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
               </button>
             </div>
 
-            <details className="group rounded-md border border-rule">
-              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-semibold text-ink-2">
+            <details className="group min-w-0 rounded-md border border-rule">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 px-3 py-3 text-sm font-semibold text-ink-2">
                 <Printer size={16} aria-hidden="true" className="shrink-0 text-ink-3" />
                 Cómo imprimir o usar el QR
                 <TriangleAlert
@@ -293,7 +295,7 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                   className="ml-auto shrink-0 text-ink-3 transition-transform group-open:rotate-180"
                 />
               </summary>
-              <ul className="space-y-2 border-t border-rule px-4 py-3 text-sm leading-5 text-ink-2">
+              <ul className="space-y-2 border-t border-rule px-3 py-3 text-sm leading-5 text-ink-2 [overflow-wrap:anywhere]">
                 <li>Descarga el PNG (alta resolución) o el SVG y úsalo en una etiqueta, placa o colgante.</li>
                 <li>Tamaño mínimo recomendado: 2.5 × 2.5 cm (elige 5 cm si va en una placa).</li>
                 <li>No recortes el margen blanco alrededor del código.</li>

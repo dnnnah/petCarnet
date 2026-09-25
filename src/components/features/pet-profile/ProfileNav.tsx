@@ -37,7 +37,10 @@ type ProfileNavProps = {
 };
 
 export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
-  const [active, setActive] = useState("");
+  // Se inicializa con la primera sección: como solo la activa despliega su
+  // rótulo, arrancar en `""` dejaba el carril como nueve iconos sin contexto
+  // hasta que el observador de intersección registrara la primera sección.
+  const [active, setActive] = useState(defaultNavItems[0].id);
   const navItems = useMemo(
     () => defaultNavItems.filter((item) => item.id !== "fotos" || hasPhotos),
     [hasPhotos]
@@ -78,9 +81,21 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
   return (
     <nav
       aria-label="Secciones del perfil"
-      className="sticky top-0 z-40 -mx-4 border-y border-rule bg-canvas/95 px-4 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+      className="sticky top-0 z-40 -mx-4 border-y border-rule bg-canvas/95 px-2 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
     >
-      <ul className="scrollbar-none -mx-1 flex items-center gap-0.5 overflow-x-auto py-1.5">
+      {/*
+        Las nueve etiquetas suman ≈1009px y el carril del perfil mide 840px
+        incluso a 1280px de viewport, así que mostrar rótulos por breakpoint
+        siempre desbordaba en algún ancho. En su lugar solo la sección activa
+        despliega su nombre: el carril cabe en cualquier pantalla, cada destino
+        conserva su nombre accesible y el `title` lo expone al puntero. El
+        degradado del borde derecho indica que el carril continúa.
+      */}
+      {/* `contain: paint` es obligatorio: sin él, el contenido desplazable del
+          carril se sumaba al ancho de la página (410px en un viewport de 320px).
+          El `px-1.5` interno deja sitio al `outline-offset: 2px` del foco global
+          para que `contain: paint` no lo recorte en los extremos. */}
+      <ul className="scrollbar-none -mx-1 flex items-center gap-1 overflow-x-auto px-1.5 py-1.5 [contain:paint] [mask-image:linear-gradient(to_right,#000_calc(100%-1.5rem),transparent)] sm:[mask-image:none]">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
@@ -91,15 +106,17 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
                 type="button"
                 onClick={() => scrollTo(item.id)}
                 aria-current={isActive ? "true" : undefined}
+                aria-label={item.label}
+                title={item.label}
                 className={cx(
-                  "flex min-h-11 items-center gap-1.5 rounded-md px-2.5 text-sm font-medium transition-colors duration-150",
+                  "flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-md px-2.5 text-sm font-medium transition-colors duration-150",
                   isActive
                     ? "bg-brand-soft text-brand-ink"
-                    : "text-ink-3 hover:bg-sunken hover:text-ink"
+                    : "text-ink-2 hover:bg-sunken hover:text-ink"
                 )}
               >
-                <Icon size={15} className="shrink-0" aria-hidden="true" />
-                <span className="whitespace-nowrap">{item.label}</span>
+                <Icon size={17} className="shrink-0" aria-hidden="true" />
+                <span className={isActive ? "whitespace-nowrap" : "sr-only"}>{item.label}</span>
               </button>
             </li>
           );

@@ -48,7 +48,7 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
           <button
             type="button"
             onClick={() => setPreview(true)}
-            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
+            className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-brand-hover"
           >
             <Eye size={17} aria-hidden="true" />
             Vista previa de impresión
@@ -66,7 +66,7 @@ export function ExportSummaryClient({ petName, summary }: ExportSummaryClientPro
             <button
               type="button"
               onClick={() => window.print()}
-              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-white transition-colors hover:bg-ink-2"
+              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2"
             >
               <Printer size={18} aria-hidden="true" />
               Imprimir resumen

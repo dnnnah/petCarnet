@@ -42,7 +42,7 @@ export function LostModeAlertSections({
           <button
             type="button"
             onClick={deactivate}
-            className="inline-flex min-h-9 items-center rounded-md bg-danger-soft px-3 text-xs font-semibold text-danger ring-1 ring-inset ring-danger-rule transition-colors hover:bg-danger hover:text-white"
+            className="inline-flex min-h-9 items-center rounded-md bg-danger-soft px-3 text-xs font-semibold text-danger ring-1 ring-inset ring-danger-rule transition-colors hover:bg-danger hover:text-on-solid"
           >
             Desactivar modo alerta
           </button>
