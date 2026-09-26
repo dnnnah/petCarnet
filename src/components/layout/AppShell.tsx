@@ -17,19 +17,6 @@ const footerLinks = [
 export function AppShell({ children }: AppShellProps) {
   return (
     <div className="relative flex min-h-dvh flex-col">
-      {/* El diseno original llevaba aqui una marca de pagina, pero era un trazo
-          punteado dibujado a mano. Se sustituye por dos signos nitidos del
-          mismo lenguaje que las marcas de la mascota. Solo aparece a partir de
-          2xl, que es el primer ancho donde la pagina mas ancha del producto
-          (1152px) deja margen real a la derecha: por debajo, el margen no
-          existe y la marca se montaria encima del contenido. */}
-      <div
-        aria-hidden="true"
-        className="marcas-entran pointer-events-none absolute right-8 top-32 hidden flex-col items-end gap-3 text-brand opacity-[0.14] print:hidden 2xl:flex"
-      >
-        <PawPrint size={34} strokeWidth={1.6} />
-        <Sparkles size={18} strokeWidth={1.6} className="mr-1" />
-      </div>
       <a
         href="#contenido"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-on-solid"
@@ -95,6 +82,21 @@ export function AppShell({ children }: AppShellProps) {
                 ))}
               </ul>
             </nav>
+            {/* El diseño original llevaba una marca de página en la esquina de
+                todas las vistas, pero era un trazo punteado dibujado a mano; aquí
+                son dos signos nítidos del mismo lenguaje que las marcas de la
+                mascota. Vive en el flujo del pie y no como elemento flotante:
+                fuera del margen de la columna no habia sitio donde no se montara
+                sobre el contenido, y por eso antes solo se veia en pantallas
+                muy anchas. En el flujo aparece en todas y no colisiona en
+                ninguna. */}
+            <div
+              aria-hidden="true"
+              className="marcas-entran flex shrink-0 items-end gap-2 text-brand opacity-[0.16] print:hidden"
+            >
+              <PawPrint size={30} strokeWidth={1.6} />
+              <Sparkles size={16} strokeWidth={1.6} className="mb-1" />
+            </div>
           </div>
           <p className="mt-8 border-t border-rule pt-6 text-xs text-ink-3">
             Los perfiles públicos muestran únicamente la información que cada tutor decide

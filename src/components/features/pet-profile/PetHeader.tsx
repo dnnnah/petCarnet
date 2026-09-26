@@ -31,8 +31,15 @@ export function PetHeader({ pet, statusBadge }: PetHeaderProps) {
   const SpeciesIcon = SPECIES_FACE[pet.species.trim().toLowerCase()];
 
   return (
-    <section className="relative border-b border-rule pb-8 sm:pb-10">
-      <PetMarks className="right-0 top-0 hidden lg:block" />
+    <section className="relative border-b border-rule pb-8 pt-11 sm:pb-10 sm:pt-0">
+      {/* Aparecen en todos los anchos, no solo en escritorio, y por eso la
+          seccion reserva una banda arriba por debajo de `sm`. A 320px la foto
+          centrada de 240px deja 24px de margen a cada lado: menos que cualquier
+          huella legible, asi que la unica banda libre es la de arriba, y tiene
+          que medir mas que la marca (38px) para no montarse sobre la foto. A
+          partir de 640px el margen llega a 184px y la marca vuelve a la
+          esquina, junto al espacio que el titular no usa. */}
+      <PetMarks className="right-0 top-0 origin-top-right [scale:0.28] sm:[scale:0.72] lg:[scale:1]" />
       <div className="grid items-start gap-7 sm:gap-9 lg:grid-cols-[240px_1fr]">
         <div className="mx-auto w-full max-w-[240px] lg:mx-0 lg:max-w-none">
           <div className="overflow-hidden rounded-lg bg-sunken ring-1 ring-rule">

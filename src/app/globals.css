@@ -317,16 +317,22 @@
 
 /* Un solo gesto authored en todo el producto: las marcas de la mascota aparecen
    con un descenso corto en vez de estar ahí desde el primer fotograma. Cuatro
-   marcas se apresuran al entrar, y con `motion-reduce` no se mueven: quien pidio
-   menos movimiento no recibe ninguno, no una version reducida. */
+   marcas se apresuran al entrar, y con `motion-reduce` no se mueven: quien pidió
+   menos movimiento no recibe ninguno, no una versión reducida.
+
+   Se anima la propiedad `translate` suelta y no `transform`: las marcas cambian
+   de tamaño según el ancho, y `transform` se comería ese escalado mientras la
+   animación estuviera activa. Las propiedades sueltas se componen en orden
+   (`translate`, `rotate`, `scale`, `transform`), así que el gesto y el tamaño
+   pueden convivir. */
 @keyframes marcas-entran {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    translate: 0 6px;
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    translate: 0 0;
   }
 }
 

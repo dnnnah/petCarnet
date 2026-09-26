@@ -32,8 +32,13 @@ export default function Home() {
   return (
     <AppShell>
       <section className="border-b border-rule">
-        <div className="relative mx-auto w-full max-w-5xl px-4 pb-14 pt-6 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
-          <PetMarks className="right-0 top-6 hidden lg:block xl:right-6" />
+        <div className="relative mx-auto w-full max-w-5xl px-4 pb-28 pt-6 sm:px-6 sm:pb-28 sm:pt-10 lg:px-8 lg:pb-20">
+          {/* En movil y tablet el titular ocupa todo el ancho, asi que arriba a la
+              derecha no hay hueco: la marca baja a la banda de padding bajo los
+              botones, que es donde el hero reserva sitio para ella. A partir de
+              `lg` el titular se limita a `max-w-3xl` y la esquina vuelve a estar
+              libre. */}
+          <PetMarks className="bottom-4 right-0 origin-bottom-right [scale:0.55] sm:[scale:0.7] lg:bottom-auto lg:right-0 lg:top-8 lg:origin-top-right lg:[scale:0.85] xl:right-6 xl:[scale:1]" />
           <p className="overline text-brand">Carnet digital para mascotas</p>
           <h1 className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] text-ink sm:text-6xl">
             Si la pierdes, que cualquiera pueda devolverla.
