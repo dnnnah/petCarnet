@@ -1,17 +1,10 @@
 import Image from "next/image";
-import {
-  CalendarDays,
-  Heart,
-  Mars,
-  Microchip,
-  PawPrint,
-  Ruler,
-  ShieldCheck,
-  Sparkles,
-  Venus,
-} from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
+import { Heart, Mars, Microchip, Ruler, ShieldCheck, Venus } from "lucide-react";
+import { Pill } from "@/components/ui/Pill";
 import { CopyButton } from "@/components/ui/CopyButton";
+import { DataList } from "@/components/ui/DataList";
+import { PetMarks } from "@/components/ui/PetMarks";
+import { SPECIES_FACE } from "@/lib/ui/speciesFace";
 
 type PetHeaderProps = {
   pet: {
@@ -33,91 +26,75 @@ type PetHeaderProps = {
 };
 
 export function PetHeader({ pet, statusBadge }: PetHeaderProps) {
-  return (
-    <section className="soft-card relative overflow-hidden rounded-[2.25rem] px-5 py-7 sm:px-8 lg:px-14 lg:py-9">
-      <div className="pointer-events-none absolute left-16 top-8 h-44 w-44 rounded-full bg-emerald-100/58" />
-      <div className="pointer-events-none absolute left-10 bottom-8 h-28 w-28 rounded-full bg-amber-100/54" />
-      <div className="pointer-events-none absolute right-16 top-20 text-gray-100">
-        <PawPrint size={54} fill="currentColor" />
-      </div>
-      <div className="pointer-events-none absolute right-10 bottom-22 text-emerald-300/80">
-        <Sparkles size={46} />
-      </div>
-      <div className="pointer-events-none absolute right-36 bottom-10 h-16 w-28 -rotate-12 doodle-line" />
+  const isMale = pet.gender === "Macho";
+  const GenderIcon = isMale ? Mars : Venus;
+  const SpeciesIcon = SPECIES_FACE[pet.species.trim().toLowerCase()];
 
-      <div className="relative grid items-center gap-9 lg:grid-cols-[310px_1fr] xl:grid-cols-[350px_1fr]">
-        <div className="relative mx-auto w-full max-w-[300px] xl:max-w-[330px]">
-          <div className="absolute -right-5 bottom-8 z-20 grid h-20 w-20 place-items-center rounded-full bg-white text-emerald-500 shadow-[0_14px_28px_rgba(17,24,39,0.11)] ring-8 ring-emerald-50">
-            <PawPrint size={35} />
-          </div>
-          <div className="absolute -right-2 top-2 z-20 rotate-12 text-emerald-300">
-            <Sparkles size={26} />
-          </div>
-          <div className="relative z-10 rotate-[-3deg] rounded-[2rem] bg-white p-4 shadow-[0_22px_54px_rgba(17,24,39,0.12)]">
-            <div className="overflow-hidden rounded-[1.45rem] bg-emerald-50">
-              <Image
-                src={pet.image}
-                alt={`Foto de ${pet.name}`}
-                width={900}
-                height={900}
-                priority
-                className="aspect-[0.86] w-full object-cover"
-              />
-            </div>
+  return (
+    <section className="relative border-b border-rule pb-8 pt-11 sm:pb-10 sm:pt-0">
+      {/* Aparecen en todos los anchos, no solo en escritorio, y por eso la
+          seccion reserva una banda arriba por debajo de `sm`. A 320px la foto
+          centrada de 240px deja 24px de margen a cada lado: menos que cualquier
+          huella legible, asi que la unica banda libre es la de arriba, y tiene
+          que medir mas que la marca (38px) para no montarse sobre la foto. A
+          partir de 640px el margen llega a 184px y la marca vuelve a la
+          esquina, junto al espacio que el titular no usa. */}
+      {/* Escala mobile 0.5, no 0.28: la caja completa mide 160x144, y a 0.28
+          quedaban 45x40px, demasiado pequenos para que se leyeran. 0.5 son
+          80x72px, que ya pesan sin pisar el texto. Desde sm el valor es el mismo
+          que ya estaba. */}
+      <PetMarks className="right-0 top-0 origin-top-right [scale:0.5] sm:[scale:0.72] lg:[scale:1]" />
+      <div className="grid items-start gap-7 sm:gap-9 lg:grid-cols-[240px_1fr]">
+        <div className="mx-auto w-full max-w-[240px] lg:mx-0 lg:max-w-none">
+          <div className="overflow-hidden rounded-lg bg-sunken ring-1 ring-rule">
+            <Image
+              src={pet.image}
+              alt={`Foto de ${pet.name}`}
+              width={900}
+              height={900}
+              priority
+              className="aspect-square w-full object-cover"
+            />
           </div>
         </div>
 
-        <div className="relative">
-          <div className="absolute -right-2 top-2 hidden rotate-12 text-amber-300 sm:block">
-            <Sparkles size={34} />
-          </div>
+        <div className="min-w-0">
+          <h1 className="text-[2.5rem] leading-[1.05] text-ink sm:text-6xl">{pet.name}</h1>
+          <p className="mt-2 flex flex-wrap items-center gap-x-1.5 text-base text-ink-2">
+            <span>{pet.breed}</span>
+            {SpeciesIcon ? (
+              <SpeciesIcon size={15} strokeWidth={1.75} className="text-ink-3" aria-hidden="true" />
+            ) : (
+              <span aria-hidden="true">·</span>
+            )}
+            <span>{pet.species}</span>
+          </p>
 
-          <h1 className="text-5xl font-extrabold leading-none tracking-tight text-gray-950 dark:text-white sm:text-6xl lg:text-8xl">
-            {pet.name}
-          </h1>
-          <p className="mt-2 sm:mt-3 text-lg sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400">{pet.breed} · {pet.species}</p>
-
-          <div className="mt-7 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-wrap items-center gap-2">
             {statusBadge}
-            <Badge tone="mint" icon={<CalendarDays size={18} />}>
-              {pet.age}
-            </Badge>
-            <Badge tone={pet.gender === "Macho" ? "blue" : "pink"} icon={pet.gender === "Macho" ? <Mars size={18} /> : <Venus size={18} />}>
+            <Pill tone="muted">{pet.age}</Pill>
+            <Pill tone="muted" icon={<GenderIcon size={13} />}>
               {pet.gender}
-            </Badge>
-            <Badge tone="blue" icon={<Ruler size={18} />}>
+            </Pill>
+            <Pill tone="muted" icon={<Ruler size={13} />}>
               {pet.size}
-            </Badge>
+            </Pill>
           </div>
 
-          <div className="mt-7 flex max-w-sm flex-wrap items-center justify-between gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-3 shadow-[0_10px_24px_rgba(17,24,39,0.05)] dark:border-gray-700 dark:bg-gray-900">
-            <span className="font-extrabold text-gray-950 dark:text-white">ID PetCarnet: {pet.id}</span>
+          <div className="mt-6 flex flex-wrap items-center gap-2 border-y border-rule py-2.5">
+            <span className="tnum text-sm font-semibold text-ink">ID PetCarnet: {pet.id}</span>
             <CopyButton value={pet.id} label="Copiar ID" />
           </div>
 
-          <div className="mt-7 grid gap-3 sm:grid-cols-3">
-            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)] dark:border-gray-800 dark:bg-gray-900/90">
-              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400">
-                <ShieldCheck size={27} />
-              </span>
-              <p className="font-extrabold text-gray-950 dark:text-white">Vacunas</p>
-              <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{pet.status.vaccines}</p>
-            </article>
-            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)] dark:border-gray-800 dark:bg-gray-900/90">
-              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-pink-100 text-pink-500 dark:bg-pink-500/15 dark:text-pink-400">
-                <Heart size={27} />
-              </span>
-              <p className="font-extrabold text-gray-950 dark:text-white">Esterilizado</p>
-              <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{pet.status.sterilized}</p>
-            </article>
-            <article className="rounded-3xl border border-gray-100 bg-white/92 p-4 shadow-[0_12px_26px_rgba(17,24,39,0.06)] dark:border-gray-800 dark:bg-gray-900/90">
-              <span className="mb-3 grid h-12 w-12 place-items-center rounded-2xl bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400">
-                <Microchip size={27} />
-              </span>
-              <p className="font-extrabold text-gray-950 dark:text-white">Microchip</p>
-              <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{pet.status.microchip}</p>
-            </article>
-          </div>
+          <DataList
+            layout="grid"
+            className="mt-5"
+            items={[
+              { label: "Vacunas", value: pet.status.vaccines, icon: <ShieldCheck size={14} /> },
+              { label: "Esterilizado", value: pet.status.sterilized, icon: <Heart size={14} /> },
+              { label: "Microchip", value: pet.status.microchip, icon: <Microchip size={14} /> },
+            ]}
+          />
         </div>
       </div>
     </section>

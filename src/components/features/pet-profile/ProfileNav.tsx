@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Stethoscope,
 } from "lucide-react";
+import { cx } from "@/lib/ui/tone";
 
 type NavItem = {
   id: string;
@@ -35,12 +36,27 @@ type ProfileNavProps = {
   hasPhotos?: boolean;
 };
 
+
 export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
-  const [active, setActive] = useState("");
+  // Arranca marcada la primera sección en vez de `""`: sin sección activa el
+  // nav queda sin ningun estado visible hasta que el observador de interseccion
+  // registra la primera, que ocurre tras el primer scroll.
+  const [active, setActive] = useState(defaultNavItems[0].id);
+  // En tablet el carril arranca plegado en iconos y se despliega al bajar, que
+  // es cuando la persona ya esta leyendo y le sirve saber donde esta. En
+  // escritorio y en movil el estado no cambia nada: lo decide el CSS.
+  const [scrolled, setScrolled] = useState(false);
   const navItems = useMemo(
     () => defaultNavItems.filter((item) => item.id !== "fotos" || hasPhotos),
     [hasPhotos]
   );
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 96);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const sections = navItems
@@ -75,33 +91,101 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
   }
 
   return (
-    <nav className="sticky top-0 z-40 -mx-4 mb-6 px-4 py-3 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-      <div className="flex w-full items-center justify-between gap-1.5 overflow-x-auto scrollbar-hide rounded-full border border-gray-100 bg-white/80 p-1.5 shadow-[0_14px_34px_rgba(17,24,39,0.07)] backdrop-blur-lg dark:border-gray-800 dark:bg-gray-900/80">
+    <nav
+      aria-label="Secciones del perfil"
+      className={cx(
+        "z-40 border-y border-rule bg-canvas/95 backdrop-blur-sm",
+        /* En móvil el nav va a sangre: el margen negativo del `px-4` de la pagina
+           le devuelve los 32px laterales, y con ellos el ancho que hace falta
+           para que los nueve destinos quepan en una sola fila. Desde sm se
+           alinea a la columna de contenido, que es el reparto que ya estaba
+           aprobado. */
+        "-mx-4 px-1 sm:mx-0 sm:px-0",
+        "sticky top-0"
+      )}
+    >
+      {/*
+        Una sola fila a todo lo ancho, y en móvil reparto por ancho igual: cada
+        destino recibe su parte exacta de la fila, sea cual sea el número de
+        destinos. Por eso `flex-1` con `min-w-0` en vez de una retícula de
+        columnas fijas: con ocho destinos (sin fotos) y con nueve, la fila se
+        reparte sola y no hay que calcular ni descentrar una segunda fila que ya
+        no existe.
+
+        Qué se gana y qué se paga. Antes, en móvil, cada destino tenía 44px de
+        lado: 9x44 son 396px y en un móvil de 390 hay 358px útiles, así que
+        cabían solo en dos filas de 5+4, y había que deslizar para ver el último
+        destino. Ahora la fila existe siempre y el ancho se reparte: a 320px
+        cada destino mide 32px, a 390px son 40px, y a partir de 430px vuelve a
+        dar 44px exactos, sin cambiar nada del código. Por debajo de 430px el
+        área táctil baja de los 44px que recomiendan Apple y Material; cumple el
+        mínimo de 24px de WCAG 2.2 (2.5.8) y los 32px medidos dejan 8px entre
+        destinos, pero es un intercambio consciente: los 44px 每个 frente a los
+        nueve destinos en una fila. Los 44px se recuperan solos a partir de sm.
+
+        El alto baja a 36px en móvil por lo mismo: nueve iconos en 52px de alto se
+        leen como una fila de iconos, no como un menu. Y al ser una sola fila en
+        todos los tamaños, el nav vuelve a ser sticky también en móvil.
+
+        El icono crece a 18px a partir de 380px, donde el destino ya tiene sitio
+        de sobra, y vuelve a 16px desde sm con el resto del menu.
+
+        Las etiquetas se despliegan al bajar, porque ahi es cuando la persona ya
+        esta leyendo y le sirve saber donde esta. La columna del perfil es de 6xl
+        para que, con las nueve etiquetas visibles, el hueco entre destinos sea de
+        21px a 1024 y de 37px a partir de 1280, en vez de los 14px que daba la
+        columna de 5xl.
+      */}
+      <ul
+        className={cx(
+          /* `items-stretch` con `flex-1` en cada `li`: el ancho se reparte por
+             igual entre los destinos y el alto lo marca la fila entera, en vez
+             de dejar cada boton a su propio ancho con huecos descuadrados. */
+          "flex items-stretch gap-1 py-2",
+          "sm:justify-between sm:gap-x-3 sm:py-1.5"
+        )}
+      >
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
 
           return (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              aria-label={item.label}
-              aria-current={isActive ? "true" : undefined}
-              className={[
-                "inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-extrabold outline-none transition focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
-                "md:px-3.5 md:py-2 md:text-sm",
-                isActive
-                  ? "bg-emerald-500 text-white shadow-[0_8px_18px_rgba(16,185,129,0.28)]"
-                  : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800",
-                "h-11 w-11 md:h-auto md:w-auto",
-              ].join(" ")}
-            >
-              <Icon size={18} className="shrink-0" aria-hidden="true" />
-              <span className="hidden md:inline">{item.label}</span>
-            </button>
+            <li key={item.id} className="min-w-0 flex-1 sm:flex-none">
+              <button
+                type="button"
+                onClick={() => scrollTo(item.id)}
+                aria-current={isActive ? "true" : undefined}
+                aria-label={item.label}
+                title={item.label}
+                className={cx(
+                  "flex h-9 w-full items-center justify-center gap-1.5 rounded-md px-1 text-[13px] font-medium transition-colors duration-150",
+                  "sm:h-11 sm:w-auto sm:min-w-11 sm:px-1.5",
+                  isActive ? "bg-brand-soft text-brand-ink" : "text-ink-2 hover:bg-sunken hover:text-ink"
+                )}
+              >
+                <Icon
+                  size={16}
+                  className="h-4 w-4 shrink-0 min-[380px]:h-[18px] min-[380px]:w-[18px] sm:h-4 sm:w-4"
+                  aria-hidden="true"
+                />
+                {/* El nombre se pliega con `max-width`, no con `hidden`: asi el
+                    despliegue del tablet se puede animar. El ancho de la etiqueta
+                    no altera el nombre accesible, que sigue viniendo de
+                    `aria-label`. */}
+                <span
+                  className={cx(
+                    "max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-200 ease-out motion-reduce:transition-none",
+                    scrolled && "lg:max-w-[10rem] lg:opacity-100",
+                    "xl:max-w-[10rem] xl:opacity-100"
+                  )}
+                >
+                  {item.label}
+                </span>
+              </button>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </nav>
   );
 }

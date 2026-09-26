@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { AlertTriangle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
+import { Button } from "@/components/ui/Button";
 import { AdoptionRequestCta } from "@/components/features/adoption/AdoptionRequestCta";
 import { DocumentsCard } from "@/components/features/documents/DocumentsCard";
 import { PhysicalCardCta } from "@/components/features/carnet/PhysicalCardCta";
@@ -76,8 +76,13 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   return (
     <AppShell>
-      <div className="mx-auto max-w-6xl px-4 pb-10 sm:px-6 lg:px-8">
-        <div className="space-y-7">
+      {/* `overflow-x: clip` recorta el nav a sangre sin crear contenedor de
+          scroll: `clip` no genera scrollport, asi que el `sticky` del nav y
+          de la tarjeta del QR siguen funcionando. Sin esto, el `w-screen` del
+          nav sumaba el ancho de la barra de scroll vertical y la pagina
+          ganaba scroll horizontal en escritorio. */}
+      <div className="mx-auto max-w-6xl overflow-x-clip px-4 pb-12 sm:px-6 lg:px-8">
+        <div className="space-y-12">
           <PetHeader
             pet={profile.header}
             statusBadge={
@@ -103,32 +108,31 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             status={profile.status}
             shelterName={findShelterForPet(pet.id, getMockShelters())?.nombre ?? null}
           />
-          <div id="contacto">
+          <div id="contacto" className="scroll-mt-24">
             <EmergencyContactSection
               contact={profile.contact}
               emergency={pet.emergencia}
               petId={pet.id}
               petName={pet.mascota.nombre}
-              species={pet.mascota.especie}
               status={profile.status}
               zonaSegura={pet.contacto.zonaSegura}
             />
           </div>
-          <div id="info" className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div id="info" className="scroll-mt-24">
             <InfoCard petName={pet.mascota.nombre} info={profile.info} />
-            <div id="salud">
-              <HealthCard health={profile.health} />
-            </div>
-            <div id="veterinario">
-              <VetCard vet={profile.vet} species={pet.mascota.especie} />
-            </div>
+          </div>
+          <div id="salud" className="scroll-mt-24">
+            <HealthCard health={profile.health} />
+          </div>
+          <div id="veterinario" className="scroll-mt-24">
+            <VetCard vet={profile.vet} />
           </div>
           {profile.photos.length > 0 ? (
-            <div id="fotos">
+            <div id="fotos" className="scroll-mt-24">
               <RecentPhotos photos={profile.photos} profilePhoto={pet.mascota.fotoPerfilUrl} />
             </div>
           ) : null}
-          <div id="vacunas">
+          <div id="vacunas" className="scroll-mt-24">
             <VaccineTimeline
               petId={pet.id}
               petName={pet.mascota.nombre}
@@ -136,28 +140,49 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
               vaccines={vaccineViewModels}
             />
           </div>
-          <div id="expediente">
+          <div id="expediente" className="scroll-mt-24">
             <HealthExpedientePreview pet={pet} />
           </div>
-          <div id="carnet">
+          <div id="carnet" className="scroll-mt-24">
             <PhysicalCardCta
               petId={pet.id}
               petName={pet.mascota.nombre}
               card={physicalCard}
             />
           </div>
-          <div id="documentos" className="grid gap-6 md:grid-cols-[1fr_240px] lg:grid-cols-[1fr_280px]">
+          {/* Columna derecha con ancho fijo: antes `auto` dejaba que la tarjeta
+              del QR marcara el ancho y descuadrara la de documentos. */}
+          <div
+            id="documentos"
+            className="grid scroll-mt-24 items-start gap-6 md:grid-cols-[minmax(0,1fr)_20rem]"
+          >
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
-            <QRShareCard petName={pet.mascota.nombre} profileUrl={publicProfileUrl} petCode={pet.identificacion.codigoPublico} />
+            {/* La tarjeta del QR es mas corta que la lista de documentos, asi
+                que sin `sticky` la columna derecha deja cientos de pixeles
+                vacios al final. Con `items-start` cada tarjeta ocupa solo lo que
+                necesita: la de documentos no se estira para igualar a la del
+                QR, que con dos documentos dejaba 228px de hueco dentro. El
+                `sticky` solo tiene recorrido cuando la lista es larga, que es
+                justo cuando sirve. */}
+            <div>
+              <QRShareCard
+                petName={pet.mascota.nombre}
+                profileUrl={publicProfileUrl}
+                petCode={pet.identificacion.codigoPublico}
+                className="md:sticky md:top-24"
+              />
+            </div>
           </div>
           {!isTerminal ? (
-            <Link
-              href={`/perfil/${pet.id}/alerta`}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-500 to-red-500 px-5 py-3 text-sm font-extrabold text-white shadow-[0_14px_28px_rgba(225,29,72,0.2)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(225,29,72,0.28)]"
-            >
-              <AlertTriangle size={18} />
-              Generar alerta de mascota perdida
-            </Link>
+            <div className="border-t border-rule pt-8">
+              <Button
+                href={`/perfil/${pet.id}/alerta`}
+                variant="secondary"
+                icon={<AlertTriangle size={18} />}
+              >
+                Generar alerta de mascota perdida
+              </Button>
+            </div>
           ) : null}
           <PetFooterBanner
             petId={pet.id}
@@ -166,9 +191,6 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             emergency={pet.emergencia}
             status={profile.status}
           />
-          <p className="text-center text-sm font-bold text-gray-400 dark:text-gray-500">
-            PetCarnet © {new Date().getFullYear()} · Carnet Digital para Mascotas
-          </p>
         </div>
       </div>
     </AppShell>

@@ -1,6 +1,9 @@
 import { Bug, CalendarDays, FileText, Package } from "lucide-react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Pill } from "@/components/ui/Pill";
+import { Section } from "@/components/ui/Section";
+import { Surface } from "@/components/ui/Surface";
 import type { DewormingSectionViewModel } from "@/lib/mapping/health";
+import { resolveTone } from "@/lib/ui/tone";
 
 type DewormingSectionProps = {
   petName: string;
@@ -15,121 +18,103 @@ const DUE_CONTEXT: Record<string, string> = {
 
 function Field({ label, value }: { label: string; value: string | null }) {
   return (
-    <div className="rounded-xl border border-gray-100 bg-white/80 p-3 dark:border-gray-800 dark:bg-gray-900/80">
-      <span className="block text-xs font-extrabold uppercase text-gray-400">{label}</span>
-      <span className="mt-1 block font-bold text-gray-900 dark:text-white">
-        {value ?? "Sin registro"}
+    <div className="min-w-0">
+      <span className="block text-xs uppercase tracking-[0.1em] text-ink-3">{label}</span>
+      <span className="mt-1 block text-sm leading-6 text-ink">
+        {value ?? <span className="text-ink-3">Sin registro</span>}
       </span>
     </div>
   );
 }
 
 export function DewormingSection({ petName, viewModel }: DewormingSectionProps) {
-  return (
-    <GlassCard className="h-full overflow-hidden p-5 sm:p-6 lg:p-7">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="flex items-center gap-3 text-xl sm:text-2xl font-extrabold text-gray-950 dark:text-white">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-teal-50 text-teal-600 ring-1 ring-teal-100 dark:bg-teal-500/15 dark:text-teal-400 dark:ring-teal-800">
-            <Bug size={20} />
-          </span>
-          Desparasitación
-          {viewModel.total > 0 ? (
-            <span className="rounded-full bg-teal-100 px-3 py-1 text-sm font-extrabold text-teal-700 ring-1 ring-teal-200 dark:bg-teal-500/15 dark:text-teal-300 dark:ring-teal-800">
-              {viewModel.total}
-            </span>
-          ) : null}
-        </h2>
-      </div>
+  const due = viewModel.nextDue;
+  const dueTone = due ? resolveTone(due.tone) : null;
 
-      {viewModel.nextDue ? (
-        <div className="mt-5 flex flex-wrap items-center gap-3 rounded-2xl ring-1 p-4">
-          <span
-            className={[
-              "inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-extrabold ring-1",
-              viewModel.nextDue.tone,
-            ].join(" ")}
-          >
-            <CalendarDays size={15} aria-hidden="true" />
-            {viewModel.nextDue.label}
-          </span>
-          <div className="min-w-0">
-            <p className="font-extrabold text-gray-950 dark:text-white">
-              {viewModel.nextDue.fecha}
-            </p>
-            <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-              {DUE_CONTEXT[viewModel.nextDue.kind]}
-            </p>
-          </div>
+  return (
+    <Section
+      title="Desparasitación"
+      eyebrow="Salud"
+      icon={<Bug size={18} />}
+      action={
+        viewModel.total > 0 ? <Pill tone="muted">{viewModel.total}</Pill> : null
+      }
+    >
+      {due && dueTone ? (
+        <div className={["rounded-md p-4", dueTone.panel].join(" ")}>
+          <Pill tone={due.tone} icon={<CalendarDays size={13} />}>
+            {due.label}
+          </Pill>
+          <p className="mt-2.5 text-sm font-semibold text-ink">{due.fecha}</p>
+          <p className="mt-0.5 text-sm leading-6 text-ink-2">{DUE_CONTEXT[due.kind]}</p>
         </div>
       ) : null}
 
       {viewModel.items.length > 0 ? (
-        <ul className="mt-6 space-y-4">
+        <ul className="mt-5 space-y-3">
           {viewModel.items.map((item) => (
-            <li
-              key={item.id}
-              className="rounded-2xl border border-gray-100 bg-white/80 p-4 dark:border-gray-800 dark:bg-gray-900/80"
-            >
-              <div className="flex items-center gap-3">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-teal-50 text-teal-600 ring-1 ring-teal-100 dark:bg-teal-500/15 dark:text-teal-300 dark:ring-teal-800">
-                  <Package size={22} aria-hidden="true" />
-                </span>
-                <div className="min-w-0">
-                  <h3 className="truncate text-lg font-extrabold text-gray-950 dark:text-white">
-                    {item.producto}
-                  </h3>
-                  <p className="text-sm font-bold text-gray-500 dark:text-gray-400">
-                    Aplicada el {item.fecha ?? "fecha no registrada"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                <Field label="Fecha" value={item.fecha} />
-                <Field label="Próxima fecha" value={item.proximaFecha} />
-                <Field label="Dosis" value={item.dosis} />
-                <Field label="Veterinario" value={item.veterinario} />
-              </div>
-
-              {item.documentoUrl ? (
-                <div className="mt-4 flex justify-end">
-                  <a
-                    href={item.documentoUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full bg-teal-50 px-4 py-2 text-sm font-extrabold text-teal-700 ring-1 ring-teal-100 transition hover:bg-teal-100 dark:bg-teal-500/15 dark:text-teal-300 dark:ring-teal-800 dark:hover:bg-teal-500/25"
+            <li key={item.id}>
+              <Surface className="p-4">
+                <div className="flex items-start gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-info-soft text-info"
                   >
-                    <FileText size={16} />
-                    Ver documento
-                  </a>
+                    <Package size={19} />
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="text-lg leading-tight text-ink">{item.producto}</h3>
+                    <p className="mt-1 text-sm text-ink-2">
+                      Aplicada el {item.fecha ?? "fecha no registrada"}
+                    </p>
+                  </div>
                 </div>
-              ) : null}
 
-              {item.missingFields.length > 0 ? (
-                <p className="mt-3 text-sm font-bold text-amber-700 dark:text-amber-300">
-                  Datos faltantes: {item.missingFields.join(", ")}
-                </p>
-              ) : null}
+                <div className="mt-4 grid gap-x-4 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-4">
+                  <Field label="Fecha" value={item.fecha} />
+                  <Field label="Próxima fecha" value={item.proximaFecha} />
+                  <Field label="Dosis" value={item.dosis} />
+                  <Field label="Veterinario" value={item.veterinario} />
+                </div>
+
+                {item.missingFields.length > 0 ? (
+                  <p className="mt-4 text-sm leading-6 text-warning">
+                    Datos faltantes: {item.missingFields.join(", ")}
+                  </p>
+                ) : null}
+
+                {item.documentoUrl ? (
+                  <div className="mt-4 border-t border-rule pt-3.5">
+                    <a
+                      href={item.documentoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-md border border-rule bg-surface px-3.5 text-sm font-semibold text-brand transition-colors hover:border-brand-rule hover:bg-brand-soft"
+                    >
+                      <FileText size={16} aria-hidden="true" />
+                      Ver documento
+                    </a>
+                  </div>
+                ) : null}
+              </Surface>
             </li>
           ))}
         </ul>
       ) : (
-        <div className="mt-6 rounded-3xl border border-dashed border-gray-200 py-10 text-center dark:border-gray-700">
-          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-slate-50 text-slate-400 ring-1 ring-slate-100 dark:bg-slate-900 dark:text-slate-500 dark:ring-slate-800">
-            <Bug size={28} aria-hidden="true" />
-          </span>
-          <p className="mt-4 text-lg font-extrabold text-gray-950 dark:text-white">
+        <div className="rounded-md border border-dashed border-rule-strong px-4 py-8 text-center">
+          <Bug size={26} className="mx-auto text-ink-3" aria-hidden="true" />
+          <p className="mt-3 text-base font-semibold text-ink">
             Sin desparasitaciones registradas
           </p>
-          <p className="mx-auto mt-2 max-w-md font-semibold leading-7 text-gray-600 dark:text-gray-300">
+          <p className="mx-auto mt-1.5 max-w-md text-sm leading-6 text-ink-2">
             Aún no hay registros de desparasitación para {petName}.
           </p>
         </div>
       )}
 
-      <p className="mt-5 text-sm font-semibold text-gray-500 dark:text-gray-400">
+      <p className="mt-5 text-sm leading-6 text-ink-2">
         La próxima fecha es informativa: el calendario real lo define tu veterinario.
       </p>
-    </GlassCard>
+    </Section>
   );
 }

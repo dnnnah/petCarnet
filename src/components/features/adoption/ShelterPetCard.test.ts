@@ -17,7 +17,7 @@ function buildPet(overrides: Partial<ShelterPetCardPresentation> = {}): ShelterP
     image: "/pets/alix.jpeg",
     code: "PC-MILA-001",
     statusLabel: "En adopción",
-    statusTone: "purple",
+    statusTone: "adoption",
     adoptable: true,
     profileHref: "/perfil/mila",
     adoptionHref: "/perfil/mila/adopcion",
@@ -41,7 +41,7 @@ describe("ShelterPetCard", () => {
     expect(html).toContain('href="/perfil/mila/adopcion"');
 
     const htmlNoAdoptable = renderPet(
-      buildPet({ adoptable: false, statusLabel: "Perdido", statusTone: "rose" }),
+      buildPet({ adoptable: false, statusLabel: "Perdido", statusTone: "danger" }),
     );
     expect(htmlNoAdoptable).not.toContain("Solicitar adopción");
     expect(htmlNoAdoptable).toContain("Perdido");

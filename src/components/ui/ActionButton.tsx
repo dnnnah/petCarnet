@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import { cx } from "@/lib/ui/tone";
 
 type ActionButtonProps = {
   href: string;
@@ -7,15 +8,61 @@ type ActionButtonProps = {
   icon: LucideIcon;
   tone?: "call" | "whatsapp" | "location" | "urgentCall" | "urgentWhatsapp";
   size?: "normal" | "large";
+  className?: string;
 };
 
+/**
+ * Acción de contacto. Es el elemento de mayor peso en un perfil de mascota,
+ * así que va sólido, con icono + texto y una jerarquía clara: la acción
+ * urgente gana contraste; el resto baja a secundario.
+ */
 const tones = {
-  call: "from-emerald-700 to-teal-700 shadow-[0_16px_28px_rgba(16,185,129,0.28)]",
-  whatsapp: "from-green-700 to-emerald-700 shadow-[0_16px_28px_rgba(22,163,74,0.28)]",
-  location: "from-violet-600 to-indigo-600 shadow-[0_16px_28px_rgba(129,140,248,0.3)]",
-  urgentCall: "from-rose-600 to-red-700 shadow-[0_20px_38px_rgba(225,29,72,0.28)] ring-4 ring-rose-100",
-  urgentWhatsapp: "from-green-700 to-emerald-700 shadow-[0_20px_38px_rgba(22,163,74,0.26)] ring-4 ring-emerald-100",
-};
+  call: {
+    card: "bg-surface border-rule hover:border-brand-rule hover:bg-brand-soft",
+    icon: "bg-brand text-on-solid",
+    label: "text-ink",
+    helper: "text-ink-2",
+  },
+  whatsapp: {
+    card: "bg-surface border-rule hover:border-success-rule hover:bg-success-soft",
+    icon: "bg-success text-on-solid",
+    label: "text-ink",
+    helper: "text-ink-2",
+  },
+  location: {
+    card: "bg-surface border-rule hover:border-info-rule hover:bg-info-soft",
+    icon: "bg-info text-on-solid",
+    label: "text-ink",
+    helper: "text-ink-2",
+  },
+  urgentCall: {
+    card: "bg-danger-soft border-danger-rule hover:border-danger hover:bg-danger",
+    // En hover el fondo pasa a sólido, así que el texto se invierte a
+    // `--on-solid`, que ya cambia con el tema: `#ffffff` sobre el rojo
+    // `#8f2b23` en claro y `#14110f` sobre el rosa `#e08a80` en oscuro. Con
+    // `text-ink` fijo quedaba casi negro sobre rojo en claro y casi blanco
+    // sobre rosa en oscuro: ilegible en los dos temas. El chip pasa a
+    // `--on-solid` al 25% porque si no se fundía con la tarjeta, que ya es
+    // del mismo tono.
+    // `group-hover:` y no `hover:`. CSS hace `:hover` en el elemento bajo el
+    // puntero y sus ancestros, nunca en sus descendientes: con `hover:` el
+    // texto solo se invertia si el puntero caia justo sobre el glifo, y el
+    // chip, el padding y el hueco entre lineas quedaban con el color viejo.
+    // El chip ya usaba `group-hover:`; la etiqueta y el helper ahora igual.
+    icon: "bg-danger text-on-solid group-hover:bg-on-solid/25",
+    label: "text-ink group-hover:text-on-solid",
+    helper: "text-ink-2 group-hover:text-on-solid/85",
+  },
+  urgentWhatsapp: {
+    // Mismo razonamiento que `urgentCall`: el fondo tiene que volverse solido en
+    // hover, porque el texto se invierte a `--on-solid`. Sin `hover:bg-success`
+    // el texto blanco caia sobre el verde palido de `success-soft` (1.2:1).
+    card: "bg-success-soft border-success-rule hover:border-success hover:bg-success",
+    icon: "bg-success text-on-solid group-hover:bg-on-solid/25",
+    label: "text-ink group-hover:text-on-solid",
+    helper: "text-ink-2 group-hover:text-on-solid/85",
+  },
+} as const;
 
 export function ActionButton({
   href,
@@ -24,27 +71,54 @@ export function ActionButton({
   icon: Icon,
   size = "normal",
   tone = "call",
+  className,
 }: ActionButtonProps) {
+  const classes = tones[tone];
+  const urgent = tone === "urgentCall" || tone === "urgentWhatsapp";
+
   return (
     <a
       href={href}
-      className={[
-        "grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-3 overflow-hidden rounded-[1.45rem] bg-gradient-to-br text-white transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
-        size === "large" ? "min-h-[104px] px-4 py-4 sm:px-5" : "min-h-[76px] px-4 py-3 sm:px-5",
-        tones[tone],
-      ].join(" ")}
+      className={cx(
+        "group flex w-full min-w-0 items-center gap-3.5 rounded-lg border px-4 py-3.5 transition-colors duration-150",
+        size === "large" && "sm:px-5 sm:py-4",
+        classes.card,
+        className
+      )}
     >
-      <span className={["grid shrink-0 place-items-center rounded-full bg-white/22", size === "large" ? "h-12 w-12" : "h-11 w-11"].join(" ")}>
-        <Icon size={size === "large" ? 29 : 25} fill="none" />
+      <span
+        className={cx(
+          "grid shrink-0 place-items-center rounded-md",
+          size === "large" ? "h-11 w-11" : "h-10 w-10",
+          classes.icon
+        )}
+      >
+        <Icon size={size === "large" ? 22 : 20} aria-hidden="true" />
       </span>
-      <span className="min-w-0 max-w-full text-left">
-        <span className={["block max-w-full overflow-wrap-anywhere break-words font-extrabold leading-5", size === "large" ? "text-xl sm:text-2xl" : "text-lg"].join(" ")}>{label}</span>
+      <span className="min-w-0 flex-1">
+        <span
+          className={cx(
+            "block font-semibold leading-snug [overflow-wrap:anywhere]",
+            size === "large" ? "text-lg" : "text-base",
+            classes.label
+          )}
+        >
+          {label}
+        </span>
         {helper ? (
-          <span className="mt-1 block max-w-full overflow-wrap-anywhere break-words text-xs font-semibold leading-4 text-white/90 sm:text-sm">
+          <span
+            className={cx(
+              "mt-0.5 block text-sm leading-snug [overflow-wrap:anywhere]",
+              classes.helper
+            )}
+          >
             {helper}
           </span>
         ) : null}
       </span>
+      {urgent ? (
+        <span className="sr-only">Acción urgente</span>
+      ) : null}
     </a>
   );
 }

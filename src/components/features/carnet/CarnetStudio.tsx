@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { CreditCard, FileOutput, KeyRound, Printer } from "lucide-react";
 import { CarnetDocument } from "@/components/features/carnet/CarnetDocument";
+import { Pill } from "@/components/ui/Pill";
+import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import {
   CARNET_FORMATO_LABELS,
   CARNET_ORIENTACION_LABELS,
@@ -41,37 +43,27 @@ export function CarnetStudio({ petName, cards }: CarnetStudioProps) {
   return (
     <div className="space-y-5" aria-label={`Estudio del carnet físico de ${petName}`}>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Formato del carnet">
-          {(Object.keys(CARNET_FORMATO_LABELS) as PhysicalPetCardFormato[]).map((option) => {
-            const Icon = FORMATO_ICONS[option];
-            const isActive = option === formato;
-            return (
-              <button
-                key={option}
-                type="button"
-                aria-pressed={isActive}
-                onClick={() => setFormato(option)}
-                className={[
-                  "inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-extrabold transition outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
-                  isActive
-                    ? "bg-emerald-500 text-white shadow-[0_10px_22px_rgba(16,185,129,0.28)]"
-                    : "bg-white text-gray-600 ring-1 ring-gray-200 hover:bg-gray-50 dark:bg-gray-900 dark:text-gray-300 dark:ring-gray-800 dark:hover:bg-gray-800",
-                ].join(" ")}
-              >
-                <Icon size={16} aria-hidden="true" />
-                {CARNET_FORMATO_LABELS[option]}
-              </button>
-            );
-          })}
-        </div>
+        <SegmentedControl
+          label="Formato del carnet"
+          value={formato}
+          onChange={setFormato}
+          options={(Object.keys(CARNET_FORMATO_LABELS) as PhysicalPetCardFormato[]).map(
+            (option) => {
+              const Icon = FORMATO_ICONS[option];
+              return {
+                value: option,
+                label: CARNET_FORMATO_LABELS[option],
+                icon: <Icon size={16} />,
+              };
+            },
+          )}
+        />
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-4 py-2 text-sm font-extrabold text-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:ring-1 dark:ring-gray-800">
-            Orientación: {CARNET_ORIENTACION_LABELS[vm.orientacion]}
-          </span>
+          <Pill tone="muted">Orientación: {CARNET_ORIENTACION_LABELS[vm.orientacion]}</Pill>
           <button
             type="button"
             onClick={() => window.print()}
-            className="print:hidden inline-flex min-h-11 items-center gap-2 rounded-full bg-gray-950 px-5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+            className="print:hidden inline-flex min-h-11 items-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-ink-2"
           >
             <Printer size={17} aria-hidden="true" />
             Imprimir
@@ -79,11 +71,9 @@ export function CarnetStudio({ petName, cards }: CarnetStudioProps) {
         </div>
       </div>
 
-      <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
-        {vm.formatoDescription}
-      </p>
+      <p className="text-sm leading-6 text-ink-2">{vm.formatoDescription}</p>
 
-      <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-gray-400 dark:text-gray-500">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-3">
         Referencia de impresión · QR mínimo {card.print.qrMinimoMm} mm
       </p>
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import { IdCard } from "lucide-react";
 import { CarnetDocument } from "@/components/features/carnet/CarnetDocument";
 import { toCarnetViewModel } from "@/lib/mapping/carnet";
 import type { PhysicalPetCard } from "@/types/carnet";
@@ -24,27 +24,30 @@ export function PhysicalCardCta({ petId, petName, card }: PhysicalCardCtaProps) 
         <div>
           <h2
             id="carnet-heading"
-            className="flex items-center gap-2.5 text-2xl font-extrabold tracking-tight text-gray-950 dark:text-white"
+            className="flex items-center gap-2.5 text-2xl leading-tight text-ink"
           >
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100 dark:bg-emerald-500/15 dark:text-emerald-400 dark:ring-emerald-800">
-              <Sparkles size={19} aria-hidden="true" />
+            <span
+              aria-hidden="true"
+              className="grid h-9 w-9 place-items-center rounded-md bg-brand-soft text-brand"
+            >
+              <IdCard size={19} />
             </span>
             Carnet físico
           </h2>
-          <p className="mt-1 text-sm font-semibold text-gray-500 dark:text-gray-400">
+          <p className="mt-1.5 text-sm leading-6 text-ink-2">
             La identidad física de {petName} lista para imprimir o compartir.
           </p>
         </div>
         <Link
           href={`/perfil/${petId}/carnet`}
-          className="inline-flex min-h-12 items-center gap-2 rounded-2xl bg-emerald-500 px-5 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(16,185,129,0.18)] transition hover:-translate-y-0.5 hover:bg-emerald-600"
+          className="inline-flex min-h-11 items-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-on-solid transition-colors hover:bg-brand-hover"
         >
-          <Sparkles size={16} aria-hidden="true" />
+          <IdCard size={16} aria-hidden="true" />
           Estudio del carnet
         </Link>
       </div>
 
-      <p className="text-xs font-extrabold uppercase tracking-[0.16em] text-gray-400 dark:text-gray-500">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-3">
         {vm.formatoLabel} · orientación {vm.orientacionLabel.toLowerCase()} · QR mínimo {card.print.qrMinimoMm} mm
       </p>
 

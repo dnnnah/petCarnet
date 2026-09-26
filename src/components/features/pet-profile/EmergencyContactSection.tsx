@@ -10,7 +10,6 @@ import { EmergencyContact } from "./EmergencyContact";
 type EmergencyContactSectionProps = {
   petId: string;
   petName: string;
-  species: string;
   emergency: PetEmergency;
   status: PetStatus;
   zonaSegura: string;
@@ -20,7 +19,6 @@ type EmergencyContactSectionProps = {
 export function EmergencyContactSection({
   petId,
   petName,
-  species,
   emergency,
   status,
   zonaSegura,
@@ -44,7 +42,6 @@ export function EmergencyContactSection({
       isLost={effective.isLost}
       isTerminal={effective.status === "fallecido"}
       petName={petName}
-      species={species}
     />
   );
 }

@@ -17,7 +17,7 @@ describe("PetStateBanner", () => {
   it("anuncia que la mascota está en adopción", () => {
     const html = renderBanner("en_adopcion");
     expect(html).toContain("Lucca está buscando familia");
-    expect(html).toContain("EN ADOPCIÓN");
+    expect(html).toContain("En adopción");
     expect(html).toContain("Conocer el proceso de adopción");
     expect(html).toContain('href="#contacto"');
   });
@@ -25,20 +25,20 @@ describe("PetStateBanner", () => {
   it("celebra la adopción sin acciones", () => {
     const html = renderBanner("adoptado");
     expect(html).toContain("Lucca encontró un hogar");
-    expect(html).toContain("ADOPTADO");
+    expect(html).toContain("Adoptado");
     expect(html).not.toContain('href="#contacto"');
   });
 
   it("muestra el estado rescatado", () => {
     const html = renderBanner("rescatado");
     expect(html).toContain("Lucca está a salvo");
-    expect(html).toContain("RESCATADO");
+    expect(html).toContain("Rescatado");
   });
 
   it("muestra un memorial respetuoso para fallecido", () => {
     const html = renderBanner("fallecido");
     expect(html).toContain("En memoria de Lucca");
-    expect(html).toContain("EN MEMORIA");
+    expect(html).toContain("En memoria");
     expect(html).toContain("Con cariño y para siempre.");
     expect(html).not.toContain("está perdido");
     expect(html).not.toContain("impact");

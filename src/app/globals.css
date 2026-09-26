@@ -2,192 +2,406 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================================
+   PetCarnet · Design tokens
+   Concept: "documento de identidad" — ink on warm paper.
+   Restrained, editorial, high-legibility. Colour is semantic.
+   ============================================================ */
+
 :root {
-  --background: #fffdf9;
-  --foreground: #111827;
-  --muted: #6b7280;
-  --mint: #34c99a;
-  --mint-soft: #d1fae5;
-  --pink-soft: #fce7f3;
-  --blue-soft: #dbeafe;
-  --yellow-soft: #fef3c7;
-  --purple-soft: #a78bfa;
-  --border-soft: #e5e7eb;
+  color-scheme: light;
 
+  /* Surfaces — warm paper, not blue-grey */
+  --canvas: #f4f1ea;
   --surface: #ffffff;
-  --surface-muted: #f7f6f2;
-  --surface-card: rgba(255, 255, 255, 0.92);
-  --surface-subtle: rgba(255, 255, 255, 0.72);
+  --sunken: #ede8de;
 
-  --ring-soft: rgba(229, 231, 235, 0.78);
-  --shadow-card: 0 18px 48px rgba(17, 24, 39, 0.08);
+  /* Ink scale */
+  --ink: #1b1815;
+  --ink-2: #56504a;
+  --ink-3: #6f675f;
+
+  /* Rules & borders */
+  --rule: #e2dcd0;
+  --rule-strong: #c7bfb0;
+
+  /* Texto sobre un fondo sólido. En claro los sólidos son oscuros; en oscuro
+     son claros, así que este token se invierte y `text-white` deja de usarse
+     en botones (era ilegible en modo oscuro). */
+  --on-solid: #ffffff;
+
+  /* Marca — pino profundo, no esmeralda */
+  --brand: #1f4a3a;
+  --brand-hover: #17382c;
+  --brand-ink: #1b4133;
+  --brand-soft: #e7ede8;
+  --brand-rule: #b3c8bd;
+
+  /* Semánticos — pino, ocre, granate, terracota, pizarra y petróleo.
+     Fuera azul, celeste, esmeralda brillante, rosa y violeta. */
+  --success: #2c5f45;
+  --success-soft: #e4ede7;
+  --success-rule: #b0c9b8;
+
+  --warning: #8a5a12;
+  --warning-soft: #f7eeda;
+  --warning-rule: #ddc596;
+
+  --danger: #8f2b23;
+  --danger-soft: #f7e6e2;
+  --danger-rule: #e0aca4;
+
+  --info: #4a4a46;
+  --info-soft: #edebe6;
+  --info-rule: #cec9bf;
+
+  --adoption: #8a4b1f;
+  --adoption-soft: #f6e9dc;
+  --adoption-rule: #ddbc9b;
+
+  --settled: #4a5563;
+  --settled-soft: #e9e9e6;
+  --settled-rule: #c3c3bd;
+
+  --rescue: #2f5d62;
+  --rescue-soft: #e2ebeb;
+  --rescue-rule: #aec9ca;
+
+  --muted-soft: #eceae4;
+  --muted-rule: #d6d0c4;
+
+  /* Elevation — three levels, never coloured */
+  --elev-1: 0 1px 2px rgba(27, 24, 21, 0.05);
+  --elev-2: 0 4px 14px -4px rgba(27, 24, 21, 0.1), 0 1px 2px rgba(27, 24, 21, 0.04);
+  --elev-3: 0 18px 44px -14px rgba(27, 24, 21, 0.2), 0 2px 6px rgba(27, 24, 21, 0.05);
 }
 
 .dark {
-  --background: #0e1412;
-  --foreground: #edf2ef;
-  --muted: #a6afaa;
-  --mint: #3dd9a3;
-  --mint-soft: #0f2b21;
-  --pink-soft: #331f2c;
-  --blue-soft: #15263a;
-  --yellow-soft: #332a14;
-  --purple-soft: #2a2a4a;
-  --border-soft: #2a332e;
+  color-scheme: dark;
 
-  --surface: #151d1a;
-  --surface-muted: #1a2320;
-  --surface-card: rgba(21, 29, 26, 0.92);
-  --surface-subtle: rgba(21, 29, 26, 0.72);
+  --canvas: #131110;
+  --surface: #1c1917;
+  --sunken: #262220;
 
-  --ring-soft: rgba(42, 51, 46, 0.8);
-  --shadow-card: 0 18px 48px rgba(0, 0, 0, 0.45);
+  --ink: #f4f0e9;
+  --ink-2: #b4ada2;
+  --ink-3: #95867f;
+
+  --rule: #302b27;
+  --rule-strong: #47413a;
+
+  --on-solid: #14110f;
+
+  --brand: #7fb8a0;
+  --brand-hover: #93c6b2;
+  --brand-ink: #b6dccb;
+  --brand-soft: #17251f;
+  --brand-rule: #2e4539;
+
+  --success: #86bd93;
+  --success-soft: #17251c;
+  --success-rule: #2d4335;
+
+  --warning: #d2a24c;
+  --warning-soft: #271f11;
+  --warning-rule: #46371a;
+
+  --danger: #e08a80;
+  --danger-soft: #2b1714;
+  --danger-rule: #4c2620;
+
+  --info: #b5b0a6;
+  --info-soft: #24231f;
+  --info-rule: #3d3b35;
+
+  --adoption: #d9a06a;
+  --adoption-soft: #281c11;
+  --adoption-rule: #46331f;
+
+  --settled: #a8b0bd;
+  --settled-soft: #1e2024;
+  --settled-rule: #343740;
+
+  --rescue: #7fb3b8;
+  --rescue-soft: #122224;
+  --rescue-rule: #253e41;
+
+  --muted-soft: #242120;
+  --muted-rule: #383330;
+
+  --elev-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --elev-2: 0 4px 14px -4px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.35);
+  --elev-3: 0 18px 44px -14px rgba(0, 0, 0, 0.66), 0 2px 6px rgba(0, 0, 0, 0.45);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-on-solid: var(--on-solid);
+  --color-canvas: var(--canvas);
   --color-surface: var(--surface);
-  --color-surface-muted: var(--surface-muted);
-  --font-sans: "Nunito", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-  --shadow-soft: 0 16px 42px rgba(17, 24, 39, 0.07);
-  --shadow-button: 0 16px 30px rgba(16, 185, 129, 0.2);
+  --color-sunken: var(--sunken);
+
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-rule: var(--brand-rule);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-success-rule: var(--success-rule);
+
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-rule: var(--warning-rule);
+
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-rule: var(--danger-rule);
+
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-info-rule: var(--info-rule);
+
+  --color-adoption: var(--adoption);
+  --color-adoption-soft: var(--adoption-soft);
+  --color-adoption-rule: var(--adoption-rule);
+
+  --color-settled: var(--settled);
+  --color-settled-soft: var(--settled-soft);
+  --color-settled-rule: var(--settled-rule);
+
+  --color-rescue: var(--rescue);
+  --color-rescue-soft: var(--rescue-soft);
+  --color-rescue-rule: var(--rescue-rule);
+
+  --color-muted-soft: var(--muted-soft);
+  --color-muted-rule: var(--muted-rule);
+
+  --font-sans: var(--pc-font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--pc-font-display), ui-serif, Georgia, "Times New Roman", serif;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-1: var(--elev-1);
+  --shadow-2: var(--elev-2);
+  --shadow-3: var(--elev-3);
 }
 
-* {
-  box-sizing: border-box;
+/* Los estilos base de elemento deben vivir en `@layer base`: sin capa, CSS
+   da prioridad a lo no-capaado sobre `@layer utilities`, y `button {
+   color: inherit }` anulaba todos los `text-*` de botones, inputs y
+   selects. Con la capa, cualquier utilidad de Tailwind gana. */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    min-height: 100%;
+    background: var(--canvas);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    margin: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-wrap: break-word;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  img,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Un único tratamiento de foco para todo el producto. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+  }
+
+  ::selection {
+    background: var(--brand-soft);
+    color: var(--brand-ink);
+  }
 }
 
-html {
-  min-height: 100%;
-  background: var(--background);
-  scroll-behavior: smooth;
-  cursor: url("/paw-cursor.png") 8 8, url("/paw-cursor.svg") 8 8, auto;
+/* Cursor con huellita. Estaba en el diseño original y se perdió en el rediseño;
+   el recurso seguía en `public/` sin referenciar. Es la marca del producto en el
+   gesto, no un adorno de pantalla.
+   Tres correcciones sobre la versión original:
+   - Solo con puntero fino: en táctil no hay cursor y la huella no hace nada.
+   - Nunca en un campo de texto. El original lo ponia en `*` y el usuario
+     perdia el cursor de texto; `input`, `textarea`, `select` y `option` quedan
+     fuera de forma explicita.
+   - Dos variantes, pine sobre papel y crema sobre noche, porque un SVG de
+     cursor es un documento externo y no puede heredar `currentColor`. */
+@media screen and (pointer: fine) {
+  a[href],
+  button,
+  summary,
+  [role="button"],
+  label {
+    cursor: url("/paw-cursor-light.svg") 9 9, pointer;
+  }
+
+  .dark a[href],
+  .dark button,
+  .dark summary,
+  .dark [role="button"],
+  .dark label {
+    cursor: url("/paw-cursor-dark.svg") 9 9, pointer;
+  }
 }
 
-body,
-body * {
-  cursor: url("/paw-cursor.png") 8 8, url("/paw-cursor.svg") 8 8, auto;
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
 }
 
-body {
-  min-height: 100vh;
-  margin: 0;
-  background:
-    radial-gradient(circle at 7% 6%, rgba(209, 250, 229, 0.4), transparent 24rem),
-    radial-gradient(circle at 94% 8%, rgba(252, 231, 243, 0.38), transparent 24rem),
-    radial-gradient(circle at 40% 82%, rgba(254, 243, 199, 0.3), transparent 26rem),
-    radial-gradient(circle at 87% 78%, rgba(219, 234, 254, 0.38), transparent 24rem),
-    linear-gradient(180deg, var(--background) 0%, var(--surface-muted) 100%);
-  color: var(--foreground);
-  font-family: "Nunito", "Avenir Next", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-  font-weight: 500;
-  letter-spacing: 0;
-  text-rendering: geometricPrecision;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Un solo gesto authored en todo el producto: las marcas de la mascota aparecen
+   con un descenso corto en vez de estar ahí desde el primer fotograma. Cuatro
+   marcas se apresuran al entrar, y con `motion-reduce` no se mueven: quien pidió
+   menos movimiento no recibe ninguno, no una versión reducida.
+
+   Se anima la propiedad `translate` suelta y no `transform`: las marcas cambian
+   de tamaño según el ancho, y `transform` se comería ese escalado mientras la
+   animación estuviera activa. Las propiedades sueltas se componen en orden
+   (`translate`, `rotate`, `scale`, `transform`), así que el gesto y el tamaño
+   pueden convivir. */
+@keyframes marcas-entran {
+  from {
+    opacity: 0;
+    translate: 0 6px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
 }
 
-.dark body {
-  background:
-    radial-gradient(circle at 7% 6%, rgba(61, 217, 163, 0.12), transparent 24rem),
-    radial-gradient(circle at 94% 8%, rgba(236, 72, 153, 0.1), transparent 24rem),
-    radial-gradient(circle at 40% 82%, rgba(251, 191, 36, 0.08), transparent 26rem),
-    radial-gradient(circle at 87% 78%, rgba(96, 165, 250, 0.1), transparent 24rem),
-    linear-gradient(180deg, var(--background) 0%, var(--surface-muted) 100%);
+.marcas-entran {
+  animation: marcas-entran 420ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
-p,
-li,
-a,
-button,
-span {
-  letter-spacing: 0;
+@media (prefers-reduced-motion: reduce) {
+  .marcas-entran {
+    animation: none;
+  }
 }
 
-p,
-li {
-  font-weight: 500;
+/* La tarjeta de alerta de pérdida es un artefacto para imprimir y compartir, no
+   una pantalla: su identidad (papel blanco, tinta oscura, rojo de aviso) no debe
+   cambiar con el tema. Redefiniendo las variables en el subárbol, todas las
+   utilidades que usan tokens resuelven a valores de papel en claro y en oscuro,
+   y la impresión queda idéntica. */
+.alert-card {
+  --canvas: #f4f1ea;
+  --surface: #ffffff;
+  --sunken: #ede8de;
+  --on-solid: #ffffff;
+  --ink: #1b1815;
+  --ink-2: #56504a;
+  --ink-3: #6f675f;
+  --rule: #e2dcd0;
+  --rule-strong: #c7bfb0;
+  --brand: #1f4a3a;
+  --brand-ink: #1b4133;
+  --brand-soft: #e7ede8;
+  --brand-rule: #b3c8bd;
+  --success: #2c5f45;
+  --success-soft: #e4ede7;
+  --success-rule: #b0c9b8;
+  --warning: #8a5a12;
+  --warning-soft: #f7eeda;
+  --warning-rule: #ddc596;
+  --danger: #8f2b23;
+  --danger-soft: #f7e6e2;
+  --danger-rule: #e0aca4;
+  --info: #4a4a46;
+  --info-soft: #edebe6;
+  --info-rule: #cec9bf;
+  --muted-soft: #eceae4;
+  --muted-rule: #d6d0c4;
+  background: var(--surface);
+  color: var(--ink);
 }
 
-strong,
-b {
-  font-weight: 700;
-}
-
-.font-semibold {
-  font-weight: 550;
-}
-
-.font-bold {
+.overline {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
   font-weight: 600;
-}
-
-.font-extrabold {
-  font-weight: 700;
-}
-
-.font-black {
-  font-weight: 760;
+  line-height: 1.1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .overflow-wrap-anywhere {
   overflow-wrap: anywhere;
 }
 
-button,
-a {
-  -webkit-tap-highlight-color: transparent;
-  cursor: url("/paw-cursor.png") 8 8, url("/paw-cursor.svg") 8 8, pointer;
-}
-
-::selection {
-  background: var(--mint-soft);
-  color: #065f46;
-}
-
-.dotted-path {
-  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.16) 1.2px, transparent 1.2px);
-  background-size: 20px 20px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 72%);
-}
-
-.soft-card {
-  border: 1px solid rgba(229, 231, 235, 0.78);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 18px 48px rgba(17, 24, 39, 0.08);
-}
-
-.dark .soft-card {
-  border-color: rgba(55, 65, 81, 0.6);
-  background: rgba(17, 24, 39, 0.82);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
-}
-
-.doodle-line {
-  border: 2px dashed rgba(16, 185, 129, 0.32);
-  border-left: 0;
-  border-bottom: 0;
-  border-radius: 999px;
-}
-
-.scrollbar-hide {
+.scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.scrollbar-hide::-webkit-scrollbar {
+.scrollbar-none::-webkit-scrollbar {
   display: none;
-}
-
-@keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 .print-panel {
@@ -195,43 +409,85 @@ a {
   print-color-adjust: exact;
 }
 
+/* Motion is opt-in and always collapses to "instant" when the user asks. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @media print {
+  /* Imprimir siempre en papel: si el tema del navegador es oscuro, el panel
+     saldría con fondo #1c1917 (tinta desperdiciada y texto ilegible). Se fijan
+     aquí los valores claros derivados de `:root` para que la impresión sea
+     idéntica en ambos temas. */
+  #expediente-print,
+  #carnet-print {
+    --canvas: #f4f1ea;
+    --surface: #ffffff;
+    --sunken: #ede8de;
+    --ink: #1b1815;
+    --ink-2: #56504a;
+    --ink-3: #6f675f;
+    --rule: #e2dcd0;
+    --rule-strong: #c7bfb0;
+    --brand: #1f4a3a;
+    --brand-hover: #17382c;
+    --brand-ink: #1b4133;
+    --brand-soft: #e7ede8;
+    --brand-rule: #b3c8bd;
+    --success: #2c5f45;
+    --success-soft: #e4ede7;
+    --success-rule: #b0c9b8;
+    --warning: #8a5a12;
+    --warning-soft: #f7eeda;
+    --warning-rule: #ddc596;
+    --danger: #8f2b23;
+    --danger-soft: #f7e6e2;
+    --danger-rule: #e0aca4;
+    --info: #4a4a46;
+    --info-soft: #edebe6;
+    --info-rule: #cec9bf;
+    --adoption: #8a4b1f;
+    --adoption-soft: #f6e9dc;
+    --adoption-rule: #ddbc9b;
+    --settled: #4a5563;
+    --settled-soft: #e9e9e6;
+    --settled-rule: #c3c3bd;
+    --rescue: #2f5d62;
+    --rescue-soft: #e2ebeb;
+    --rescue-rule: #aec9ca;
+    --muted-soft: #eceae4;
+    --muted-rule: #d6d0c4;
+    --elev-1: 0 1px 2px rgba(27, 24, 21, 0.05);
+    --elev-2: 0 4px 14px -4px rgba(27, 24, 21, 0.1), 0 1px 2px rgba(27, 24, 21, 0.04);
+    --elev-3: 0 18px 44px -14px rgba(27, 24, 21, 0.2), 0 2px 6px rgba(27, 24, 21, 0.05);
+    --on-solid: #ffffff;
+    color-scheme: light;
+  }
+
   body,
   body * {
     visibility: hidden;
   }
 
   #expediente-print,
-  #expediente-print * {
-    visibility: visible;
-  }
-
-  #expediente-print {
-    position: absolute !important;
-    left: 0;
-    top: 0;
-    width: 100%;
-    margin: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-  }
-
-  #expediente-print,
-  #expediente-print * {
-    background-color: #ffffff !important;
-    color: #111827 !important;
-    border-color: #e5e7eb !important;
-  }
-
-  #expediente-print h3 {
-    color: #059669 !important;
-  }
-
+  #expediente-print *,
   #carnet-print,
   #carnet-print * {
     visibility: visible;
   }
 
+  #expediente-print,
   #carnet-print {
     position: absolute !important;
     left: 0;
@@ -244,6 +500,17 @@ a {
     border-radius: 0 !important;
   }
 
+  #expediente-print *,
+  #carnet-print * {
+    background-color: #ffffff !important;
+    color: #1b1815 !important;
+    border-color: #e2dcd0 !important;
+  }
+
+  #expediente-print h3 {
+    color: #14503e !important;
+  }
+
   #carnet-print > * {
     page-break-inside: avoid;
     break-inside: avoid;
@@ -253,23 +520,22 @@ a {
     margin-top: 1.25rem;
     margin-bottom: 0.5rem;
     font-size: 0.75rem;
-    font-weight: 800;
-    text-transform: uppercase;
+    font-weight: 700;
     letter-spacing: 0.08em;
-    color: #059669;
+    color: #14503e;
   }
 
   .print-row {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e2dcd0;
     padding: 0.35rem 0;
     font-size: 0.875rem;
   }
 
   .print-row-label {
-    font-weight: 700;
-    color: #6b7280;
+    font-weight: 600;
+    color: #56504a;
   }
 }

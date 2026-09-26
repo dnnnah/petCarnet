@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HeartHandshake } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { SPECIES_FACE } from "@/lib/ui/speciesFace";
 import type { ShelterPetCardPresentation } from "@/lib/mapping/adoptionPresentation";
 
 type ShelterPetCardProps = {
@@ -9,37 +10,46 @@ type ShelterPetCardProps = {
 };
 
 export function ShelterPetCard({ pet }: ShelterPetCardProps) {
+  const SpeciesIcon = SPECIES_FACE[pet.species.trim().toLowerCase()];
+
   return (
-    <article className="flex items-center gap-4 rounded-[1.6rem] bg-white p-3 shadow-[0_10px_26px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 dark:bg-gray-900 dark:ring-gray-800">
-      <Link href={pet.profileHref} className="shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 rounded-2xl">
+    <article className="flex items-center gap-4 rounded-lg border border-rule bg-surface p-3">
+      <Link
+        href={pet.profileHref}
+        className="shrink-0 rounded-md"
+        tabIndex={-1}
+        aria-hidden="true"
+      >
         <Image
           src={pet.image}
-          alt={`Foto de ${pet.name}`}
+          alt=""
           width={128}
           height={128}
-          className="h-24 w-24 rounded-2xl object-cover sm:h-28 sm:w-28"
+          className="h-24 w-24 rounded-md object-cover sm:h-28 sm:w-28"
         />
       </Link>
 
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
-          <h3 className="text-xl font-extrabold tracking-tight text-gray-950 dark:text-white">
-            {pet.name}
-          </h3>
+          <h3 className="font-display text-xl leading-tight text-ink">{pet.name}</h3>
           <Badge tone={pet.statusTone}>{pet.statusLabel}</Badge>
         </div>
-        <p className="mt-0.5 text-sm font-bold text-gray-600 dark:text-gray-300">
-          {pet.species} · {pet.breed}
+        <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-sm text-ink-2">
+          <span>{pet.species}</span>
+          {SpeciesIcon ? (
+            <SpeciesIcon size={14} strokeWidth={1.75} className="text-ink-3" aria-hidden="true" />
+          ) : (
+            <span aria-hidden="true">·</span>
+          )}
+          <span>{pet.breed}</span>
         </p>
-        <p className="mt-0.5 text-xs font-bold text-gray-400 dark:text-gray-500">
-          ID: {pet.code}
-        </p>
+        <p className="mt-0.5 text-xs text-ink-3">ID: {pet.code}</p>
 
         <div className="mt-2 flex flex-wrap gap-2">
           {pet.adoptable ? (
             <Link
               href={pet.adoptionHref}
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-violet-600 px-4 py-2 text-sm font-extrabold text-white shadow-[0_10px_22px_rgba(124,58,237,0.25)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 items-center gap-2 rounded-md bg-adoption px-4 text-sm font-semibold text-on-solid transition-colors hover:brightness-110"
             >
               <HeartHandshake size={16} aria-hidden="true" />
               Solicitar adopción
@@ -47,7 +57,7 @@ export function ShelterPetCard({ pet }: ShelterPetCardProps) {
           ) : null}
           <Link
             href={pet.profileHref}
-            className="inline-flex min-h-11 items-center rounded-full bg-white px-4 py-2 text-sm font-extrabold text-gray-700 ring-1 ring-gray-200 transition hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 dark:bg-gray-900 dark:text-gray-200 dark:ring-gray-700 dark:hover:bg-gray-800"
+            className="inline-flex min-h-11 items-center rounded-md border border-rule bg-surface px-4 text-sm font-semibold text-ink-2 transition-colors hover:border-brand-rule hover:text-brand"
           >
             Ver perfil
           </Link>

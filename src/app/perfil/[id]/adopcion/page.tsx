@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Ban, HeartCrack, HeartHandshake } from "lucide-react";
+import { Ban, HeartCrack } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { BackLink } from "@/components/ui/BackLink";
+import { Surface } from "@/components/ui/Surface";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { AdoptionRequestForm } from "@/components/features/adoption/AdoptionRequestForm";
 import { resolveAdoptionAvailability } from "@/lib/domain/adoption";
@@ -62,55 +62,47 @@ export default async function AdoptionRequestPage({ params }: AdoptionPageProps)
     <AppShell>
       <div className="mx-auto max-w-4xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="space-y-6">
-          <Link
-            href={`/perfil/${pet.id}`}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-gray-800 shadow-[0_10px_24px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
-          >
-            <ArrowLeft size={18} aria-hidden="true" />
+          <BackLink href={`/perfil/${pet.id}`}>
             Volver al perfil de {pet.mascota.nombre}
-          </Link>
+          </BackLink>
 
           <SubpageHeader
             eyebrow="Solicitud de adopción"
-            eyebrowTone="text-violet-600"
             title={`Adoptar a ${pet.mascota.nombre}`}
             description="Completa el formulario para registrar tu interés. En este prototipo la solicitud se guarda solo en este navegador y no se envía a ningún servidor."
-            icon={<HeartHandshake size={96} />}
-            background="bg-gradient-to-r from-violet-50 via-white to-indigo-50 ring-violet-100"
           />
 
           {!availability.available ? (
-            <GlassCard className="p-6 lg:p-8">
-              <div className="text-center">
+            <Surface className="p-6 sm:p-8">
+              <div className="max-w-md">
                 <span
+                  aria-hidden="true"
                   className={[
-                    "mx-auto grid h-16 w-16 place-items-center rounded-full",
-                    isTerminal
-                      ? "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400"
-                      : "bg-rose-100 text-rose-600 dark:bg-rose-500/15 dark:text-rose-300",
+                    "grid size-14 place-items-center rounded-md",
+                    isTerminal ? "bg-sunken text-ink-3" : "bg-danger-soft text-danger",
                   ].join(" ")}
                 >
-                  {isTerminal ? <HeartCrack size={32} aria-hidden="true" /> : <Ban size={32} aria-hidden="true" />}
+                  {isTerminal ? (
+                    <HeartCrack size={26} />
+                  ) : (
+                    <Ban size={26} />
+                  )}
                 </span>
-                <h3 className="mt-4 text-2xl font-extrabold text-gray-950 dark:text-white">
+                <h3 className="mt-4 font-display text-2xl leading-snug text-ink">
                   No es posible solicitar la adopción
                 </h3>
-                <p className="mx-auto mt-2 max-w-md text-sm font-semibold text-gray-600 dark:text-gray-300">
+                <p className="mt-2 text-sm leading-6 text-ink-2">
                   El estado actual de {pet.mascota.nombre} es{" "}
-                  <strong>{getPetStatusMeta(availability.effectiveStatus).label}</strong>, por lo que
-                  no está disponible para adopción en este momento.
+                  <strong className="font-semibold text-ink">
+                    {getPetStatusMeta(availability.effectiveStatus).label}
+                  </strong>
+                  , por lo que no está disponible para adopción en este momento.
                 </p>
-                <div className="mt-6 flex flex-wrap justify-center gap-3">
-                  <Link
-                    href={`/perfil/${pet.id}`}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-full bg-violet-600 px-6 py-2.5 text-sm font-extrabold text-white shadow-[0_12px_24px_rgba(124,58,237,0.28)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
-                  >
-                    <ArrowLeft size={18} aria-hidden="true" />
-                    Volver al perfil
-                  </Link>
+                <div className="mt-5">
+                  <BackLink href={`/perfil/${pet.id}`}>Volver al perfil</BackLink>
                 </div>
               </div>
-            </GlassCard>
+            </Surface>
           ) : (
             <AdoptionRequestForm pet={pet} shelterName={shelter?.nombre ?? null} />
           )}

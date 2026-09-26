@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BadgeCheck, Check, Download, FileCode2, Link2, Printer, QrCode, TriangleAlert } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import { Surface } from "@/components/ui/Surface";
+import { cx } from "@/lib/ui/tone";
 
 const QR_EXPORT_SIZE = 1024;
 const QR_PRINT_SIZE = 2048;
@@ -13,6 +14,7 @@ type QRShareCardProps = {
   petName: string;
   profileUrl: string;
   petCode: string;
+  className?: string;
 };
 
 type BusyAction = "png" | "svg" | null;
@@ -64,7 +66,7 @@ async function copyText(text: string): Promise<boolean> {
   }
 }
 
-export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) {
+export function QRShareCard({ petName, profileUrl, petCode, className }: QRShareCardProps) {
   const qrRef = useRef<HTMLDivElement>(null);
   const timers = useRef<number[]>([]);
   const [busy, setBusy] = useState<BusyAction>(null);
@@ -180,43 +182,44 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
   }, [fileName, busy, announce, later]);
 
   const buttonClasses = [
-    "inline-flex min-w-0 items-center justify-center gap-2 rounded-full px-3.5 py-2.5 text-sm font-extrabold",
-    "bg-white text-emerald-700 shadow-[0_8px_18px_rgba(17,24,39,0.06)] ring-1 ring-emerald-100",
-    "transition hover:-translate-y-0.5 hover:ring-emerald-300",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
-    "disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0",
+    "inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold",
+    "border border-rule bg-surface text-ink-2 transition-colors hover:border-brand-rule hover:text-brand",
+    "disabled:cursor-not-allowed disabled:opacity-50",
   ].join(" ");
 
   return (
-    <GlassCard className="h-full overflow-hidden bg-emerald-50/80 p-5 lg:p-6 dark:bg-emerald-950/30">
-      <div className="grid h-full gap-6">
+    <Surface className={cx("p-5", className)}>
+      {/* `min-w-0` en cada nivel: sin esto la URL larga y la rejilla de
+          botones ensanchan la tarjeta y descuadran la columna de documentos. */}
+      <div className="grid min-w-0 gap-5">
         <div className="flex items-start gap-3">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-white text-emerald-600 shadow-[0_8px_18px_rgba(17,24,39,0.06)] dark:bg-gray-900 dark:text-emerald-400">
-            <QrCode size={22} />
+          <span
+            aria-hidden="true"
+            className="grid size-10 shrink-0 place-items-center rounded-md bg-brand-soft text-brand"
+          >
+            <QrCode size={20} />
           </span>
           <div className="min-w-0">
-            <h2 className="text-lg font-extrabold leading-6 text-gray-950 dark:text-white">
+            <h2 className="font-display text-lg leading-snug text-ink [overflow-wrap:anywhere]">
               Comparte el perfil de {petName}
             </h2>
-            <p className="mt-1 text-sm font-bold text-emerald-700 dark:text-emerald-400">
-              Escanea con la cámara para ver el perfil.
-            </p>
+            <p className="mt-1 text-sm text-ink-2">Escanea con la cámara para ver el perfil.</p>
           </div>
         </div>
 
         {!profileUrl ? (
-          <div className="rounded-3xl bg-white/80 p-4 dark:bg-gray-900/80">
-            <p className="text-sm font-extrabold text-gray-950 dark:text-white">QR no disponible</p>
-            <p className="mt-1 text-sm font-bold text-gray-600 dark:text-gray-300">
+          <div className="rounded-md border border-dashed border-rule-strong p-4">
+            <p className="text-sm font-medium text-ink">QR no disponible</p>
+            <p className="mt-1 text-sm text-ink-2">
               Este perfil aún no tiene un identificador público asignado.
             </p>
           </div>
         ) : (
           <>
-            <div className="mx-auto w-fit">
+            <div className="mx-auto flex w-fit max-w-full flex-col items-center">
               <div
                 ref={qrRef}
-                className="grid h-44 w-44 place-items-center rounded-3xl bg-white p-2 shadow-[0_18px_32px_rgba(17,24,39,0.12)] ring-1 ring-emerald-100 sm:h-48 sm:w-48"
+                className="grid size-44 shrink-0 place-items-center rounded-md bg-white p-2 ring-1 ring-rule sm:size-48"
               >
                 <QRCodeSVG
                   value={profileUrl}
@@ -231,16 +234,18 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                   style={{ width: "100%", height: "100%" }}
                 />
               </div>
-              <p className="mt-2 max-w-48 truncate text-center text-xs font-bold text-emerald-700/80 dark:text-emerald-400/80">
-                <Link2 size={12} className="mr-1 inline" />
-                {profileUrl}
+              {/* `w-full`, no un ancho fijo: la linea debe medir lo mismo que el
+                  cuadro del QR en cada tamano. Con `w-48` fijo, en movil (QR de
+                  176px) la linea media 192px y empujaba el conjunto 8px a la
+                  izquierda, descentrando el codigo dentro de la tarjeta. */}
+              <p className="mt-2 flex w-full items-center justify-center gap-1 text-xs text-ink-3">
+                <Link2 size={12} aria-hidden="true" className="shrink-0" />
+                <span className="truncate [overflow-wrap:anywhere]">{profileUrl}</span>
               </p>
-              <p className="mt-1 text-center text-xs font-extrabold text-gray-500 dark:text-gray-400">
-                ID PetCarnet: {petCode}
-              </p>
+              <p className="mt-1 w-full break-words text-center text-xs text-ink-2">ID PetCarnet: {petCode}</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2 [&>*]:min-w-0">
               <button
                 type="button"
                 onClick={() => handleCopy("url")}
@@ -248,7 +253,7 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                 aria-label="Copiar la URL del perfil para compartir"
                 className={buttonClasses}
               >
-                {copied === "url" ? <Check size={16} /> : <Link2 size={16} />}
+                {copied === "url" ? <Check size={16} aria-hidden="true" /> : <Link2 size={16} aria-hidden="true" />}
                 <span className="truncate">{copied === "url" ? "¡Copiado!" : "Copiar URL"}</span>
               </button>
 
@@ -259,7 +264,7 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                 aria-label="Copiar el ID PetCarnet"
                 className={buttonClasses}
               >
-                {copied === "id" ? <Check size={16} /> : <BadgeCheck size={16} />}
+                {copied === "id" ? <Check size={16} aria-hidden="true" /> : <BadgeCheck size={16} aria-hidden="true" />}
                 <span className="truncate">{copied === "id" ? "¡Copiado!" : "Copiar ID"}</span>
               </button>
 
@@ -270,7 +275,7 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                 aria-label="Descargar el QR en PNG de alta resolución para imprimir"
                 className={buttonClasses}
               >
-                <Download size={16} />
+                <Download size={16} aria-hidden="true" />
                 <span className="truncate">{busy === "png" ? "Generando…" : "Descargar PNG"}</span>
               </button>
 
@@ -281,18 +286,22 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                 aria-label="Exportar el QR en formato vectorial SVG"
                 className={buttonClasses}
               >
-                <FileCode2 size={16} />
+                <FileCode2 size={16} aria-hidden="true" />
                 <span className="truncate">{busy === "svg" ? "Generando…" : "Exportar SVG"}</span>
               </button>
             </div>
 
-            <details className="group rounded-2xl bg-white/70 ring-1 ring-emerald-100 dark:bg-gray-900/70 dark:ring-emerald-500/20">
-              <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-extrabold text-emerald-700 dark:text-emerald-400">
-                <Printer size={16} />
+            <details className="group min-w-0 rounded-md border border-rule">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 px-3 py-3 text-sm font-semibold text-ink-2">
+                <Printer size={16} aria-hidden="true" className="shrink-0 text-ink-3" />
                 Cómo imprimir o usar el QR
-                <TriangleAlert size={14} className="ml-auto transition-transform group-open:rotate-180" />
+                <TriangleAlert
+                  size={14}
+                  aria-hidden="true"
+                  className="ml-auto shrink-0 text-ink-3 transition-transform group-open:rotate-180"
+                />
               </summary>
-              <ul className="space-y-2 border-t border-emerald-100 px-4 py-3 text-sm font-bold leading-5 text-gray-700 dark:border-emerald-500/20 dark:text-gray-200">
+              <ul className="space-y-2 border-t border-rule px-3 py-3 text-sm leading-5 text-ink-2 [overflow-wrap:anywhere]">
                 <li>Descarga el PNG (alta resolución) o el SVG y úsalo en una etiqueta, placa o colgante.</li>
                 <li>Tamaño mínimo recomendado: 2.5 × 2.5 cm (elige 5 cm si va en una placa).</li>
                 <li>No recortes el margen blanco alrededor del código.</li>
@@ -301,12 +310,12 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
             </details>
 
             {copyFailed ? (
-              <p role="status" className="text-center text-xs font-extrabold text-rose-600 dark:text-rose-400">
+              <p role="status" className="text-center text-xs text-danger">
                 No se pudo copiar, revisa los permisos del navegador.
               </p>
             ) : null}
             {downloadFailed ? (
-              <p role="status" className="text-center text-xs font-extrabold text-rose-600 dark:text-rose-400">
+              <p role="status" className="text-center text-xs text-danger">
                 No se pudo generar la descarga. Inténtalo de nuevo.
               </p>
             ) : null}
@@ -317,6 +326,6 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
           {liveMessage}
         </span>
       </div>
-    </GlassCard>
+    </Surface>
   );
 }

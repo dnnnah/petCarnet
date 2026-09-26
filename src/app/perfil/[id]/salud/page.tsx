@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeft, HeartPulse } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
+import { BackLink } from "@/components/ui/BackLink";
 import { DewormingSection } from "@/components/features/pet-profile/health/DewormingSection";
 import { HealthCompletenessCard } from "@/components/features/pet-profile/health/HealthCompletenessCard";
 import { MedicalHistorySection } from "@/components/features/pet-profile/health/MedicalHistorySection";
@@ -71,21 +70,12 @@ export default async function SaludPage({ params }: HealthPageProps) {
     <AppShell>
       <div className="mx-auto max-w-4xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="space-y-6">
-          <Link
-            href={`/perfil/${pet.id}`}
-            className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-extrabold text-gray-800 shadow-[0_10px_24px_rgba(17,24,39,0.06)] ring-1 ring-gray-100 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-800"
-          >
-            <ArrowLeft size={18} />
-            Volver al perfil
-          </Link>
+          <BackLink href={`/perfil/${pet.id}`} />
 
           <SubpageHeader
             eyebrow="Expediente de salud"
-            eyebrowTone="text-emerald-600"
             title={`Salud de ${pet.mascota.nombre}`}
             description="Vacunas, desparasitación e historial médico en un solo lugar."
-            icon={<HeartPulse size={96} />}
-            background="bg-gradient-to-r from-emerald-50 via-white to-sky-50 ring-emerald-100"
           />
 
           <HealthCompletenessCard petName={pet.mascota.nombre} viewModel={completeness} />

@@ -5,12 +5,12 @@ import {
   Check,
   Copy,
   ExternalLink,
-  HeartHandshake,
   MapPin,
   Send,
   X,
 } from "lucide-react";
 import { ActionButton } from "@/components/ui/ActionButton";
+import { Field } from "@/components/ui/Field";
 import {
   buildFoundPetMessage,
   buildMapsLocationUrl,
@@ -130,23 +130,18 @@ export function FoundPetPanel({
   return (
     <section
       aria-labelledby="encontre-panel-titulo"
-      className="relative overflow-hidden rounded-[2rem] border-2 border-rose-200 bg-gradient-to-r from-rose-100/70 via-white to-amber-100/70 p-5 shadow-[0_18px_42px_rgba(225,29,72,0.14)] ring-2 ring-rose-100 dark:from-rose-950/50 dark:via-gray-900 dark:to-amber-950/40 dark:ring-rose-900 sm:p-7"
+      className="rounded-lg border border-l-2 border-danger-rule bg-danger-soft p-5 sm:p-6"
     >
-      <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-rose-500 via-red-400 to-amber-400" />
-      <div className="pointer-events-none absolute -right-3 -top-5 text-rose-200">
-        <HeartHandshake size={86} />
-      </div>
-
       {!flowOpen ? (
-        <div className="relative grid items-center gap-5 lg:grid-cols-[1fr_auto]">
+        <div className="grid items-center gap-5 lg:grid-cols-[1fr_auto]">
           <div>
             <h2
               id="encontre-panel-titulo"
-              className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white"
+              className="text-2xl leading-tight text-ink sm:text-3xl"
             >
               ¿Encontraste a {petName}?
             </h2>
-            <p className="mt-2 max-w-2xl text-base font-bold leading-6 text-gray-700 dark:text-gray-200">
+            <p className="mt-2 max-w-2xl text-base leading-7 text-ink-2">
               Esta mascota está reportada como perdida. Si la tienes cerca,
               avisa a su familia con un mensaje desde aquí.
             </p>
@@ -154,20 +149,20 @@ export function FoundPetPanel({
           <button
             type="button"
             onClick={openFlow}
-            className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-600 to-red-500 px-6 py-4 text-base sm:text-lg font-extrabold text-white shadow-[0_18px_34px_rgba(225,29,72,0.28)] ring-4 ring-rose-100 dark:ring-rose-900 transition hover:-translate-y-0.5 hover:from-rose-700 hover:to-red-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-danger px-5 text-base font-semibold text-on-solid transition-colors hover:brightness-110"
           >
             <Send size={22} aria-hidden="true" />
             Encontré esta mascota
           </button>
         </div>
       ) : (
-        <div className="relative space-y-5">
+        <div className="space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2
               ref={headingRef}
               id="encontre-panel-titulo"
               tabIndex={-1}
-              className="text-2xl sm:text-3xl font-extrabold tracking-tight text-gray-950 dark:text-white outline-none"
+              className="text-2xl leading-tight text-ink outline-none sm:text-3xl"
             >
               Avisa que encontraste a {petName}
             </h2>
@@ -175,38 +170,35 @@ export function FoundPetPanel({
               type="button"
               onClick={closeFlow}
               aria-label="Cancelar y volver"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-gray-700 shadow-[0_8px_18px_rgba(17,24,39,0.08)] ring-1 ring-gray-200 transition hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-700 dark:hover:bg-gray-800"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-md text-ink-2 transition-colors hover:bg-danger-soft hover:text-ink"
             >
               <X size={20} aria-hidden="true" />
             </button>
           </div>
 
           {lastZone ? (
-            <p className="inline-flex items-center gap-2 rounded-full bg-rose-50 px-4 py-2 text-sm font-extrabold text-rose-700 ring-1 ring-rose-100 dark:bg-rose-500/15 dark:text-rose-300 dark:ring-rose-900">
+            <p className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-2">
               <MapPin size={16} aria-hidden="true" />
               Última vez visto cerca de: {lastZone}
             </p>
           ) : null}
 
-          <div className="rounded-[1.45rem] border border-rose-100 bg-white/90 p-4 dark:border-rose-900 dark:bg-gray-900/90">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="text-base font-extrabold text-gray-950 dark:text-white">
-                Lo haces saber con tu ubicación actual
-              </p>
-            </div>
-            <p className="mt-1 text-sm font-bold text-gray-600 dark:text-gray-300">
+          <div className="rounded-lg border border-rule bg-surface p-4">
+            <p className="text-base font-semibold text-ink">
+              Compartir tu ubicación actual
+            </p>
+            <p className="mt-1 text-sm leading-6 text-ink-2">
               La ubicación es opcional y solo se envía si tú la compartes.
             </p>
 
-            <div className="mt-4 flex flex-wrap gap-3">
+            <div className="mt-4 flex flex-wrap gap-2.5">
               <button
                 type="button"
                 onClick={handleShareLocation}
                 disabled={location.status === "locating"}
                 className={[
-                  "inline-flex min-h-14 items-center justify-center gap-2 rounded-full px-5 py-3.5 text-sm font-extrabold text-white shadow-[0_14px_26px_rgba(129,140,248,0.28)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2",
-                  "bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700",
-                  "disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0",
+                  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-info px-4 text-sm font-semibold text-on-solid transition-colors hover:brightness-110",
+                  "disabled:cursor-not-allowed disabled:opacity-60",
                 ].join(" ")}
               >
                 <MapPin size={20} aria-hidden="true" />
@@ -221,21 +213,21 @@ export function FoundPetPanel({
                 type="button"
                 onClick={handleSkipLocation}
                 disabled={location.status === "locating"}
-                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-white px-5 py-3.5 text-sm font-extrabold text-gray-800 ring-1 ring-gray-200 transition hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-gray-900 dark:text-gray-100 dark:ring-gray-700 dark:hover:bg-gray-800"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-surface px-4 text-sm font-semibold text-ink-2 ring-1 ring-inset ring-rule-strong transition-colors hover:bg-sunken hover:text-ink disabled:cursor-not-allowed disabled:opacity-60"
               >
                 Omitir ubicación
               </button>
             </div>
 
             {location.status === "located" && locationUrl ? (
-              <p className="mt-3 flex flex-wrap items-center gap-2 text-sm font-extrabold text-emerald-700 dark:text-emerald-300">
+              <p className="mt-3 flex flex-wrap items-center gap-2 text-sm font-semibold text-success">
                 <Check size={16} aria-hidden="true" />
                 Ubicación confirmada.
                 <a
                   href={locationUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-3 py-1.5 text-emerald-700 ring-1 ring-emerald-200 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-800"
+                  className="inline-flex min-h-11 items-center gap-1 rounded-md bg-surface px-2.5 text-sm font-semibold text-success ring-1 ring-inset ring-success-rule transition-colors hover:bg-success-soft"
                 >
                   Abrir mapa
                   <ExternalLink size={14} aria-hidden="true" />
@@ -246,7 +238,7 @@ export function FoundPetPanel({
             {location.status === "error" ? (
               <p
                 role="status"
-                className="mt-3 rounded-2xl bg-amber-50 px-4 py-3 text-sm font-bold text-amber-800 ring-1 ring-amber-100 dark:bg-amber-500/15 dark:text-amber-300 dark:ring-amber-900"
+                className="mt-3 rounded-md bg-warning-soft px-3.5 py-3 text-sm leading-6 text-warning ring-1 ring-inset ring-warning-rule"
               >
                 {LOCATION_ERROR_COPY[location.errorKey]}
               </p>
@@ -255,32 +247,28 @@ export function FoundPetPanel({
             {location.status === "locating" ? (
               <p
                 role="status"
-                className="mt-3 text-sm font-bold text-violet-700 dark:text-violet-300"
+                className="mt-3 text-sm text-ink-2"
               >
                 Obteniendo tu ubicación… Tarda unos segundos.
               </p>
             ) : null}
           </div>
 
-          <div>
-            <label
-              htmlFor="encontre-mensaje"
-              className="block text-sm font-extrabold text-gray-800 dark:text-gray-100"
-            >
-              Mensaje para la familia
-            </label>
-            <textarea
-              id="encontre-mensaje"
-              value={message}
-              onChange={(event) => {
-                setMessage(event.target.value);
-                setCopied(false);
-                setCopyFailed(false);
-              }}
-              rows={4}
-              className="mt-2 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-bold text-gray-900 shadow-[0_10px_24px_rgba(17,24,39,0.05)] outline-none transition focus:border-rose-300 focus:ring-2 focus:ring-rose-400 dark:border-gray-700 dark:bg-gray-900 dark:text-white resize-none dark:focus:border-rose-700"
-            />
-          </div>
+          <Field id="encontre-mensaje" label="Mensaje para la familia">
+            {(control) => (
+              <textarea
+                {...control}
+                value={message}
+                onChange={(event) => {
+                  setMessage(event.target.value);
+                  setCopied(false);
+                  setCopyFailed(false);
+                }}
+                rows={4}
+                className={`${control.className} resize-y leading-6`}
+              />
+            )}
+          </Field>
 
           <div className="grid gap-3 sm:grid-cols-2">
             {whatsappHref ? (
@@ -297,10 +285,10 @@ export function FoundPetPanel({
               type="button"
               onClick={handleCopyMessage}
               className={[
-                "inline-flex min-h-14 items-center justify-center gap-2 rounded-[1.45rem] px-4 py-3.5 text-base font-extrabold transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2",
+                "inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-4 text-base font-semibold transition-colors",
                 copied
-                  ? "bg-emerald-500 text-white shadow-[0_14px_26px_rgba(16,185,129,0.28)]"
-                  : "bg-white text-gray-900 shadow-[0_10px_22px_rgba(17,24,39,0.06)] ring-1 ring-gray-200 hover:bg-gray-100 dark:bg-gray-900 dark:text-white dark:ring-gray-700 dark:hover:bg-gray-800",
+                  ? "bg-success-soft text-success ring-1 ring-inset ring-success-rule"
+                  : "bg-surface text-ink ring-1 ring-inset ring-rule-strong hover:bg-sunken",
               ].join(" ")}
             >
               {copied ? <Check size={22} aria-hidden="true" /> : <Copy size={22} aria-hidden="true" />}
@@ -309,7 +297,7 @@ export function FoundPetPanel({
           </div>
 
           {copyFailed ? (
-            <p role="status" className="text-sm font-bold text-rose-600 dark:text-rose-400">
+            <p role="status" className="text-sm text-danger">
               No se pudo copiar el mensaje. Revisa los permisos del navegador.
             </p>
           ) : null}

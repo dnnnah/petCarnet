@@ -1,9 +1,27 @@
 import type { Metadata, Viewport } from "next";
+import { Archivo, Newsreader } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./providers";
 import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
 import { PWA_THEME_COLOR } from "./manifest";
 import { resolvePublicProfileBaseUrl } from "@/lib/services/publicProfileUrl";
+
+/**
+ * Tipografía del sistema visual.
+ * - Archivo: interfaz, etiquetas, datos (grotesca neutra, fuerte en tamaño pequeño).
+ * - Newsreader: títulos y display (serif editorial cálida; evoca el documento oficial).
+ */
+const sans = Archivo({
+  subsets: ["latin"],
+  variable: "--pc-font-sans",
+  display: "swap",
+});
+
+const display = Newsreader({
+  subsets: ["latin"],
+  variable: "--pc-font-display",
+  display: "swap",
+});
 
 const siteUrl = (() => {
   const baseUrl = resolvePublicProfileBaseUrl();
@@ -52,7 +70,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning className={`${sans.variable} ${display.variable}`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
