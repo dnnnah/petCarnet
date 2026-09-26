@@ -81,7 +81,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           de la tarjeta del QR siguen funcionando. Sin esto, el `w-screen` del
           nav sumaba el ancho de la barra de scroll vertical y la pagina
           ganaba scroll horizontal en escritorio. */}
-      <div className="mx-auto max-w-5xl overflow-x-clip px-4 pb-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl overflow-x-clip px-4 pb-12 sm:px-6 lg:px-8">
         <div className="space-y-12">
           <PetHeader
             pet={profile.header}

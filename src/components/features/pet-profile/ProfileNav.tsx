@@ -36,6 +36,19 @@ type ProfileNavProps = {
   hasPhotos?: boolean;
 };
 
+/** Columnas de la retícula del nav. Cada destino ocupa dos, de modo que una fila
+ *  caben cinco. Diez columnas permiten además descentrar la última fila, que se
+ *  queda con cuatro destinos: sobran dos columnas, una a cada lado. */
+const NAV_COLS = 10;
+const NAV_POR_FILA = 5;
+
+// El paso a una sola fila ocurre en `sm` (640px) y no en un valor arbitrario:
+// con `min-[560px]` el destino de 44px se quedaba a 44px justo a 559px de
+// ancho, el único punto donde la consulta de medios no aplicaba y las celdas
+// quedaban a 63px de separación con la fila descuadrada. Nueve áreas táctiles de
+// 44px son 396px, y hace falta además un hueco mínimo de 16px entre ellas:
+// 396 + 8x16 = 524px, más 32px de margen lateral. `sm` deja margen de sobra.
+
 export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
   // Arranca marcada la primera sección en vez de `""`: sin sección activa el
   // nav queda sin ningun estado visible hasta que el observador de interseccion
@@ -82,6 +95,12 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
     return () => observer.disconnect();
   }, [navItems]);
 
+  // La última fila se descentra para que sus cuatro destinos no queden pegados
+  // al borde izquierdo con una columna vacía al final. Con ocho destinos (sin
+  // fotos) sobran cuatro columnas, dos a cada lado, y el desfase crece solo.
+  const enUltimaFila = Math.max(0, navItems.length - NAV_POR_FILA);
+  const desfaseUltimaFila = Math.floor((NAV_COLS - enUltimaFila * 2) / 2) + 1;
+
   function scrollTo(id: string) {
     const element = document.getElementById(id);
     if (element) {
@@ -92,48 +111,54 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
   return (
     <nav
       aria-label="Secciones del perfil"
-      className="sticky top-0 z-40 -mx-4 border-y border-rule bg-canvas/95 px-2 backdrop-blur-sm sm:-mx-6 sm:px-6 lg:mx-0 lg:border-b lg:px-0"
+      className={cx(
+        "z-40 border-y border-rule bg-canvas/95 backdrop-blur-sm",
+        "sm:sticky sm:top-0"
+      )}
     >
       {/*
-        El carril va alineado a la columna de contenido, no a pantalla
-        completa. Con `justify-between` sobre la ventana entera los nueve
-        destinos quedaban sueltos —a 1920px, con ~200px entre uno y otro— y el
-        primero pegado al borde de la pantalla, sin relacion con el texto de
-        abajo. Alineado a la columna, el reparto se ve deliberado y los
-        extremos del nav caen en la misma linea que el contenido.
+        Reparto de punta a punta dentro de la columna, no de la ventana: con
+        `justify-between` sobre el ancho completo los nueve destinos quedaban
+        sueltos a ~200px entre si en pantallas anchas y el primero pegado al
+        borde de la pantalla, sin relación con el texto de abajo.
 
-        Las nueve etiquetas ocupan ~830px con el tamaño actual del item, asi que
-        hacen falta dos cosas para que quepan en la columna: la pagina pasa a
-        `max-w-5xl` (960px utiles) y el item se aprieta —icono 16, `text-[13px]`,
-        `px-2`— dejando ~130px de holgura en vez de los 6px que daba
-        `max-w-4xl`, donde cualquier diferencia de metricas de la fuente lo
-        desbordaba.
+        Por debajo de 640px los nueve destinos no caben en una fila, y con un
+        carril desplazable había que deslizar para ver el último: un destino que
+        no se ve es un destino que no existe. Ahí el nav es una retícula de dos
+        filas, cinco destinos arriba y cuatro abajo, con separación real entre
+        ellos. No puede ser `flex-wrap`: al no haber hueco, envuelve lo más
+        apretado posible y deja destinos huérfanos en la segunda fila.
 
-        La mascara de degradado solo vive por debajo de `lg`, que es donde el
-        carril llega a desplazar. Entre 1024 y 1279 se conservaba aun sin
-        desborde y desvanecía el ultimo destino sin motivo.
+        El nav solo es sticky cuando ya es una sola fila. Dos filas ocupan 112px,
+        y fijarlas debajo del encabezado dejaria casi una quinta parte de la
+        pantalla de un telefono ocupada de forma permanente.
 
-        En movil no se reparte: nueve iconos de 44px no entran en 288px, asi que
-        ahi el carril va pegado a la izquierda y desplazable, que es lo unico
-        que conserva el area tactil. En tablet tampoco, y por un motivo concreto:
-        con `justify-between` los nueve iconos solos se separaban 71px entre si y,
-        al desplegarse las etiquetas, bajaban a 16px. Los destinos se movian
-        debajo del cursor a media lectura. Empacados, el despliegue solo anade
-        ancho hacia la derecha y el primer destino —y el que se esta leyendo— no
-        se mueve. El reparto de punta a punta queda en `xl`, donde las etiquetas
-        estan siempre y no hay nada que reordenar.
+        Las etiquetas se despliegan al bajar, porque ahi es cuando la persona ya
+        esta leyendo y le sirve saber donde esta. La columna del perfil es de 6xl
+        para que, con las nueve etiquetas visibles, el hueco entre destinos sea de
+        21px a 1024 y de 37px a partir de 1280, en vez de los 14px que daba la
+        columna de 5xl.
       */}
-      {/* `contain: paint` es obligatorio: sin él, el contenido desplazable del
-          carril se sumaba al ancho de la página (410px en un viewport de 320px).
-          El `px-1.5` interno deja sitio al `outline-offset: 2px` del foco global
-          para que `contain: paint` no lo recorte en los extremos. */}
-      <ul className="scrollbar-none -mx-1.5 flex items-center gap-0.5 overflow-x-auto px-1.5 py-1.5 [contain:paint] [mask-image:linear-gradient(to_right,#000_calc(100%-1.5rem),transparent)] lg:gap-2 lg:[mask-image:none] xl:justify-between xl:gap-1">
-        {navItems.map((item) => {
+      <ul
+        className={cx(
+          "grid grid-cols-10 gap-1.5 py-2",
+          "sm:flex sm:flex-nowrap sm:justify-between sm:gap-x-3 sm:py-1.5"
+        )}
+      >
+        {navItems.map((item, index) => {
           const Icon = item.icon;
           const isActive = active === item.id;
 
           return (
-            <li key={item.id} className="shrink-0">
+            <li
+              key={item.id}
+              /* En la retícula cada destino ocupa su celda entera: si el `li` se
+                 queda con el ancho del contenido, el sobrante se acumula dentro
+                 de la celda, los botones quedan arrimados a la izquierda y la
+                 fila no llega al borde derecho. */
+              className="col-span-2 max-sm:w-full max-sm:self-stretch"
+              style={index === NAV_POR_FILA ? { gridColumnStart: desfaseUltimaFila } : undefined}
+            >
               <button
                 type="button"
                 onClick={() => scrollTo(item.id)}
@@ -141,10 +166,9 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
                 aria-label={item.label}
                 title={item.label}
                 className={cx(
-                  "flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-md px-2 text-[13px] font-medium transition-colors duration-150",
-                  isActive
-                    ? "bg-brand-soft text-brand-ink"
-                    : "text-ink-2 hover:bg-sunken hover:text-ink"
+                  "flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-md px-1.5 text-[13px] font-medium transition-colors duration-150",
+                  "max-sm:w-full",
+                  isActive ? "bg-brand-soft text-brand-ink" : "text-ink-2 hover:bg-sunken hover:text-ink"
                 )}
               >
                 <Icon size={16} className="shrink-0" aria-hidden="true" />
