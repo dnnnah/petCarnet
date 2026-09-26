@@ -76,7 +76,12 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   return (
     <AppShell>
-      <div className="mx-auto max-w-4xl px-4 pb-12 sm:px-6 lg:px-8">
+      {/* `overflow-x: clip` recorta el nav a sangre sin crear contenedor de
+          scroll: `clip` no genera scrollport, asi que el `sticky` del nav y
+          de la tarjeta del QR siguen funcionando. Sin esto, el `w-screen` del
+          nav sumaba el ancho de la barra de scroll vertical y la pagina
+          ganaba scroll horizontal en escritorio. */}
+      <div className="mx-auto max-w-4xl overflow-x-clip px-4 pb-12 sm:px-6 lg:px-8">
         <div className="space-y-12">
           <PetHeader
             pet={profile.header}
@@ -152,7 +157,21 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             className="grid scroll-mt-24 items-start gap-6 md:grid-cols-[minmax(0,1fr)_20rem]"
           >
             <DocumentsCard documents={profile.documents} documentsPath={`/perfil/${pet.id}/documentos`} />
-            <QRShareCard petName={pet.mascota.nombre} profileUrl={publicProfileUrl} petCode={pet.identificacion.codigoPublico} />
+            {/* La tarjeta del QR es mas corta que la lista de documentos, asi
+                que sin `sticky` la columna derecha deja cientos de pixeles
+                vacios al final. Con `items-start` cada tarjeta ocupa solo lo que
+                necesita: la de documentos no se estira para igualar a la del
+                QR, que con dos documentos dejaba 228px de hueco dentro. El
+                `sticky` solo tiene recorrido cuando la lista es larga, que es
+                justo cuando sirve. */}
+            <div>
+              <QRShareCard
+                petName={pet.mascota.nombre}
+                profileUrl={publicProfileUrl}
+                petCode={pet.identificacion.codigoPublico}
+                className="md:sticky md:top-24"
+              />
+            </div>
           </div>
           {!isTerminal ? (
             <div className="border-t border-rule pt-8">

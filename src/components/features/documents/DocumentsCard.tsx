@@ -12,7 +12,12 @@ type DocumentsCardProps = {
 
 export function DocumentsCard({ documents, documentsPath }: DocumentsCardProps) {
   return (
-    <Surface className="h-full p-6">
+    // `@container` + consultas de contenedor en vez de `md:`/`lg:`: esta tarjeta
+    // se usa en una columna estrecha del perfil (488px a 1280px de ventana) y en
+    // una tarjeta a pantalla completa. Los breakpoints de ventana le imponían
+    // tres columnas de 155px, donde el nombre, la categoria y el boton de
+    // descarga no cabian. Ahora las columnas dependen del ancho de la tarjeta.
+    <Surface className="@container p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="flex min-w-0 items-center gap-2.5 font-display text-xl leading-tight text-ink">
           <Folder size={20} className="shrink-0 text-ink-3" aria-hidden="true" />
@@ -28,7 +33,7 @@ export function DocumentsCard({ documents, documentsPath }: DocumentsCardProps) 
       </div>
 
       {documents.length > 0 ? (
-        <ul className="mt-5 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-5 grid gap-3 @lg:grid-cols-2 @4xl:grid-cols-3">
           {documents.map((document) => (
             <li
               key={document.id}

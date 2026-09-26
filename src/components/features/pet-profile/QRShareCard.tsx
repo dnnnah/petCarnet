@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { BadgeCheck, Check, Download, FileCode2, Link2, Printer, QrCode, TriangleAlert } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { Surface } from "@/components/ui/Surface";
+import { cx } from "@/lib/ui/tone";
 
 const QR_EXPORT_SIZE = 1024;
 const QR_PRINT_SIZE = 2048;
@@ -13,6 +14,7 @@ type QRShareCardProps = {
   petName: string;
   profileUrl: string;
   petCode: string;
+  className?: string;
 };
 
 type BusyAction = "png" | "svg" | null;
@@ -64,7 +66,7 @@ async function copyText(text: string): Promise<boolean> {
   }
 }
 
-export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) {
+export function QRShareCard({ petName, profileUrl, petCode, className }: QRShareCardProps) {
   const qrRef = useRef<HTMLDivElement>(null);
   const timers = useRef<number[]>([]);
   const [busy, setBusy] = useState<BusyAction>(null);
@@ -186,7 +188,7 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
   ].join(" ");
 
   return (
-    <Surface className="p-5">
+    <Surface className={cx("p-5", className)}>
       {/* `min-w-0` en cada nivel: sin esto la URL larga y la rejilla de
           botones ensanchan la tarjeta y descuadran la columna de documentos. */}
       <div className="grid min-w-0 gap-5">
@@ -214,10 +216,10 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
           </div>
         ) : (
           <>
-            <div className="mx-auto w-fit min-w-0 max-w-full">
+            <div className="mx-auto flex w-fit max-w-full flex-col items-center">
               <div
                 ref={qrRef}
-                className="grid size-44 place-items-center rounded-md bg-white p-2 ring-1 ring-rule sm:size-48"
+                className="grid size-44 shrink-0 place-items-center rounded-md bg-white p-2 ring-1 ring-rule sm:size-48"
               >
                 <QRCodeSVG
                   value={profileUrl}
@@ -232,11 +234,15 @@ export function QRShareCard({ petName, profileUrl, petCode }: QRShareCardProps) 
                   style={{ width: "100%", height: "100%" }}
                 />
               </div>
-              <p className="mx-auto mt-2 flex w-48 max-w-full items-center justify-center gap-1 text-xs text-ink-3">
+              {/* `w-full`, no un ancho fijo: la linea debe medir lo mismo que el
+                  cuadro del QR en cada tamano. Con `w-48` fijo, en movil (QR de
+                  176px) la linea media 192px y empujaba el conjunto 8px a la
+                  izquierda, descentrando el codigo dentro de la tarjeta. */}
+              <p className="mt-2 flex w-full items-center justify-center gap-1 text-xs text-ink-3">
                 <Link2 size={12} aria-hidden="true" className="shrink-0" />
                 <span className="truncate [overflow-wrap:anywhere]">{profileUrl}</span>
               </p>
-              <p className="mt-1 break-words text-center text-xs text-ink-2">ID PetCarnet: {petCode}</p>
+              <p className="mt-1 w-full break-words text-center text-xs text-ink-2">ID PetCarnet: {petCode}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-2 [&>*]:min-w-0">
