@@ -26,7 +26,7 @@ export function PetMarks({ className }: PetMarksProps) {
          colapsa los iconos a cero. Dimensions fijas y ningun reposicionamiento
          por viewport. */
       className={cx(
-        "pointer-events-none absolute h-40 w-36 select-none text-brand print:hidden",
+        "marcas-entran pointer-events-none absolute h-40 w-36 select-none text-brand print:hidden",
         className
       )}
     >

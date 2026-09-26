@@ -315,6 +315,31 @@
   font-feature-settings: "tnum" 1;
 }
 
+/* Un solo gesto authored en todo el producto: las marcas de la mascota aparecen
+   con un descenso corto en vez de estar ahí desde el primer fotograma. Cuatro
+   marcas se apresuran al entrar, y con `motion-reduce` no se mueven: quien pidio
+   menos movimiento no recibe ninguno, no una version reducida. */
+@keyframes marcas-entran {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.marcas-entran {
+  animation: marcas-entran 420ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marcas-entran {
+    animation: none;
+  }
+}
+
 /* La tarjeta de alerta de pérdida es un artefacto para imprimir y compartir, no
    una pantalla: su identidad (papel blanco, tinta oscura, rojo de aviso) no debe
    cambiar con el tema. Redefiniendo las variables en el subárbol, todas las

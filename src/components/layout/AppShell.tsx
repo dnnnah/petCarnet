@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PawPrint } from "lucide-react";
+import { PawPrint, Sparkles } from "lucide-react";
 import { SiteNav } from "./SiteNav";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -16,7 +16,20 @@ const footerLinks = [
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="relative flex min-h-dvh flex-col">
+      {/* El diseno original llevaba aqui una marca de pagina, pero era un trazo
+          punteado dibujado a mano. Se sustituye por dos signos nitidos del
+          mismo lenguaje que las marcas de la mascota. Solo aparece a partir de
+          2xl, que es el primer ancho donde la pagina mas ancha del producto
+          (1152px) deja margen real a la derecha: por debajo, el margen no
+          existe y la marca se montaria encima del contenido. */}
+      <div
+        aria-hidden="true"
+        className="marcas-entran pointer-events-none absolute right-8 top-32 hidden flex-col items-end gap-3 text-brand opacity-[0.14] print:hidden 2xl:flex"
+      >
+        <PawPrint size={34} strokeWidth={1.6} />
+        <Sparkles size={18} strokeWidth={1.6} className="mr-1" />
+      </div>
       <a
         href="#contenido"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-on-solid"
@@ -50,7 +63,11 @@ export function AppShell({ children }: AppShellProps) {
         </div>
       </header>
 
-      <main id="contenido" tabIndex={-1} className="flex-1 focus:outline-none">
+      {/* El respiro entre el encabezado global y el contenido es del shell, no de
+          cada pagina: nueve contenedores distintos terminaban con `pb-10` y sin
+          padding superior, y por eso el enlace "Volver al perfil" de las paginas
+          de detalle quedaba pegado al navbar. */}
+      <main id="contenido" tabIndex={-1} className="flex-1 pt-8 focus:outline-none sm:pt-10">
         {children}
       </main>
 

@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <AppShell>
       <section className="border-b border-rule">
-        <div className="relative mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div className="relative mx-auto w-full max-w-5xl px-4 pb-14 pt-6 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
           <PetMarks className="right-0 top-6 hidden lg:block xl:right-6" />
           <p className="overline text-brand">Carnet digital para mascotas</p>
           <h1 className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] text-ink sm:text-6xl">
