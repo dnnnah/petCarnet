@@ -39,7 +39,11 @@ export function PetHeader({ pet, statusBadge }: PetHeaderProps) {
           que medir mas que la marca (38px) para no montarse sobre la foto. A
           partir de 640px el margen llega a 184px y la marca vuelve a la
           esquina, junto al espacio que el titular no usa. */}
-      <PetMarks className="right-0 top-0 origin-top-right [scale:0.28] sm:[scale:0.72] lg:[scale:1]" />
+      {/* Escala mobile 0.5, no 0.28: la caja completa mide 160x144, y a 0.28
+          quedaban 45x40px, demasiado pequenos para que se leyeran. 0.5 son
+          80x72px, que ya pesan sin pisar el texto. Desde sm el valor es el mismo
+          que ya estaba. */}
+      <PetMarks className="right-0 top-0 origin-top-right [scale:0.5] sm:[scale:0.72] lg:[scale:1]" />
       <div className="grid items-start gap-7 sm:gap-9 lg:grid-cols-[240px_1fr]">
         <div className="mx-auto w-full max-w-[240px] lg:mx-0 lg:max-w-none">
           <div className="overflow-hidden rounded-lg bg-sunken ring-1 ring-rule">

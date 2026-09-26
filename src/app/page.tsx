@@ -38,7 +38,12 @@ export default function Home() {
               botones, que es donde el hero reserva sitio para ella. A partir de
               `lg` el titular se limita a `max-w-3xl` y la esquina vuelve a estar
               libre. */}
-          <PetMarks className="bottom-4 right-0 origin-bottom-right [scale:0.55] sm:[scale:0.7] lg:bottom-auto lg:right-0 lg:top-8 lg:origin-top-right lg:[scale:0.85] xl:right-6 xl:[scale:1]" />
+          {/* Escala mobile 0.65, no 0.55: a 320px la caja de 160x144 caia a
+              88x79 y las marcas se perdian. 0.7 es el tope: por debajo de 430px
+              la marca se monta sobre el CTA "Ver mascotas en adopción", que ahi
+              ya ocupa dos lineas. Desde 430px hay sitio y recupera el 0.7 que
+              tenia; lg y xl no se tocan. */}
+          <PetMarks className="bottom-4 right-0 origin-bottom-right [scale:0.65] min-[430px]:[scale:0.7] lg:bottom-auto lg:right-0 lg:top-8 lg:origin-top-right lg:[scale:0.85] xl:right-6 xl:[scale:1]" />
           <p className="overline text-brand">Carnet digital para mascotas</p>
           <h1 className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] text-ink sm:text-6xl">
             Si la pierdes, que cualquiera pueda devolverla.

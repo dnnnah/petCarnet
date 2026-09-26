@@ -36,18 +36,6 @@ type ProfileNavProps = {
   hasPhotos?: boolean;
 };
 
-/** Columnas de la retícula del nav. Cada destino ocupa dos, de modo que una fila
- *  caben cinco. Diez columnas permiten además descentrar la última fila, que se
- *  queda con cuatro destinos: sobran dos columnas, una a cada lado. */
-const NAV_COLS = 10;
-const NAV_POR_FILA = 5;
-
-// El paso a una sola fila ocurre en `sm` (640px) y no en un valor arbitrario:
-// con `min-[560px]` el destino de 44px se quedaba a 44px justo a 559px de
-// ancho, el único punto donde la consulta de medios no aplicaba y las celdas
-// quedaban a 63px de separación con la fila descuadrada. Nueve áreas táctiles de
-// 44px son 396px, y hace falta además un hueco mínimo de 16px entre ellas:
-// 396 + 8x16 = 524px, más 32px de margen lateral. `sm` deja margen de sobra.
 
 export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
   // Arranca marcada la primera sección en vez de `""`: sin sección activa el
@@ -95,12 +83,6 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
     return () => observer.disconnect();
   }, [navItems]);
 
-  // La última fila se descentra para que sus cuatro destinos no queden pegados
-  // al borde izquierdo con una columna vacía al final. Con ocho destinos (sin
-  // fotos) sobran cuatro columnas, dos a cada lado, y el desfase crece solo.
-  const enUltimaFila = Math.max(0, navItems.length - NAV_POR_FILA);
-  const desfaseUltimaFila = Math.floor((NAV_COLS - enUltimaFila * 2) / 2) + 1;
-
   function scrollTo(id: string) {
     const element = document.getElementById(id);
     if (element) {
@@ -113,25 +95,40 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
       aria-label="Secciones del perfil"
       className={cx(
         "z-40 border-y border-rule bg-canvas/95 backdrop-blur-sm",
-        "sm:sticky sm:top-0"
+        /* En móvil el nav va a sangre: el margen negativo del `px-4` de la pagina
+           le devuelve los 32px laterales, y con ellos el ancho que hace falta
+           para que los nueve destinos quepan en una sola fila. Desde sm se
+           alinea a la columna de contenido, que es el reparto que ya estaba
+           aprobado. */
+        "-mx-4 px-1 sm:mx-0 sm:px-0",
+        "sticky top-0"
       )}
     >
       {/*
-        Reparto de punta a punta dentro de la columna, no de la ventana: con
-        `justify-between` sobre el ancho completo los nueve destinos quedaban
-        sueltos a ~200px entre si en pantallas anchas y el primero pegado al
-        borde de la pantalla, sin relación con el texto de abajo.
+        Una sola fila a todo lo ancho, y en móvil reparto por ancho igual: cada
+        destino recibe su parte exacta de la fila, sea cual sea el número de
+        destinos. Por eso `flex-1` con `min-w-0` en vez de una retícula de
+        columnas fijas: con ocho destinos (sin fotos) y con nueve, la fila se
+        reparte sola y no hay que calcular ni descentrar una segunda fila que ya
+        no existe.
 
-        Por debajo de 640px los nueve destinos no caben en una fila, y con un
-        carril desplazable había que deslizar para ver el último: un destino que
-        no se ve es un destino que no existe. Ahí el nav es una retícula de dos
-        filas, cinco destinos arriba y cuatro abajo, con separación real entre
-        ellos. No puede ser `flex-wrap`: al no haber hueco, envuelve lo más
-        apretado posible y deja destinos huérfanos en la segunda fila.
+        Qué se gana y qué se paga. Antes, en móvil, cada destino tenía 44px de
+        lado: 9x44 son 396px y en un móvil de 390 hay 358px útiles, así que
+        cabían solo en dos filas de 5+4, y había que deslizar para ver el último
+        destino. Ahora la fila existe siempre y el ancho se reparte: a 320px
+        cada destino mide 32px, a 390px son 40px, y a partir de 430px vuelve a
+        dar 44px exactos, sin cambiar nada del código. Por debajo de 430px el
+        área táctil baja de los 44px que recomiendan Apple y Material; cumple el
+        mínimo de 24px de WCAG 2.2 (2.5.8) y los 32px medidos dejan 8px entre
+        destinos, pero es un intercambio consciente: los 44px 每个 frente a los
+        nueve destinos en una fila. Los 44px se recuperan solos a partir de sm.
 
-        El nav solo es sticky cuando ya es una sola fila. Dos filas ocupan 112px,
-        y fijarlas debajo del encabezado dejaria casi una quinta parte de la
-        pantalla de un telefono ocupada de forma permanente.
+        El alto baja a 36px en móvil por lo mismo: nueve iconos en 52px de alto se
+        leen como una fila de iconos, no como un menu. Y al ser una sola fila en
+        todos los tamaños, el nav vuelve a ser sticky también en móvil.
+
+        El icono crece a 18px a partir de 380px, donde el destino ya tiene sitio
+        de sobra, y vuelve a 16px desde sm con el resto del menu.
 
         Las etiquetas se despliegan al bajar, porque ahi es cuando la persona ya
         esta leyendo y le sirve saber donde esta. La columna del perfil es de 6xl
@@ -141,24 +138,19 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
       */}
       <ul
         className={cx(
-          "grid grid-cols-10 gap-1.5 py-2",
-          "sm:flex sm:flex-nowrap sm:justify-between sm:gap-x-3 sm:py-1.5"
+          /* `items-stretch` con `flex-1` en cada `li`: el ancho se reparte por
+             igual entre los destinos y el alto lo marca la fila entera, en vez
+             de dejar cada boton a su propio ancho con huecos descuadrados. */
+          "flex items-stretch gap-1 py-2",
+          "sm:justify-between sm:gap-x-3 sm:py-1.5"
         )}
       >
-        {navItems.map((item, index) => {
+        {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = active === item.id;
 
           return (
-            <li
-              key={item.id}
-              /* En la retícula cada destino ocupa su celda entera: si el `li` se
-                 queda con el ancho del contenido, el sobrante se acumula dentro
-                 de la celda, los botones quedan arrimados a la izquierda y la
-                 fila no llega al borde derecho. */
-              className="col-span-2 max-sm:w-full max-sm:self-stretch"
-              style={index === NAV_POR_FILA ? { gridColumnStart: desfaseUltimaFila } : undefined}
-            >
+            <li key={item.id} className="min-w-0 flex-1 sm:flex-none">
               <button
                 type="button"
                 onClick={() => scrollTo(item.id)}
@@ -166,12 +158,16 @@ export function ProfileNav({ hasPhotos = true }: ProfileNavProps) {
                 aria-label={item.label}
                 title={item.label}
                 className={cx(
-                  "flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-md px-1.5 text-[13px] font-medium transition-colors duration-150",
-                  "max-sm:w-full",
+                  "flex h-9 w-full items-center justify-center gap-1.5 rounded-md px-1 text-[13px] font-medium transition-colors duration-150",
+                  "sm:h-11 sm:w-auto sm:min-w-11 sm:px-1.5",
                   isActive ? "bg-brand-soft text-brand-ink" : "text-ink-2 hover:bg-sunken hover:text-ink"
                 )}
               >
-                <Icon size={16} className="shrink-0" aria-hidden="true" />
+                <Icon
+                  size={16}
+                  className="h-4 w-4 shrink-0 min-[380px]:h-[18px] min-[380px]:w-[18px] sm:h-4 sm:w-4"
+                  aria-hidden="true"
+                />
                 {/* El nombre se pliega con `max-width`, no con `hidden`: asi el
                     despliegue del tablet se puede animar. El ancho de la etiqueta
                     no altera el nombre accesible, que sigue viniendo de
