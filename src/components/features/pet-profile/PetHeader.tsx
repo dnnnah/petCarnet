@@ -3,6 +3,8 @@ import { Heart, Mars, Microchip, Ruler, ShieldCheck, Venus } from "lucide-react"
 import { Pill } from "@/components/ui/Pill";
 import { CopyButton } from "@/components/ui/CopyButton";
 import { DataList } from "@/components/ui/DataList";
+import { PetMarks } from "@/components/ui/PetMarks";
+import { SPECIES_FACE } from "@/lib/ui/speciesFace";
 
 type PetHeaderProps = {
   pet: {
@@ -26,9 +28,11 @@ type PetHeaderProps = {
 export function PetHeader({ pet, statusBadge }: PetHeaderProps) {
   const isMale = pet.gender === "Macho";
   const GenderIcon = isMale ? Mars : Venus;
+  const SpeciesIcon = SPECIES_FACE[pet.species.trim().toLowerCase()];
 
   return (
-    <section className="border-b border-rule pb-8 sm:pb-10">
+    <section className="relative border-b border-rule pb-8 sm:pb-10">
+      <PetMarks className="right-0 top-0 hidden lg:block" />
       <div className="grid items-start gap-7 sm:gap-9 lg:grid-cols-[240px_1fr]">
         <div className="mx-auto w-full max-w-[240px] lg:mx-0 lg:max-w-none">
           <div className="overflow-hidden rounded-lg bg-sunken ring-1 ring-rule">
@@ -45,8 +49,14 @@ export function PetHeader({ pet, statusBadge }: PetHeaderProps) {
 
         <div className="min-w-0">
           <h1 className="text-[2.5rem] leading-[1.05] text-ink sm:text-6xl">{pet.name}</h1>
-          <p className="mt-2 text-base text-ink-2">
-            {pet.breed} · {pet.species}
+          <p className="mt-2 flex flex-wrap items-center gap-x-1.5 text-base text-ink-2">
+            <span>{pet.breed}</span>
+            {SpeciesIcon ? (
+              <SpeciesIcon size={15} strokeWidth={1.75} className="text-ink-3" aria-hidden="true" />
+            ) : (
+              <span aria-hidden="true">·</span>
+            )}
+            <span>{pet.species}</span>
           </p>
 
           <div className="mt-5 flex flex-wrap items-center gap-2">

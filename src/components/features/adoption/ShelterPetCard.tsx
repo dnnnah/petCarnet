@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HeartHandshake } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { SPECIES_FACE } from "@/lib/ui/speciesFace";
 import type { ShelterPetCardPresentation } from "@/lib/mapping/adoptionPresentation";
 
 type ShelterPetCardProps = {
@@ -9,6 +10,8 @@ type ShelterPetCardProps = {
 };
 
 export function ShelterPetCard({ pet }: ShelterPetCardProps) {
+  const SpeciesIcon = SPECIES_FACE[pet.species.trim().toLowerCase()];
+
   return (
     <article className="flex items-center gap-4 rounded-lg border border-rule bg-surface p-3">
       <Link
@@ -31,8 +34,14 @@ export function ShelterPetCard({ pet }: ShelterPetCardProps) {
           <h3 className="font-display text-xl leading-tight text-ink">{pet.name}</h3>
           <Badge tone={pet.statusTone}>{pet.statusLabel}</Badge>
         </div>
-        <p className="mt-0.5 text-sm text-ink-2">
-          {pet.species} · {pet.breed}
+        <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-sm text-ink-2">
+          <span>{pet.species}</span>
+          {SpeciesIcon ? (
+            <SpeciesIcon size={14} strokeWidth={1.75} className="text-ink-3" aria-hidden="true" />
+          ) : (
+            <span aria-hidden="true">·</span>
+          )}
+          <span>{pet.breed}</span>
         </p>
         <p className="mt-0.5 text-xs text-ink-3">ID: {pet.code}</p>
 

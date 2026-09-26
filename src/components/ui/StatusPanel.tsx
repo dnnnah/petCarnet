@@ -24,8 +24,10 @@ type StatusPanelProps = {
  * lugar donde el color tiene permiso: el tono comunica la situación (perdido,
  * en adopción, en memoria…) y siempre viaja con icono + texto.
  *
- * No hay gradiente, ni halo, ni mancha decorativa: un filete de color a la
- * izquierda, fondo tenue y una tipografía que manda.
+ * No hay gradiente, ni halo, ni marca de agua, ni detalle decorativo: este panel
+ * es, en la practica, la alerta de una mascota perdida — la superficie mas
+ * sensible del producto — y ahi manda la calma y la legibilidad. La marca de
+ * agua quedo en `PetMarks`, que solo se usa en superficies que no urgen.
  */
 export function StatusPanel({
   tone,

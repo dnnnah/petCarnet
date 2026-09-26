@@ -21,26 +21,46 @@ const tones = {
     card: "bg-surface border-rule hover:border-brand-rule hover:bg-brand-soft",
     icon: "bg-brand text-on-solid",
     label: "text-ink",
+    helper: "text-ink-2",
   },
   whatsapp: {
     card: "bg-surface border-rule hover:border-success-rule hover:bg-success-soft",
     icon: "bg-success text-on-solid",
     label: "text-ink",
+    helper: "text-ink-2",
   },
   location: {
     card: "bg-surface border-rule hover:border-info-rule hover:bg-info-soft",
     icon: "bg-info text-on-solid",
     label: "text-ink",
+    helper: "text-ink-2",
   },
   urgentCall: {
-    card: "bg-danger-soft border-danger-rule hover:bg-danger hover:border-danger",
-    icon: "bg-danger text-on-solid",
-    label: "text-ink",
+    card: "bg-danger-soft border-danger-rule hover:border-danger hover:bg-danger",
+    // En hover el fondo pasa a sólido, así que el texto se invierte a
+    // `--on-solid`, que ya cambia con el tema: `#ffffff` sobre el rojo
+    // `#8f2b23` en claro y `#14110f` sobre el rosa `#e08a80` en oscuro. Con
+    // `text-ink` fijo quedaba casi negro sobre rojo en claro y casi blanco
+    // sobre rosa en oscuro: ilegible en los dos temas. El chip pasa a
+    // `--on-solid` al 25% porque si no se fundía con la tarjeta, que ya es
+    // del mismo tono.
+    // `group-hover:` y no `hover:`. CSS hace `:hover` en el elemento bajo el
+    // puntero y sus ancestros, nunca en sus descendientes: con `hover:` el
+    // texto solo se invertia si el puntero caia justo sobre el glifo, y el
+    // chip, el padding y el hueco entre lineas quedaban con el color viejo.
+    // El chip ya usaba `group-hover:`; la etiqueta y el helper ahora igual.
+    icon: "bg-danger text-on-solid group-hover:bg-on-solid/25",
+    label: "text-ink group-hover:text-on-solid",
+    helper: "text-ink-2 group-hover:text-on-solid/85",
   },
   urgentWhatsapp: {
-    card: "bg-success-soft border-success-rule hover:bg-success hover:border-success",
-    icon: "bg-success text-on-solid",
-    label: "text-ink",
+    // Mismo razonamiento que `urgentCall`: el fondo tiene que volverse solido en
+    // hover, porque el texto se invierte a `--on-solid`. Sin `hover:bg-success`
+    // el texto blanco caia sobre el verde palido de `success-soft` (1.2:1).
+    card: "bg-success-soft border-success-rule hover:border-success hover:bg-success",
+    icon: "bg-success text-on-solid group-hover:bg-on-solid/25",
+    label: "text-ink group-hover:text-on-solid",
+    helper: "text-ink-2 group-hover:text-on-solid/85",
   },
 } as const;
 
@@ -86,7 +106,12 @@ export function ActionButton({
           {label}
         </span>
         {helper ? (
-          <span className="mt-0.5 block text-sm leading-snug text-ink-2 [overflow-wrap:anywhere]">
+          <span
+            className={cx(
+              "mt-0.5 block text-sm leading-snug [overflow-wrap:anywhere]",
+              classes.helper
+            )}
+          >
             {helper}
           </span>
         ) : null}

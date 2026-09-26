@@ -3,6 +3,7 @@ import { ArrowRight, HeartHandshake, QrCode, ShieldCheck, UserRound } from "luci
 import { AppShell } from "@/components/layout/AppShell";
 import { Button } from "@/components/ui/Button";
 import { PetsList } from "@/components/features/home/PetsList";
+import { PetMarks } from "@/components/ui/PetMarks";
 import { Section } from "@/components/ui/Section";
 import { getAllPets } from "@/lib/getAllPets";
 
@@ -31,7 +32,8 @@ export default function Home() {
   return (
     <AppShell>
       <section className="border-b border-rule">
-        <div className="mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+        <div className="relative mx-auto w-full max-w-5xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8">
+          <PetMarks className="right-0 top-6 hidden lg:block xl:right-6" />
           <p className="overline text-brand">Carnet digital para mascotas</p>
           <h1 className="mt-4 max-w-3xl text-[2.25rem] leading-[1.05] text-ink sm:text-6xl">
             Si la pierdes, que cualquiera pueda devolverla.

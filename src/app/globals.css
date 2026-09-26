@@ -282,6 +282,34 @@
   }
 }
 
+/* Cursor con huellita. Estaba en el diseño original y se perdió en el rediseño;
+   el recurso seguía en `public/` sin referenciar. Es la marca del producto en el
+   gesto, no un adorno de pantalla.
+   Tres correcciones sobre la versión original:
+   - Solo con puntero fino: en táctil no hay cursor y la huella no hace nada.
+   - Nunca en un campo de texto. El original lo ponia en `*` y el usuario
+     perdia el cursor de texto; `input`, `textarea`, `select` y `option` quedan
+     fuera de forma explicita.
+   - Dos variantes, pine sobre papel y crema sobre noche, porque un SVG de
+     cursor es un documento externo y no puede heredar `currentColor`. */
+@media screen and (pointer: fine) {
+  a[href],
+  button,
+  summary,
+  [role="button"],
+  label {
+    cursor: url("/paw-cursor-light.svg") 9 9, pointer;
+  }
+
+  .dark a[href],
+  .dark button,
+  .dark summary,
+  .dark [role="button"],
+  .dark label {
+    cursor: url("/paw-cursor-dark.svg") 9 9, pointer;
+  }
+}
+
 .tnum {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
