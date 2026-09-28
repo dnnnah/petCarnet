@@ -151,6 +151,7 @@ una vez.
 | `systematic-debugging` | obra/superpowers | Causa raiz antes de proponer un arreglo |
 | `test-driven-development` | obra/superpowers | El test primero, y verlo fallar |
 | `spec-driven-development` | addyosmani/agent-skills | Escribir la especificacion antes del codigo |
+| `git-commit` | github/awesome-copilot | Commits con conventional commit, staging y mensaje derivados del diff |
 | `find-skills` | vercel-labs/skills | Descubrir e instalar skills del ecosistema |
 
 ### Que movimos y que quitamos
