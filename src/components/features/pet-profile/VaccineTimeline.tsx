@@ -31,8 +31,12 @@ export function VaccineTimeline({ petId, petName, totalCount, vaccines }: Vaccin
   return (
     <Section
       title="Registro de vacunas"
-      eyebrow="Salud"
+      eyebrow="Vacunación"
       icon={<ShieldCheck size={18} />}
+      /* Pino de seguridad: la seccion que dice si la mascota esta al dia. El
+         color va aqui y no en cada fila porque el tono de cada vacuna ya lo dice
+         mas exacto (al dia, pendiente, vencida). */
+      tone="success"
       action={
         <div className="flex flex-wrap items-center gap-3">
           {totalCount > 0 ? <Pill tone="muted">{totalCount}</Pill> : null}

@@ -183,7 +183,7 @@ export function QRShareCard({ petName, profileUrl, petCode, className }: QRShare
 
   const buttonClasses = [
     "inline-flex min-h-11 min-w-0 items-center justify-center gap-2 rounded-md px-3 text-sm font-semibold",
-    "border border-rule bg-surface text-ink-2 transition-colors hover:border-brand-rule hover:text-brand",
+    "border border-edge bg-surface text-ink-2 transition-colors hover:border-brand-rule hover:text-brand",
     "disabled:cursor-not-allowed disabled:opacity-50",
   ].join(" ");
 

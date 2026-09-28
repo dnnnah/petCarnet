@@ -26,7 +26,10 @@ const sizes = {
 
 const variants = {
   primary: "bg-brand text-on-solid hover:bg-brand-hover shadow-1",
-  secondary: "bg-surface text-ink ring-1 ring-inset ring-rule-strong hover:bg-sunken",
+  // `ring-edge` y no `ring-rule`: el borde de un boton es lo que dice que hay
+  // un control pulsable, asi que tiene que llegar a 3:1 (WCAG 1.4.11). Con
+  // `ring-rule` a 1.4:1 el boton se disolvia en el papel.
+  secondary: "bg-surface text-ink ring-1 ring-inset ring-edge hover:bg-sunken",
   quiet: "bg-transparent text-ink-2 hover:bg-sunken hover:text-ink",
   danger: resolveTone("danger").solid,
 };

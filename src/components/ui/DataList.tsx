@@ -20,6 +20,11 @@ type DataListProps = {
  * Lista de datos del expediente. Sustituye a las rejillas de "tarjetas de
  * información": un solo filete por fila, label en versalitas y valor en cuerpo.
  * Legible en pantalla, legible impreso, sin caja alrededor de cada dato.
+ *
+ * El valor es el dato, no una nota: 15px a 600 es lo que permite leerlo sin
+ * effort en una pantalla a un brazo de distancia. El label se queda en
+ * versalitas de 12px porque solo nombra el campo, y para nombrarlo el peso y el
+ *tracking ya hacen el trabajo que haria subirle el tamano.
  */
 export function DataList({ items, layout = "rows", columns = 2, className }: DataListProps) {
   const usable = items.filter((item) => item.value !== null && item.value !== undefined);
@@ -43,7 +48,7 @@ export function DataList({ items, layout = "rows", columns = 2, className }: Dat
             <dt className="shrink-0 text-xs font-semibold uppercase tracking-[0.08em] text-ink-3">
               {item.label}
             </dt>
-            <dd className="min-w-0 text-sm font-medium text-ink [overflow-wrap:anywhere]">
+            <dd className="min-w-0 text-[0.9375rem] font-semibold text-ink [overflow-wrap:anywhere]">
               {item.value}
             </dd>
           </div>
@@ -67,7 +72,7 @@ export function DataList({ items, layout = "rows", columns = 2, className }: Dat
             ) : null}
             {item.label}
           </dt>
-          <dd className="min-w-0 flex-1 text-sm font-medium text-ink [overflow-wrap:anywhere]">
+          <dd className="min-w-0 flex-1 text-[0.9375rem] font-semibold text-ink [overflow-wrap:anywhere]">
             {item.value}
           </dd>
         </div>

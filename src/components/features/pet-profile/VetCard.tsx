@@ -13,8 +13,16 @@ type VetCardProps = {
 
 export function VetCard({ vet }: VetCardProps) {
   return (
-    <Section title="Veterinario" eyebrow="Profesional a cargo" icon={<Stethoscope size={18} />}>
-      <p className="font-display text-xl font-semibold text-ink">{vet.doctor}</p>
+    <Section
+      title="Veterinario"
+      eyebrow="Profesional a cargo"
+      icon={<Stethoscope size={18} />}
+      /* Petrolio: la seccion que nombra a una persona, no un dato. Es el mismo
+         tono que usan las alertas de "`rescue`" en el resto del producto, asi
+         que la lectura es coherente sin painted cards. */
+      tone="rescue"
+    >
+      <p className="font-display text-2xl font-semibold text-ink">{vet.doctor}</p>
       <p className="mt-0.5 text-sm text-ink-2">{vet.clinic}</p>
 
       <DataList

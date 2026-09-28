@@ -19,7 +19,7 @@ export function BackLink({ href, children = "Volver al perfil", className }: Bac
     <Link
       href={href}
       className={[
-        "inline-flex min-h-11 items-center gap-2 rounded-md border border-rule bg-surface px-3.5",
+        "inline-flex min-h-11 items-center gap-2 rounded-md border border-edge bg-surface px-3.5",
         "text-sm font-semibold text-ink-2 transition-colors hover:border-brand-rule hover:text-brand",
         className ?? "",
       ].join(" ")}

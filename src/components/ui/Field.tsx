@@ -48,9 +48,15 @@ export function Field({ id, label, optional, error, help, className, children }:
           className: cx(
             BASE_CONTROL,
             "focus:ring-2",
+            /* El campo en error usa `border-danger`, no `border-danger-rule`:
+               `danger-rule` se queda en 1.9:1 sobre blanco, o sea por debajo
+               del borde de reposo (3.4:1), y un campo con error acababa
+               dibujando menos que uno correcto. El mensaje de error sigue
+               siendo la pista principal, pero el borde ya no restaura la
+               calma. */
             error
-              ? "border-danger-rule focus:border-danger focus:ring-danger-soft"
-              : "border-rule focus:border-brand-rule focus:ring-brand-soft",
+              ? "border-danger focus:border-danger focus:ring-danger-soft"
+              : "border-edge focus:border-brand-rule focus:ring-brand-soft",
           ),
         })}
       </div>

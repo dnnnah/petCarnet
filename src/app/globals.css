@@ -16,14 +16,23 @@
   --surface: #ffffff;
   --sunken: #ede8de;
 
-  /* Ink scale */
+  /* Ink scale — `--ink-3` medido en claro: 6.3:1 sobre `--surface`, 5.6:1
+     sobre `--canvas` y 5.1:1 sobre `--sunken`. Los tres pasan AA (4.5:1), que
+     es lo que importa porque el overline de 12px vive sobre `--sunken`. */
   --ink: #1b1815;
   --ink-2: #56504a;
-  --ink-3: #6f675f;
+  --ink-3: #675f57;
 
-  /* Rules & borders */
+  /* Rules & borders — tres niveles con trabajos distintos:
+     `--rule` agrupa (filetes entre filas, separadores). 1.4:1 medido, a
+     propósito: estructura, no control.
+     `--rule-strong` da presencia a un borde estructural: 2.6:1.
+     `--edge` es el único que puede marcar el límite de un control y por eso
+     tiene que llegar a 3:1 (WCAG 1.4.11): 3.4:1 sobre `--surface` y 3.0:1
+     sobre `--canvas`, medidos. */
   --rule: #e2dcd0;
-  --rule-strong: #c7bfb0;
+  --rule-strong: #a89e8d;
+  --edge: #948a78;
 
   /* Texto sobre un fondo sólido. En claro los sólidos son oscuros; en oscuro
      son claros, así que este token se invierte y `text-white` deja de usarse
@@ -83,12 +92,16 @@
   --surface: #1c1917;
   --sunken: #262220;
 
+  /* La misma escala en noche, medida contra `--surface` #1c1917 y `--canvas`
+     #131110. El color es claro, así que la proporción se mide igual de
+     stringentemente: `--ink-3` 5.6:1 y 6.0:1, `--edge` 3.4:1 y 3.7:1. */
   --ink: #f4f0e9;
   --ink-2: #b4ada2;
-  --ink-3: #95867f;
+  --ink-3: #9d8f88;
 
   --rule: #302b27;
-  --rule-strong: #47413a;
+  --rule-strong: #59534a;
+  --edge: #756d62;
 
   --on-solid: #14110f;
 
@@ -146,6 +159,7 @@
 
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
+  --color-edge: var(--edge);
 
   --color-brand: var(--brand);
   --color-brand-hover: var(--brand-hover);
@@ -358,9 +372,10 @@
   --on-solid: #ffffff;
   --ink: #1b1815;
   --ink-2: #56504a;
-  --ink-3: #6f675f;
+  --ink-3: #675f57;
   --rule: #e2dcd0;
-  --rule-strong: #c7bfb0;
+  --rule-strong: #a89e8d;
+  --edge: #948a78;
   --brand: #1f4a3a;
   --brand-ink: #1b4133;
   --brand-soft: #e7ede8;
@@ -383,12 +398,17 @@
   color: var(--ink);
 }
 
+/* El overline es la pieza mas pequena del sistema y aparece sobre `--sunken`,
+   el fondo con menos contraste. A 11px con `--ink-3` viejo se quedaba en
+   4.55:1, justo en el limite de AA, y a 12px con el `--ink-3` actual sube a
+   5.1:1 con margen. El tracking se aprieta de 0.14em a 0.12em porque a 12px
+   0.14em ya separa mas de lo que ayuda a leer. */
 .overline {
   font-family: var(--font-sans);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1.1;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -437,9 +457,10 @@
     --sunken: #ede8de;
     --ink: #1b1815;
     --ink-2: #56504a;
-    --ink-3: #6f675f;
+    --ink-3: #675f57;
     --rule: #e2dcd0;
-    --rule-strong: #c7bfb0;
+    --rule-strong: #a89e8d;
+    --edge: #948a78;
     --brand: #1f4a3a;
     --brand-hover: #17382c;
     --brand-ink: #1b4133;
