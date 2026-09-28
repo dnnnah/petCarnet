@@ -70,7 +70,7 @@ export function StatusPanel({
 
       <h2
         id={headingId}
-        className="mt-4 text-2xl leading-tight text-ink sm:text-3xl lg:text-4xl"
+        className="mt-4 text-2xl leading-tight text-ink sm:text-[1.75rem]"
       >
         {title}
       </h2>

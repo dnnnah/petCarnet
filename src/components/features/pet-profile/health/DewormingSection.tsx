@@ -89,7 +89,7 @@ export function DewormingSection({ petName, viewModel }: DewormingSectionProps) 
                       href={item.documentoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex min-h-11 items-center gap-2 rounded-md border border-rule bg-surface px-3.5 text-sm font-semibold text-brand transition-colors hover:border-brand-rule hover:bg-brand-soft"
+                      className="inline-flex min-h-11 items-center gap-2 rounded-md border border-edge bg-surface px-3.5 text-sm font-semibold text-brand transition-colors hover:border-brand-rule hover:bg-brand-soft"
                     >
                       <FileText size={16} aria-hidden="true" />
                       Ver documento

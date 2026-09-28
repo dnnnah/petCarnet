@@ -30,21 +30,28 @@ export function PetMarks({ className }: PetMarksProps) {
         className
       )}
     >
+      {/* Las opacidades suben un punto (0.16/0.12/0.12/0.09) respecto al
+          0.13/0.10/0.10/0.07 anterior. Con esos valores las marcas no se veian
+          en la captura de escritorio, solo se adivinaban: el rediseño habia
+          borrado justo la seccion del espacio negativo que la pagina necesita
+          para no ser solo una tabla de datos. Sigue siendo `aria-hidden`, no
+          pasa de `pointer-events-none` y no compite con el titular porque vive
+          en la esquina que el texto no usa. */}
       <PawPrint
         strokeWidth={1.5}
-        className="absolute left-0 top-0 size-14 -rotate-12 opacity-[0.13]"
+        className="absolute left-0 top-0 size-14 -rotate-12 opacity-[0.16]"
       />
       <Sparkles
         strokeWidth={1.5}
-        className="absolute left-[4.75rem] top-1 size-7 rotate-[8deg] opacity-[0.10]"
+        className="absolute left-[4.75rem] top-1 size-7 rotate-[8deg] opacity-[0.12]"
       />
       <Star
         strokeWidth={1.5}
-        className="absolute left-3 top-[5.25rem] size-5 -rotate-[8deg] opacity-[0.10]"
+        className="absolute left-3 top-[5.25rem] size-5 -rotate-[8deg] opacity-[0.12]"
       />
       <PawPrint
         strokeWidth={1.5}
-        className="absolute left-[5.5rem] top-[6.5rem] size-8 rotate-[20deg] opacity-[0.07]"
+        className="absolute left-[5.5rem] top-[6.5rem] size-8 rotate-[20deg] opacity-[0.09]"
       />
     </div>
   );

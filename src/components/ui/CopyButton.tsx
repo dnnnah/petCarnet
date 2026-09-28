@@ -42,7 +42,7 @@ export function CopyButton({ value, label, copiedLabel = "¡Copiado!" }: CopyBut
         "inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-md px-3 text-sm font-semibold transition-colors duration-150",
         copied
           ? "bg-success-soft text-success ring-1 ring-inset ring-success-rule"
-          : "bg-surface text-ink-2 ring-1 ring-inset ring-rule hover:bg-sunken hover:text-ink"
+          : "bg-surface text-ink-2 ring-1 ring-inset ring-edge hover:bg-sunken hover:text-ink"
       )}
     >
       {copied ? (

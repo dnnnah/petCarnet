@@ -1,4 +1,4 @@
-import { cx } from "@/lib/ui/tone";
+import { cx, resolveTone, type ToneName } from "@/lib/ui/tone";
 
 type SectionProps = {
   children: React.ReactNode;
@@ -7,6 +7,12 @@ type SectionProps = {
   eyebrow?: string;
   description?: string;
   icon?: React.ReactNode;
+  /**
+   * Tono semantico del encabezado. El color nunca pinta la seccion entera: solo
+   * el overline y el icono, que es donde dice algo. Por eso el color puede
+   * variar de una seccion a otra sin que la pagina se lea como un arcoiris.
+   */
+  tone?: ToneName;
   /** Acción a la derecha del encabezado (enlace, botón, contador). */
   action?: React.ReactNode;
   /** Nivel del encabezado, para respetar la jerarquía real del documento. */
@@ -29,6 +35,7 @@ export function Section({
   eyebrow,
   description,
   icon,
+  tone = "brand",
   action,
   as: Heading = "h2",
   id,
@@ -37,6 +44,7 @@ export function Section({
   bare,
 }: SectionProps) {
   const hasHeader = Boolean(title || eyebrow || action);
+  const toneClass = resolveTone(tone).text;
 
   return (
     <section id={id} className={cx("min-w-0", className)}>
@@ -49,15 +57,25 @@ export function Section({
         >
           <div className="min-w-0 flex-1">
             {eyebrow ? (
-              <p className="overline mb-1.5 text-ink-3">{eyebrow}</p>
+              <p className={cx("overline mb-1.5", toneClass)}>{eyebrow}</p>
             ) : null}
             <div className="flex items-center gap-2.5">
               {icon ? (
-                <span aria-hidden="true" className="shrink-0 text-brand">
+                <span aria-hidden="true" className={cx("shrink-0", toneClass)}>
                   {icon}
                 </span>
               ) : null}
-              <Heading className="text-xl font-semibold text-ink sm:text-2xl">
+              {/* La escala sale del nivel del encabezado, no de cada llamada: por
+                  eso el documento tiene una sola jerarquia. Antes cada seccion
+                  elegia su tamano y el perfil acababa con 18, 20, 24 y 30px
+                  para titulos del mismo peso. Un <h3> anidado baja un escalon
+                  y se lee como subordinado, que es lo que es. */}
+              <Heading
+                className={cx(
+                  Heading === "h2" ? "text-2xl sm:text-[1.75rem]" : "text-xl sm:text-2xl",
+                  "font-semibold text-ink"
+                )}
+              >
                 {title}
               </Heading>
             </div>

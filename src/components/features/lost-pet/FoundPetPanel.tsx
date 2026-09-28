@@ -130,14 +130,14 @@ export function FoundPetPanel({
   return (
     <section
       aria-labelledby="encontre-panel-titulo"
-      className="rounded-lg border border-l-2 border-danger-rule bg-danger-soft p-5 sm:p-6"
+      className="rounded-lg border border-l-2 border-danger-rule border-l-danger bg-danger-soft p-5 sm:p-6"
     >
       {!flowOpen ? (
         <div className="grid items-center gap-5 lg:grid-cols-[1fr_auto]">
           <div>
             <h2
               id="encontre-panel-titulo"
-              className="text-2xl leading-tight text-ink sm:text-3xl"
+              className="text-2xl leading-tight text-ink sm:text-[1.75rem]"
             >
               ¿Encontraste a {petName}?
             </h2>
@@ -162,7 +162,7 @@ export function FoundPetPanel({
               ref={headingRef}
               id="encontre-panel-titulo"
               tabIndex={-1}
-              className="text-2xl leading-tight text-ink outline-none sm:text-3xl"
+              className="text-2xl leading-tight text-ink outline-none sm:text-[1.75rem]"
             >
               Avisa que encontraste a {petName}
             </h2>

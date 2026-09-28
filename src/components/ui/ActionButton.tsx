@@ -17,23 +17,27 @@ type ActionButtonProps = {
  * urgente gana contraste; el resto baja a secundario.
  */
 const tones = {
+  // El helper de `call` es el telefono: es el dato que la persona necesita, no
+  // una nota, asi que va a 600. En los demas es un texto de apoyo y se queda en
+  // 500. El tamano vive en la base (15px) y el peso en el tono, para que dos
+  // clases del mismo peso no peleeen por la cascada.
   call: {
-    card: "bg-surface border-rule hover:border-brand-rule hover:bg-brand-soft",
+    card: "bg-surface border-edge hover:border-brand-rule hover:bg-brand-soft",
     icon: "bg-brand text-on-solid",
     label: "text-ink",
-    helper: "text-ink-2",
+    helper: "text-ink-2 font-semibold",
   },
   whatsapp: {
-    card: "bg-surface border-rule hover:border-success-rule hover:bg-success-soft",
+    card: "bg-surface border-edge hover:border-success-rule hover:bg-success-soft",
     icon: "bg-success text-on-solid",
     label: "text-ink",
-    helper: "text-ink-2",
+    helper: "text-ink-2 font-medium",
   },
   location: {
-    card: "bg-surface border-rule hover:border-info-rule hover:bg-info-soft",
+    card: "bg-surface border-edge hover:border-info-rule hover:bg-info-soft",
     icon: "bg-info text-on-solid",
     label: "text-ink",
-    helper: "text-ink-2",
+    helper: "text-ink-2 font-medium",
   },
   urgentCall: {
     card: "bg-danger-soft border-danger-rule hover:border-danger hover:bg-danger",
@@ -51,7 +55,7 @@ const tones = {
     // El chip ya usaba `group-hover:`; la etiqueta y el helper ahora igual.
     icon: "bg-danger text-on-solid group-hover:bg-on-solid/25",
     label: "text-ink group-hover:text-on-solid",
-    helper: "text-ink-2 group-hover:text-on-solid/85",
+    helper: "text-ink-2 font-semibold group-hover:text-on-solid/85",
   },
   urgentWhatsapp: {
     // Mismo razonamiento que `urgentCall`: el fondo tiene que volverse solido en
@@ -60,7 +64,7 @@ const tones = {
     card: "bg-success-soft border-success-rule hover:border-success hover:bg-success",
     icon: "bg-success text-on-solid group-hover:bg-on-solid/25",
     label: "text-ink group-hover:text-on-solid",
-    helper: "text-ink-2 group-hover:text-on-solid/85",
+    helper: "text-ink-2 font-medium group-hover:text-on-solid/85",
   },
 } as const;
 
@@ -108,7 +112,7 @@ export function ActionButton({
         {helper ? (
           <span
             className={cx(
-              "mt-0.5 block text-sm leading-snug [overflow-wrap:anywhere]",
+              "mt-0.5 block text-[0.9375rem] leading-snug [overflow-wrap:anywhere]",
               classes.helper
             )}
           >
