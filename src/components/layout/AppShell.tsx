@@ -2,6 +2,9 @@ import Link from "next/link";
 import { PawPrint, Sparkles } from "lucide-react";
 import { SiteNav } from "./SiteNav";
 import { ThemeToggle } from "./ThemeToggle";
+import { InstallCta } from "@/components/pwa/InstallCta";
+import { OfflineNavGuard } from "@/components/pwa/OfflineNavGuard";
+import { OfflineStatus } from "@/components/pwa/OfflineStatus";
 
 type AppShellProps = {
   children: React.ReactNode;
@@ -50,11 +53,18 @@ export function AppShell({ children }: AppShellProps) {
         </div>
       </header>
 
+      {/* El estado de conexión va pegado al encabezado, no flotando: es el
+          primer sitio donde se mira al levantar el celular, y ocupa su sitio en
+          el flujo (no hay layout shift al aparecer ni al desaparecer). Con
+          conexión no renderiza nada, así que el shell no cambia. */}
+      <OfflineStatus />
+
       {/* El respiro entre el encabezado global y el contenido es del shell, no de
           cada pagina: nueve contenedores distintos terminaban con `pb-10` y sin
           padding superior, y por eso el enlace "Volver al perfil" de las paginas
           de detalle quedaba pegado al navbar. */}
       <main id="contenido" tabIndex={-1} className="flex-1 pt-8 focus:outline-none sm:pt-10">
+        <OfflineNavGuard />
         {children}
       </main>
 
@@ -102,6 +112,13 @@ export function AppShell({ children }: AppShellProps) {
             Los perfiles públicos muestran únicamente la información que cada tutor decide
             compartir.
           </p>
+
+          {/* El CTA de instalar vive en el pie a propósito: es una mejora, no una
+              urgencia, y arriba competiría con el contenido del carnet. Se
+              renderiza solo si el navegador puede instalarlo de verdad y si no
+              se descartó antes en este dispositivo. Va sin envoltorio porque
+              cuando se oculta no debe quedar ni un margen vacío. */}
+          <InstallCta />
         </div>
       </footer>
     </div>

@@ -20,6 +20,101 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 7B — PWA / CAMPO: UI de campo (PR `feat/pwa-campo-ui`)
+
+**Estado:** completada
+**Fecha:** 2026-09-28
+
+Cierra el bloque B de la FASE 7: lo que una persona ve y puede hacer en el
+móvil cuando no hay señal. Sin redesign —se reutilizan `AppShell`, tokens,
+tipografía y componentes existentes— y sin prometer nada que no exista: **no
+hay backend**, así que la UI no habla de sincronización, colas de envío ni
+copias en la nube.
+
+### Banner de estado y recuperación
+
+- `OfflineStatus` (montado una vez en `AppShell`): banner "Estás sin conexión"
+  que explica qué sigue disponible en el dispositivo y ofrece volver al
+  inicio; aviso "Conexión recuperada" al recuperar la señal, retirado solo a
+  los ~6 s para no dejar un mensaje obsoleto.
+- `connectivityStore` como estado externo con `useSyncExternalStore`:
+  banner, recuperación y guard de navegación reaccionan al mismo cambio, con
+  instantáneas estables para no encadenar renders.
+
+### Guardia de navegación offline
+
+- `useOfflineNavigationGuard` solo actúa sin conexión y solo con un listener en
+  fase de captura sobre enlaces internos del propio producto. Consulta la
+  caché y decide entre `router.push` (hay payload RSC), navegación completa
+  (`location.assign`, hay solo documento) o bloqueo con aviso.
+- `OfflineRouteNotice`: en lugar de un error de red, explica que la sección no
+  está disponible y ofrece "Volver al inicio" / "Seguir aquí".
+- Enlaces externos, `target`, descargas, clic con modificadores y cambios solo
+  de fragmento se ignoran: el navegador conserva su comportamiento.
+- Las decisiones viven en funciones puras (`offlineNavigation`,
+  `connectivity`, `cacheApi`) y se prueban sin navegador; las vistas, con
+  `renderToStaticMarkup` sobre vistas desacopladas.
+
+### Instalación
+
+- Botón nativo **solo** con `beforeinstallprompt`. En iOS/iPadOS, que no
+  expone esa API, se muestran las instrucciones reales (Compartir → *Añadir a
+  pantalla de inicio*) en lugar de un botón que no puede hacer nada.
+- `isIosSafariLike` detecta iPadOS por UA Macintosh + `maxTouchPoints`, de modo
+  que macOS y Android no se confundan con iOS.
+- `installStore` captura `beforeinstallprompt` al evaluarse el módulo, no al
+  montar el componente, y detecta la app ya instalada al arrancar. El descarte
+  del CTA se persiste en `localStorage` y degrada a memoria si el storage está
+  bloqueado.
+
+### Corrección: payloads RSC servidos como HTML
+
+La caché del service worker mezclaba documentos y payloads RSC, que comparten
+clave al resolverse por `pathname`. De ahí salieron dos fallos reales:
+
+- una recarga sin señal de un perfil devolvía la portada en vez del perfil;
+- el *fallback* de `networkFirst` usaba `caches.match()`, que busca en **todas**
+  las cachés: para el documento de `/adopciones` encontraba el payload RSC de
+  esa ruta y lo servía como HTML, dejando la página en blanco con datos de
+  vuelo en el `<body>` y sin banner de estado.
+
+Corrección: **dos cachés** (`petcarnet-<VERSION>` para documentos y estáticos,
+`petcarnet-routes-<VERSION>` para payloads RSC) y **ningún handler usa
+`caches.match()`**; cada uno abre y consulta la suya. `hasShellCache()` tenía el
+mismo defecto y ahora consulta la caché de documentos. `VERSION` sube a `v3`.
+Un test de contrato en `purity.test.ts` lee `public/sw.js` y falla si reaparece
+un match global o si los nombres de versión divergen de los de `cacheApi.ts`.
+
+### Copy honesto
+
+- La alerta de mascota perdida es explícita en que es local y en que para
+  hacerla pública hay que compartir un enlace o una imagen.
+
+### Verificación
+
+- `npm test` (46 archivos, 595 tests), `npm run lint`, `npm run typecheck`,
+  `npm run build` y `npm run validate:data` en verde (11 perfiles, 10 mocks de
+  adopción, 2 de refugio; 26 avisos preexistentes).
+- Smoke sobre la build de producción (`next start`): navegación offline real a
+  una sección con payload cacheado (renderiza el contenido, no un error),
+  recarga offline de un perfil, aviso de ruta no disponible, recuperación de
+  conexión, y ausencia de botón de instalación falso en iOS emulado.
+- Sin desbordamiento horizontal a 360, 375 y 390 px.
+
+### Deuda conocida
+
+- `VERSION` del SW es manual y los nombres de caché están duplicados en
+  `public/sw.js` y `cacheApi.ts`; el test de contrato avisa de la divergencia,
+  pero subir solo una de las dos cosas rompe la disponibilidad offline en
+  silencio.
+- La primera navegación tras instalar el SW no pasa por el worker (se sirve
+  antes de `clients.claim()`), así que ese documento se cachea en la carga
+  siguiente.
+- Íconos PWA PNG (192/512) y `apple-touch-icon`, pendientes del bloque de
+  diseño B.
+
+---
+
 ## FASE 7 — PWA / CAMPO: Core e infraestructura (PR `feat/pwa-campo-core`)
 
 **Estado:** Base PWA/offline completada (infraestructura Core)

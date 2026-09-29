@@ -1,9 +1,10 @@
 "use client";
 
-import { BellRing } from "lucide-react";
+import { BellRing, Smartphone } from "lucide-react";
 import { formatMexicanDate } from "@/lib/dateFormat";
 import { resolveLostState } from "@/lib/domain/emergency";
 import { useLostAlerts } from "@/lib/useLostAlerts";
+import { LOST_MODE_LOCAL_COPY } from "@/lib/pwa/copy";
 import { FoundPetPanel } from "./FoundPetPanel";
 import { LostPetBanner } from "./LostPetBanner";
 import { LostPetInstructions } from "./LostPetInstructions";
@@ -47,6 +48,21 @@ export function LostModeAlertSections({
             Desactivar modo alerta
           </button>
         </div>
+      ) : null}
+
+      {/* El modo alerta vive en el almacenamiento local de **este** dispositivo:
+          no hay servidor que lo difunda. Sin esta nota, "activa el modo alerta
+          en el perfil" se lee como si el resto del mundo viera el cambio, y en
+          una emergencia eso es exactamente la conclusión equivocada. Se dice
+          sin miedo y con la salida al alcance. */}
+      {alert !== null ? (
+        <p className="flex items-start gap-2.5 rounded-md border border-rule bg-sunken px-4 py-3 text-sm leading-6 text-ink-2">
+          <Smartphone size={16} aria-hidden="true" className="mt-1 shrink-0 text-ink-3" />
+          <span>
+            <span className="font-semibold text-ink">{LOST_MODE_LOCAL_COPY.aviso}</span>{" "}
+            {LOST_MODE_LOCAL_COPY.detalle}
+          </span>
+        </p>
       ) : null}
 
       <LostPetBanner
