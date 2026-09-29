@@ -1,7 +1,12 @@
 import type { MetadataRoute } from "next";
 
-export const PWA_THEME_COLOR = "#10B981";
-export const PWA_BACKGROUND_COLOR = "#ffffff";
+/* Los colores del manifest son los mismos tokens del sistema visual, no valores
+   sueltos: `--brand` (pino) y `--canvas` (papel cálido) de `globals.css`. Antes
+   eran un esmeralda brillante que ya no existe en la paleta y, en un móvil
+   instalado, el marco del sistema y la pantalla de inicio salían de un color
+   que el producto no usa en ninguna parte. */
+export const PWA_THEME_COLOR = "#1f4a3a";
+export const PWA_BACKGROUND_COLOR = "#f4f1ea";
 export const PWA_ICON_SRC = "/icon.svg";
 
 /**
