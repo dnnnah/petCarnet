@@ -131,6 +131,26 @@ describe("pureza del Core FASE 6 (carnet físico)", () => {
   });
 });
 
+describe("pureza de telemetría FASE 8", () => {
+  const PURE_TELEMETRY_FILES = [
+    "src/lib/domain/telemetry/events.ts",
+    "src/lib/domain/telemetry/types.ts",
+    "src/lib/domain/telemetry/validators.ts",
+    "src/lib/kpis/calculations.ts",
+  ];
+
+  for (const file of PURE_TELEMETRY_FILES) {
+    it(`${file} no importa de UI, framework ni infraestructura`, () => {
+      const source = readFileSync(resolve(process.cwd(), file), "utf8");
+      const specifiers = extractSpecifiers(source).map(normalizeSpecifier);
+      expect(specifiers.filter(isForbiddenSpecifier)).toEqual([]);
+      expect(specifiers.filter(isBusinessImport)).toEqual([]);
+      expect(specifiers.filter((s) => s.includes("/services/"))).toEqual([]);
+      expect(specifiers.filter((s) => s.includes("/infra/"))).toEqual([]);
+    });
+  }
+});
+
 function normalizeSpecifier(specifier: string): string {
   return specifier.replace(/\.(test|ts|mts)$/, "");
 }
