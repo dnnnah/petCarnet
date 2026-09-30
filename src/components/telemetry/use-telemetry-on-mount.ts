@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createMountObserver } from "./mount-observer";
+import { createMountObserver } from "@/lib/services/telemetry/mount-observer";
 
 /**
  * Emite un evento de telemetría **una vez por montaje**, en el cliente.
@@ -30,6 +30,13 @@ import { createMountObserver } from "./mount-observer";
  * `emit` va en las dependencias para que el hook sea honesto ante el linter,
  * pero eso no provoca re-emisión: el guardia, no las dependencias, es lo que
  * decide que ocurra una sola vez.
+ *
+ * **Ubicación (FASE 9B).** Este hook vive en la capa de UI, no en
+ * `lib/services/telemetry/`, porque es la única pieza que necesita React: la
+ * fábrica que decide cuándo medir (`createMountObserver`) sí es lógica pura y
+ * sigue en services, junto al resto de la capa. Dejar el binding de React
+ * dentro de services rompía el guardián de dirección de dependencias de
+ * FASE 9A, que exige que services no dependa de ningún framework.
  */
 export function useTelemetryOnMount(emit: () => void): void {
   const [observer] = useState(createMountObserver);

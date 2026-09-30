@@ -40,6 +40,21 @@ function listFiles(dir: string, extension: string): string[] {
     .sort();
 }
 
+/**
+ * Módulos de la UI de telemetría, incluidos los `.ts` sin JSX.
+ *
+ * El hook de montaje se movió aquí en FASE 9B y es un `.ts`, así que listar solo
+ * `.tsx` lo dejaría fuera de las guardas que le aplicaban cuando vivía en
+ * services. Estas guardas son sobre el *contenido* del fichero, no sobre si
+ * renderiza, así que no tienen motivo para ignorar la extensión.
+ */
+function listUiFiles(): string[] {
+  return readdirSync(TELEMETRY_UI_DIR)
+    .filter((file) => (file.endsWith(".tsx") || file.endsWith(".ts")) && !file.endsWith(".test.ts"))
+    .sort()
+    .map((file) => `src/components/telemetry/${file}`);
+}
+
 function stripComments(source: string): string {
   return source
     .replace(/\/\*[\s\S]*?\*\//g, " ")
@@ -83,7 +98,7 @@ const FORBIDDEN_RUNTIME_TOKENS = [
 describe("la telemetría no Monta infraestructura por su cuenta", () => {
   const telemetryFiles = [
     ...listFiles(TELEMETRY_SERVICE_DIR, ".ts").map((file) => `src/lib/services/telemetry/${file}`),
-    ...listFiles(TELEMETRY_UI_DIR, ".tsx").map((file) => `src/components/telemetry/${file}`),
+    ...listUiFiles(),
   ];
 
   it("hay módulos de telemetría que vigilar", () => {
@@ -160,15 +175,45 @@ describe("la UI no se salta la fachada de telemetría", () => {
       expect(rawEvent, `${file} construye un evento a mano`).toBe(false);
     }
   });
+
+  /**
+   * El hook de montaje (FASE 9B) queda fuera de `uiFiles` a propósito: no es un
+   * componente que emita eventos, sino el mecanismo que decide *cuándo* se mide,
+   * así que consume la fábrica pura `mount-observer` y no la fachada `trackers`.
+   * Lo que sí debe seguir respetando es la propiedad de seguridad de esta capa:
+   * hablar con services, nunca con el adaptador ni con el contrato en crudo.
+   */
+  it("el hook de montaje no toca ni el adaptador ni el contrato de eventos", () => {
+    const hook = "src/components/telemetry/use-telemetry-on-mount.ts";
+    const specifiers = extractSpecifiers(read(hook));
+
+    expect(
+      specifiers.filter((s) => s.includes("/infra/telemetry/")),
+      `${hook} no debe importar la capa de infraestructura`,
+    ).toEqual([]);
+    expect(
+      specifiers.filter((s) => s.includes("/domain/telemetry/")),
+      `${hook} no debe construir eventos del contrato`,
+    ).toEqual([]);
+    expect(
+      specifiers.filter((s) => s.includes("/services/telemetry/mount-observer")),
+      `${hook} debe apoyarse en la fábrica pura de services`,
+    ).not.toEqual([]);
+  });
 });
 
 describe("la capa de servicios de telemetría sigue siendo independiente de React", () => {
   const files = listFiles(TELEMETRY_SERVICE_DIR, ".ts");
 
-  /** Único módulo que legitimately depende de React: el hook de montaje. */
-  const REACT_ALLOWLIST = new Set(["use-telemetry-on-mount.ts"]);
+  /**
+   * Sin excepciones (FASE 9B). El binding de React del hook de montaje se movió
+   * a `src/components/telemetry/`, así que la capa de servicios no debe
+   * importar React en ningún fichero. Si algún día hace falta una excepción,
+   * que vuelva a aparecer aquí de forma explícita y no como olvido.
+   */
+  const REACT_ALLOWLIST = new Set<string>();
 
-  it("solo el hook cliente importa React", () => {
+  it("ningún módulo de servicios importa React", () => {
     const withReact = files.filter((file) =>
       extractSpecifiers(readFileSync(resolve(TELEMETRY_SERVICE_DIR, file), "utf8")).some(
         (specifier) => specifier === "react" || specifier.startsWith("react/"),

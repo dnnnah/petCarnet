@@ -1,7 +1,7 @@
 "use client";
 
 import { trackProfileViewed } from "@/lib/services/telemetry/trackers";
-import { useTelemetryOnMount } from "@/lib/services/telemetry/use-telemetry-on-mount";
+import { useTelemetryOnMount } from "@/components/telemetry/use-telemetry-on-mount";
 import type { ProfileContext } from "@/lib/domain/telemetry/events";
 
 type ProfileViewTrackerProps = {
