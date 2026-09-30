@@ -4,7 +4,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { telemetryClient } from "@/lib/infra/telemetry/noop-client";
-import { getPetByIdAny } from "@/lib/getPetByIdAny";
+import { getPetByIdAny } from "@/lib/services/pets/queries";
 import { createMountObserver } from "./mount-observer";
 import * as trackModule from "./trackers";
 import { ProfileViewTracker } from "@/components/telemetry/ProfileViewTracker";

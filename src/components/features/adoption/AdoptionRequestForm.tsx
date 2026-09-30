@@ -19,7 +19,7 @@ import { formatMexicanDate } from "@/lib/dateFormat";
 import { useLostAlerts } from "@/lib/useLostAlerts";
 import { useAdoptionRequests } from "@/lib/useAdoptionRequests";
 import { trackAdoptionRequestStarted } from "@/lib/services/telemetry/trackers";
-import { useTelemetryOnMount } from "@/lib/services/telemetry/use-telemetry-on-mount";
+import { useTelemetryOnMount } from "@/components/telemetry/use-telemetry-on-mount";
 import type { AdoptionRequest } from "@/types/adoption";
 import type { PetProfile } from "@/types/pet";
 
