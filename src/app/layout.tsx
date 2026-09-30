@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./providers";
 import { ServiceWorkerRegistration } from "@/components/pwa/ServiceWorkerRegistration";
 import { PWA_THEME_COLOR } from "./manifest";
-import { resolvePublicProfileBaseUrl } from "@/lib/services/publicProfileUrl";
+import { resolvePublicProfileBaseUrl } from "@/lib/publicProfileUrl";
 
 /**
  * Tipografía del sistema visual.

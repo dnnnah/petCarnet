@@ -22,12 +22,12 @@ import { buildPhysicalPetCard } from "@/lib/domain/carnet";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
 import { findShelterForPet } from "@/lib/domain/shelter";
 import { sortVaccinesByDate } from "@/lib/domain/vaccine";
-import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
-import { getMockShelters } from "@/lib/getMockShelters";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/services/pets/queries";
+import { getMockShelters } from "@/lib/services/shelters/queries";
 import { toProfileViewModel } from "@/lib/mapping/profile";
 import { toVaccineItemViewModel } from "@/lib/mapping/health";
 import { buildPetProfileMetadata } from "@/lib/seo";
-import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
+import { getPublicProfileUrl } from "@/lib/publicProfileUrl";
 import { notFound } from "next/navigation";
 
 type ProfilePageProps = {

@@ -8,8 +8,8 @@ import { PrototypeNotice } from "@/components/features/adoption/PrototypeNotice"
 import { filterAdoptablePets, buildAdoptionCatalogEntry } from "@/lib/domain/adoption";
 import { findShelterForPet } from "@/lib/domain/shelter";
 import { buildCatalogCard } from "@/lib/mapping/adoptionPresentation";
-import { getAdoptionDemoPets } from "@/lib/getAdoptionDemoPets";
-import { getMockShelters } from "@/lib/getMockShelters";
+import { getAdoptionDemoPets } from "@/lib/services/pets/queries";
+import { getMockShelters } from "@/lib/services/shelters/queries";
 
 export const metadata: Metadata = {
   title: "Adopciones | PetCarnet",

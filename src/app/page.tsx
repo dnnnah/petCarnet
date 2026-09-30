@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { PetsList } from "@/components/features/home/PetsList";
 import { PetMarks } from "@/components/ui/PetMarks";
 import { Section } from "@/components/ui/Section";
-import { getAllPets } from "@/lib/getAllPets";
+import { getAllPets } from "@/lib/services/pets/queries";
 
 const STEPS = [
   {

@@ -4,7 +4,7 @@ import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { BackLink } from "@/components/ui/BackLink";
 import { LostPetAlertForm } from "@/components/features/lost-pet/LostPetAlertForm";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
-import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/services/pets/queries";
 import { notFound } from "next/navigation";
 
 type AlertPageProps = {

@@ -9,7 +9,7 @@ import { VaccineTimeline } from "@/components/features/pet-profile/VaccineTimeli
 import { sortVaccinesByDate } from "@/lib/domain/vaccine";
 import { buildHealthExportSummary } from "@/lib/domain/health";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
-import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/services/pets/queries";
 import {
   toCompletenessViewModel,
   toDewormingSectionViewModel,

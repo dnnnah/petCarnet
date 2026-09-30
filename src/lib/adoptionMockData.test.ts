@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { filterAdoptablePets } from "@/lib/domain/adoption";
-import { getAdoptionDemoPets } from "@/lib/getAdoptionDemoPets";
-import { getAllPets } from "@/lib/getAllPets";
-import { getMockShelters } from "@/lib/getMockShelters";
+import { getAdoptionDemoPets, getAllPets } from "@/lib/services/pets/queries";
+import { getMockShelters } from "@/lib/services/shelters/queries";
 
 describe("datos mock del prototipo de adopción", () => {
   it("carga perfiles mock válidos", () => {

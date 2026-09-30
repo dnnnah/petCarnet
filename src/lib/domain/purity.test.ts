@@ -154,3 +154,28 @@ describe("pureza de telemetría FASE 8", () => {
 function normalizeSpecifier(specifier: string): string {
   return specifier.replace(/\.(test|ts|mts)$/, "");
 }
+
+describe("pureza de los puertos de directorio FASE 9", () => {
+  const PURE_PORT_FILES = [
+    "src/lib/domain/directory/types.ts",
+    "src/lib/publicProfileUrl.ts",
+  ];
+
+  for (const file of PURE_PORT_FILES) {
+    it(`${file} no importa de UI, framework, services, infra ni datos crudos`, () => {
+      const source = readFileSync(resolve(process.cwd(), file), "utf8");
+      const specifiers = extractSpecifiers(source).map(normalizeSpecifier);
+      expect(specifiers.filter(isForbiddenSpecifier)).toEqual([]);
+      expect(specifiers.filter(isBusinessImport)).toEqual([]);
+      expect(specifiers.filter((s) => s.includes("/services/"))).toEqual([]);
+      expect(specifiers.filter((s) => s.includes("/infra/"))).toEqual([]);
+      expect(specifiers.filter((s) => s.includes("@/data/"))).toEqual([]);
+    });
+  }
+
+  it("el dominio de FASE 9 contiene los puertos de directorio", () => {
+    const source = readFileSync(resolve(DOMAIN_DIR, "directory/types.ts"), "utf8");
+    expect(source).toContain("PetDirectory");
+    expect(source).toContain("ShelterDirectory");
+  });
+});
