@@ -4,7 +4,7 @@ import { CarnetStudio } from "@/components/features/carnet/CarnetStudio";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { BackLink } from "@/components/ui/BackLink";
 import { buildPhysicalPetCard } from "@/lib/domain/carnet";
-import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/services/pets/queries";
 import type { PhysicalPetCardFormato } from "@/types/carnet";
 import { notFound } from "next/navigation";
 import { ProfileViewTracker } from "@/components/telemetry/ProfileViewTracker";

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
+import { getPublicProfileUrl } from "@/lib/publicProfileUrl";
 import type { PetProfile } from "@/types/pet";
 
 export function getPetProfileSeoTitle(pet: PetProfile): string {

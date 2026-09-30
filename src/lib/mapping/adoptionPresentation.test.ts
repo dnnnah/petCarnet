@@ -6,8 +6,8 @@ import {
   buildShelterPetCard,
   normalizeSocialUrl,
 } from "@/lib/mapping/adoptionPresentation";
-import { getAdoptionDemoPets } from "@/lib/getAdoptionDemoPets";
-import { getMockShelters } from "@/lib/getMockShelters";
+import { getAdoptionDemoPets } from "@/lib/services/pets/queries";
+import { getMockShelters } from "@/lib/services/shelters/queries";
 
 describe("buildCatalogCard", () => {
   const pets = getAdoptionDemoPets();

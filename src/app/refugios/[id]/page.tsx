@@ -21,8 +21,8 @@ import { filterAdoptablePets } from "@/lib/domain/adoption";
 import { findShelterById } from "@/lib/domain/shelter";
 import { buildShelterPetCard, normalizeSocialUrl } from "@/lib/mapping/adoptionPresentation";
 import { buildWhatsAppHref, toE164Digits } from "@/lib/phone";
-import { getAdoptionDemoPets } from "@/lib/getAdoptionDemoPets";
-import { getMockShelters } from "@/lib/getMockShelters";
+import { getAdoptionDemoPets } from "@/lib/services/pets/queries";
+import { getMockShelters } from "@/lib/services/shelters/queries";
 
 type ShelterPageProps = {
   params: Promise<{ id: string }>;

@@ -5,7 +5,7 @@ import { Surface } from "@/components/ui/Surface";
 import { SubpageHeader } from "@/components/ui/SubpageHeader";
 import { BackLink } from "@/components/ui/BackLink";
 import { Pill } from "@/components/ui/Pill";
-import { getPetByIdAny, getAllProfilePets } from "@/lib/getPetByIdAny";
+import { getPetByIdAny, getAllProfilePets } from "@/lib/services/pets/queries";
 import { toVaccineSummaryViewModel } from "@/lib/mapping/health";
 import { notFound } from "next/navigation";
 import { ProfileViewTracker } from "@/components/telemetry/ProfileViewTracker";

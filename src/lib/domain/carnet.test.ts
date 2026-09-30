@@ -1,8 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildPhysicalPetCard } from "@/lib/domain/carnet";
-import { getAdoptionDemoPets } from "@/lib/getAdoptionDemoPets";
-import { getAllPets } from "@/lib/getAllPets";
-import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
+import { getAdoptionDemoPets, getAllPets } from "@/lib/services/pets/queries";
+import { getPublicProfileUrl } from "@/lib/publicProfileUrl";
 import type { PhysicalPetCard } from "@/types/carnet";
 import type { LostAlert } from "@/types/emergency";
 import type { PetGender, PetProfile, PetSize } from "@/types/pet";

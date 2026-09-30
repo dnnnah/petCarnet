@@ -20,6 +20,89 @@ Skills de agente disponibles en este proyecto (`.agents/skills/`):
 
 ---
 
+## FASE 9A — Services / ARQUITECTURA: puertos y adapters (PR `feat/services-architecture-core`)
+
+**Estado:** completada
+**Fecha:** 2026-09-30
+
+Prepara la capa de Services para que la fuente de datos pueda pasar de JSON
+estático a Supabase/DB más adelante **sin rehacer la UI**. No introduce
+Supabase, DB, Auth ni RLS: solo contratos, adapters y la corrección de una
+dependencia inversa. Detalle completo en `docs/fase-9-services-arquitectura.md`.
+
+### Qué había realmente (y no lo que se suponía)
+
+La auditoría partía de la premisa de que la UI importaba `mascotas.json` y
+usaba `localStorage` sin encapsular. Al revisar el código, ambas cosas ya
+estaban resueltas: los JSON vivían detrás de `getAllPets` / `getAdoptionDemoPets` /
+`getMockShelters`, y `localStorage` estaba aislado tras `StorageLike`
+(`pwa/storage.ts`) con inyección, *fallback* en memoria y tolerancia a storage
+bloqueado. El hueco real era de otro tipo:
+
+1. Los accesores estaban planos en `src/lib/`, **sin contrato** que permitiera
+   cambiar la fuente sin reescribirlos.
+2. `domain/carnet.ts` importaba de `services/` — dependencia **inversa**.
+3. `getPetById` devolvía `undefined` y `getPetByIdAny` devolvía `null`.
+4. Los datos inválidos no tenían una regla de error unificada.
+
+### Puertos, adapters y servicios
+
+- `domain/directory/types.ts`: puertos `PetDirectory` y `ShelterDirectory`
+  (tipos puros, sin implementación), siguiendo la convención de FASE 8
+  (`TelemetryClient` vive en `domain/telemetry/types.ts`).
+- `infra/directory/staticPets.ts` y `staticShelters.ts`: únicas capas que
+  conocen `src/data/*.json`; validan al cargar con `assertValid*`.
+- `services/pets/queries.ts` y `services/shelters/queries.ts`: API de consulta
+  que consumen rutas y componentes, sin framework y sin acceso a `src/data`.
+- Migrados 15 ficheros (10 rutas + 3 tests + realocados) **solo** la ruta de
+  import. Cero cambios de lógica, UX, rutas o URLs canónicas.
+
+### Correcciones
+
+- **Dependencia inversa `domain → services`**: `publicProfileUrl.ts` es un util
+  puro usado por domain, app, components y types; se movió a `src/lib/`, donde
+  ya viven `dateFormat.ts`, `phone.ts` y `clipboard.ts`.
+- **Contrato uniforme**: "no existe" es siempre `null`, nunca `undefined`.
+- **`getPetOrNotFound` eliminado**: código muerto, cero consumidores. Las 7
+  rutas ya hacen `getPetByIdAny` + `notFound()` en línea, que es la frontera
+  correcta: decidir un 404 es tarea de la ruta, no del service.
+
+### Guardián arquitectónico
+
+`src/lib/architecture.test.ts` verifica la dirección de dependencias
+(`domain ← services ← infra ← UI`) y que solo `infra` importa `src/data`.
+`domain/purity.test.ts` se extendió a los puertos nuevos. El guardián detectó
+la dependencia inversa de `carnet.ts` durante el desarrollo.
+
+### Lo que no se hizo (a propósito)
+
+- **No** se envolvió `localStorage` en otro adapter: ya estaba encapsulado y
+  una capa extra no permitiría ningún swap a backend.
+- **No** se extrajo el tema de `app/providers.tsx`: el script anti-FOUC de
+  `layout.tsx` debe seguir siendo JS plano. Deuda documentada.
+- **No** se unificaron `listProfilePets` / `listAdoptionPets`: hoy son dos
+  ficheros disjuntos; con backend real saldrán de la misma tabla por estado.
+- **No** se creó una jerarquía de clases de error: ninguna tendría consumidores
+  hoy. La regla es `null` + `assertValid*` al cargar + degradar a memoria.
+- **No** se renombró `getAdoptionDemoPets` (churn sin beneficio funcional).
+
+### Verificación
+
+`npm test` (709 tests, 54 ficheros, 0 fallos), `npm run lint`,
+`npm run typecheck`, `npm run build` y `npm run validate:data` en verde.
+Smoke tests sobre `next start` con 200 en las rutas críticas, canonical y
+Open Graph sigue apuntando a `/perfil/PC-LUCCA-001`, QR con ese *payload*,
+manifest y service worker responden, 404 correcto para mascota inexistente.
+Sin cambios en PWA/offline, telemetría de FASE 8, KPIs, mapping ni dominio de
+negocio.
+
+**Pendiente preexistente:** `/refugios` (índice) sigue en 404 porque el
+proyecto solo tiene `app/refugios/[id]/page.tsx`. No es regresión de esta fase.
+La telemetría de FASE 8 continúa sin instrumentar la UI: `trackers.ts` solo lo
+consume su propio test.
+
+---
+
 ## FASE 7B — PWA / CAMPO: UI de campo (PR `feat/pwa-campo-ui`)
 
 **Estado:** completada

@@ -4,7 +4,7 @@ import {
   getPetProfileSeoDescription,
   getPetProfileSeoTitle,
 } from "@/lib/seo";
-import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
+import { getPublicProfileUrl } from "@/lib/publicProfileUrl";
 import type { PetProfile } from "@/types/pet";
 
 type AnyRecord = Record<string, unknown>;

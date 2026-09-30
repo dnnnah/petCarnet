@@ -10,9 +10,8 @@ import { resolveAdoptionAvailability } from "@/lib/domain/adoption";
 import { isTerminalPetStatus } from "@/lib/domain/petStatus";
 import { findShelterForPet } from "@/lib/domain/shelter";
 import { getPetStatusMeta } from "@/lib/mapping/petStatusPresentation";
-import { getPetByIdAny } from "@/lib/getPetByIdAny";
-import { getAdoptionDemoPets } from "@/lib/getAdoptionDemoPets";
-import { getMockShelters } from "@/lib/getMockShelters";
+import { getPetByIdAny, getAdoptionDemoPets } from "@/lib/services/pets/queries";
+import { getMockShelters } from "@/lib/services/shelters/queries";
 
 type AdoptionPageProps = {
   params: Promise<{ id: string }>;

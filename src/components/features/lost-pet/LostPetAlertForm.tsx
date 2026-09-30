@@ -10,7 +10,7 @@ import { cx } from "@/lib/ui/tone";
 import { LostPetAlertImage } from "./LostPetAlertImage";
 import { formatMexicanDate } from "@/lib/dateFormat";
 import { useLostAlerts } from "@/lib/useLostAlerts";
-import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
+import { getPublicProfileUrl } from "@/lib/publicProfileUrl";
 import type { PetProfile } from "@/types/pet";
 
 type LostPetAlertFormProps = {

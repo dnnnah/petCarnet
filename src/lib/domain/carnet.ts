@@ -17,7 +17,7 @@
  */
 
 import { buildWhatsAppHref } from "@/lib/phone";
-import { getPublicProfileUrl } from "@/lib/services/publicProfileUrl";
+import { getPublicProfileUrl } from "@/lib/publicProfileUrl";
 import type { PhysicalPetCard, PhysicalPetCardFormato, PhysicalPetCardOrientacion, PhysicalPetCardOptions, PhysicalPetCardPrint } from "@/types/carnet";
 import type { PetProfile } from "@/types/pet";
 import { todayIsoDate } from "./dateRules.ts";
